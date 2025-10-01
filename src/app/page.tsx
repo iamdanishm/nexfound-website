@@ -1,10 +1,10 @@
 import Header from "./_components/header";
 import Hero from "./_components/hero";
-// import Features from "./_components/features";
-// import Showcase from "./_components/showcase";
-// import Testimonials from "./_components/testimonials";
-// import CTA from "./_components/cta";
-// import Footer from "./_components/footer";
+import Features from "./_components/features";
+import Showcase from "./_components/showcase";
+import Testimonials from "./_components/testimonials";
+import CTA from "./_components/cta";
+import Footer from "./_components/footer";
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
         <section id="home">
           <Hero />
         </section>
-        {/* <section id="services">
+        <section id="services">
           <Features />
         </section>
         <section id="work">
@@ -25,9 +25,9 @@ export default function Home() {
         </section>
         <section id="contact">
           <CTA />
-        </section> */}
+        </section>
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
