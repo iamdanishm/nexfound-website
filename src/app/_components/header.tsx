@@ -67,7 +67,8 @@ export default function Header() {
       />
 
       <header
-        className={`header ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}`}
+        className={`header ${isScrolled ? "animate-header-glow" : "animate-header-pulse"} h-[80px] md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 drop-shadow-xl`}
+        // className={`header ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}`}
         data-scrolled={isScrolled ? "true" : "false"}
       >
         <div className="container-custom h-full">
@@ -91,9 +92,9 @@ export default function Header() {
                   priority
                 />
               </div>
-              <span className="text-2xl md:text-3xl font-bold text-gold-gradient tracking-tight hidden sm:inline">
+              <h1 className="font-display text-transparent bg-clip-text bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-2xl md:text-4xl tracking-tight">
                 Nexfound
-              </span>
+              </h1>
             </a>
 
             {/* Desktop Navigation */}

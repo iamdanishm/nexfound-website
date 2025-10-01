@@ -28,7 +28,7 @@ export default function Hero() {
     <section
       ref={heroRef}
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-8 md:pt-0"
       style={
         {
           "--mouse-x": "50%",

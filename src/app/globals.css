@@ -714,3 +714,7 @@
 .animate-gradient-pulse {
   animation: gradient-pulse 15s ease-in-out infinite;
 }
+
+.hero-space-fix {
+  padding-top: 0 !important;
+}
