@@ -14,7 +14,6 @@ import {
   testimonialsQuery,
 } from "../lib/queries";
 
-// Fetch data server-side (App Router default)
 async function getData() {
   const [projects, testimonials, services, settings] = await Promise.all([
     client.fetch(projectsQuery, {}, { cache: "no-cache" }),
@@ -46,7 +45,10 @@ export default async function Home() {
           <About about={settings?.about} />
         </section>
         <section id="testimonials">
-          <Testimonials testimonials={testimonials} />
+          <Testimonials
+            testimonials={testimonials}
+            stats={settings?.testimonialStats}
+          />
         </section>
         <section id="contact">
           <CTA

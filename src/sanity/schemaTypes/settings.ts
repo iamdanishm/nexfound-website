@@ -330,6 +330,34 @@ export default defineType({
             ],
         }),
 
+        // testimonial stats
+
+        defineField({
+            name: 'testimonialStats',
+            title: 'Testimonials Stats',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        { name: 'value', type: 'string', title: 'Value' },
+                        { name: 'label', type: 'string', title: 'Label' },
+                    ],
+                    preview: {
+                        select: { title: 'value', subtitle: 'label' },
+                    },
+                },
+            ],
+            initialValue: [
+                { value: '500+', label: 'Happy Clients' },
+                { value: '4.9/5', label: 'Average Rating' },
+                { value: '99%', label: 'Client Retention' },
+                { value: '48h', label: 'Response Time' },
+            ],
+            validation: (Rule) => Rule.min(3).max(6),
+        }),
+
+
 
         // base settings
 

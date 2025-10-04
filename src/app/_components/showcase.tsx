@@ -59,8 +59,10 @@ export default function Showcase({ projects }: { projects: Project[] }) {
           </h2>
 
           <p className="text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto">
-            Explore our portfolio of award-winning projects that have redefined
-            digital experiences across industries.
+            Discover our portfolio of projects where ambitious ideas became
+            scalable, high-impact digital products. Each project reflects our
+            commitment to strategy, design, and engineering excellence across
+            industries.
           </p>
         </div>
 
@@ -95,7 +97,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                     <p className="text-white text-lg font-medium max-w-md">
                       {project.description}
                     </p>
-                    <button className="btn btn-secondary text-sm inline-flex items-center gap-2">
+                    {/* <button className="btn btn-secondary text-sm inline-flex items-center gap-2">
                       <span>View Case Study</span>
                       <svg
                         className="w-4 h-4"
@@ -110,7 +112,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                           d="M17 8l4 4m0 0l-4 4m4-4H3"
                         />
                       </svg>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
 

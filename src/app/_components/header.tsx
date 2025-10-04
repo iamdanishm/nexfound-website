@@ -90,6 +90,7 @@ export default function Header() {
                   alt="Nexfound"
                   fill
                   className="object-contain"
+                  suppressHydrationWarning
                   priority
                 />
               </div>

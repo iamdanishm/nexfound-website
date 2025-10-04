@@ -4,6 +4,12 @@ import { useState } from "react";
 import SanityImageComp from "./sanity-image";
 import { SanityImage } from "@/sanity/lib/image";
 
+type Project = {
+  _id: string;
+  title: string;
+  slug: { current: string };
+};
+
 type Testimonial = {
   _id: string;
   name: string;
@@ -13,19 +19,38 @@ type Testimonial = {
   rating: number;
   avatar?: SanityImage;
   gradient: string;
+  project?: Project;
+};
+
+type Stat = {
+  value: string;
+  label: string;
+};
+
+type TestimonialsProps = {
+  testimonials: Testimonial[];
+  stats?: Stat[];
 };
 
 export default function Testimonials({
   testimonials,
-}: {
-  testimonials: Testimonial[];
-}) {
+  stats,
+}: TestimonialsProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const defaultStats: Stat[] = [
+    { value: "500+", label: "Happy Clients" },
+    { value: "4.9/5", label: "Average Rating" },
+    { value: "99%", label: "Client Retention" },
+    { value: "48h", label: "Response Time" },
+  ];
+
+  const testimonialStats = stats && stats.length > 0 ? stats : defaultStats;
 
   return (
     <section
       id="testimonials"
-      className="relative overflow-hidden py-12 md:py-12 lg:py-12"
+      className="relative overflow-hidden py-12 md:py-16 lg:py-20"
     >
       {/* Background Elements */}
       <div
@@ -67,12 +92,12 @@ export default function Testimonials({
           </p>
         </div>
 
-        {/* Testimonials Grid */}
+        {/* Testimonials Grid - Reduced padding for smaller cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {testimonials.map((testimonial, index) => (
             <div
-              key={index}
-              className="liquid-glass group cursor-pointer p-8 md:p-10 relative overflow-hidden"
+              key={testimonial._id}
+              className="liquid-glass group cursor-pointer p-6 md:p-8 relative overflow-hidden"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
@@ -81,10 +106,10 @@ export default function Testimonials({
                 className={`absolute inset-0 bg-gradient-to-br ${testimonial.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
               />
 
-              {/* Quote Icon */}
-              <div className="relative mb-6">
+              {/* Quote Icon - Smaller */}
+              <div className="relative mb-4">
                 <div
-                  className={`w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br ${testimonial.gradient} transform group-hover:scale-110 transition-all duration-500`}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${testimonial.gradient} transform group-hover:scale-110 transition-all duration-500`}
                   style={{
                     boxShadow:
                       hoveredIndex === index
@@ -93,7 +118,7 @@ export default function Testimonials({
                   }}
                 >
                   <svg
-                    className="w-7 h-7 text-black"
+                    className="w-5 h-5 text-black"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -102,19 +127,19 @@ export default function Testimonials({
                 </div>
               </div>
 
-              {/* Quote Text */}
-              <div className="relative z-10 mb-8">
-                <p className="text-[#E0E0E0] text-lg leading-relaxed group-hover:text-white transition-colors duration-300">
-                  &quot;{testimonial.quote}&quot;
+              {/* Quote Text - Smaller font */}
+              <div className="relative z-10 mb-6">
+                <p className="text-[#E0E0E0] text-base leading-relaxed group-hover:text-white transition-colors duration-300">
+                  {testimonial.quote}
                 </p>
               </div>
 
-              {/* Star Rating */}
-              <div className="flex gap-1 mb-6">
+              {/* Star Rating - Smaller */}
+              <div className="flex gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <svg
                     key={i}
-                    className={`w-5 h-5 fill-current text-gold-gradient`}
+                    className="w-4 h-4 fill-current"
                     viewBox="0 0 20 20"
                   >
                     <defs>
@@ -137,37 +162,62 @@ export default function Testimonials({
                 ))}
               </div>
 
-              {/* Author Info */}
-              <div className="relative z-10 flex items-center gap-4">
-                {/* Avatar with Gradient Border */}
+              {/* Project Badge - Show if linked */}
+              {testimonial.project && (
+                <div className="mb-4">
+                  <div
+                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${testimonial.gradient} bg-opacity-10 border border-[#B08D57]/30`}
+                  >
+                    <svg
+                      className="w-3.5 h-3.5 text-[#B08D57]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <span className="text-xs font-medium text-[#F4E6C0]">
+                      Project: {testimonial.project.title}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Author Info - Smaller avatar */}
+              <div className="relative z-10 flex items-center gap-3">
                 {/* Avatar with Gradient Border */}
                 <div className="relative">
                   <div
                     className={`absolute inset-0 rounded-full bg-gradient-to-br ${testimonial.gradient} blur-sm opacity-75 group-hover:opacity-100 transition-opacity duration-500`}
                   />
-                  <div className="relative w-14 h-14 rounded-full overflow-hidden bg-gradient-to-br from-[#2E2E2E] to-[#1A1A1A] flex items-center justify-center">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-[#2E2E2E] to-[#1A1A1A] flex items-center justify-center">
                     {testimonial.avatar ? (
                       <SanityImageComp
                         image={testimonial.avatar}
                         alt={testimonial.avatar.alt || testimonial.name}
-                        width={56}
-                        height={56}
+                        width={40}
+                        height={40}
                         className="object-cover rounded-full"
                       />
                     ) : (
-                      <span className="text-2xl font-bold text-gold-gradient">
+                      <span className="text-lg font-bold text-gold-gradient">
                         {testimonial.name.charAt(0)}
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* Name & Company */}
+                {/* Name & Company - Smaller text */}
                 <div>
-                  <h4 className="text-white font-bold text-lg group-hover:text-gold-gradient transition-colors duration-300">
+                  <h4 className="text-white font-bold text-base group-hover:text-gold-gradient transition-colors duration-300">
                     {testimonial.name}
                   </h4>
-                  <p className="text-[#B3B3B3] text-sm">
+                  <p className="text-[#B3B3B3] text-xs">
                     {testimonial.role} at{" "}
                     <span className="text-[#E0E0E0]">
                       {testimonial.company}
@@ -198,34 +248,18 @@ export default function Testimonials({
           ))}
         </div>
 
-        {/* Stats Section */}
+        {/* Stats Section - Dynamic */}
         <div className="mt-16 md:mt-20">
           <div className="liquid-glass p-8 md:p-12 rounded-2xl">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-gold-gradient mb-2">
-                  500+
+              {testimonialStats.map((stat, idx) => (
+                <div key={idx} className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-gold-gradient mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-[#B3B3B3]">{stat.label}</div>
                 </div>
-                <div className="text-sm text-[#B3B3B3]">Happy Clients</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-gold-gradient mb-2">
-                  4.9/5
-                </div>
-                <div className="text-sm text-[#B3B3B3]">Average Rating</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-gold-gradient mb-2">
-                  99%
-                </div>
-                <div className="text-sm text-[#B3B3B3]">Client Retention</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-gold-gradient mb-2">
-                  48h
-                </div>
-                <div className="text-sm text-[#B3B3B3]">Response Time</div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

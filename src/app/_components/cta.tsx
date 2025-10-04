@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 type CTAData = {
   badgeText?: string;
@@ -54,15 +55,44 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    console.log("Form submitted:", formData);
-    setIsSubmitting(false);
+      const data = await response.json();
 
-    // Reset form
-    setFormData({ name: "", email: "", company: "", message: "" });
-    alert("Thank you! We'll be in touch shortly.");
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
+      // Success
+      setFormData({ name: "", email: "", company: "", message: "" });
+      toast.success(
+        "Thank you for reaching out! We've received your message and will get back to you within 24 hours.",
+        {
+          duration: 6000,
+          icon: "✨",
+        }
+      );
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : `We couldn't send your message. Please try again or email us at ${email}`,
+        {
+          duration: 7000,
+          icon: "⚠️",
+        }
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (

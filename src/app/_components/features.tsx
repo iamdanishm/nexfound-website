@@ -123,8 +123,8 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
               Ready to start your project?
             </h3>
             <p className="text-[#B3B3B3] mb-6 max-w-2xl">
-              Let&apos;s discuss how we can help you achieve your digital goals
-              and create something extraordinary.
+              Let’s discuss how Nexfound can bring your vision to life and build
+              a product that stands out.
             </p>
             <a
               href="#contact"

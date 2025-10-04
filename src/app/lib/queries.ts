@@ -36,9 +36,15 @@ export const testimonialsQuery = groq`
       },
       alt
     },
-    gradient
+    gradient,
+    project->{
+      _id,
+      title,
+      slug
+    }
   }
 `
+
 
 // Services remain the same (icons are emojis, not images)
 export const servicesQuery = groq`
@@ -96,6 +102,7 @@ export const settingsQuery = groq`
         links[]{label, href}
       }
     },
+    testimonialStats[]{value, label},
     contactEmail,
     contactPhone,
     socialLinks,
