@@ -2,52 +2,15 @@
 
 import { useState } from "react";
 
-const features = [
-  {
-    icon: "🎨",
-    title: "Brand Identity",
-    description:
-      "Crafting distinctive visual identities that embody your brand's essence and resonate with your audience.",
-    gradient: "from-[#B08D57] to-[#F4E6C0]",
-  },
-  {
-    icon: "💻",
-    title: "Web Development",
-    description:
-      "Building lightning-fast, scalable web experiences with cutting-edge technology and pristine code.",
-    gradient: "from-[#1A7F6B] to-[#0D3B66]",
-  },
-  {
-    icon: "📱",
-    title: "Mobile Apps",
-    description:
-      "Creating intuitive mobile applications that users love, with seamless performance across all devices.",
-    gradient: "from-[#F4E6C0] to-[#B08D57]",
-  },
-  {
-    icon: "🚀",
-    title: "Digital Strategy",
-    description:
-      "Developing data-driven strategies that accelerate growth and establish market dominance.",
-    gradient: "from-[#0D3B66] to-[#1A7F6B]",
-  },
-  {
-    icon: "⚡",
-    title: "Performance",
-    description:
-      "Optimizing every millisecond to deliver blazing-fast experiences that convert visitors into customers.",
-    gradient: "from-[#B08D57] via-[#F4E6C0] to-[#1A7F6B]",
-  },
-  {
-    icon: "🎯",
-    title: "Consulting",
-    description:
-      "Providing expert guidance to navigate complex digital challenges and unlock new opportunities.",
-    gradient: "from-[#1A7F6B] via-[#0D3B66] to-[#B08D57]",
-  },
-];
+type Service = {
+  _id: string;
+  title: string;
+  icon: string;
+  description: string;
+  gradient: string;
+};
 
-export default function Features() {
+export default function FeatFeatures({ services }: { services: Service[] }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
@@ -94,7 +57,7 @@ export default function Features() {
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {features.map((feature, index) => (
+          {services.map((feature, index) => (
             <div
               key={index}
               className="liquid-glass-hover group cursor-pointer p-8 md:p-10 relative overflow-hidden"

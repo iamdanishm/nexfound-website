@@ -2,7 +2,40 @@
 
 import { useEffect, useRef } from "react";
 
-export default function Hero() {
+type TrustItem = { value: string; label: string };
+
+type HeroData = {
+  badgeText?: string;
+  mainHeading?: string;
+  highlightedText?: string;
+  subheading?: string;
+  cta?: { ctaTitle?: string; ctaSubtitle?: string };
+  trustIndicators?: TrustItem[];
+};
+
+export default function Hero({ hero }: { hero?: HeroData }) {
+  const badgeText = hero?.badgeText ?? "Crafting Digital Excellence";
+  const mainHeading = hero?.mainHeading ?? "Transform Your";
+  const highlightedText = hero?.highlightedText ?? "Digital Presence";
+  const subheading =
+    hero?.subheading ??
+    "Premium digital service studio crafting exceptional experiences for ambitious brands.";
+
+  const cta = {
+    title: hero?.cta?.ctaTitle,
+    subtitle: hero?.cta?.ctaSubtitle,
+  };
+
+  const trustIndicators: TrustItem[] =
+    hero?.trustIndicators && hero.trustIndicators.length > 0
+      ? hero.trustIndicators
+      : [
+          { value: "50+", label: "Projects Delivered" },
+          { value: "98%", label: "Client Satisfaction" },
+          { value: "15+", label: "Industry Awards" },
+          { value: "24/7", label: "Support Available" },
+        ];
+
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -86,22 +119,21 @@ export default function Hero() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F4E6C0]"></span>
             </span>
             <span className="text-sm font-medium text-[#F4E6C0] tracking-wide">
-              Crafting Digital Excellence
+              {badgeText}
             </span>
           </div>
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1] animate-[slide-up_0.6s_ease-out_0.1s_both]">
-            <span className="block text-white mb-2">Transform Your</span>
+            <span className="block text-white mb-2">{mainHeading}</span>
             <span className="block text-gold-gradient text-shadow-gold">
-              Digital Presence
+              {highlightedText}
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-xl md:text-2xl text-[#B3B3B3] mb-12 max-w-3xl leading-relaxed animate-[slide-up_0.6s_ease-out_0.2s_both]">
-            Premium digital service studio crafting exceptional web and mobile
-            experiences for ambitious brands that refuse to blend in.
+            {subheading}
           </p>
 
           {/* CTA Container with Liquid Glass */}
@@ -109,11 +141,9 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-between relative z-10">
               <div className="flex-1">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                  Ready to elevate your brand?
+                  {cta.title}
                 </h3>
-                <p className="text-[#B3B3B3]">
-                  Let&apos;s create something extraordinary together.
-                </p>
+                <p className="text-[#B3B3B3]">{cta.subtitle}</p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <a
@@ -146,15 +176,13 @@ export default function Hero() {
 
           {/* Trust Indicators */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 animate-[fade-in_0.8s_ease-out_0.4s_both]">
-            {[
-              { number: "50+", label: "Projects Delivered" },
-              { number: "98%", label: "Client Satisfaction" },
-              { number: "15+", label: "Industry Awards" },
-              { number: "24/7", label: "Support Available" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center group cursor-default">
+            {trustIndicators.map((stat, index) => (
+              <div
+                key={`${stat.label}-${index}`}
+                className="text-center group cursor-default"
+              >
                 <div className="text-3xl md:text-4xl font-bold text-gold-gradient mb-2 transition-transform duration-300 group-hover:scale-110">
-                  {stat.number}
+                  {stat.value}
                 </div>
                 <div className="text-sm md:text-base text-[#B3B3B3]">
                   {stat.label}

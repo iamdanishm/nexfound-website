@@ -44,6 +44,7 @@ export default function Header() {
     { href: "#work", label: "Work" },
     { href: "#services", label: "Services" },
     { href: "#about", label: "About" },
+    { href: "#testimonials", label: "Testimonials" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

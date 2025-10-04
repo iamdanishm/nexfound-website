@@ -1,48 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import SanityImageComp from "./sanity-image";
+import { SanityImage } from "@/sanity/lib/image";
 
-const projects = [
-  {
-    title: "Quantum Finance",
-    category: "FinTech Platform",
-    description:
-      "Revolutionary trading platform with real-time analytics and AI-powered insights.",
-    image: "/projects/project-1.jpg", // Replace with your project images
-    gradient: "from-[#1A7F6B] to-[#0D3B66]",
-    metrics: { conversion: "+145%", users: "50K+", rating: "4.9/5" },
-  },
-  {
-    title: "LuxeStay",
-    category: "Hospitality App",
-    description:
-      "Premium hotel booking experience with immersive 3D tours and concierge services.",
-    image: "/projects/project-2.jpg",
-    gradient: "from-[#B08D57] to-[#F4E6C0]",
-    metrics: { conversion: "+89%", users: "120K+", rating: "4.8/5" },
-  },
-  {
-    title: "HealthPro",
-    category: "Healthcare Platform",
-    description:
-      "Comprehensive telemedicine solution connecting patients with specialists globally.",
-    image: "/projects/project-3.jpg",
-    gradient: "from-[#0D3B66] to-[#1A7F6B]",
-    metrics: { conversion: "+210%", users: "200K+", rating: "4.9/5" },
-  },
-  {
-    title: "EcoMart",
-    category: "E-Commerce",
-    description:
-      "Sustainable marketplace featuring eco-friendly products with carbon footprint tracking.",
-    image: "/projects/project-4.jpg",
-    gradient: "from-[#F4E6C0] to-[#B08D57]",
-    metrics: { conversion: "+175%", users: "85K+", rating: "4.7/5" },
-  },
-];
+type Project = {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  category: string;
+  description: string;
+  mainImage?: SanityImage;
+  metrics: {
+    conversion: string;
+    users: string;
+    rating: string;
+  };
+  gradient: string;
+};
 
-export default function Showcase() {
+export default function Showcase({ projects }: { projects: Project[] }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
@@ -99,10 +76,19 @@ export default function Showcase() {
               {/* Project Image Container */}
               <div className="relative h-[280px] md:h-[360px] overflow-hidden rounded-t-xl">
                 {/* Placeholder gradient (replace with actual images) */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-60`}
-                />
-
+                {project.mainImage ? (
+                  <SanityImageComp
+                    image={project.mainImage}
+                    alt={project.mainImage.alt || project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                  />
+                ) : (
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-60`}
+                  />
+                )}
                 {/* Overlay on Hover */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                   <div className="text-center space-y-4 px-6">
@@ -129,14 +115,14 @@ export default function Showcase() {
                 </div>
 
                 {/* Image Zoom Effect */}
-                <div
+                {/* <div
                   className="absolute inset-0 bg-gradient-to-br from-[#000000] to-[#1A1A1A] transform transition-transform duration-700 group-hover:scale-110"
                   style={{
                     backgroundImage: `url(${project.image})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
-                />
+                /> */}
               </div>
 
               {/* Project Info */}

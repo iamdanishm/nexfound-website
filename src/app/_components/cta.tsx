@@ -2,7 +2,24 @@
 
 import { useState } from "react";
 
-export default function CTA() {
+type CTAData = {
+  badgeText?: string;
+  mainHeading?: string;
+  highlightedText?: string;
+  description?: string;
+  formTitle?: string;
+  quickContactTitle?: string;
+  whyChooseTitle?: string;
+  whyChoosePoints?: string[];
+};
+
+type CTAProps = {
+  cta?: CTAData;
+  contactEmail?: string;
+  contactPhone?: string;
+};
+
+export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,6 +28,27 @@ export default function CTA() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+
+  const badgeText = cta?.badgeText ?? "Let's Connect";
+  const mainHeading = cta?.mainHeading ?? "Ready to Build";
+  const highlightedText = cta?.highlightedText ?? "Something Extraordinary?";
+  const description =
+    cta?.description ??
+    "Transform your vision into reality. Schedule a consultation with our team and discover how we can elevate your digital presence.";
+  const formTitle = cta?.formTitle ?? "Get Started Today";
+  const quickContactTitle = cta?.quickContactTitle ?? "Quick Contact";
+  const email = contactEmail ?? "hello@nexfound.in";
+  const phone = contactPhone ?? "+91 8286556661";
+  const whyChooseTitle = cta?.whyChooseTitle ?? "Why Nexfound?";
+  const whyChoosePoints =
+    cta?.whyChoosePoints && cta.whyChoosePoints.length > 0
+      ? cta.whyChoosePoints
+      : [
+          "48-hour response guarantee",
+          "Dedicated project manager",
+          "Transparent pricing model",
+          "Post-launch support included",
+        ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,20 +101,19 @@ export default function CTA() {
             }}
           >
             <span className="text-sm font-medium text-[#F4E6C0] tracking-wide">
-              Let&apos;s Connect
+              {badgeText}
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="block text-white mb-2">Ready to Build</span>
+            <span className="block text-white mb-2">{mainHeading}</span>
             <span className="block text-gold-gradient text-shadow-gold">
-              Something Extraordinary?
+              {highlightedText}
             </span>
           </h2>
 
           <p className="text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto">
-            Transform your vision into reality. Schedule a consultation with our
-            team and discover how we can elevate your digital presence.
+            {description}
           </p>
         </div>
 
@@ -84,7 +121,7 @@ export default function CTA() {
           {/* Contact Form */}
           <div className="liquid-glass--intense p-8 md:p-10 rounded-2xl">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Get Started Today
+              {formTitle}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -246,11 +283,11 @@ export default function CTA() {
             {/* Quick Contact */}
             <div className="liquid-glass p-8 rounded-2xl">
               <h3 className="text-2xl font-bold text-white mb-6">
-                Quick Contact
+                {quickContactTitle}
               </h3>
               <div className="space-y-4">
                 <a
-                  href="mailto:hello@nexfound.com"
+                  href={`mailto:${email}`}
                   className="flex items-center gap-4 text-[#E0E0E0] hover:text-gold-gradient transition-colors duration-300 group"
                 >
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#B08D57] to-[#F4E6C0] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -270,12 +307,12 @@ export default function CTA() {
                   </div>
                   <div>
                     <div className="text-sm text-[#B3B3B3]">Email</div>
-                    <div className="font-medium">hello@nexfound.com</div>
+                    <div className="font-medium">{email}</div>
                   </div>
                 </a>
 
                 <a
-                  href="tel:+1234567890"
+                  href={`tel:${phone.replace(/\s/g, "")}`}
                   className="flex items-center gap-4 text-[#E0E0E0] hover:text-gold-gradient transition-colors duration-300 group"
                 >
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1A7F6B] to-[#0D3B66] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -295,7 +332,7 @@ export default function CTA() {
                   </div>
                   <div>
                     <div className="text-sm text-[#B3B3B3]">Phone</div>
-                    <div className="font-medium">+1 (234) 567-890</div>
+                    <div className="font-medium">{phone}</div>
                   </div>
                 </a>
               </div>
@@ -304,15 +341,10 @@ export default function CTA() {
             {/* Why Choose Us */}
             <div className="liquid-glass p-8 rounded-2xl">
               <h3 className="text-2xl font-bold text-white mb-6">
-                Why Nexfound?
+                {whyChooseTitle}
               </h3>
               <ul className="space-y-4">
-                {[
-                  "48-hour response guarantee",
-                  "Dedicated project manager",
-                  "Transparent pricing model",
-                  "Post-launch support included",
-                ].map((item, index) => (
+                {whyChoosePoints.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#B08D57] to-[#F4E6C0] flex items-center justify-center flex-shrink-0 mt-0.5">
                       <svg

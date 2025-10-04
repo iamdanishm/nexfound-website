@@ -1,51 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import SanityImageComp from "./sanity-image";
+import { SanityImage } from "@/sanity/lib/image";
 
-const testimonials = [
-  {
-    name: "Sarah Mitchell",
-    role: "CEO",
-    company: "TechVentures Inc.",
-    avatar: "/avatars/avatar-1.jpg", // Replace with actual avatars
-    quote:
-      "Nexfound transformed our entire digital presence. Their attention to detail and creative vision exceeded every expectation. The results speak for themselves—our conversion rate increased by 180% within three months.",
-    rating: 5,
-    gradient: "from-[#B08D57] to-[#F4E6C0]",
-  },
-  {
-    name: "Marcus Chen",
-    role: "Founder & CTO",
-    company: "DataFlow Solutions",
-    avatar: "/avatars/avatar-2.jpg",
-    quote:
-      "Working with Nexfound was a game-changer. Their technical expertise combined with their design prowess created an experience our users absolutely love. Best investment we've made in our digital infrastructure.",
-    rating: 5,
-    gradient: "from-[#1A7F6B] to-[#0D3B66]",
-  },
-  {
-    name: "Elena Rodriguez",
-    role: "Marketing Director",
-    company: "LuxeBrand Co.",
-    avatar: "/avatars/avatar-3.jpg",
-    quote:
-      "The team at Nexfound brought our vision to life with exceptional precision. Their strategic approach and creative execution delivered results that surpassed our ambitious goals. Truly a premium experience.",
-    rating: 5,
-    gradient: "from-[#F4E6C0] to-[#B08D57]",
-  },
-  {
-    name: "David Park",
-    role: "VP of Product",
-    company: "InnovateTech",
-    avatar: "/avatars/avatar-4.jpg",
-    quote:
-      "Nexfound doesn't just build products—they craft experiences. Their holistic approach to digital design and development set a new standard for our entire industry. Highly recommended.",
-    rating: 5,
-    gradient: "from-[#0D3B66] to-[#1A7F6B]",
-  },
-];
+type Testimonial = {
+  _id: string;
+  name: string;
+  role: string;
+  company: string;
+  quote: string;
+  rating: number;
+  avatar?: SanityImage;
+  gradient: string;
+};
 
-export default function Testimonials() {
+export default function Testimonials({
+  testimonials,
+}: {
+  testimonials: Testimonial[];
+}) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
@@ -166,15 +140,25 @@ export default function Testimonials() {
               {/* Author Info */}
               <div className="relative z-10 flex items-center gap-4">
                 {/* Avatar with Gradient Border */}
+                {/* Avatar with Gradient Border */}
                 <div className="relative">
                   <div
                     className={`absolute inset-0 rounded-full bg-gradient-to-br ${testimonial.gradient} blur-sm opacity-75 group-hover:opacity-100 transition-opacity duration-500`}
                   />
                   <div className="relative w-14 h-14 rounded-full overflow-hidden bg-gradient-to-br from-[#2E2E2E] to-[#1A1A1A] flex items-center justify-center">
-                    {/* Placeholder for avatar */}
-                    <span className="text-2xl font-bold text-gold-gradient">
-                      {testimonial.name.charAt(0)}
-                    </span>
+                    {testimonial.avatar ? (
+                      <SanityImageComp
+                        image={testimonial.avatar}
+                        alt={testimonial.avatar.alt || testimonial.name}
+                        width={56}
+                        height={56}
+                        className="object-cover rounded-full"
+                      />
+                    ) : (
+                      <span className="text-2xl font-bold text-gold-gradient">
+                        {testimonial.name.charAt(0)}
+                      </span>
+                    )}
                   </div>
                 </div>
 
