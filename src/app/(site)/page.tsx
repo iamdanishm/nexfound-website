@@ -17,10 +17,10 @@ import {
 // Fetch data server-side (App Router default)
 async function getData() {
   const [projects, testimonials, services, settings] = await Promise.all([
-    client.fetch(projectsQuery),
-    client.fetch(testimonialsQuery),
-    client.fetch(servicesQuery),
-    client.fetch(settingsQuery),
+    client.fetch(projectsQuery, {}, { cache: "no-cache" }),
+    client.fetch(testimonialsQuery, {}, { cache: "no-cache" }),
+    client.fetch(servicesQuery, {}, { cache: "no-cache" }),
+    client.fetch(settingsQuery, {}, { cache: "no-cache" }),
   ]);
 
   return { projects, testimonials, services, settings };
