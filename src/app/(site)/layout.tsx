@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   keywords: [
     "Nexfound",
     "nexfound",
-    "tech services",
     "startup",
     "business",
     "premium digital services",
@@ -27,6 +26,7 @@ export const metadata: Metadata = {
     "web design",
     "software development",
     "product design",
+    "tech services",
     "technology services",
     "digital studio",
     "startup app development",
