@@ -103,13 +103,13 @@ export default function Testimonials({
             >
               {/* Gradient Overlay on Hover */}
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${testimonial.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
+                className={`absolute inset-0 bg-linear-to-br ${testimonial.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
               />
 
               {/* Quote Icon - Smaller */}
               <div className="relative mb-4">
                 <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${testimonial.gradient} transform group-hover:scale-110 transition-all duration-500`}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center bg-linear-to-br ${testimonial.gradient} transform group-hover:scale-110 transition-all duration-500`}
                   style={{
                     boxShadow:
                       hoveredIndex === index
@@ -166,7 +166,7 @@ export default function Testimonials({
               {testimonial.project && (
                 <div className="mb-4">
                   <div
-                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r ${testimonial.gradient} bg-opacity-10 border border-[#B08D57]/30`}
+                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-linear-to-r ${testimonial.gradient} bg-opacity-10 border border-[#B08D57]/30`}
                   >
                     <svg
                       className="w-3.5 h-3.5 text-[#B08D57]"
@@ -193,9 +193,9 @@ export default function Testimonials({
                 {/* Avatar with Gradient Border */}
                 <div className="relative">
                   <div
-                    className={`absolute inset-0 rounded-full bg-gradient-to-br ${testimonial.gradient} blur-sm opacity-75 group-hover:opacity-100 transition-opacity duration-500`}
+                    className={`absolute inset-0 rounded-full bg-linear-to-br ${testimonial.gradient} blur-sm opacity-75 group-hover:opacity-100 transition-opacity duration-500`}
                   />
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-[#2E2E2E] to-[#1A1A1A] flex items-center justify-center">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden bg-linear-to-br from-[#2E2E2E] to-[#1A1A1A] flex items-center justify-center">
                     {testimonial.avatar ? (
                       <SanityImageComp
                         image={testimonial.avatar}
@@ -228,7 +228,7 @@ export default function Testimonials({
 
               {/* Bottom Accent Line */}
               <div
-                className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${testimonial.gradient} w-0 group-hover:w-full transition-all duration-700`}
+                className={`absolute bottom-0 left-0 h-1 bg-linear-to-r ${testimonial.gradient} w-0 group-hover:w-full transition-all duration-700`}
               />
 
               {/* Shine Effect */}

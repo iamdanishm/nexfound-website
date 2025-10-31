@@ -24,28 +24,20 @@ export default function SanityImageComp({
   fill = false,
   sizes,
 }: SanityImageProps) {
-  if (!image?.asset) {
-    return null;
-  }
+  if (!image?.asset) return null;
 
-  // Use provided alt text or fallback to image metadata
   const imageAlt = alt || image.alt || "";
-
-  // Build optimized Sanity CDN URL
-  const imageUrl = urlFor(image)
-    .auto("format") // Automatically serve WebP/AVIF when supported
-    .quality(quality)
-    .url();
+  const imageUrl = urlFor(image).auto("format").quality(quality).url();
 
   if (fill) {
     return (
       <Image
         src={imageUrl}
         alt={imageAlt}
-        fill
         className={className}
-        priority={priority}
+        fill
         sizes={sizes || "100vw"}
+        priority={priority}
       />
     );
   }
@@ -59,11 +51,11 @@ export default function SanityImageComp({
     <Image
       src={imageUrl}
       alt={imageAlt}
+      className={className}
       width={width}
       height={height}
-      className={className}
+      sizes={sizes || "100vw"}
       priority={priority}
-      sizes={sizes}
     />
   );
 }

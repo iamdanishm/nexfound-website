@@ -10,7 +10,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Nexfound | Premium Technology Services for Startups & Businesses",
+  title: {
+    default: "Nexfound | Premium Technology Services for Startups & Businesses",
+    template: "%s | Nexfound",
+  },
   description:
     "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
   keywords: [
@@ -25,17 +28,12 @@ export const metadata: Metadata = {
     "MVP development",
     "scalable digital solutions",
   ],
-  authors: [{ name: "Nexfound" }],
-  alternates: {
-    canonical: "https://www.nexfound.in",
-  },
   applicationName: "Nexfound",
   category: "Technology Services",
-  creator: "Nexfound",
-  publisher: "Nexfound",
-  classification: "Business",
-  metadataBase: new URL("https://www.nexfound.in"),
-  referrer: "origin-when-cross-origin",
+  metadataBase: new URL("https://nexfound.in"),
+  alternates: {
+    canonical: "https://nexfound.in",
+  },
   openGraph: {
     siteName: "Nexfound",
     title: "Nexfound | Premium Technology Services for Startups & Businesses",
@@ -43,21 +41,33 @@ export const metadata: Metadata = {
       "Turn ambitious ideas into scalable digital products with Nexfound. Premium web, mobile, and product solutions built for startups and ambitious businesses.",
     type: "website",
     locale: "en_US",
-    url: "https://www.nexfound.in",
+    url: "https://nexfound.in",
+    images: [
+      {
+        url: "/og-image.png", // Place a 1200x630 social preview here
+        width: 1200,
+        height: 630,
+        alt: "Nexfound - Premium Technology Services",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Nexfound | Premium Technology Services for Startups & Businesses",
     description:
       "Turn ambitious ideas into scalable digital products with Nexfound. Premium web, mobile, and product solutions built for startups and ambitious businesses.",
-  },
-  pinterest: {
-    richPin: true,
+    images: ["/og-image.png"],
+    site: "@iam_danishm",
   },
   robots: {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
+  referrer: "origin-when-cross-origin",
 };
 
 export default function RootLayout({

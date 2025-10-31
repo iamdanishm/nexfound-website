@@ -16,10 +16,26 @@ import {
 
 async function getData() {
   const [projects, testimonials, services, settings] = await Promise.all([
-    client.fetch(projectsQuery, {}, { cache: "no-cache" }),
-    client.fetch(testimonialsQuery, {}, { cache: "no-cache" }),
-    client.fetch(servicesQuery, {}, { cache: "no-cache" }),
-    client.fetch(settingsQuery, {}, { cache: "no-cache" }),
+    client.fetch(
+      projectsQuery,
+      {},
+      { cache: "no-cache", next: { revalidate: 60 } }
+    ),
+    client.fetch(
+      testimonialsQuery,
+      {},
+      { cache: "no-cache", next: { revalidate: 60 } }
+    ),
+    client.fetch(
+      servicesQuery,
+      {},
+      { cache: "no-cache", next: { revalidate: 60 } }
+    ),
+    client.fetch(
+      settingsQuery,
+      {},
+      { cache: "no-cache", next: { revalidate: 60 } }
+    ),
   ]);
 
   return { projects, testimonials, services, settings };

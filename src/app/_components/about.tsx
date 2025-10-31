@@ -3,7 +3,6 @@
 import Image from "next/image";
 import SanityImage from "./sanity-image";
 import { SanityImage as SanityImageType } from "@/sanity/lib/image";
-import { log } from "console";
 
 type Pillar = {
   title: string;
@@ -106,15 +105,15 @@ export default function About({ about }: { about?: AboutData }) {
 
           {/* Right: Team/Firm Image or Signature */}
           <div className="flex flex-col items-center justify-center">
-            <div className="relative w-96 h-[450px] rounded-3xl overflow-hidden border-4 border-[#B08D57]/30 shadow-lg mb-6">
+            <div className="relative w-full max-w-xs sm:max-w-sm md:w-96 h-auto aspect-3/4 rounded-2xl overflow-hidden border-4 border-[#B08D57]/30 shadow-lg mb-6">
               {about?.teamImage ? (
                 <SanityImage
                   image={about.teamImage}
-                  alt={about.teamImage.alt || "Nexfound Team"}
-                  fill
                   width={400}
-                  height={450}
-                  className="object-cover"
+                  height={600}
+                  alt="Founder photo"
+                  className="w-full h-auto object-cover block"
+                  priority
                 />
               ) : (
                 <Image
@@ -126,7 +125,7 @@ export default function About({ about }: { about?: AboutData }) {
               )}
             </div>
             <div className="text-center">
-              <p className="text-gold-gradient text-lg font-semibold">
+              <p className="text-gold-gradient text-shadow-gold text-lg font-semibold">
                 {teamTagline}
               </p>
               <span className="block mt-2 text-[#B3B3B3]">{foundedInfo}</span>
