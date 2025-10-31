@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     url: "https://nexfound.in",
     images: [
       {
-        url: "/og-image.png", // Place a 1200x630 social preview here
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Nexfound - Premium Technology Services",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     title: "Nexfound | Premium Technology Services for Startups & Businesses",
     description:
       "Turn ambitious ideas into scalable digital products with Nexfound. Premium web, mobile, and product solutions built for startups and ambitious businesses.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
     site: "@iam_danishm",
   },
   robots: {

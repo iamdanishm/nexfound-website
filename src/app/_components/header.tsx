@@ -68,12 +68,12 @@ export default function Header() {
       />
 
       <header
-        className={`header  ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}  h-[80px] md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 drop-shadow-xl`}
+        className={`header  ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}  h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 drop-shadow-xl`}
         // className={`header ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}`}
         data-scrolled={isScrolled ? "true" : "false"}
       >
         <div className="container-custom h-full">
-          <div className="flex items-center justify-between h-full">
+          <div className="flex items-center justify-between h-full gap-4 md:gap-6 lg:gap-10">
             {/* Logo with Animated Gradient */}
             <a
               href="#"
@@ -94,13 +94,13 @@ export default function Header() {
                   priority
                 />
               </div>
-              <h1 className="font-display text-transparent bg-clip-text bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-2xl md:text-4xl tracking-tight">
+              <h1 className="font-display text-transparent bg-clip-text bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-tight whitespace-nowrap">
                 Nexfound
               </h1>
             </a>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-10">
+            <nav className="hidden md:flex items-center space-x-6 lg:space-x-10 xl:space-x-12">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
@@ -109,7 +109,7 @@ export default function Header() {
                   className="link text-base font-medium tracking-wide relative group"
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] transition-all duration-300 group-hover:w-full" />
                 </a>
               ))}
             </nav>
@@ -119,10 +119,10 @@ export default function Header() {
               <a
                 href="#contact"
                 onClick={handleNavClick}
-                className="btn btn-primary text-sm relative overflow-hidden group"
+                className="btn btn-primary text-xs sm:text-sm md:text-base text-center relative overflow-hidden group px-3 sm:px-4 md:px-5 lg:px-6 shrink-0"
               >
                 <span className="relative z-10">Let&apos;s Talk</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               </a>
             </div>
 
@@ -175,7 +175,7 @@ export default function Header() {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`fixed top-[80px] left-0 right-0 z-40 md:hidden transition-all duration-300 ${
+        className={`fixed top-20 left-0 right-0 z-40 md:hidden transition-all duration-300 ${
           isMobileMenuOpen
             ? "translate-y-0 opacity-100"
             : "-translate-y-4 opacity-0 pointer-events-none"
@@ -191,7 +191,7 @@ export default function Header() {
               className="text-xl font-semibold text-white hover:text-gold-gradient transition-all duration-300 py-2 focus-gold rounded-lg animate-[slide-up_0.4s_ease-out_both] relative group"
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
           <div className="pt-6 border-t border-[#B08D57]/20">
@@ -201,7 +201,7 @@ export default function Header() {
               className="btn btn-primary text-sm relative overflow-hidden group w-full"
             >
               <span className="relative z-10">Let&apos;s Talk</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </a>
           </div>
         </nav>
