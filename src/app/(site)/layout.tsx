@@ -11,14 +11,24 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Nexfound | Premium Technology Services for Startups & Businesses",
+    default: "Nexfound | Premium Tech Services for Startups & Businesses",
     template: "%s | Nexfound",
   },
   description:
     "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
   keywords: [
     "Nexfound",
+    "nexfound",
+    "tech services",
+    "startup",
+    "business",
+    "premium digital services",
+    "product development",
+    "web design",
+    "software development",
+    "product design",
     "technology services",
+    "digital studio",
     "startup app development",
     "web development",
     "mobile app development",
