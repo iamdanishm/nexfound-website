@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { SanityImage as SanityImageType } from "@/sanity/lib/image";
+import toast from "react-hot-toast";
 
 type FooterLink = {
   label: string;
@@ -107,11 +108,14 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
       icon: (
         <svg
           className="w-5 h-5"
+          viewBox="0 0 1200 1227"
           fill="currentColor"
-          viewBox="0 0 24 24"
           aria-hidden
         >
-          <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+          <path
+            d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"
+            fill="white"
+          />
         </svg>
       ),
     },
@@ -146,6 +150,27 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
       } else {
         if (href === "#") window.scrollTo({ top: 0, behavior: "smooth" });
       }
+    }
+  };
+
+  const handleNewsletterSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    const emailInput = e.currentTarget.elements[0] as HTMLInputElement;
+
+    const response = await fetch("/api/newsletter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: emailInput.value }),
+    });
+    const result = await response.json();
+
+    if (result.success) {
+      toast.success("Subscribed! You'll get our updates soon.");
+      emailInput.value = "";
+    } else {
+      toast.error(result.error || "Subscription failed.");
     }
   };
 
@@ -233,10 +258,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
 
             <form
               className="flex flex-col sm:flex-row gap-3"
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert("Thank you for subscribing!");
-              }}
+              onSubmit={handleNewsletterSubmit}
             >
               <input
                 type="email"
@@ -257,12 +279,12 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
 
         {/* Bottom bar */}
         <div className="pt-6 sm:pt-8 border-t border-[#2E2E2E]">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
             <p className="text-[#737373] text-xs sm:text-sm">
               © {currentYear} Nexfound. All rights reserved.
             </p>
 
-            <div className="flex flex-wrap justify-center md:justify-end gap-4 sm:gap-6 text-xs sm:text-sm">
+            {/* <div className="flex flex-wrap justify-center md:justify-end gap-4 sm:gap-6 text-xs sm:text-sm">
               <a
                 href="#privacy"
                 onClick={(e) => handleLinkClick(e, "#privacy")}
@@ -291,7 +313,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               >
                 Sitemap
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -1,28 +1,37 @@
 import { Resend } from 'resend'
 import { type NextRequest, NextResponse } from 'next/server'
+import { client } from '@/sanity/lib/client'
+import { settingsQuery } from '@/app/lib/queries'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: NextRequest) {
-    try {
-        const body = await request.json()
-        const { name, email, company, message } = body
+  try {
+    const body = await request.json()
+    const { name, email, company, message } = body
 
-        // Validate required fields
-        if (!name || !email || !message) {
-            return NextResponse.json(
-                { error: 'Name, email, and message are required' },
-                { status: 400 }
-            )
-        }
+    // Validate required fields
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { error: 'Name, email, and message are required' },
+        { status: 400 }
+      )
+    }
 
-        // Send email
-        const { data, error } = await resend.emails.send({
-            from: 'Nexfound Contact Form <onboarding@resend.dev>', // Default Resend sender
-            to: ['mansuridanish14@gmail.com'],
-            replyTo: email, // User's email for easy reply
-            subject: `New Contact Form Submission from ${name}`,
-            html: `
+    const [settings] = await Promise.all([
+      client.fetch(settingsQuery, {}, { cache: "no-cache" }),
+    ]);
+
+
+
+
+    // Send email
+    const { data, error } = await resend.emails.send({
+      from: 'Nexfound Contact Form <hello@send.nexfound.in>', // Default Resend sender
+      to: [settings?.contactEmail],
+      replyTo: email, // User's email for easy reply
+      subject: `New Contact Form Submission from ${name}`,
+      html: `
         <!DOCTYPE html>
         <html>
           <head>
@@ -74,20 +83,20 @@ export async function POST(request: NextRequest) {
           </body>
         </html>
       `,
-        })
+    })
 
 
-        if (error) {
-            console.error('Resend error:', error)
-            return NextResponse.json({ error: error.message }, { status: 500 })
-        }
-
-        return NextResponse.json({ success: true, id: data?.id })
-    } catch (error) {
-        console.error('Contact form error:', error)
-        return NextResponse.json(
-            { error: 'Failed to send email' },
-            { status: 500 }
-        )
+    if (error) {
+      console.error('Resend error:', error)
+      return NextResponse.json({ error: error.message }, { status: 500 })
     }
+
+    return NextResponse.json({ success: true, id: data?.id })
+  } catch (error) {
+    console.error('Contact form error:', error)
+    return NextResponse.json(
+      { error: 'Failed to send email' },
+      { status: 500 }
+    )
+  }
 }

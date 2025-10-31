@@ -26,6 +26,16 @@ export const metadata: Metadata = {
     "scalable digital solutions",
   ],
   authors: [{ name: "Nexfound" }],
+  alternates: {
+    canonical: "https://www.nexfound.in",
+  },
+  applicationName: "Nexfound",
+  category: "Technology Services",
+  creator: "Nexfound",
+  publisher: "Nexfound",
+  classification: "Business",
+  metadataBase: new URL("https://www.nexfound.in"),
+  referrer: "origin-when-cross-origin",
   openGraph: {
     siteName: "Nexfound",
     title: "Nexfound | Premium Technology Services for Startups & Businesses",
@@ -33,7 +43,7 @@ export const metadata: Metadata = {
       "Turn ambitious ideas into scalable digital products with Nexfound. Premium web, mobile, and product solutions built for startups and ambitious businesses.",
     type: "website",
     locale: "en_US",
-    url: "https://nexfound.vercel.app",
+    url: "https://www.nexfound.in",
   },
   twitter: {
     card: "summary_large_image",
