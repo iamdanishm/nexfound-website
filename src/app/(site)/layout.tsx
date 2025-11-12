@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   keywords: [
     "Nexfound",
     "nexfound",
+    "nexfound.in",
+    "nexfoundco",
+    "Nexfoundco",
     "startup",
     "business",
     "premium digital services",
@@ -43,30 +46,36 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://nexfound.in"),
   alternates: {
     canonical: "https://nexfound.in",
+    languages: {
+      "en-US": "https://nexfound.in",
+    },
   },
   openGraph: {
     siteName: "Nexfound",
-    title: "Nexfound | Premium Technology Services for Startups & Businesses",
+    title: "Nexfound | Premium Tech Services for Startups & Businesses",
     description:
-      "Turn ambitious ideas into scalable digital products with Nexfound. Premium web, mobile, and product solutions built for startups and ambitious businesses.",
+      "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
     type: "website",
     locale: "en_US",
     url: "https://nexfound.in",
+    countryName: "India",
+    emails: ["hello@nexfound.in"],
     images: [
       {
         url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
+        width: 1050,
+        height: 600,
         alt: "Nexfound - Premium Technology Services",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nexfound | Premium Technology Services for Startups & Businesses",
+    title: "Nexfound | Premium Tech Services for Startups & Businesses",
     description:
-      "Turn ambitious ideas into scalable digital products with Nexfound. Premium web, mobile, and product solutions built for startups and ambitious businesses.",
+      "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
     images: ["/og-image.jpg"],
+    creator: "@iam_danishm",
     site: "@iam_danishm",
   },
   robots: {
@@ -75,7 +84,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico",
-    apple: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
   },
   referrer: "origin-when-cross-origin",
 };
