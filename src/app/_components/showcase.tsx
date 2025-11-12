@@ -8,7 +8,13 @@ type Project = {
   _id: string;
   title: string;
   slug: { current: string };
-  category: string;
+  category: {
+    _id: string;
+    title: string;
+    slug: { current: string };
+    description?: string;
+    color?: string;
+  };
   description: string;
   mainImage?: SanityImage;
   metrics: {
@@ -17,10 +23,19 @@ type Project = {
     rating: string;
   };
   gradient: string;
+  tags?: string[];
+  status: string;
 };
 
 export default function Showcase({ projects }: { projects: Project[] }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const formatStatus = (status: string) => {
+    return status
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   return (
     <section
@@ -67,7 +82,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 max-w-3xl mx-auto">
           {projects.map((project, index) => (
             <div
               key={index}
@@ -76,19 +91,21 @@ export default function Showcase({ projects }: { projects: Project[] }) {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Project Image Container */}
-              <div className="relative h-[280px] md:h-[360px] overflow-hidden rounded-t-xl">
+              <div className="relative h-[240px] md:h-72 overflow-hidden rounded-t-xl">
                 {/* Placeholder gradient (replace with actual images) */}
                 {project.mainImage ? (
                   <SanityImageComp
                     image={project.mainImage}
                     alt={project.mainImage.alt || project.title}
                     fill
+                    quality={85}
+                    priority={index < 2} // Prioritize first 2 images for above-the-fold loading
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 ) : (
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-60`}
+                    className={`absolute inset-0 bg-linear-to-br ${project.gradient} opacity-60`}
                   />
                 )}
                 {/* Overlay on Hover */}
@@ -115,57 +132,64 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                     </button> */}
                   </div>
                 </div>
-
-                {/* Image Zoom Effect */}
-                {/* <div
-                  className="absolute inset-0 bg-gradient-to-br from-[#000000] to-[#1A1A1A] transform transition-transform duration-700 group-hover:scale-110"
-                  style={{
-                    backgroundImage: `url(${project.image})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                /> */}
               </div>
 
               {/* Project Info */}
-              <div className="p-6 md:p-8 relative">
-                {/* Category Badge */}
-                <div
-                  className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 bg-gradient-to-r ${project.gradient} text-black`}
-                >
-                  {project.category}
+              <div className="p-6 md:p-5 relative">
+                {/* Badges */}
+                <div className="flex items-center gap-2 mb-3">
+                  <div
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-linear-to-r ${project.gradient} text-black`}
+                  >
+                    {project.category.title}
+                  </div>
+                  <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gray-700 text-white">
+                    {formatStatus(project.status)}
+                  </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-gold-gradient transition-all duration-300">
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4 group-hover:text-gold-gradient transition-all duration-300">
                   {project.title}
                 </h3>
 
                 {/* Metrics */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <div className="text-lg md:text-xl font-bold text-gold-gradient">
-                      {project.metrics.conversion}
-                    </div>
-                    <div className="text-xs text-[#B3B3B3]">Conversion</div>
-                  </div>
-                  <div>
-                    <div className="text-lg md:text-xl font-bold text-gold-gradient">
+                    <div className="text-lg md:text-xl lg:text-2xl font-bold text-gold-gradient mb-1">
                       {project.metrics.users}
                     </div>
-                    <div className="text-xs text-[#B3B3B3]">Active Users</div>
+                    <div className="text-xs md:text-sm text-[#B3B3B3] font-medium tracking-wide">
+                      Active Users
+                    </div>
                   </div>
                   <div>
-                    <div className="text-lg md:text-xl font-bold text-gold-gradient">
+                    <div className="text-lg md:text-xl lg:text-2xl font-bold text-gold-gradient mb-1">
                       {project.metrics.rating}
                     </div>
-                    <div className="text-xs text-[#B3B3B3]">User Rating</div>
+                    <div className="text-xs md:text-sm text-[#B3B3B3] font-medium tracking-wide">
+                      User Rating
+                    </div>
                   </div>
                 </div>
 
+                {/* Technologies/Tags */}
+                {project.tags && project.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag, tagIndex) => (
+                      <span
+                        key={tagIndex}
+                        className="inline-block px-2 py-1 text-xs bg-gray-800 text-gray-300 rounded-md"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
                 {/* Bottom Accent Line */}
                 <div
-                  className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${project.gradient} w-0 group-hover:w-full transition-all duration-700`}
+                  className={`absolute bottom-0 left-0 h-1 bg-linear-to-r ${project.gradient} w-0 group-hover:w-full transition-all duration-700`}
                 />
               </div>
 

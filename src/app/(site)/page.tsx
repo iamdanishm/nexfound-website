@@ -3,9 +3,8 @@ import Hero from "../_components/hero";
 import Features from "../_components/features";
 import Showcase from "../_components/showcase";
 import Testimonials from "../_components/testimonials";
-import CTA from "../_components/cta";
-import Footer from "../_components/footer";
 import About from "../_components/about";
+import ContactFooter from "../_components/contact-footer";
 import { client } from "@/sanity/lib/client";
 import {
   projectsQuery,
@@ -66,15 +65,14 @@ export default async function Home() {
             stats={settings?.testimonialStats}
           />
         </section>
-        <section id="contact">
-          <CTA
-            cta={settings?.cta}
-            contactEmail={settings?.contactEmail}
-            contactPhone={settings?.contactPhone}
-          />
-        </section>
       </main>
-      <Footer footer={settings?.footer} socialLinks={settings?.socialLinks} />
+      <ContactFooter
+        cta={settings?.cta}
+        contactEmail={settings?.contactEmail}
+        contactPhone={settings?.contactPhone}
+        footer={settings?.footer}
+        socialLinks={settings?.socialLinks}
+      />
     </>
   );
 }

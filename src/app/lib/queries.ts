@@ -6,7 +6,13 @@ export const projectsQuery = groq`
     _id,
     title,
     slug,
-    category,
+    category->{
+      _id,
+      title,
+      slug,
+      description,
+      color
+    },
     description,
     mainImage {
       asset->{
@@ -16,7 +22,9 @@ export const projectsQuery = groq`
       alt
     },
     metrics,
-    gradient
+    gradient,
+    tags,
+    status
   }
 `
 
@@ -113,5 +121,3 @@ export const settingsQuery = groq`
     }
   }
 `
-
-

@@ -1,5 +1,6 @@
 import { type SchemaTypeDefinition } from 'sanity'
 import project from './project'
+import projectCategory from './projectCategory'
 import testimonial from './testimonial'
 import service from './service'
 import settings from './settings'
@@ -7,6 +8,7 @@ import settings from './settings'
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     project,
+    projectCategory,
     testimonial,
     service,
     settings,
