@@ -21,6 +21,16 @@ interface BlogPostPageProps {
   }>;
 }
 
+interface SimpleBlogPost {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  excerpt: string;
+  publishedAt: string;
+  featuredImage?: { asset: { _id: string; url: string }; alt?: string };
+  category?: { _id: string; title: string; color: string };
+}
+
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
@@ -131,8 +141,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         })
       : client
           .fetch(blogPostsQuery)
-          .then((posts: any[]) =>
-            posts.filter((p: any) => p._id !== post._id).slice(0, 5)
+          .then((posts: SimpleBlogPost[]) =>
+            posts.filter((p: SimpleBlogPost) => p._id !== post._id).slice(0, 5)
           ),
   ]);
 
@@ -294,7 +304,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {displayPosts.map((relatedPost) => (
+                {displayPosts.map((relatedPost: SimpleBlogPost) => (
                   <BlogCard
                     key={relatedPost._id}
                     title={relatedPost.title}
