@@ -43,6 +43,7 @@ export default function Header() {
   const navLinks = [
     { href: "#work", label: "Work" },
     { href: "#services", label: "Services" },
+    { href: "/blog", label: "Blog" },
     { href: "#about", label: "About" },
     { href: "#testimonials", label: "Testimonials" },
   ];
@@ -51,10 +52,15 @@ export default function Header() {
     e.preventDefault();
     const target = e.currentTarget.getAttribute("href");
     if (target) {
-      const element = document.querySelector(target);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        setIsMobileMenuOpen(false);
+      if (target.startsWith("#")) {
+        const element = document.querySelector(target);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          setIsMobileMenuOpen(false);
+        }
+      } else {
+        // Handle external routes (like /blog)
+        window.location.href = target;
       }
     }
   };
@@ -89,6 +95,7 @@ export default function Header() {
                   src="/logo-transparent.png"
                   alt="Nexfound"
                   fill
+                  sizes="(max-width: 768px) 44px, 56px"
                   className="object-contain"
                   suppressHydrationWarning
                   priority
@@ -132,6 +139,7 @@ export default function Header() {
               className="md:hidden relative w-11 h-11 flex items-center justify-center focus-gold rounded-xl transition-transform duration-200 active:scale-95 group"
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMobileMenuOpen}
+              suppressHydrationWarning
             >
               <div className="w-6 h-5 relative flex flex-col justify-between">
                 <span

@@ -64,7 +64,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               { label: "About Us", href: "#about" },
               { label: "Our Work", href: "#work" },
               { label: "Careers", href: "#careers" },
-              { label: "Blog", href: "#blog" },
+              { label: "Blog", href: "/blog" },
             ],
           },
           {
@@ -142,14 +142,15 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
     if (href === "#") {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
+    } else if (href.startsWith("#")) {
       e.preventDefault();
       const element = document.querySelector(href);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
-      } else {
-        if (href === "#") window.scrollTo({ top: 0, behavior: "smooth" });
       }
+    } else {
+      // Handle external routes (like /blog)
+      window.location.href = href;
     }
   };
 
@@ -266,10 +267,12 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                 required
                 className="flex-1 px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 text-sm sm:text-base"
                 aria-label="Email address"
+                suppressHydrationWarning
               />
               <button
                 type="submit"
                 className="btn btn-primary whitespace-nowrap px-6 py-3 text-sm sm:text-base"
+                suppressHydrationWarning
               >
                 Subscribe
               </button>

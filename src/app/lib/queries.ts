@@ -66,6 +66,148 @@ export const servicesQuery = groq`
 `
 
 
+// Get all blog posts for listing
+export const blogPostsQuery = groq`
+  *[_type == "blog"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    content,
+    excerpt,
+    publishedAt,
+    featured,
+    author->{
+      _id,
+      name,
+      slug,
+      bio,
+      avatar {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    },
+    tags,
+    featuredImage {
+      asset->{
+        _id,
+        url
+      },
+      alt,
+      caption
+    },
+    category->{
+      _id,
+      title,
+      slug,
+      color
+    }
+  }
+`
+
+// Get single blog post by slug
+export const blogPostQuery = groq`
+  *[_type == "blog" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    content[] {
+      ...,
+      _type == "image" => {
+        ...,
+        asset->{
+          _id,
+          url
+        }
+      }
+    },
+    excerpt,
+    publishedAt,
+    featured,
+    author->{
+      _id,
+      name,
+      slug,
+      bio
+    },
+    tags,
+    seo,
+    featuredImage {
+      asset->{
+        _id,
+        url
+      },
+      alt,
+      caption
+    },
+    category->{
+      _id,
+      title,
+      slug,
+      color
+    }
+  }
+`
+
+// Get related blog posts by category (excluding current post)
+export const relatedBlogPostsQuery = groq`
+  *[_type == "blog" && category._ref == $categoryId && _id != $currentPostId] | order(publishedAt desc)[0...5] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    publishedAt,
+    featuredImage {
+      asset->{
+        _id,
+        url
+      },
+      alt
+    },
+    category->{
+      _id,
+      title,
+      color
+    }
+  }
+`
+
+// Get other blog posts (excluding current post and category)
+export const otherBlogPostsQuery = groq`
+  *[_type == "blog" && category._ref != $categoryId && _id != $currentPostId] | order(publishedAt desc)[0...5] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    publishedAt,
+    featuredImage {
+      asset->{
+        _id,
+        url
+      },
+      alt
+    },
+    category->{
+      _id,
+      title,
+      color
+    }
+  }
+`
+
+// Get all blog categories
+export const blogCategoriesQuery = groq`
+  *[_type == "blogCategory"] | order(title asc) {
+    _id,
+    title,
+    slug,
+    description,
+    color
+  }
+`
+
 export const settingsQuery = groq`
   *[_type == "settings"][0]{
     title,
