@@ -1,8 +1,12 @@
-import { PortableText, PortableTextComponents } from "@portabletext/react";
+import {
+  PortableText,
+  PortableTextComponents,
+  PortableTextBlock,
+} from "@portabletext/react";
 import Image from "next/image";
 
 interface BlogContentProps {
-  content: any;
+  content: PortableTextBlock[];
 }
 
 const components: PortableTextComponents = {
