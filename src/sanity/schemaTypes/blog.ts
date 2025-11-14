@@ -195,6 +195,13 @@ export default defineType({
             initialValue: () => new Date().toISOString(),
             validation: Rule => Rule.required(),
         }),
+        defineField({
+            name: 'lastUpdated',
+            title: 'Last Updated',
+            type: 'datetime',
+            description: 'Last time this post was updated',
+            initialValue: () => new Date().toISOString(),
+        }),
     ],
     preview: {
         select: {

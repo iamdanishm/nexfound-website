@@ -202,6 +202,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
               <div className="flex flex-wrap items-center gap-4 text-text-muted border-b border-brand-bronze/20 pb-6">
                 <time className="text-sm">{formattedDate}</time>
+                {post.lastUpdated && post.lastUpdated !== post.publishedAt && (
+                  <time className="text-xs text-text-muted">
+                    Updated{" "}
+                    {format(new Date(post.lastUpdated), "MMMM dd, yyyy")}
+                  </time>
+                )}
                 <span className="text-sm">{readingTime} min read</span>
                 {post.category && (
                   <span className="text-sm text-brand-champagne">

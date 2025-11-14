@@ -9,6 +9,14 @@ interface BlogCardProps {
   };
   publishedAt: string;
   excerpt?: string;
+  featured?: boolean;
+  author?: {
+    _id: string;
+    name: string;
+    slug: { current: string };
+    bio?: string;
+  };
+  tags?: string[];
   category?: {
     title: string;
     color: string;
@@ -28,6 +36,9 @@ export default function BlogCard({
   slug,
   publishedAt,
   excerpt,
+  featured,
+  author,
+  tags,
   category,
   featuredImage,
 }: BlogCardProps) {
@@ -56,17 +67,25 @@ export default function BlogCard({
             </div>
           )}
 
-          {/* Category Badge */}
-          {category && (
-            <div className="mb-3">
+          {/* Badges Row */}
+          <div className="mb-3 flex flex-wrap gap-2">
+            {/* Featured Badge */}
+            {featured && (
+              <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-brand-bronze/20 text-brand-bronze">
+                Featured
+              </span>
+            )}
+
+            {/* Category Badge */}
+            {category && (
               <span
                 className="inline-block px-3 py-1 text-xs font-medium rounded-full text-black"
                 style={{ backgroundColor: category.color || "#B08D57" }}
               >
                 {category.title}
               </span>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Title */}
           <h2 className="text-xl font-semibold text-pearl mb-3 group-hover:text-gold-gradient-animated transition-colors line-clamp-2">
@@ -80,28 +99,67 @@ export default function BlogCard({
             </p>
           )}
 
-          {/* Footer */}
-          <div className="flex items-center justify-between mt-4 pt-4 border-t border-brand-bronze/20">
-            <div className="flex items-center space-x-3">
-              <time className="text-sm text-text-muted">{formattedDate}</time>
-              <span className="text-sm text-text-muted">
-                {readingTime} min read
-              </span>
+          {/* Tags */}
+          {tags && tags.length > 0 && (
+            <div className="mb-4 flex flex-wrap gap-1">
+              {tags.slice(0, 3).map((tag, index) => (
+                <span
+                  key={index}
+                  className="inline-block px-2 py-1 text-xs font-medium rounded-md bg-brand-charcoal border border-brand-onyx text-text-primary"
+                >
+                  #{tag}
+                </span>
+              ))}
+              {tags.length > 3 && (
+                <span className="inline-block px-2 py-1 text-xs font-medium rounded-md bg-brand-charcoal border border-brand-onyx text-text-primary">
+                  +{tags.length - 3}
+                </span>
+              )}
             </div>
-            <div className="text-brand-champagne group-hover:text-brand-bronze transition-colors">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+          )}
+
+          {/* Footer */}
+          <div className="mt-auto pt-4 border-t border-brand-bronze/20">
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-1">
+                {/* Author */}
+                {author && (
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/logo-transparent.png"
+                      alt="Nexfound"
+                      width={16}
+                      height={16}
+                      className="rounded-full"
+                    />
+                    <span className="text-xs text-text-muted">
+                      {author.name}
+                    </span>
+                  </div>
+                )}
+
+                {/* Date and Reading Time */}
+                <div className="flex items-center gap-3 text-xs text-text-muted">
+                  <time>{formattedDate}</time>
+                  <span>{readingTime} min read</span>
+                </div>
+              </div>
+
+              <div className="text-brand-champagne group-hover:text-brand-bronze transition-colors">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
         </div>

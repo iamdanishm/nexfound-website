@@ -126,6 +126,7 @@ export const blogPostQuery = groq`
     excerpt,
     publishedAt,
     featured,
+    lastUpdated,
     author->{
       _id,
       name,

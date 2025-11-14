@@ -13,6 +13,14 @@ interface BlogPost {
   slug: { current: string };
   publishedAt: string;
   excerpt?: string;
+  featured?: boolean;
+  author?: {
+    _id: string;
+    name: string;
+    slug: { current: string };
+    bio?: string;
+  };
+  tags?: string[];
   category?: {
     _id: string;
     title: string;
@@ -40,6 +48,7 @@ export default function BlogPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,31 +69,42 @@ export default function BlogPage() {
     fetchData();
   }, []);
 
-  // Filter posts based on selected category
+  // Filter and search posts
   const filteredPosts = useMemo(() => {
-    if (!selectedCategory) return posts;
-    return posts.filter((post) => post.category?._id === selectedCategory);
-  }, [posts, selectedCategory]);
+    let filtered = posts;
+
+    // Category filter
+    if (selectedCategory) {
+      filtered = filtered.filter(
+        (post) => post.category?._id === selectedCategory
+      );
+    }
+
+    // Search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (post) =>
+          post.title.toLowerCase().includes(query) ||
+          post.excerpt?.toLowerCase().includes(query) ||
+          post.author?.name.toLowerCase().includes(query) ||
+          post.tags?.some((tag) => tag.toLowerCase().includes(query)) ||
+          post.category?.title.toLowerCase().includes(query)
+      );
+    }
+
+    // Sort posts by date (newest first)
+    filtered.sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+
+    return filtered;
+  }, [posts, selectedCategory, searchQuery]);
 
   const handleCategoryFilter = (categoryId: string | null) => {
     setSelectedCategory(categoryId);
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-black">
-        <Header />
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="liquid-glass p-8">
-            <div className="animate-pulse text-pearl">
-              Loading blog posts...
-            </div>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-black">
@@ -92,8 +112,8 @@ export default function BlogPage() {
 
       {/* Hero Section */}
       <section className="relative pt-20 pb-16 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-bronze/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-br from-black via-gray-900 to-black" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-brand-bronze/10 via-transparent to-transparent" />
 
         <div className="container-custom relative z-10">
           <div className="text-center max-w-4xl mx-auto">
@@ -115,10 +135,38 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Category Filter */}
-      {categories.length > 0 && (
-        <section className="py-8">
-          <div className="container-custom">
+      {/* Search and Filters */}
+      <section className="py-8">
+        <div className="container-custom">
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search posts by title, content, author, or tags..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-6 py-4 bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300"
+                suppressHydrationWarning
+              />
+              <svg
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#737373]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {/* Category Filter */}
+          {categories.length > 0 && (
             <div className="flex flex-wrap justify-center gap-3">
               <button
                 onClick={() => handleCategoryFilter(null)}
@@ -144,94 +192,74 @@ export default function BlogPage() {
                 </button>
               ))}
             </div>
-          </div>
-        </section>
-      )}
+          )}
+        </div>
+      </section>
 
       {/* Blog Posts */}
       <section className="py-16">
         <div className="container-custom">
-          {filteredPosts.length === 0 ? (
+          {loading && posts.length === 0 ? (
             <div className="text-center py-12">
               <div className="liquid-glass p-8 max-w-md mx-auto">
                 <h2 className="text-xl font-semibold text-pearl mb-2">
-                  {selectedCategory
-                    ? "No posts in this category"
-                    : "Coming Soon"}
+                  Coming Soon
                 </h2>
                 <p className="text-text-muted">
-                  {selectedCategory
-                    ? "Check back later for more content in this category."
-                    : "We're working on exciting content. Check back soon for our latest posts."}
+                  We&apos;re working on exciting content. Check back soon for
+                  our latest posts.
                 </p>
-                {selectedCategory && (
-                  <button
-                    onClick={() => handleCategoryFilter(null)}
-                    className="mt-4 btn btn-primary"
-                  >
-                    View All Posts
-                  </button>
-                )}
+              </div>
+            </div>
+          ) : filteredPosts.length === 0 && !loading ? (
+            <div className="text-center py-12">
+              <div className="liquid-glass p-8 max-w-md mx-auto">
+                <h2 className="text-xl font-semibold text-pearl mb-2">
+                  No posts found
+                </h2>
+                <p className="text-text-muted mb-4">
+                  {searchQuery
+                    ? `No posts match "${searchQuery}". Try adjusting your search.`
+                    : "No posts available in this category."}
+                </p>
+                <div className="flex gap-2 justify-center">
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="btn btn-secondary"
+                    >
+                      Clear Search
+                    </button>
+                  )}
+                  {selectedCategory && (
+                    <button
+                      onClick={() => handleCategoryFilter(null)}
+                      className="btn btn-primary"
+                    >
+                      View All Posts
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ) : (
             <>
-              {/* Featured Post - only show if no category filter or if featured post matches filter */}
-              {filteredPosts.length > 0 && !selectedCategory && (
-                <div className="mb-16">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <BlogCard
-                      title={filteredPosts[0].title}
-                      slug={filteredPosts[0].slug}
-                      publishedAt={filteredPosts[0].publishedAt}
-                      excerpt={filteredPosts[0].excerpt}
-                      category={filteredPosts[0].category}
-                      featuredImage={filteredPosts[0].featuredImage}
-                    />
-                    <div className="space-y-8">
-                      {filteredPosts.slice(1, 3).map((post) => (
-                        <BlogCard
-                          key={post._id}
-                          title={post.title}
-                          slug={post.slug}
-                          publishedAt={post.publishedAt}
-                          excerpt={post.excerpt}
-                          category={post.category}
-                          featuredImage={post.featuredImage}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Remaining Posts */}
+              {/* All Posts in Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {selectedCategory
-                  ? filteredPosts.map((post) => (
-                      <BlogCard
-                        key={post._id}
-                        title={post.title}
-                        slug={post.slug}
-                        publishedAt={post.publishedAt}
-                        excerpt={post.excerpt}
-                        category={post.category}
-                        featuredImage={post.featuredImage}
-                      />
-                    ))
-                  : filteredPosts
-                      .slice(selectedCategory ? 0 : 3)
-                      .map((post) => (
-                        <BlogCard
-                          key={post._id}
-                          title={post.title}
-                          slug={post.slug}
-                          publishedAt={post.publishedAt}
-                          excerpt={post.excerpt}
-                          category={post.category}
-                          featuredImage={post.featuredImage}
-                        />
-                      ))}
+                {filteredPosts.map((post) => (
+                  <BlogCard
+                    key={post._id}
+                    title={post.title}
+                    slug={post.slug}
+                    publishedAt={post.publishedAt}
+                    excerpt={post.excerpt}
+                    featured={post.featured}
+                    author={post.author}
+                    tags={post.tags}
+                    category={post.category}
+                    featuredImage={post.featuredImage}
+                  />
+                ))}
               </div>
             </>
           )}
