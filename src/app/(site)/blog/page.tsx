@@ -199,49 +199,60 @@ export default function BlogPage() {
       {/* Blog Posts */}
       <section className="py-16">
         <div className="container-custom">
-          {loading && posts.length === 0 ? (
+          {loading ? (
             <div className="text-center py-12">
               <div className="liquid-glass p-8 max-w-md mx-auto">
-                <h2 className="text-xl font-semibold text-pearl mb-2">
-                  Coming Soon
-                </h2>
-                <p className="text-text-muted">
-                  We&apos;re working on exciting content. Check back soon for
-                  our latest posts.
-                </p>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-bronze mx-auto mb-4"></div>
+                <p className="text-text-muted">Loading posts...</p>
               </div>
             </div>
-          ) : filteredPosts.length === 0 && !loading ? (
-            <div className="text-center py-12">
-              <div className="liquid-glass p-8 max-w-md mx-auto">
-                <h2 className="text-xl font-semibold text-pearl mb-2">
-                  No posts found
-                </h2>
-                <p className="text-text-muted mb-4">
-                  {searchQuery
-                    ? `No posts match "${searchQuery}". Try adjusting your search.`
-                    : "No posts available in this category."}
-                </p>
-                <div className="flex gap-2 justify-center">
-                  {searchQuery && (
-                    <button
-                      onClick={() => setSearchQuery("")}
-                      className="btn btn-secondary"
-                    >
-                      Clear Search
-                    </button>
-                  )}
-                  {selectedCategory && (
-                    <button
-                      onClick={() => handleCategoryFilter(null)}
-                      className="btn btn-primary"
-                    >
-                      View All Posts
-                    </button>
-                  )}
+          ) : filteredPosts.length === 0 ? (
+            posts.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="liquid-glass p-8 max-w-md mx-auto">
+                  <h2 className="text-xl font-semibold text-pearl mb-2">
+                    Coming Soon
+                  </h2>
+                  <p className="text-text-muted">
+                    We&apos;re working on exciting content. Check back soon for
+                    our latest posts.
+                  </p>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="liquid-glass p-8 max-w-md mx-auto">
+                  <h2 className="text-xl font-semibold text-pearl mb-2">
+                    No posts found
+                  </h2>
+                  <p className="text-text-muted mb-4">
+                    {searchQuery
+                      ? `No posts match "${searchQuery}". Try adjusting your search.`
+                      : selectedCategory
+                        ? "No posts available in this category."
+                        : "No posts available."}
+                  </p>
+                  <div className="flex gap-2 justify-center">
+                    {searchQuery && (
+                      <button
+                        onClick={() => setSearchQuery("")}
+                        className="btn btn-secondary"
+                      >
+                        Clear Search
+                      </button>
+                    )}
+                    {selectedCategory && (
+                      <button
+                        onClick={() => handleCategoryFilter(null)}
+                        className="btn btn-primary"
+                      >
+                        View All Posts
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )
           ) : (
             <>
               {/* All Posts in Grid */}

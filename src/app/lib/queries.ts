@@ -264,3 +264,34 @@ export const settingsQuery = groq`
     }
   }
 `
+
+// Get featured blog posts for home page carousel (only featured posts, up to 6)
+export const featuredBlogPostsQuery = groq`
+  *[_type == "blog" && featured == true] | order(publishedAt desc)[0...6] {
+  _id,
+    title,
+    slug,
+    excerpt,
+    publishedAt,
+    featured,
+    author -> {
+      _id,
+      name,
+      slug
+    },
+    tags,
+    featuredImage {
+    asset -> {
+      _id,
+      url
+    },
+      alt,
+      caption
+  },
+  category -> {
+    _id,
+    title,
+    color
+  }
+}
+`
