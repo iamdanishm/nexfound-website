@@ -195,6 +195,9 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                   alt="Nexfound"
                   fill
                   className="object-contain"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+                  loading="lazy"
                 />
               </div>
               <h3 className="font-display text-transparent bg-clip-text bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-lg sm:text-2xl tracking-tight">

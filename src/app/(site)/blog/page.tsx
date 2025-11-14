@@ -1,11 +1,14 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { client } from "@/sanity/lib/client";
 import { blogPostsQuery, blogCategoriesQuery } from "@/app/lib/queries";
-import BlogCard from "@/app/_components/blog-card";
-import Header from "@/app/_components/header";
-import Footer from "@/app/_components/footer";
+
+// Dynamic imports for code splitting
+const BlogCard = dynamic(() => import("@/app/_components/blog-card"));
+const Header = dynamic(() => import("@/app/_components/header"));
+const Footer = dynamic(() => import("@/app/_components/footer"));
 
 interface BlogPost {
   _id: string;

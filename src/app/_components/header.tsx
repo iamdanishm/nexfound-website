@@ -104,6 +104,8 @@ export default function Header() {
                   className="object-contain"
                   suppressHydrationWarning
                   priority
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                 />
               </div>
               <h1 className="font-display text-transparent bg-clip-text bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-tight whitespace-nowrap">

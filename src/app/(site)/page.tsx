@@ -1,11 +1,13 @@
 import Header from "../_components/header";
 import Hero from "../_components/hero";
-import Features from "../_components/features";
-import Showcase from "../_components/showcase";
-import Testimonials from "../_components/testimonials";
-import About from "../_components/about";
-import FeaturedBlogCarousel from "../_components/featured-blog-carousel";
-import ContactFooter from "../_components/contact-footer";
+import {
+  LazyFeatures,
+  LazyShowcase,
+  LazyTestimonials,
+  LazyAbout,
+  LazyFeaturedBlogCarousel,
+  LazyContactFooter,
+} from "../_components/lazy-section";
 import { client } from "@/sanity/lib/client";
 import {
   projectsQuery,
@@ -60,27 +62,27 @@ export default async function Home() {
           <Hero hero={settings?.hero} />
         </section>
         <section id="services">
-          <Features services={services} />
+          <LazyFeatures services={services} />
         </section>
         <section id="work">
-          <Showcase projects={projects} />
+          <LazyShowcase projects={projects} />
         </section>
         <section id="about">
-          <About about={settings?.about} />
+          <LazyAbout about={settings?.about} />
         </section>
         <section id="testimonials">
-          <Testimonials
+          <LazyTestimonials
             testimonials={testimonials}
             stats={settings?.testimonialStats}
           />
         </section>
         {featuredBlogs && featuredBlogs.length > 0 && (
           <section id="blog">
-            <FeaturedBlogCarousel posts={featuredBlogs} />
+            <LazyFeaturedBlogCarousel posts={featuredBlogs} />
           </section>
         )}
       </main>
-      <ContactFooter
+      <LazyContactFooter
         cta={settings?.cta}
         contactEmail={settings?.contactEmail}
         contactPhone={settings?.contactPhone}
