@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
@@ -31,7 +32,7 @@ interface BlogCardProps {
   };
 }
 
-export default function BlogCard({
+const BlogCard = React.memo(function BlogCard({
   title,
   slug,
   publishedAt,
@@ -42,12 +43,17 @@ export default function BlogCard({
   category,
   featuredImage,
 }: BlogCardProps) {
-  const formattedDate = format(new Date(publishedAt), "MMMM dd, yyyy");
+  const formattedDate = React.useMemo(
+    () => format(new Date(publishedAt), "MMMM dd, yyyy"),
+    [publishedAt]
+  );
 
   // Calculate reading time (rough estimate: 200 words per minute)
-  const readingTime = excerpt
-    ? Math.max(1, Math.ceil(excerpt.split(" ").length / 200))
-    : 1;
+  const readingTime = React.useMemo(
+    () =>
+      excerpt ? Math.max(1, Math.ceil(excerpt.split(" ").length / 200)) : 1,
+    [excerpt]
+  );
 
   return (
     <Link href={`/blog/${slug.current}`} className="block group">
@@ -62,6 +68,9 @@ export default function BlogCard({
                 width={400}
                 height={192}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
+                loading="lazy"
                 className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
               />
             </div>
@@ -130,6 +139,8 @@ export default function BlogCard({
                       alt="Nexfound"
                       width={16}
                       height={16}
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                       className="rounded-full"
                     />
                     <span className="text-xs text-text-muted">
@@ -166,4 +177,8 @@ export default function BlogCard({
       </article>
     </Link>
   );
-}
+});
+
+BlogCard.displayName = "BlogCard";
+
+export default BlogCard;

@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { client } from "@/sanity/lib/client";
 import {
   blogPostQuery,
@@ -5,15 +6,17 @@ import {
   otherBlogPostsQuery,
   blogPostsQuery,
 } from "@/app/lib/queries";
-import BlogContent from "@/app/_components/blog-content";
-import BlogCard from "@/app/_components/blog-card";
 import { format } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Header from "@/app/_components/header";
-import Footer from "@/app/_components/footer";
 import Image from "next/image";
 import { Metadata } from "next";
+
+// Dynamic imports for code splitting
+const Header = dynamic(() => import("@/app/_components/header"));
+const Footer = dynamic(() => import("@/app/_components/footer"));
+const BlogContent = dynamic(() => import("@/app/_components/blog-content"));
+const BlogCard = dynamic(() => import("@/app/_components/blog-card"));
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -187,6 +190,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     alt={post.featuredImage.alt || post.title}
                     width={800}
                     height={320}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
+                    loading="eager"
+                    priority
                     className="w-full h-64 md:h-80 object-cover"
                   />
                 </div>
@@ -251,6 +259,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       width={40}
                       height={40}
                       className="rounded-full object-cover"
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+                      loading="lazy"
                     />
                     <div>
                       <p className="text-sm text-text-muted">Written by</p>

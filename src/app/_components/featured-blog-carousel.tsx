@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
@@ -37,14 +37,17 @@ interface FeaturedBlogCarouselProps {
   posts: BlogPost[];
 }
 
-export default function FeaturedBlogCarousel({
+const FeaturedBlogCarousel = React.memo(function FeaturedBlogCarousel({
   posts,
 }: FeaturedBlogCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
   const visiblePosts = 3; // Show 3 posts at a time on desktop, 1 on mobile
-  const totalSlides = Math.max(1, Math.ceil(posts.length - visiblePosts + 1));
+  const totalSlides = React.useMemo(
+    () => Math.max(1, Math.ceil(posts.length - visiblePosts + 1)),
+    [posts.length, visiblePosts]
+  );
 
   // Auto-play functionality
   useEffect(() => {
@@ -225,11 +228,22 @@ export default function FeaturedBlogCarousel({
       </div>
     </section>
   );
-}
+});
+
+FeaturedBlogCarousel.displayName = "FeaturedBlogCarousel";
+
+export default FeaturedBlogCarousel;
 
 // Compact Blog Card for Carousel
-function BlogCarouselCard({ post }: { post: BlogPost }) {
-  const formattedDate = format(new Date(post.publishedAt), "MMM dd, yyyy");
+const BlogCarouselCard = React.memo(function BlogCarouselCard({
+  post,
+}: {
+  post: BlogPost;
+}) {
+  const formattedDate = React.useMemo(
+    () => format(new Date(post.publishedAt), "MMM dd, yyyy"),
+    [post.publishedAt]
+  );
 
   return (
     <Link href={`/blog/${post.slug.current}`} className="block group">
@@ -243,6 +257,10 @@ function BlogCarouselCard({ post }: { post: BlogPost }) {
                 alt={post.featuredImage.alt || post.title}
                 width={300}
                 height={160}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
+                loading="lazy"
                 className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-105"
               />
             </div>
@@ -286,6 +304,8 @@ function BlogCarouselCard({ post }: { post: BlogPost }) {
                   alt="Nexfound"
                   width={14}
                   height={14}
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                   className="rounded-full"
                 />
                 <span className="text-xs text-text-muted">
@@ -304,4 +324,6 @@ function BlogCarouselCard({ post }: { post: BlogPost }) {
       </article>
     </Link>
   );
-}
+});
+
+BlogCarouselCard.displayName = "BlogCarouselCard";
