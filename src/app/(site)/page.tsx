@@ -4,6 +4,7 @@ import Features from "../_components/features";
 import Showcase from "../_components/showcase";
 import Testimonials from "../_components/testimonials";
 import About from "../_components/about";
+import FeaturedBlogCarousel from "../_components/featured-blog-carousel";
 import ContactFooter from "../_components/contact-footer";
 import { client } from "@/sanity/lib/client";
 import {
@@ -11,37 +12,45 @@ import {
   servicesQuery,
   settingsQuery,
   testimonialsQuery,
+  featuredBlogPostsQuery,
 } from "../lib/queries";
 
 async function getData() {
-  const [projects, testimonials, services, settings] = await Promise.all([
-    client.fetch(
-      projectsQuery,
-      {},
-      { cache: "no-cache", next: { revalidate: 60 } }
-    ),
-    client.fetch(
-      testimonialsQuery,
-      {},
-      { cache: "no-cache", next: { revalidate: 60 } }
-    ),
-    client.fetch(
-      servicesQuery,
-      {},
-      { cache: "no-cache", next: { revalidate: 60 } }
-    ),
-    client.fetch(
-      settingsQuery,
-      {},
-      { cache: "no-cache", next: { revalidate: 60 } }
-    ),
-  ]);
+  const [projects, testimonials, services, settings, featuredBlogs] =
+    await Promise.all([
+      client.fetch(
+        projectsQuery,
+        {},
+        { cache: "no-cache", next: { revalidate: 60 } }
+      ),
+      client.fetch(
+        testimonialsQuery,
+        {},
+        { cache: "no-cache", next: { revalidate: 60 } }
+      ),
+      client.fetch(
+        servicesQuery,
+        {},
+        { cache: "no-cache", next: { revalidate: 60 } }
+      ),
+      client.fetch(
+        settingsQuery,
+        {},
+        { cache: "no-cache", next: { revalidate: 60 } }
+      ),
+      client.fetch(
+        featuredBlogPostsQuery,
+        {},
+        { cache: "no-cache", next: { revalidate: 60 } }
+      ),
+    ]);
 
-  return { projects, testimonials, services, settings };
+  return { projects, testimonials, services, settings, featuredBlogs };
 }
 
 export default async function Home() {
-  const { projects, testimonials, services, settings } = await getData();
+  const { projects, testimonials, services, settings, featuredBlogs } =
+    await getData();
 
   return (
     <>
@@ -65,6 +74,11 @@ export default async function Home() {
             stats={settings?.testimonialStats}
           />
         </section>
+        {featuredBlogs && featuredBlogs.length > 0 && (
+          <section id="blog">
+            <FeaturedBlogCarousel posts={featuredBlogs} />
+          </section>
+        )}
       </main>
       <ContactFooter
         cta={settings?.cta}
