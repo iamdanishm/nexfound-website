@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -43,6 +44,7 @@ export default function Header() {
   const navLinks = [
     { href: "#work", label: "Work" },
     { href: "#services", label: "Services" },
+    { href: "/blog", label: "Blog" },
     { href: "#about", label: "About" },
     { href: "#testimonials", label: "Testimonials" },
   ];
@@ -51,10 +53,23 @@ export default function Header() {
     e.preventDefault();
     const target = e.currentTarget.getAttribute("href");
     if (target) {
-      const element = document.querySelector(target);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        setIsMobileMenuOpen(false);
+      if (target.startsWith("#")) {
+        // Check if we're on a page with sections (not blog pages)
+        const currentPath = window.location.pathname;
+        if (currentPath === "/" || currentPath === "") {
+          // We're on home page, scroll to sections
+          const element = document.querySelector(target);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+            setIsMobileMenuOpen(false);
+          }
+        } else {
+          // We're on blog or other pages, navigate to home page with hash
+          window.location.href = `/${target}`;
+        }
+      } else {
+        // Handle external routes (like /blog)
+        window.location.href = target;
       }
     }
   };
@@ -75,20 +90,17 @@ export default function Header() {
         <div className="container-custom h-full">
           <div className="flex items-center justify-between h-full gap-4 md:gap-6 lg:gap-10">
             {/* Logo with Animated Gradient */}
-            <a
-              href="#"
+            <Link
+              href="/"
               className="flex items-center space-x-3 focus-gold group"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-                setIsMobileMenuOpen(false);
-              }}
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               <div className="relative w-11 h-11 md:w-14 md:h-14 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/logo-transparent.png"
                   alt="Nexfound"
                   fill
+                  sizes="(max-width: 768px) 44px, 56px"
                   className="object-contain"
                   suppressHydrationWarning
                   priority
@@ -97,7 +109,7 @@ export default function Header() {
               <h1 className="font-display text-transparent bg-clip-text bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-tight whitespace-nowrap">
                 Nexfound
               </h1>
-            </a>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-6 lg:space-x-10 xl:space-x-12">
@@ -132,6 +144,7 @@ export default function Header() {
               className="md:hidden relative w-11 h-11 flex items-center justify-center focus-gold rounded-xl transition-transform duration-200 active:scale-95 group"
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMobileMenuOpen}
+              suppressHydrationWarning
             >
               <div className="w-6 h-5 relative flex flex-col justify-between">
                 <span

@@ -1,0 +1,2 @@
+npx @sanity/cli dataset export production production.tar.gz
+npx @sanity/cli dataset import production.tar.gz development --replace
