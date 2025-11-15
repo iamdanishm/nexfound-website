@@ -120,6 +120,7 @@ export default function About({ about }: { about?: AboutData }) {
                   src="/logo-dark.png"
                   alt="Nexfound Team"
                   fill
+                  sizes="400px"
                   className="object-cover"
                 />
               )}

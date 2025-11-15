@@ -12,8 +12,6 @@ interface BlogContentProps {
 const components: PortableTextComponents = {
   types: {
     image: ({ value }) => {
-      console.log("Image value:", value); // Debug log
-
       if (!value || !value.asset) {
         return (
           <div className="my-8 p-4 border-2 border-dashed border-gray-600 rounded-lg text-center text-gray-400">
@@ -55,6 +53,9 @@ const components: PortableTextComponents = {
                     ? "max-w-none"
                     : ""
                 }`}
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
+                loading="lazy"
               />
               {value.caption && (
                 <p className="text-sm text-text-muted mt-2 text-center">

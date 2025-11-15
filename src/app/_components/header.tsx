@@ -104,8 +104,6 @@ export default function Header() {
                   className="object-contain"
                   suppressHydrationWarning
                   priority
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                 />
               </div>
               <h1 className="font-display text-transparent bg-clip-text bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-tight whitespace-nowrap">
@@ -133,7 +131,7 @@ export default function Header() {
               <a
                 href="#contact"
                 onClick={handleNavClick}
-                className="btn btn-primary text-xs sm:text-sm md:text-base text-center relative overflow-hidden group px-3 sm:px-4 md:px-5 lg:px-6 shrink-0"
+                className="btn btn-primary text-xs sm:text-sm md:text-sm lg:text-base text-center relative overflow-hidden group px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 min-w-0 flex-shrink"
               >
                 <span className="relative z-10">Let&apos;s Talk</span>
                 <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />

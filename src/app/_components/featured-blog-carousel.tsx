@@ -304,9 +304,8 @@ const BlogCarouselCard = React.memo(function BlogCarouselCard({
                   alt="Nexfound"
                   width={14}
                   height={14}
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
-                  className="rounded-full"
+                  sizes="14px"
+                  className="rounded-full w-3.5 h-3.5"
                 />
                 <span className="text-xs text-text-muted">
                   {post.author?.name || "Nexfound"}
