@@ -149,11 +149,11 @@ export default function BlogPage() {
                 placeholder="Search posts by title, content, author, or tags..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300"
+                className="w-full px-6 py-4 pr-12 bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 text-sm sm:text-base"
                 suppressHydrationWarning
               />
               <svg
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#737373]"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#737373]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

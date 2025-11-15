@@ -38,7 +38,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
 
   const description =
     footer?.description ??
-    "Premium digital service studio crafting exceptional experiences for ambitious brands that refuse to blend in.";
+    "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.";
 
   const newsletterTitle = footer?.newsletterTitle ?? "Stay Updated";
   const newsletterDescription =
@@ -144,9 +144,17 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (href.startsWith("#")) {
       e.preventDefault();
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+      // Check if we're on a page with sections (not blog pages)
+      const currentPath = window.location.pathname;
+      if (currentPath === "/" || currentPath === "") {
+        // We're on home page, scroll to sections
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      } else {
+        // We're on blog or other pages, navigate to home page with hash
+        window.location.href = `/${href}`;
       }
     } else {
       // Handle external routes (like /blog)
