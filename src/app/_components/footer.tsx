@@ -188,7 +188,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
       <div className="hidden sm:block absolute top-0 left-1/4 w-96 h-96 bg-[#B08D57] rounded-full mix-blend-multiply filter blur-[128px] opacity-5 pointer-events-none" />
       <div className="hidden sm:block absolute bottom-0 right-1/4 w-96 h-96 bg-[#1A7F6B] rounded-full mix-blend-multiply filter blur-[128px] opacity-5 pointer-events-none" />
 
-      <div className="container-custom mx-auto relative z-10 px-4 sm:px-6 lg:px-0">
+      <div className="container-custom mx-auto relative z-10 px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="grid gap-6 sm:gap-8 md:gap-12 mb-10 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {/* Brand block */}
           <div className="min-w-0">
@@ -256,7 +256,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
         </div>
 
         {/* Newsletter */}
-        <div className="liquid-glass p-6 sm:p-8 md:p-10 rounded-2xl mb-10">
+        <div className="liquid-glass p-6 sm:p-8 md:p-10 lg:p-4 rounded-2xl mb-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center max-w-4xl mx-auto">
             <div>
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
@@ -281,7 +281,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               />
               <button
                 type="submit"
-                className="btn btn-primary whitespace-nowrap px-6 py-3 text-sm sm:text-sm min-w-0 flex-shrink"
+                className="btn btn-primary whitespace-nowrap px-7 py-3 text-sm sm:text-sm min-w-0 shrink"
                 suppressHydrationWarning
               >
                 <span className="whitespace-nowrap">Subscribe</span>
