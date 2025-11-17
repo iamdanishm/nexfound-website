@@ -23,8 +23,8 @@ export default function NotFound() {
 
         {/* Description */}
         <p className="text-base text-[#B3B3B3] mb-8 max-w-sm mx-auto leading-relaxed">
-          The page you're looking for doesn't exist. Let's get you back on
-          track.
+          The page you&apos;re looking for doesn&apos;t exist. Let&apos;s get
+          you back on track.
         </p>
 
         {/* CTA Button */}
