@@ -7,7 +7,9 @@ import Link from "next/link";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -22,6 +24,37 @@ export default function Header() {
 
     observer.observe(sentinel);
     return () => observer.disconnect();
+  }, []);
+
+  // Auto-hide header on blog pages
+  useEffect(() => {
+    const isBlogPage = window.location.pathname.includes("/blog/");
+
+    if (!isBlogPage) return;
+
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+
+          // Show/hide header based on scroll direction
+          if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+            setIsHidden(true); // Scrolling down
+          } else if (currentScrollY < lastScrollY.current) {
+            setIsHidden(false); // Scrolling up
+          }
+
+          lastScrollY.current = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -83,9 +116,10 @@ export default function Header() {
       />
 
       <header
-        className={`header  ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}  h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 drop-shadow-xl`}
+        className={`header transition-transform duration-300 ${isScrolled && !isHidden ? "animate-header-glow" : "animate-header-pulse"} ${isHidden ? "-translate-y-full" : "translate-y-0"} h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 drop-shadow-xl`}
         // className={`header ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}`}
         data-scrolled={isScrolled ? "true" : "false"}
+        data-hidden={isHidden ? "true" : "false"}
       >
         <div className="container-custom h-full">
           <div className="flex items-center justify-between h-full gap-4 md:gap-6 lg:gap-10">

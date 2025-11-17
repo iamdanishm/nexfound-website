@@ -487,17 +487,30 @@
     }
   }
 
-  /* When scrolled */
-  .header[data-scrolled="true"] {
+  /* When scrolled and visible */
+  .header[data-scrolled="true"]:not([data-hidden="true"]) {
     height: 64px;
     background: linear-gradient(
       135deg,
-      rgba(176, 141, 87, 0.06) 0%,
-      rgba(244, 230, 192, 0.03) 100%
+      rgba(176, 141, 87, 0.08) 0%,
+      rgba(244, 230, 192, 0.04) 100%
     );
-    border-bottom: 1px solid rgba(176, 141, 87, 0.2);
-    -webkit-backdrop-filter: blur(16px) saturate(1.4); /* Safari */
-    backdrop-filter: blur(16px) saturate(1.4); /* Chrome/Edge */
+    border-bottom: 1px solid rgba(176, 141, 87, 0.25);
+    backdrop-filter: blur(12px) saturate(1.3);
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
+    isolation: isolate !important;
+  }
+
+  /* When scrolled but hidden */
+  .header[data-scrolled="true"][data-hidden="true"] {
+    height: 64px;
+    background: linear-gradient(
+      135deg,
+      rgba(176, 141, 87, 0.08) 0%,
+      rgba(244, 230, 192, 0.04) 100%
+    );
+    border-bottom: 1px solid rgba(176, 141, 87, 0.25);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
     isolation: isolate !important;
   }
@@ -717,6 +730,147 @@
    KEYFRAME ANIMATIONS
    ============================================ */
 
+/* ============================================
+   SUBTLE LIQUID GLASS COMPONENTS
+   ============================================ */
+
+.liquid-glass-subtle {
+  position: relative;
+  isolation: isolate;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(244, 230, 192, 0.08);
+  border-radius: 20px;
+  backdrop-filter: blur(8px) saturate(1.2);
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  overflow: hidden;
+}
+
+.liquid-glass-subtle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(244, 230, 192, 0.04) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+
+.liquid-glass-subtle::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(244, 230, 192, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    transparent 100%
+  );
+  filter: blur(1px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+/* ============================================
+   READING MODE STYLES
+   ============================================ */
+
+.reading-mode .header,
+.reading-mode .footer {
+  display: none !important;
+}
+
+.reading-mode {
+  background: #000000 !important;
+}
+
+.reading-mode .container-custom {
+  max-width: 48rem !important; /* Narrower for better reading */
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+
+.reading-mode .section-spacing {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+}
+
+.reading-mode .pt-20 {
+  padding-top: 2rem !important;
+}
+
+/* Hide progress bar in reading mode for cleaner experience */
+.reading-mode .fixed.top-0.left-0.w-full.h-1 {
+  display: none !important;
+}
+
+/* Adjust liquid glass in reading mode */
+.reading-mode .liquid-glass {
+  background: rgba(176, 141, 87, 0.03) !important;
+  border: 1px solid rgba(176, 141, 87, 0.1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+/* ============================================
+   CONTENT WAYPOINT ANIMATIONS
+   ============================================ */
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-right {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -788,4 +942,9 @@
 
 .hero-space-fix {
   padding-top: 0 !important;
+}
+
+.backdrop-filter-none {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }

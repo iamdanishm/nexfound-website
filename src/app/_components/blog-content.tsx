@@ -1,3 +1,4 @@
+"use client";
 import {
   PortableText,
   PortableTextComponents,
@@ -77,45 +78,67 @@ const components: PortableTextComponents = {
   },
   block: {
     h1: ({ children }) => (
-      <h1 className="text-3xl font-bold text-pearl mt-8 mb-4 first:mt-0">
+      <h1 className="text-4xl font-semibold text-pearl mt-12 mb-6 first:mt-0 transition-all duration-500 hover:scale-[1.02] hover:text-brand-champagne/90 cursor-pointer leading-relaxed tracking-tight">
         {children}
       </h1>
     ),
     h2: ({ children }) => (
-      <h2 className="text-2xl font-semibold text-pearl mt-6 mb-3">
+      <h2 className="text-3xl font-medium text-pearl mt-10 mb-5 transition-all duration-500 hover:scale-[1.02] hover:text-brand-champagne/90 cursor-pointer leading-relaxed tracking-tight">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-xl font-semibold text-pearl mt-6 mb-3">{children}</h3>
+      <h3 className="text-2xl font-medium text-pearl mt-8 mb-4 transition-all duration-500 hover:scale-[1.02] hover:text-brand-champagne/90 cursor-pointer leading-relaxed tracking-tight">
+        {children}
+      </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="text-lg font-semibold text-pearl mt-4 mb-2">{children}</h4>
+      <h4 className="text-xl font-medium text-pearl mt-6 mb-3 transition-all duration-500 hover:scale-[1.02] hover:text-brand-champagne/90 cursor-pointer leading-relaxed tracking-tight">
+        {children}
+      </h4>
     ),
     normal: ({ children }) => (
-      <p className="text-text-primary leading-relaxed mb-4">{children}</p>
+      <p className="text-text-primary leading-relaxed mb-8 text-lg max-w-3xl">
+        {children}
+      </p>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="liquid-glass border-l-4 border-brand-bronze p-4 my-6 italic">
-        {children}
+      <blockquote className="relative bg-black/20 border-l-4 border-brand-bronze p-6 my-8 rounded-r-lg shadow-lg backdrop-blur-sm">
+        <div className="absolute -left-1 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-bronze to-brand-champagne opacity-50"></div>
+        <div className="relative italic text-brand-champagne leading-relaxed text-lg">
+          <span className="absolute -top-1 -left-3 text-3xl text-brand-bronze/30 font-serif">
+            &ldquo;
+          </span>
+          {children}
+          <span className="inline text-3xl text-brand-bronze/30 font-serif ml-1">
+            &rdquo;
+          </span>
+        </div>
       </blockquote>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="list-disc list-inside text-text-primary mb-4 space-y-2">
-        {children}
-      </ul>
+      <ul className="text-text-primary mb-6 space-y-3">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="list-decimal list-inside text-text-primary mb-4 space-y-2">
+      <ol className="text-text-primary mb-6 space-y-3 list-decimal list-inside">
         {children}
       </ol>
     ),
   },
   listItem: {
-    bullet: ({ children }) => <li className="text-text-primary">{children}</li>,
-    number: ({ children }) => <li className="text-text-primary">{children}</li>,
+    bullet: ({ children }) => (
+      <li className="text-text-primary leading-loose text-lg flex items-start gap-3 mb-3">
+        <span className="flex-shrink-0 w-2 h-2 bg-brand-champagne/60 rounded-full mt-3"></span>
+        <span className="flex-1">{children}</span>
+      </li>
+    ),
+    number: ({ children }) => (
+      <li className="text-text-primary leading-loose text-lg mb-3">
+        {children}
+      </li>
+    ),
   },
   marks: {
     strong: ({ children }) => (
@@ -125,8 +148,19 @@ const components: PortableTextComponents = {
       <em className="italic text-brand-champagne">{children}</em>
     ),
     code: ({ children }) => (
-      <code className="liquid-glass px-2 py-1 rounded text-sm font-mono">
-        {children}
+      <code className="bg-slate-900 px-3 py-3 rounded-md text-sm font-mono text-slate-50 border border-slate-700 inline-block whitespace-pre-wrap break-words max-w-full overflow-x-auto relative">
+        <div className="absolute top-0 left-0 right-0 h-6 bg-slate-800 border-b border-slate-700 rounded-t-md flex items-center px-2">
+          <div className="flex space-x-1">
+            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+            <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+          </div>
+        </div>
+        <div className="pt-6">
+          <pre className="font-mono text-sm text-slate-50 leading-relaxed whitespace-pre-wrap break-words overflow-x-auto m-0 p-0">
+            <code className="block">{children}</code>
+          </pre>
+        </div>
       </code>
     ),
     link: ({ value, children }) => (
@@ -144,7 +178,7 @@ const components: PortableTextComponents = {
 
 export default function BlogContent({ content }: BlogContentProps) {
   return (
-    <div className="prose prose-lg max-w-none">
+    <div className="prose prose-lg max-w-none space-y-2">
       <PortableText value={content} components={components} />
     </div>
   );
