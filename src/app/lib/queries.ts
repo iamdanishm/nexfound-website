@@ -119,7 +119,14 @@ export const blogPostQuery = groq`
       _id,
       name,
       slug,
-      bio
+      bio,
+      avatar {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
     },
     tags,
     seo,

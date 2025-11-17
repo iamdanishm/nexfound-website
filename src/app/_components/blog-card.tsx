@@ -139,6 +139,7 @@ const BlogCard = React.memo(function BlogCard({
                       alt="Nexfound"
                       width={16}
                       height={16}
+                      sizes="16px"
                       placeholder="blur"
                       blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                       className="rounded-full"

@@ -5,20 +5,12 @@ import { useEffect } from "react";
 export default function PreloadLinks() {
   useEffect(() => {
     // Preload critical resources
-    const preloadResources = [
-      { href: "/blog", rel: "prefetch" },
-      { href: "/logo-transparent.png", rel: "preload", as: "image" },
-      { href: "/logo-dark.png", rel: "preload", as: "image" },
-    ];
+    const preloadResources = [{ href: "/blog", rel: "prefetch" }];
 
-    preloadResources.forEach(({ href, rel, as }) => {
+    preloadResources.forEach(({ href, rel }) => {
       const link = document.createElement("link");
       link.rel = rel;
       link.href = href;
-      if (as) link.as = as;
-      if (rel === "preload" && as === "image") {
-        link.crossOrigin = "anonymous";
-      }
       document.head.appendChild(link);
     });
 
