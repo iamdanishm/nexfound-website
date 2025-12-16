@@ -302,10 +302,10 @@ const BlogCarouselCard = React.memo(function BlogCarouselCard({
                 <Image
                   src="/logo-transparent.png"
                   alt="Nexfound"
-                  width={14}
-                  height={14}
-                  sizes="14px"
-                  className="rounded-full w-3.5 h-3.5"
+                  width={18}
+                  height={18}
+                  sizes="18px"
+                  className="rounded-full w-4.5 h-4.5"
                 />
                 <span className="text-xs text-text-muted">
                   {post.author?.name || "Nexfound"}

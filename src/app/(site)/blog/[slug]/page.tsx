@@ -216,7 +216,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       className="w-full h-auto object-cover"
                     />
                     {/* Gradient Overlay for Text Readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
                     {/* Floating Category Badge (Top-Right, High Contrast) */}
                     {post.category && (
                       <div className="absolute top-6 right-6 z-10">
@@ -238,13 +238,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   {/* Author Info Left */}
                   {post.author && (
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center p-1.5">
+                      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center p-1">
                         <Image
                           src="/logo-transparent.png"
                           alt="Nexfound"
-                          width={40}
-                          height={40}
-                          sizes="40px"
+                          width={48}
+                          height={48}
+                          sizes="48px"
                           className="object-contain"
                           placeholder="blur"
                           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
