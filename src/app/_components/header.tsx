@@ -126,9 +126,9 @@ export default function Header() {
               <a
                 href="#contact"
                 onClick={handleNavClick}
-                className="btn btn-primary text-xs sm:text-sm md:text-sm lg:text-base text-center relative overflow-hidden group px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 min-w-0 flex-shrink"
+                className="btn btn-primary text-xs sm:text-sm md:text-sm lg:text-base text-center relative overflow-hidden group px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 min-w-0 shrink"
               >
-                <span className="relative z-10">Let's Talk</span>
+                <span className="relative z-10">Let&apos;s Talk</span>
                 <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               </a>
             </div>
@@ -142,17 +142,17 @@ export default function Header() {
             >
               <div className="w-6 h-5 relative flex flex-col justify-between">
                 <span
-                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] ${
+                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] ${
                     isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
                   }`}
                 />
                 <span
-                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] ${
+                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] ${
                     isMobileMenuOpen ? "opacity-0" : ""
                   }`}
                 />
                 <span
-                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] ${
+                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] ${
                     isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
                   }`}
                 />
@@ -198,7 +198,7 @@ export default function Header() {
               onClick={handleNavClick}
               className="btn btn-primary text-sm relative overflow-hidden group w-full"
             >
-              <span className="relative z-10">Let's Talk</span>
+              <span className="relative z-10">Let&apos;s Talk</span>
               <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </a>
           </div>
