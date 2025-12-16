@@ -33,7 +33,6 @@ export default function Header() {
     if (!isBlogPage) return;
 
     let ticking = false;
-    let hideTimeout: number | null = null;
 
     const handleScroll = () => {
       if (!ticking) {
@@ -42,25 +41,9 @@ export default function Header() {
 
           // Show/hide header based on scroll direction
           if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-            // Scrolling down - hide header immediately
-            setIsHidden(true);
-            // Clear any pending show operations
-            if (hideTimeout) {
-              clearTimeout(hideTimeout);
-              hideTimeout = null;
-            }
-          } else if (
-            currentScrollY < lastScrollY.current &&
-            currentScrollY < window.innerHeight * 0.8
-          ) {
-            // Scrolling up - show header with a small delay to prevent flickering
-            if (hideTimeout) {
-              clearTimeout(hideTimeout);
-            }
-            hideTimeout = window.setTimeout(() => {
-              setIsHidden(false);
-              hideTimeout = null;
-            }, 100);
+            setIsHidden(true); // Scrolling down
+          } else if (currentScrollY < lastScrollY.current) {
+            setIsHidden(false); // Scrolling up
           }
 
           lastScrollY.current = currentScrollY;
@@ -71,12 +54,7 @@ export default function Header() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (hideTimeout) {
-        clearTimeout(hideTimeout);
-      }
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -139,13 +117,9 @@ export default function Header() {
 
       <header
         className={`header transition-transform duration-300 ${isScrolled && !isHidden ? "animate-header-glow" : "animate-header-pulse"} ${isHidden ? "-translate-y-full" : "translate-y-0"} h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50`}
+        // className={`header ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}`}
         data-scrolled={isScrolled ? "true" : "false"}
         data-hidden={isHidden ? "true" : "false"}
-        style={{
-          // Ensure proper layering to prevent shadow line issues
-          willChange: "transform, box-shadow",
-          backfaceVisibility: "hidden",
-        }}
       >
         <div className="container-custom h-full">
           <div className="flex items-center justify-between h-full gap-4 md:gap-6 lg:gap-10">
