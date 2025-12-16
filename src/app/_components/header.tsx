@@ -39,11 +39,11 @@ export default function Header() {
         requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
 
-          // Show/hide header based on scroll direction
-          if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-            setIsHidden(true); // Scrolling down
-          } else if (currentScrollY < lastScrollY.current) {
-            setIsHidden(false); // Scrolling up
+          // Show/hide header based on scroll direction with hysteresis
+          if (currentScrollY > lastScrollY.current && currentScrollY > 150) {
+            setIsHidden(true); // Scrolling down - hide after 150px
+          } else if (currentScrollY < lastScrollY.current - 50) {
+            setIsHidden(false); // Scrolling up with 50px hysteresis
           }
 
           lastScrollY.current = currentScrollY;
@@ -116,7 +116,7 @@ export default function Header() {
       />
 
       <header
-        className={`header transition-transform duration-300 ${isScrolled && !isHidden ? "animate-header-glow" : "animate-header-pulse"} ${isHidden ? "-translate-y-full" : "translate-y-0"} h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50`}
+        className={`header transition-transform duration-300 ${isScrolled ? "liquid-glass-header" : ""} ${isScrolled && !isHidden ? "animate-header-glow" : "animate-header-pulse"} ${isHidden ? "-translate-y-full" : "translate-y-0"} h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 ${!isHidden ? "drop-shadow-xl" : "shadow-none"}`}
         // className={`header ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}`}
         data-scrolled={isScrolled ? "true" : "false"}
         data-hidden={isHidden ? "true" : "false"}
