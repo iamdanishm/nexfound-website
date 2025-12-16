@@ -2,11 +2,14 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -21,6 +24,37 @@ export default function Header() {
 
     observer.observe(sentinel);
     return () => observer.disconnect();
+  }, []);
+
+  // Auto-hide header on blog pages
+  useEffect(() => {
+    const isBlogPage = window.location.pathname.includes("/blog/");
+
+    if (!isBlogPage) return;
+
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+
+          // Show/hide header based on scroll direction
+          if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+            setIsHidden(true); // Scrolling down
+          } else if (currentScrollY < lastScrollY.current) {
+            setIsHidden(false); // Scrolling up
+          }
+
+          lastScrollY.current = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -43,6 +77,7 @@ export default function Header() {
   const navLinks = [
     { href: "#work", label: "Work" },
     { href: "#services", label: "Services" },
+    { href: "/blog", label: "Blog" },
     { href: "#about", label: "About" },
     { href: "#testimonials", label: "Testimonials" },
   ];
@@ -51,10 +86,23 @@ export default function Header() {
     e.preventDefault();
     const target = e.currentTarget.getAttribute("href");
     if (target) {
-      const element = document.querySelector(target);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        setIsMobileMenuOpen(false);
+      if (target.startsWith("#")) {
+        // Check if we're on a page with sections (not blog pages)
+        const currentPath = window.location.pathname;
+        if (currentPath === "/" || currentPath === "") {
+          // We're on home page, scroll to sections
+          const element = document.querySelector(target);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+            setIsMobileMenuOpen(false);
+          }
+        } else {
+          // We're on blog or other pages, navigate to home page with hash
+          window.location.href = `/${target}`;
+        }
+      } else {
+        // Handle external routes (like /blog)
+        window.location.href = target;
       }
     }
   };
@@ -68,27 +116,25 @@ export default function Header() {
       />
 
       <header
-        className={`header  ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}  h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 drop-shadow-xl`}
+        className={`header transition-transform duration-300 ${isScrolled && !isHidden ? "animate-header-glow" : "animate-header-pulse"} ${isHidden ? "-translate-y-full" : "translate-y-0"} h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 drop-shadow-xl`}
         // className={`header ${isScrolled ? "animate-header-glow" : "animate-header-pulse"}`}
         data-scrolled={isScrolled ? "true" : "false"}
+        data-hidden={isHidden ? "true" : "false"}
       >
         <div className="container-custom h-full">
           <div className="flex items-center justify-between h-full gap-4 md:gap-6 lg:gap-10">
             {/* Logo with Animated Gradient */}
-            <a
-              href="#"
+            <Link
+              href="/"
               className="flex items-center space-x-3 focus-gold group"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-                setIsMobileMenuOpen(false);
-              }}
+              onClick={() => setIsMobileMenuOpen(false)}
             >
-              <div className="relative w-11 h-11 md:w-14 md:h-14 transition-transform duration-300 group-hover:scale-105">
+              <div className="relative w-14 h-14 md:w-18 md:h-18 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/logo-transparent.png"
                   alt="Nexfound"
                   fill
+                  sizes="(max-width: 768px) 56px, 72px"
                   className="object-contain"
                   suppressHydrationWarning
                   priority
@@ -97,7 +143,7 @@ export default function Header() {
               <h1 className="font-display text-transparent bg-clip-text bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-tight whitespace-nowrap">
                 Nexfound
               </h1>
-            </a>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-6 lg:space-x-10 xl:space-x-12">
@@ -119,7 +165,7 @@ export default function Header() {
               <a
                 href="#contact"
                 onClick={handleNavClick}
-                className="btn btn-primary text-xs sm:text-sm md:text-base text-center relative overflow-hidden group px-3 sm:px-4 md:px-5 lg:px-6 shrink-0"
+                className="btn btn-primary text-xs sm:text-sm md:text-sm lg:text-base text-center relative overflow-hidden group px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 min-w-0 flex-shrink"
               >
                 <span className="relative z-10">Let&apos;s Talk</span>
                 <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
@@ -132,6 +178,7 @@ export default function Header() {
               className="md:hidden relative w-11 h-11 flex items-center justify-center focus-gold rounded-xl transition-transform duration-200 active:scale-95 group"
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMobileMenuOpen}
+              suppressHydrationWarning
             >
               <div className="w-6 h-5 relative flex flex-col justify-between">
                 <span

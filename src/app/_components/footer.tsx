@@ -38,7 +38,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
 
   const description =
     footer?.description ??
-    "Premium digital service studio crafting exceptional experiences for ambitious brands that refuse to blend in.";
+    "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.";
 
   const newsletterTitle = footer?.newsletterTitle ?? "Stay Updated";
   const newsletterDescription =
@@ -64,7 +64,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               { label: "About Us", href: "#about" },
               { label: "Our Work", href: "#work" },
               { label: "Careers", href: "#careers" },
-              { label: "Blog", href: "#blog" },
+              { label: "Blog", href: "/blog" },
             ],
           },
           {
@@ -142,14 +142,23 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
     if (href === "#") {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
+    } else if (href.startsWith("#")) {
       e.preventDefault();
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+      // Check if we're on a page with sections (not blog pages)
+      const currentPath = window.location.pathname;
+      if (currentPath === "/" || currentPath === "") {
+        // We're on home page, scroll to sections
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
       } else {
-        if (href === "#") window.scrollTo({ top: 0, behavior: "smooth" });
+        // We're on blog or other pages, navigate to home page with hash
+        window.location.href = `/${href}`;
       }
+    } else {
+      // Handle external routes (like /blog)
+      window.location.href = href;
     }
   };
 
@@ -175,12 +184,12 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
   };
 
   return (
-    <footer className="relative overflow-x-hidden bg-gradient-to-b from-black to-[#0A0A0A] pt-12 sm:pt-16 pb-8">
+    <footer className="relative overflow-x-hidden bg-linear-to-b from-black to-[#0A0A0A] pt-12 sm:pt-16 pb-8">
       <div className="hidden sm:block absolute top-0 left-1/4 w-96 h-96 bg-[#B08D57] rounded-full mix-blend-multiply filter blur-[128px] opacity-5 pointer-events-none" />
       <div className="hidden sm:block absolute bottom-0 right-1/4 w-96 h-96 bg-[#1A7F6B] rounded-full mix-blend-multiply filter blur-[128px] opacity-5 pointer-events-none" />
 
-      <div className="container-custom mx-auto relative z-10 px-4 sm:px-6 lg:px-0">
-        <div className="grid gap-6 sm:gap-8 md:gap-12 mb-10 grid-cols-[repeat(auto-fit,minmax(160px,1fr))]">
+      <div className="container-custom mx-auto relative z-10 px-4 sm:px-6 md:px-8 lg:px-12">
+        <div className="grid gap-6 sm:gap-8 md:gap-12 mb-10 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {/* Brand block */}
           <div className="min-w-0">
             <a
@@ -188,15 +197,17 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               onClick={(e) => handleLinkClick(e, "#")}
               className="flex items-center space-x-3 mb-4 sm:mb-6 group"
             >
-              <div className="relative w-10 h-10 sm:w-12 sm:h-12 transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 transition-transform duration-300 group-hover:scale-110 shrink-0">
                 <Image
                   src="/logo-transparent.png"
                   alt="Nexfound"
                   fill
+                  sizes="56px"
                   className="object-contain"
+                  loading="lazy"
                 />
               </div>
-              <h3 className="font-display text-transparent bg-clip-text bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-lg sm:text-2xl tracking-tight">
+              <h3 className="font-display text-transparent bg-clip-text bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-lg sm:text-2xl tracking-tight">
                 Nexfound
               </h3>
             </a>
@@ -212,7 +223,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-[#1A1A1A] to-[#0A0A0A] border border-[#2E2E2E] flex items-center justify-center text-[#B3B3B3] hover:text-gold-gradient hover:border-[#B08D57] transition-all duration-300"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-linear-to-br from-[#1A1A1A] to-[#0A0A0A] border border-[#2E2E2E] flex items-center justify-center text-[#B3B3B3] hover:text-gold-gradient hover:border-[#B08D57] transition-all duration-300"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -233,7 +244,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                     <a
                       href={link.href}
                       onClick={(e) => handleLinkClick(e, link.href)}
-                      className="text-[#B3B3B3] hover:text-gold-gradient transition-colors duration-300 text-sm sm:text-base break-words"
+                      className="text-[#B3B3B3] hover:text-gold-gradient transition-colors duration-300 text-sm sm:text-base wrap-break-word"
                     >
                       {link.label}
                     </a>
@@ -245,8 +256,8 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
         </div>
 
         {/* Newsletter */}
-        <div className="liquid-glass p-6 sm:p-8 md:p-10 rounded-2xl mb-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div className="liquid-glass p-6 sm:p-8 md:p-10 lg:p-4 rounded-2xl mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center max-w-4xl mx-auto">
             <div>
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
                 {newsletterTitle}
@@ -257,21 +268,23 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
             </div>
 
             <form
-              className="flex flex-col sm:flex-row gap-3"
+              className="flex flex-col sm:flex-row gap-3 justify-center"
               onSubmit={handleNewsletterSubmit}
             >
               <input
                 type="email"
                 placeholder="Enter your email"
                 required
-                className="flex-1 px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 text-sm sm:text-base"
+                className="flex-1 px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 text-sm sm:text-base min-w-0"
                 aria-label="Email address"
+                suppressHydrationWarning
               />
               <button
                 type="submit"
-                className="btn btn-primary whitespace-nowrap px-6 py-3 text-sm sm:text-base"
+                className="btn btn-primary whitespace-nowrap px-7 py-3 text-sm sm:text-sm min-w-0 shrink"
+                suppressHydrationWarning
               >
-                Subscribe
+                <span className="whitespace-nowrap">Subscribe</span>
               </button>
             </form>
           </div>

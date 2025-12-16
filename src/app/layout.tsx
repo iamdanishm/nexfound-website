@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./(site)/globals.css";
 import { Toaster } from "react-hot-toast";
-import ServiceWorkerRegister from "../_components/sw-register";
-import PreloadLinks from "../_components/preload-links";
+import ServiceWorkerRegister from "./_components/sw-register";
+import PreloadLinks from "./_components/preload-links";
 
 const inter = Inter({
   subsets: ["latin"],

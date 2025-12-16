@@ -24,17 +24,8 @@ export default defineType({
         defineField({
             name: 'category',
             title: 'Category',
-            type: 'string',
-            options: {
-                list: [
-                    { title: 'FinTech Platform', value: 'fintech' },
-                    { title: 'Hospitality App', value: 'hospitality' },
-                    { title: 'Healthcare Platform', value: 'healthcare' },
-                    { title: 'E-Commerce', value: 'ecommerce' },
-                    { title: 'SaaS Product', value: 'saas' },
-                    { title: 'Mobile App', value: 'mobile' },
-                ],
-            },
+            type: 'reference',
+            to: [{ type: 'projectCategory' }],
             validation: (Rule) => Rule.required(),
         }),
         defineField({
@@ -118,6 +109,21 @@ export default defineType({
             initialValue: () => new Date().toISOString(),
         }),
         defineField({
+            name: 'status',
+            title: 'Project Status',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Completed', value: 'completed' },
+                    { title: 'In Progress', value: 'in-progress' },
+                    { title: 'On Hold', value: 'on-hold' },
+                    { title: 'Planning', value: 'planning' },
+                ],
+            },
+            validation: (Rule) => Rule.required(),
+            initialValue: 'completed',
+        }),
+        defineField({
             name: 'featured',
             title: 'Featured Project',
             type: 'boolean',
@@ -128,7 +134,7 @@ export default defineType({
     preview: {
         select: {
             title: 'title',
-            subtitle: 'category',
+            subtitle: 'category.title',
             media: 'mainImage',
         },
     },

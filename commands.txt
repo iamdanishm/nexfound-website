@@ -1,0 +1,11 @@
+# Export production dataset to a compressed file
+npx @sanity/cli dataset export production production.tar.gz
+
+# Import the exported data into development dataset, replacing existing data
+npx @sanity/cli dataset import production.tar.gz development --replace
+
+# Vice versa: Export development dataset to a compressed file
+npx @sanity/cli dataset export development development.tar.gz
+
+# Import the exported data into production dataset, replacing existing data
+npx @sanity/cli dataset import development.tar.gz production --replace
