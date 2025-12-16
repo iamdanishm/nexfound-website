@@ -487,7 +487,7 @@
     }
   }
 
-  /* When scrolled and visible */
+  /* When scrolled and visible - apply blur effect */
   .header[data-scrolled="true"]:not([data-hidden="true"]) {
     height: 64px;
     background: linear-gradient(
@@ -506,7 +506,7 @@
     will-change: transform;
   }
 
-  /* When scrolled but hidden */
+  /* When scrolled but hidden - no blur effect (translated off-screen) */
   .header[data-scrolled="true"][data-hidden="true"] {
     height: 64px;
     background: linear-gradient(
@@ -515,51 +515,10 @@
       rgba(244, 230, 192, 0.04) 100%
     );
     border-bottom: 1px solid rgba(176, 141, 87, 0.25);
-    backdrop-filter: blur(12px) saturate(1.3);
-    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    /* No backdrop-filter when hidden - doesn't work on translated elements */
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
     isolation: isolate !important;
     -webkit-isolation: isolate !important;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    will-change: transform;
-  }
-  /* When scrolled and visible */
-  .header[data-scrolled="true"]:not([data-hidden="true"]) {
-    height: 64px;
-    background: linear-gradient(
-      135deg,
-      rgba(176, 141, 87, 0.08) 0%,
-      rgba(244, 230, 192, 0.04) 100%
-    );
-    border-bottom: 1px solid rgba(176, 141, 87, 0.25);
-    backdrop-filter: blur(12px) saturate(1.3);
-    -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
-    isolation: isolate !important;
-    -webkit-isolation: isolate !important;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    will-change: transform;
-  }
-
-  /* When scrolled but hidden */
-  .header[data-scrolled="true"][data-hidden="true"] {
-    height: 64px;
-    background: linear-gradient(
-      135deg,
-      rgba(176, 141, 87, 0.08) 0%,
-      rgba(244, 230, 192, 0.04) 100%
-    );
-    border-bottom: 1px solid rgba(176, 141, 87, 0.25);
-    backdrop-filter: blur(12px) saturate(1.3);
-    -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
-    isolation: isolate !important;
-    -webkit-isolation: isolate !important;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    will-change: transform;
   }
 
   @media (min-width: 768px) {
