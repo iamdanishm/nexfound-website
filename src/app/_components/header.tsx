@@ -8,6 +8,30 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Force backdrop-filter injection to bypass Next.js optimization
+  useEffect(() => {
+    const styleId = "forced-backdrop-filter";
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement("style");
+      style.id = styleId;
+      style.textContent = `
+        .header-default,
+        .header-scrolled {
+          backdrop-filter: blur(8px) saturate(1.2) !important;
+          -webkit-backdrop-filter: blur(8px) saturate(1.2) !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    return () => {
+      const existingStyle = document.getElementById(styleId);
+      if (existingStyle) {
+        document.head.removeChild(existingStyle);
+      }
+    };
+  }, []);
+
   // Optimized scroll handler with throttling
   useEffect(() => {
     let ticking = false;
