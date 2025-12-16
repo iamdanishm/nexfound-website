@@ -129,12 +129,12 @@ export default function Header() {
               className="flex items-center space-x-3 focus-gold group"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <div className="relative w-11 h-11 md:w-14 md:h-14 transition-transform duration-300 group-hover:scale-105">
+              <div className="relative w-14 h-14 md:w-18 md:h-18 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/logo-transparent.png"
                   alt="Nexfound"
                   fill
-                  sizes="(max-width: 768px) 44px, 56px"
+                  sizes="(max-width: 768px) 56px, 72px"
                   className="object-contain"
                   suppressHydrationWarning
                   priority

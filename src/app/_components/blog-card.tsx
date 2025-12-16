@@ -137,9 +137,9 @@ const BlogCard = React.memo(function BlogCard({
                     <Image
                       src="/logo-transparent.png"
                       alt="Nexfound"
-                      width={16}
-                      height={16}
-                      sizes="16px"
+                      width={20}
+                      height={20}
+                      sizes="20px"
                       placeholder="blur"
                       blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                       className="rounded-full"

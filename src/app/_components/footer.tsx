@@ -197,12 +197,12 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               onClick={(e) => handleLinkClick(e, "#")}
               className="flex items-center space-x-3 mb-4 sm:mb-6 group"
             >
-              <div className="relative w-10 h-10 sm:w-12 sm:h-12 transition-transform duration-300 group-hover:scale-110 shrink-0">
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 transition-transform duration-300 group-hover:scale-110 shrink-0">
                 <Image
                   src="/logo-transparent.png"
                   alt="Nexfound"
                   fill
-                  sizes="48px"
+                  sizes="56px"
                   className="object-contain"
                   loading="lazy"
                 />
