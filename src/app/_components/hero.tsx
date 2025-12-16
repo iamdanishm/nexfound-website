@@ -151,9 +151,39 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                   className="btn btn-primary whitespace-nowrap"
                   onClick={(e) => {
                     e.preventDefault();
-                    document
-                      .querySelector("#contact")
-                      ?.scrollIntoView({ behavior: "smooth" });
+                    const element = document.querySelector("#contact");
+                    if (element) {
+                      const start = window.scrollY;
+                      const targetPosition =
+                        element.getBoundingClientRect().top +
+                        window.scrollY -
+                        88;
+                      const startTime = performance.now();
+                      const duration = 800;
+
+                      const easeInOutQuad = (t: number) => {
+                        return t < 0.5
+                          ? 2 * t * t
+                          : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                      };
+
+                      const scrollStep = (timestamp: number) => {
+                        const elapsed = timestamp - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const easedProgress = easeInOutQuad(progress);
+
+                        window.scrollTo(
+                          0,
+                          start + (targetPosition - start) * easedProgress
+                        );
+
+                        if (progress < 1) {
+                          window.requestAnimationFrame(scrollStep);
+                        }
+                      };
+
+                      window.requestAnimationFrame(scrollStep);
+                    }
                   }}
                 >
                   Start Your Project
@@ -163,9 +193,39 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                   className="btn btn-secondary whitespace-nowrap"
                   onClick={(e) => {
                     e.preventDefault();
-                    document
-                      .querySelector("#work")
-                      ?.scrollIntoView({ behavior: "smooth" });
+                    const element = document.querySelector("#work");
+                    if (element) {
+                      const start = window.scrollY;
+                      const targetPosition =
+                        element.getBoundingClientRect().top +
+                        window.scrollY -
+                        88;
+                      const startTime = performance.now();
+                      const duration = 800;
+
+                      const easeInOutQuad = (t: number) => {
+                        return t < 0.5
+                          ? 2 * t * t
+                          : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                      };
+
+                      const scrollStep = (timestamp: number) => {
+                        const elapsed = timestamp - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const easedProgress = easeInOutQuad(progress);
+
+                        window.scrollTo(
+                          0,
+                          start + (targetPosition - start) * easedProgress
+                        );
+
+                        if (progress < 1) {
+                          window.requestAnimationFrame(scrollStep);
+                        }
+                      };
+
+                      window.requestAnimationFrame(scrollStep);
+                    }
                   }}
                 >
                   View Our Work
@@ -197,9 +257,35 @@ export default function Hero({ hero }: { hero?: HeroData }) {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
         <button
           onClick={() => {
-            document
-              .querySelector("#services")
-              ?.scrollIntoView({ behavior: "smooth" });
+            const element = document.querySelector("#services");
+            if (element) {
+              const start = window.scrollY;
+              const targetPosition =
+                element.getBoundingClientRect().top + window.scrollY - 88;
+              const startTime = performance.now();
+              const duration = 800;
+
+              const easeInOutQuad = (t: number) => {
+                return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+              };
+
+              const scrollStep = (timestamp: number) => {
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easeInOutQuad(progress);
+
+                window.scrollTo(
+                  0,
+                  start + (targetPosition - start) * easedProgress
+                );
+
+                if (progress < 1) {
+                  window.requestAnimationFrame(scrollStep);
+                }
+              };
+
+              window.requestAnimationFrame(scrollStep);
+            }
           }}
           className="flex flex-col items-center gap-2 text-[#B3B3B3] hover:text-[#F4E6C0] transition-colors duration-300 focus-gold"
           aria-label="Scroll to services"

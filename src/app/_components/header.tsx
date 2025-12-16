@@ -78,6 +78,36 @@ export default function Header() {
     { href: "#testimonials", label: "Testimonials" },
   ];
 
+  // Custom smooth scroll function with easing
+  const smoothScrollTo = useCallback((target: string) => {
+    const element = document.querySelector(target);
+    if (!element) return;
+
+    const start = window.scrollY;
+    const targetPosition =
+      element.getBoundingClientRect().top + window.scrollY - 88; // Account for header height
+    const startTime = performance.now();
+    const duration = 800;
+
+    const easeInOutQuad = (t: number) => {
+      return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    };
+
+    const scrollStep = (timestamp: number) => {
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeInOutQuad(progress);
+
+      window.scrollTo(0, start + (targetPosition - start) * easedProgress);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(scrollStep);
+      }
+    };
+
+    window.requestAnimationFrame(scrollStep);
+  }, []);
+
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
@@ -85,17 +115,41 @@ export default function Header() {
       if (!target) return;
 
       if (target.startsWith("#")) {
-        const element = document.querySelector(target);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
+        // Check if we're on a blog page (has # in URL or /blog in path)
+        const isBlogPage =
+          window.location.pathname.includes("/blog") ||
+          window.location.hash.includes("#");
+
+        if (isBlogPage) {
+          // Store the target section in sessionStorage
+          sessionStorage.setItem("scrollToSection", target);
+          // Navigate to home page
+          window.location.href = "/";
+        } else {
+          // On home page, scroll directly to section
+          smoothScrollTo(target);
           setIsMobileMenuOpen(false);
         }
       } else {
+        // For external links like "/blog", navigate to the page
         window.location.href = target;
       }
     },
-    []
+    [smoothScrollTo]
   );
+
+  // Check for stored scroll target on page load
+  useEffect(() => {
+    const scrollTarget = sessionStorage.getItem("scrollToSection");
+    if (scrollTarget) {
+      // Small delay to ensure page is fully loaded
+      const timer = setTimeout(() => {
+        smoothScrollTo(scrollTarget);
+        sessionStorage.removeItem("scrollToSection");
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [smoothScrollTo]);
 
   return (
     <>

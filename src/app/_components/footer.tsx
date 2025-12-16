@@ -141,20 +141,49 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
   ) => {
     if (href === "#") {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // Store scroll to top in sessionStorage
+      sessionStorage.setItem("scrollToSection", "#");
+      // Navigate to home page
+      window.location.href = "/";
     } else if (href.startsWith("#")) {
       e.preventDefault();
       // Check if we're on a page with sections (not blog pages)
       const currentPath = window.location.pathname;
       if (currentPath === "/" || currentPath === "") {
-        // We're on home page, scroll to sections
+        // We're on home page, use smooth scroll
         const element = document.querySelector(href);
         if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
+          const start = window.scrollY;
+          const targetPosition =
+            element.getBoundingClientRect().top + window.scrollY - 88;
+          const startTime = performance.now();
+          const duration = 800;
+
+          const easeInOutQuad = (t: number) => {
+            return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+          };
+
+          const scrollStep = (timestamp: number) => {
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easedProgress = easeInOutQuad(progress);
+
+            window.scrollTo(
+              0,
+              start + (targetPosition - start) * easedProgress
+            );
+
+            if (progress < 1) {
+              window.requestAnimationFrame(scrollStep);
+            }
+          };
+
+          window.requestAnimationFrame(scrollStep);
         }
       } else {
-        // We're on blog or other pages, navigate to home page with hash
-        window.location.href = `/${href}`;
+        // We're on blog or other pages, store target and navigate to home
+        sessionStorage.setItem("scrollToSection", href);
+        window.location.href = "/";
       }
     } else {
       // Handle external routes (like /blog)
