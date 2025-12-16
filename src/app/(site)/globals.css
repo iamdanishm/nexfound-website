@@ -487,8 +487,8 @@
     }
   }
 
-  /* When scrolled and visible - apply blur effect */
-  .header[data-scrolled="true"]:not([data-hidden="true"]) {
+  /* When scrolled - apply blur effect */
+  .header[data-scrolled="true"] {
     height: 64px;
     background: linear-gradient(
       135deg,
@@ -504,21 +504,6 @@
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     will-change: transform;
-  }
-
-  /* When scrolled but hidden - no blur effect (translated off-screen) */
-  .header[data-scrolled="true"][data-hidden="true"] {
-    height: 64px;
-    background: linear-gradient(
-      135deg,
-      rgba(176, 141, 87, 0.08) 0%,
-      rgba(244, 230, 192, 0.04) 100%
-    );
-    border-bottom: 1px solid rgba(176, 141, 87, 0.25);
-    /* No backdrop-filter when hidden - doesn't work on translated elements */
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
-    isolation: isolate !important;
-    -webkit-isolation: isolate !important;
   }
 
   @media (min-width: 768px) {
