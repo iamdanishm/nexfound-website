@@ -405,6 +405,14 @@
     overflow: hidden;
   }
 
+  /* Fallback for browsers without backdrop-filter support */
+  @supports not (backdrop-filter: blur(1px)) {
+    .liquid-glass-header {
+      background: rgba(26, 26, 26, 0.95);
+      border-color: rgba(176, 141, 87, 0.3);
+    }
+  }
+
   .liquid-glass-header::before {
     content: "";
     position: absolute;
@@ -498,8 +506,9 @@
     border-bottom: 1px solid rgba(176, 141, 87, 0.25);
     backdrop-filter: blur(12px) saturate(1.3);
     -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
     isolation: isolate !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* When scrolled but hidden */
@@ -511,8 +520,9 @@
       rgba(244, 230, 192, 0.04) 100%
     );
     border-bottom: 1px solid rgba(176, 141, 87, 0.25);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
     isolation: isolate !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   @media (min-width: 768px) {
