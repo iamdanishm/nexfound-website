@@ -192,7 +192,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </nav>
 
           {/* Article Header */}
-          <ContentWaypoint animation="slide-up" delay={200}>
+          <ContentWaypoint animation="slide-up" delay={150}>
             <article className="max-w-5xl mx-auto mb-16">
               <header>
                 {/* Prominent Title First (Centered, Bold) */}
@@ -246,8 +246,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                           height={48}
                           sizes="48px"
                           className="object-contain"
-                          placeholder="blur"
-                          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                           loading="lazy"
                         />
                       </div>
@@ -322,7 +320,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
 
           {/* Share Section */}
-          <ContentWaypoint animation="slide-up" delay={500}>
+          <ContentWaypoint animation="slide-up" delay={100}>
             <div className="text-center mt-20 mb-12">
               <h3 className="text-2xl md:text-3xl font-light text-pearl mb-3">
                 Spread the word
@@ -345,7 +343,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
           {/* Related Posts Section */}
           {displayPosts.length > 0 && (
-            <ContentWaypoint animation="slide-up" delay={300}>
+            <ContentWaypoint animation="slide-up" delay={150}>
               <section className="mt-16 mb-16">
                 <div className="text-center mb-16">
                   <h2 className="text-2xl md:text-3xl font-light text-pearl mb-6 leading-relaxed">
@@ -366,7 +364,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       <ContentWaypoint
                         key={relatedPost._id}
                         animation="scale-in"
-                        delay={300 + index * 50}
+                        delay={200 + index * 50}
                       >
                         <BlogCard
                           title={relatedPost.title}

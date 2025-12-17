@@ -140,8 +140,6 @@ const BlogCard = React.memo(function BlogCard({
                       width={20}
                       height={20}
                       sizes="20px"
-                      placeholder="blur"
-                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                       className="rounded-full"
                     />
                     <span className="text-xs text-text-muted">

@@ -30,8 +30,6 @@ const ShareButtons = ({
 
   const handleShare = async (platform: string) => {
     const encodedUrl = encodeURIComponent(url);
-    const encodedTitle = encodeURIComponent(title);
-    const encodedDescription = encodeURIComponent(description || "");
 
     let shareUrl = "";
     let platformMessage = "";

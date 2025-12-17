@@ -117,7 +117,7 @@ export default function About({ about }: { about?: AboutData }) {
                 />
               ) : (
                 <Image
-                  src="/logo-dark.png"
+                  src="/logo-transparent.png"
                   alt="Nexfound Team"
                   fill
                   sizes="400px"

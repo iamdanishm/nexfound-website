@@ -7,7 +7,6 @@ const STATIC_ASSETS = [
   "/",
   "/blog",
   "/logo-transparent.png",
-  "/logo-dark.png",
   "/favicon.ico",
   "/og-image.jpg",
   "/apple-touch-icon.png",
