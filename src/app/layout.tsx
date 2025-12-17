@@ -13,7 +13,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Nexfound | Premium Tech Services for Startups & Businesses",
+    default: "Nexfound | Premium Tech Service for Startups and Businesses",
     template: "%s | Nexfound",
   },
   description:
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     siteName: "Nexfound",
-    title: "Nexfound | Premium Tech Services for Startups & Businesses",
+    title: "Nexfound | Premium Tech Service for Startups and Businesses",
     description:
       "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
     type: "website",
@@ -64,19 +64,19 @@ export const metadata: Metadata = {
     emails: ["hello@nexfound.in"],
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1050,
-        height: 600,
+        url: "/og_image.png",
+        width: 1200,
+        height: 633,
         alt: "Nexfound - Premium Technology Services",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nexfound | Premium Tech Services for Startups & Businesses",
+    title: "Nexfound | Premium Tech Service for Startups and Businesses",
     description:
       "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
-    images: ["/og-image.jpg"],
+    images: ["/og_image.png"],
     creator: "@iam_danishm",
     site: "@iam_danishm",
   },
