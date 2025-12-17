@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     emails: ["hello@nexfound.in"],
     images: [
       {
-        url: "/og_image.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 633,
         alt: "Nexfound - Premium Technology Services",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     title: "Nexfound | Premium Tech Service for Startups and Businesses",
     description:
       "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
-    images: ["/og_image.png"],
+    images: ["/og-image.jpg"],
     creator: "@iam_danishm",
     site: "@iam_danishm",
   },
