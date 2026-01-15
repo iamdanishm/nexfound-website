@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type TrustItem = { value: string; label: string };
 
@@ -15,8 +15,9 @@ type HeroData = {
 
 export default function Hero({ hero }: { hero?: HeroData }) {
   const badgeText = hero?.badgeText ?? "Crafting Digital Excellence";
-  const mainHeading = hero?.mainHeading ?? "Transform Your";
-  const highlightedText = hero?.highlightedText ?? "Digital Presence";
+  const mainHeading = hero?.mainHeading ?? "Stop Worrying About Code.";
+  const highlightedText =
+    hero?.highlightedText ?? "Start Scaling Your Business.";
   const subheading =
     hero?.subheading ??
     "Premium digital service studio crafting exceptional experiences for ambitious brands.";
@@ -37,6 +38,24 @@ export default function Hero({ hero }: { hero?: HeroData }) {
         ];
 
   const heroRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -61,7 +80,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
     <section
       ref={heroRef}
       id="home"
-      className="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-8 md:pt-0"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={
         {
           "--mouse-x": "50%",
@@ -69,183 +88,254 @@ export default function Hero({ hero }: { hero?: HeroData }) {
         } as React.CSSProperties
       }
     >
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0 bg-black">
-        <div className="absolute inset-0 opacity-30">
+      {/* Enhanced Animated Gradient Background */}
+      <div className="absolute inset-0 bg-linear-to-br from-black via-gray-900 to-black">
+        {/* Dynamic gradient overlay */}
+        <div className="absolute inset-0 opacity-40">
           <div
-            className="absolute inset-0 animate-gradient-shift"
+            className="absolute inset-0 transition-all duration-1000 ease-out"
             style={{
               background:
-                "radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(176, 141, 87, 0.3) 10%, rgba(244, 230, 192, 0.15) 25%, transparent 60%)",
+                "radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(176, 141, 87, 0.4) 0%, rgba(244, 230, 192, 0.2) 20%, rgba(26, 127, 107, 0.15) 40%, transparent 70%)",
             }}
           />
-          <div
-            className="absolute inset-0 animate-gradient-pulse"
-            style={{
-              background:
-                "radial-gradient(ellipse at 20% 30%, rgba(26, 127, 107, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(13, 59, 102, 0.12) 0%, transparent 50%)",
-            }}
-          />
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-[#B08D57]/5 to-transparent animate-pulse" />
         </div>
 
-        {/* Grid Overlay */}
+        {/* Subtle animated grid */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 opacity-[0.02] animate-pulse"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(176, 141, 87, 0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(176, 141, 87, 0.5) 1px, transparent 1px)
+              linear-gradient(rgba(176, 141, 87, 0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(176, 141, 87, 0.3) 1px, transparent 1px)
             `,
-            backgroundSize: "80px 80px",
+            backgroundSize: "100px 100px",
           }}
         />
       </div>
 
-      {/* Content Container */}
-      <div className="container-custom relative z-10 section-spacing">
-        <div className="max-w-5xl mx-auto">
-          {/* Badge */}
+      {/* Floating geometric shapes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 border-2 border-[#B08D57]/30 rotate-45 animate-float-slow opacity-60" />
+        <div className="absolute top-40 right-20 w-24 h-24 border-2 border-[#1A7F6B]/25 rotate-12 animate-float-medium opacity-50" />
+        <div className="absolute bottom-32 left-20 w-20 h-20 border-2 border-[#F4E6C0]/20 rotate-30 animate-float-fast opacity-40" />
+        <div className="absolute bottom-40 right-32 w-16 h-16 bg-[#B08D57]/20 rotate-60 animate-float-slow opacity-70" />
+        <div className="absolute top-1/3 right-1/4 w-28 h-28 border border-[#B08D57]/25 rotate-75 animate-float-medium opacity-45" />
+        <div className="absolute bottom-1/3 left-1/3 w-22 h-22 bg-[#1A7F6B]/15 rotate-45 animate-float-fast opacity-55" />
+      </div>
+
+      {/* Main Content Container */}
+      <div className="container-custom relative z-10 px-6 py-20">
+        <div className="max-w-6xl mx-auto text-center">
+          {/* Enhanced Badge */}
           <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 animate-[slide-up_0.6s_ease-out]"
+            className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-5 mt-5 backdrop-blur-md border transition-all duration-1000 transform ${
+              isVisible
+                ? "translate-y-0 opacity-100 scale-100"
+                : "translate-y-8 opacity-0 scale-95"
+            }`}
             style={{
               background:
-                "linear-gradient(135deg, rgba(176, 141, 87, 0.1) 0%, rgba(244, 230, 192, 0.05) 100%)",
-              border: "1px solid rgba(176, 141, 87, 0.3)",
-              backdropFilter: "blur(8px)",
+                "linear-gradient(135deg, rgba(176, 141, 87, 0.15) 0%, rgba(244, 230, 192, 0.08) 100%)",
+              borderColor: "rgba(176, 141, 87, 0.4)",
+              boxShadow: "0 8px 32px rgba(176, 141, 87, 0.1)",
             }}
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#B08D57] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F4E6C0]"></span>
-            </span>
-            <span className="text-sm font-medium text-[#F4E6C0] tracking-wide">
+            <div className="relative">
+              <div className="w-3 h-3 bg-[#B08D57] rounded-full animate-pulse" />
+              <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
+            </div>
+            <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
               {badgeText}
             </span>
           </div>
 
-          {/* Main Heading */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1] animate-[slide-up_0.6s_ease-out_0.1s_both]">
-            <span className="block text-white mb-2">{mainHeading}</span>
-            <span className="block text-gold-gradient text-shadow-gold">
+          {/* Refined Main Heading */}
+          <h1
+            className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-1000 delay-200 transform ${
+              isVisible
+                ? "translate-y-0 opacity-100 scale-100"
+                : "translate-y-8 opacity-0 scale-95"
+            }`}
+          >
+            <span className="block text-white">{mainHeading}</span>
+            <span
+              className="block bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
+              style={{
+                textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
+              }}
+            >
               {highlightedText}
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-[#B3B3B3] mb-12 max-w-3xl leading-relaxed animate-[slide-up_0.6s_ease-out_0.2s_both]">
+          {/* Improved Subtitle */}
+          <p
+            className={`text-lg md:text-xl text-[#B3B3B3] mb-16 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-400 transform ${
+              isVisible
+                ? "translate-y-0 opacity-100 scale-100"
+                : "translate-y-8 opacity-0 scale-95"
+            }`}
+          >
             {subheading}
           </p>
 
-          {/* CTA Container with Liquid Glass */}
-          <div className="liquid-glass--intense p-8 md:p-10 mb-12 animate-[slide-up_0.6s_ease-out_0.3s_both]">
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-between relative z-10">
-              <div className="flex-1">
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                  {cta.title}
-                </h3>
-                <p className="text-[#B3B3B3]">{cta.subtitle}</p>
+          {/* Enhanced CTA Section */}
+          <div
+            className={`mb-20 transition-all duration-1000 delay-600 transform ${
+              isVisible
+                ? "translate-y-0 opacity-100 scale-100"
+                : "translate-y-8 opacity-0 scale-95"
+            }`}
+          >
+            <div
+              className="p-8 md:p-12 rounded-2xl backdrop-blur-xl border relative overflow-hidden group"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(176, 141, 87, 0.02) 100%)",
+                borderColor: "rgba(176, 141, 87, 0.2)",
+                boxShadow:
+                  "0 20px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              {/* Animated border effect */}
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                <a
-                  href="#contact"
-                  className="btn btn-primary whitespace-nowrap"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const element = document.querySelector("#contact");
-                    if (element) {
-                      const start = window.scrollY;
-                      const targetPosition =
-                        element.getBoundingClientRect().top +
-                        window.scrollY -
-                        88;
-                      const startTime = performance.now();
-                      const duration = 800;
 
-                      const easeInOutQuad = (t: number) => {
-                        return t < 0.5
-                          ? 2 * t * t
-                          : 1 - Math.pow(-2 * t + 2, 2) / 2;
-                      };
+              <div className="flex flex-col lg:flex-row gap-8 items-center justify-between relative z-10">
+                <div className="flex-1 text-center lg:text-left">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                    {cta.title}
+                  </h3>
+                  <p className="text-[#B3B3B3] text-base md:text-lg">
+                    {cta.subtitle}
+                  </p>
+                </div>
 
-                      const scrollStep = (timestamp: number) => {
-                        const elapsed = timestamp - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
-                        const easedProgress = easeInOutQuad(progress);
+                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                  <button
+                    onClick={() => {
+                      const element = document.querySelector("#contact");
+                      if (element) {
+                        const start = window.scrollY;
+                        const targetPosition =
+                          element.getBoundingClientRect().top +
+                          window.scrollY -
+                          88;
+                        const startTime = performance.now();
+                        const duration = 800;
 
-                        window.scrollTo(
-                          0,
-                          start + (targetPosition - start) * easedProgress
-                        );
+                        const easeInOutQuad = (t: number) => {
+                          return t < 0.5
+                            ? 2 * t * t
+                            : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                        };
 
-                        if (progress < 1) {
-                          window.requestAnimationFrame(scrollStep);
-                        }
-                      };
+                        const scrollStep = (timestamp: number) => {
+                          const elapsed = timestamp - startTime;
+                          const progress = Math.min(elapsed / duration, 1);
+                          const easedProgress = easeInOutQuad(progress);
 
-                      window.requestAnimationFrame(scrollStep);
-                    }
-                  }}
-                >
-                  Start Your Project
-                </a>
-                <a
-                  href="#work"
-                  className="btn btn-secondary whitespace-nowrap"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const element = document.querySelector("#work");
-                    if (element) {
-                      const start = window.scrollY;
-                      const targetPosition =
-                        element.getBoundingClientRect().top +
-                        window.scrollY -
-                        88;
-                      const startTime = performance.now();
-                      const duration = 800;
+                          window.scrollTo(
+                            0,
+                            start + (targetPosition - start) * easedProgress
+                          );
 
-                      const easeInOutQuad = (t: number) => {
-                        return t < 0.5
-                          ? 2 * t * t
-                          : 1 - Math.pow(-2 * t + 2, 2) / 2;
-                      };
+                          if (progress < 1) {
+                            window.requestAnimationFrame(scrollStep);
+                          }
+                        };
 
-                      const scrollStep = (timestamp: number) => {
-                        const elapsed = timestamp - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
-                        const easedProgress = easeInOutQuad(progress);
+                        window.requestAnimationFrame(scrollStep);
+                      }
+                    }}
+                    className="group relative px-8 py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
+                  >
+                    <span className="relative z-10">Start Your Project</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </button>
 
-                        window.scrollTo(
-                          0,
-                          start + (targetPosition - start) * easedProgress
-                        );
+                  <button
+                    onClick={() => {
+                      const element = document.querySelector("#work");
+                      if (element) {
+                        const start = window.scrollY;
+                        const targetPosition =
+                          element.getBoundingClientRect().top +
+                          window.scrollY -
+                          88;
+                        const startTime = performance.now();
+                        const duration = 800;
 
-                        if (progress < 1) {
-                          window.requestAnimationFrame(scrollStep);
-                        }
-                      };
+                        const easeInOutQuad = (t: number) => {
+                          return t < 0.5
+                            ? 2 * t * t
+                            : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                        };
 
-                      window.requestAnimationFrame(scrollStep);
-                    }
-                  }}
-                >
-                  View Our Work
-                </a>
+                        const scrollStep = (timestamp: number) => {
+                          const elapsed = timestamp - startTime;
+                          const progress = Math.min(elapsed / duration, 1);
+                          const easedProgress = easeInOutQuad(progress);
+
+                          window.scrollTo(
+                            0,
+                            start + (targetPosition - start) * easedProgress
+                          );
+
+                          if (progress < 1) {
+                            window.requestAnimationFrame(scrollStep);
+                          }
+                        };
+
+                        window.requestAnimationFrame(scrollStep);
+                      }
+                    }}
+                    className="group relative px-8 py-4 border-2 border-[#B08D57]/50 text-[#F4E6C0] font-semibold rounded-xl transition-all duration-300 hover:bg-[#B08D57]/10 hover:border-[#B08D57] hover:shadow-lg hover:shadow-[#B08D57]/10 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black"
+                  >
+                    View Our Work
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Trust Indicators */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 animate-[fade-in_0.8s_ease-out_0.4s_both]">
+          {/* Enhanced Trust Indicators */}
+          <div
+            className={`grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 pb-16 transition-all duration-1000 delay-800 transform ${
+              isVisible
+                ? "translate-y-0 opacity-100 scale-100"
+                : "translate-y-8 opacity-0 scale-95"
+            }`}
+          >
             {trustIndicators.map((stat, index) => (
               <div
                 key={`${stat.label}-${index}`}
-                className="text-center group cursor-default"
+                className="group text-center p-8 rounded-2xl backdrop-blur-md border border-[#B08D57]/20 hover:border-[#B08D57]/40 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-[#B08D57]/10 relative overflow-hidden"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(176, 141, 87, 0.08) 0%, rgba(244, 230, 192, 0.04) 100%)",
+                  boxShadow:
+                    "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(244, 230, 192, 0.1)",
+                }}
               >
-                <div className="text-3xl md:text-4xl font-bold text-gold-gradient mb-2 transition-transform duration-300 group-hover:scale-110">
-                  {stat.value}
-                </div>
-                <div className="text-sm md:text-base text-[#B3B3B3]">
-                  {stat.label}
+                {/* Animated background effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#B08D57]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-shimmer" />
+
+                <div className="relative z-10">
+                  <div className="text-4xl md:text-5xl font-bold mb-4 transition-all duration-300 group-hover:scale-110">
+                    <span className="text-white drop-shadow-lg">
+                      {stat.value}
+                    </span>
+                  </div>
+                  <div className="text-sm md:text-base text-[#B3B3B3] font-semibold uppercase tracking-wider leading-tight">
+                    {stat.label}
+                  </div>
+
+                  {/* Decorative element */}
+                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </div>
             ))}
@@ -253,8 +343,12 @@ export default function Hero({ hero }: { hero?: HeroData }) {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+      {/* Refined Scroll Indicator */}
+      <div
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-1000 delay-1000 transform ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}
+      >
         <button
           onClick={() => {
             const element = document.querySelector("#services");
@@ -287,34 +381,37 @@ export default function Hero({ hero }: { hero?: HeroData }) {
               window.requestAnimationFrame(scrollStep);
             }
           }}
-          className="flex flex-col items-center gap-2 text-[#B3B3B3] hover:text-[#F4E6C0] transition-colors duration-300 focus-gold"
+          className="group flex flex-col items-center gap-3 text-[#B3B3B3] hover:text-[#F4E6C0] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black rounded-lg p-2"
           aria-label="Scroll to services"
         >
-          <span className="text-xs uppercase tracking-widest font-medium">
-            Scroll
+          <span className="text-xs uppercase tracking-[0.2em] font-semibold opacity-70 group-hover:opacity-100 transition-opacity">
+            Discover More
           </span>
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+          <div className="relative">
+            <svg
+              className="w-6 h-6 transition-transform duration-300 group-hover:translate-y-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+            <div className="absolute inset-0 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="w-full h-full border-2 border-[#B08D57] rounded-full animate-ping" />
+            </div>
+          </div>
         </button>
       </div>
 
-      {/* Decorative Elements */}
-      <div className="absolute top-1/4 left-10 w-72 h-72 bg-[#B08D57] rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-pulse" />
-      <div
-        className="absolute bottom-1/4 right-10 w-72 h-72 bg-[#1A7F6B] rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-pulse"
-        style={{ animationDelay: "1s" }}
-      />
+      {/* Enhanced decorative elements */}
+      <div className="absolute top-1/4 left-16 w-64 h-64 bg-[#B08D57]/10 rounded-full blur-3xl animate-float-slow opacity-30" />
+      <div className="absolute bottom-1/4 right-16 w-48 h-48 bg-[#1A7F6B]/8 rounded-full blur-3xl animate-float-medium opacity-20" />
+      <div className="absolute top-1/2 right-8 w-32 h-32 bg-[#F4E6C0]/5 rounded-full blur-2xl animate-float-fast opacity-25" />
     </section>
   );
 }
