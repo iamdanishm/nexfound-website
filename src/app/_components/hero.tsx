@@ -57,80 +57,18 @@ export default function Hero({ hero }: { hero?: HeroData }) {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const { left, top, width, height } = hero.getBoundingClientRect();
-
-      const x = (clientX - left) / width;
-      const y = (clientY - top) / height;
-
-      hero.style.setProperty("--mouse-x", `${x * 100}%`);
-      hero.style.setProperty("--mouse-y", `${y * 100}%`);
-    };
-
-    hero.addEventListener("mousemove", handleMouseMove);
-    return () => hero.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   return (
     <section
       ref={heroRef}
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={
-        {
-          "--mouse-x": "50%",
-          "--mouse-y": "50%",
-        } as React.CSSProperties
-      }
     >
-      {/* Enhanced Animated Gradient Background */}
-      <div className="absolute inset-0 bg-linear-to-br from-black via-gray-900 to-black">
-        {/* Dynamic gradient overlay */}
-        <div className="absolute inset-0 opacity-40">
-          <div
-            className="absolute inset-0 transition-all duration-1000 ease-out"
-            style={{
-              background:
-                "radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(176, 141, 87, 0.4) 0%, rgba(244, 230, 192, 0.2) 20%, rgba(26, 127, 107, 0.15) 40%, transparent 70%)",
-            }}
-          />
-          <div className="absolute inset-0 bg-linear-to-r from-transparent via-[#B08D57]/5 to-transparent animate-pulse" />
-        </div>
-
-        {/* Subtle animated grid */}
-        <div
-          className="absolute inset-0 opacity-[0.02] animate-pulse"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(176, 141, 87, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(176, 141, 87, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: "100px 100px",
-          }}
-        />
-      </div>
-
-      {/* Floating geometric shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-32 h-32 border-2 border-[#B08D57]/30 rotate-45 animate-float-slow opacity-60" />
-        <div className="absolute top-40 right-20 w-24 h-24 border-2 border-[#1A7F6B]/25 rotate-12 animate-float-medium opacity-50" />
-        <div className="absolute bottom-32 left-20 w-20 h-20 border-2 border-[#F4E6C0]/20 rotate-30 animate-float-fast opacity-40" />
-        <div className="absolute bottom-40 right-32 w-16 h-16 bg-[#B08D57]/20 rotate-60 animate-float-slow opacity-70" />
-        <div className="absolute top-1/3 right-1/4 w-28 h-28 border border-[#B08D57]/25 rotate-75 animate-float-medium opacity-45" />
-        <div className="absolute bottom-1/3 left-1/3 w-22 h-22 bg-[#1A7F6B]/15 rotate-45 animate-float-fast opacity-55" />
-      </div>
-
       {/* Main Content Container */}
       <div className="container-custom relative z-10 px-6 py-20">
         <div className="max-w-6xl mx-auto text-center">
           {/* Enhanced Badge */}
           <div
-            className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-5 mt-5 backdrop-blur-md border transition-all duration-1000 transform ${
+            className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-5 mt-8 backdrop-blur-md border transition-all duration-1000 transform ${
               isVisible
                 ? "translate-y-0 opacity-100 scale-100"
                 : "translate-y-8 opacity-0 scale-95"
@@ -201,7 +139,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
             >
               {/* Animated border effect */}
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
+                <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
               </div>
 
               <div className="flex flex-col lg:flex-row gap-8 items-center justify-between relative z-10">
@@ -251,10 +189,10 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                         window.requestAnimationFrame(scrollStep);
                       }
                     }}
-                    className="group relative px-8 py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
+                    className="group relative px-8 py-4 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
                   >
                     <span className="relative z-10">Start Your Project</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </button>
 
                   <button
@@ -322,7 +260,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                 }}
               >
                 {/* Animated background effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#B08D57]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-shimmer" />
+                <div className="absolute inset-0 bg-linear-to-r from-transparent via-[#B08D57]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-shimmer" />
 
                 <div className="relative z-10">
                   <div className="text-4xl md:text-5xl font-bold mb-4 transition-all duration-300 group-hover:scale-110">
@@ -335,7 +273,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                   </div>
 
                   {/* Decorative element */}
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </div>
             ))}
@@ -407,11 +345,6 @@ export default function Hero({ hero }: { hero?: HeroData }) {
           </div>
         </button>
       </div>
-
-      {/* Enhanced decorative elements */}
-      <div className="absolute top-1/4 left-16 w-64 h-64 bg-[#B08D57]/10 rounded-full blur-3xl animate-float-slow opacity-30" />
-      <div className="absolute bottom-1/4 right-16 w-48 h-48 bg-[#1A7F6B]/8 rounded-full blur-3xl animate-float-medium opacity-20" />
-      <div className="absolute top-1/2 right-8 w-32 h-32 bg-[#F4E6C0]/5 rounded-full blur-2xl animate-float-fast opacity-25" />
     </section>
   );
 }
