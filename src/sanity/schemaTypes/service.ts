@@ -13,10 +13,13 @@ export default defineType({
         }),
         defineField({
             name: 'icon',
-            title: 'Icon (Emoji)',
-            type: 'string',
-            description: 'Enter a single emoji (e.g., 🎨, 💻, 📱)',
-            validation: (Rule) => Rule.required().max(2),
+            title: 'Service Icon',
+            type: 'image',
+            description: 'Upload a service icon image (SVG or PNG recommended)',
+            options: {
+                hotspot: true,
+            },
+            validation: (Rule) => Rule.required(),
         }),
         defineField({
             name: 'description',
@@ -57,8 +60,9 @@ export default defineType({
         },
         prepare({ title, subtitle, icon }) {
             return {
-                title: `${icon} ${title}`,
+                title,
                 subtitle,
+                media: icon,
             }
         },
     },
