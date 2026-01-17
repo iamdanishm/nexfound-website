@@ -252,7 +252,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                     {/* Technology Tags - File Extensions Style */}
                     {project.tags && project.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5">
-                        {project.tags.slice(0, 4).map((tag, tagIndex) => (
+                        {project.tags.map((tag, tagIndex) => (
                           <span
                             key={tagIndex}
                             className="inline-block px-2 py-1 text-xs bg-[#B08D57]/20 text-[#F4E6C0] rounded border border-[#B08D57]/30 font-mono hover:bg-[#B08D57]/30 transition-colors duration-200"
@@ -260,11 +260,6 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                             .{tag.toLowerCase()}
                           </span>
                         ))}
-                        {project.tags.length > 4 && (
-                          <span className="inline-block px-2 py-1 text-xs bg-gray-600/30 text-gray-400 rounded border border-gray-600/50 font-mono">
-                            +{project.tags.length - 4}
-                          </span>
-                        )}
                       </div>
                     )}
 
