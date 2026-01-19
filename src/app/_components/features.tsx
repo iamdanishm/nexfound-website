@@ -76,7 +76,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                 <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
               </div>
               <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
-                Our Expertise
+                Unfair Advantage
               </span>
             </div>
 
@@ -88,14 +88,14 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              <span className="block text-white mb-3">Elevate Your</span>
+              <span className="block text-white mb-3">Engineering Your</span>
               <span
                 className="block bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
                 style={{
                   textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
                 }}
               >
-                Digital Excellence
+                Market Dominance
               </span>
             </h2>
 
@@ -107,8 +107,9 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              From concept to launch, we deliver premium digital solutions that
-              transform ambitious visions into market-leading realities.
+              We don&apos;t just build apps; we build competitive moats. We
+              deliver secure, scalable, and high-performance technical assets
+              designed to increase your company&apos;s valuation.
             </p>
           </div>
 
@@ -129,7 +130,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
               >
                 {/* Main Card Container - Modern Design */}
                 <div
-                  className="relative h-full p-8 lg:p-10 rounded-4xl backdrop-blur-2xl border border-[#B08D57]/30 hover:border-[#B08D57]/60 transition-all duration-700 hover:rotate-1 hover:scale-y-105 overflow-hidden group-hover:shadow-2xl group-hover:shadow-[#B08D57]/20"
+                  className="relative h-full p-8 lg:p-10 rounded-4xl backdrop-blur-2xl border border-[#B08D57]/30 hover:border-[#B08D57]/60 transition-all duration-700 hover:scale-y-105 overflow-hidden group-hover:shadow-2xl group-hover:shadow-[#B08D57]/20"
                   style={{
                     background:
                       "linear-gradient(145deg, rgba(176, 141, 87, 0.05) 0%, rgba(244, 230, 192, 0.03) 25%, rgba(26, 127, 107, 0.02) 50%, rgba(0, 0, 0, 0.8) 100%)",
@@ -186,7 +187,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
 
                       {/* Icon Container */}
                       <div
-                        className="relative w-24 h-24 lg:w-28 lg:h-28 rounded-full flex items-center justify-center p-4 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 overflow-hidden"
+                        className="relative w-24 h-24 lg:w-28 lg:h-28 rounded-full flex items-center justify-center p-4 transition-all duration-700 group-hover:scale-110 overflow-hidden"
                         style={{
                           background: `linear-gradient(135deg, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")})`,
                           boxShadow:
@@ -242,6 +243,20 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                       style={{ animationDelay: "0.5s" }}
                     />
                   </div>
+
+                  {/* Shine Effect */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)",
+                      transform:
+                        hoveredIndex === index
+                          ? "translateX(100%)"
+                          : "translateX(-100%)",
+                      transition: "transform 1.2s ease-in-out",
+                    }}
+                  />
                 </div>
               </div>
             ))}
@@ -272,11 +287,11 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
 
               <div className="relative z-10">
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                  Ready to start your project?
+                  Stop Sitting on Your Idea.
                 </h3>
                 <p className="text-[#B3B3B3] text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-                  Let&apos;s discuss how Nexfound can bring your vision to life
-                  and build a product that stands out.
+                  Execution is the only thing that counts. Let&apos;s turn your
+                  vision into a deployed, revenue-generating product.
                 </p>
 
                 <button
@@ -318,7 +333,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                   className="group relative px-10 py-5 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-2xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center gap-3">
-                    Schedule a Consultation
+                    Book Your Strategy Audit
                     <svg
                       className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                       fill="none"

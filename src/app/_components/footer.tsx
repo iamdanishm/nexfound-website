@@ -137,7 +137,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
 
   const handleLinkClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
+    href: string,
   ) => {
     if (href === "#") {
       e.preventDefault();
@@ -170,7 +170,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
 
             window.scrollTo(
               0,
-              start + (targetPosition - start) * easedProgress
+              start + (targetPosition - start) * easedProgress,
             );
 
             if (progress < 1) {
@@ -192,7 +192,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
   };
 
   const handleNewsletterSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ) => {
     e.preventDefault();
     const emailInput = e.currentTarget.elements[0] as HTMLInputElement;
@@ -213,149 +213,150 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
   };
 
   return (
-    <footer className="relative overflow-x-hidden bg-linear-to-b from-black to-[#0A0A0A] pt-12 sm:pt-16 pb-8">
-      <div className="hidden sm:block absolute top-0 left-1/4 w-96 h-96 bg-[#B08D57] rounded-full mix-blend-multiply filter blur-[128px] opacity-5 pointer-events-none" />
-      <div className="hidden sm:block absolute bottom-0 right-1/4 w-96 h-96 bg-[#1A7F6B] rounded-full mix-blend-multiply filter blur-[128px] opacity-5 pointer-events-none" />
-
-      <div className="container-custom mx-auto relative z-10 px-4 sm:px-6 md:px-8 lg:px-12">
-        <div className="grid gap-6 sm:gap-8 md:gap-12 mb-10 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {/* Brand block */}
-          <div className="min-w-0">
-            <a
-              href="#"
-              onClick={(e) => handleLinkClick(e, "#")}
-              className="flex items-center space-x-3 mb-4 sm:mb-6 group"
-            >
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 transition-transform duration-300 group-hover:scale-110 shrink-0">
-                <Image
-                  src="/logo-transparent.png"
-                  alt="Nexfound"
-                  fill
-                  sizes="56px"
-                  className="object-contain"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="font-display text-transparent bg-clip-text bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-lg sm:text-2xl tracking-tight">
-                Nexfound
-              </h3>
-            </a>
-
-            <p className="text-[#B3B3B3] leading-relaxed mb-4 max-w-xs text-sm sm:text-base">
-              {description}
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-              {socialLinksArray.map((social) => (
+    <footer className="relative bg-black border-t border-[#2E2E2E]/50">
+      <div className="container-custom mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto">
+          {/* Main Footer Content */}
+          <div className="grid gap-12 lg:gap-16 mb-12">
+            {/* Top Section - Brand and Newsletter */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+              {/* Brand Section */}
+              <div className="space-y-6">
                 <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-linear-to-br from-[#1A1A1A] to-[#0A0A0A] border border-[#2E2E2E] flex items-center justify-center text-[#B3B3B3] hover:text-gold-gradient hover:border-[#B08D57] transition-all duration-300"
-                  aria-label={social.name}
+                  href="#"
+                  onClick={(e) => handleLinkClick(e, "#")}
+                  className="inline-flex items-center space-x-3 group"
                 >
-                  {social.icon}
+                  <div className="relative w-12 h-12 transition-transform duration-300 group-hover:scale-105 shrink-0">
+                    <Image
+                      src="/logo-transparent.png"
+                      alt="Nexfound"
+                      fill
+                      sizes="48px"
+                      className="object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <h3 className="font-display text-transparent bg-clip-text bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-xl tracking-tight">
+                    Nexfound
+                  </h3>
                 </a>
+
+                <p className="text-[#B3B3B3] leading-relaxed max-w-md text-sm lg:text-base">
+                  {description}
+                </p>
+
+                {/* Social Links */}
+                <div className="flex items-center gap-4">
+                  {socialLinksArray.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] flex items-center justify-center text-[#B3B3B3] hover:text-gold-gradient hover:border-[#B08D57] transition-all duration-300 hover:scale-105"
+                      aria-label={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Newsletter Section */}
+              <div className="lg:text-right space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    {newsletterTitle}
+                  </h3>
+                  <p className="text-[#B3B3B3] text-sm">
+                    {newsletterDescription}
+                  </p>
+                </div>
+
+                <form
+                  onSubmit={handleNewsletterSubmit}
+                  className="flex flex-col sm:flex-row gap-3 max-w-sm lg:ml-auto"
+                >
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                    className="flex-1 px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 text-sm"
+                    aria-label="Email address"
+                    suppressHydrationWarning
+                  />
+                  <button
+                    type="submit"
+                    className="btn btn-primary px-6 py-3 text-sm whitespace-nowrap"
+                    suppressHydrationWarning
+                  >
+                    Subscribe
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            {/* Navigation Links */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+              {footerLinks.map((group) => (
+                <div key={group.category} className="space-y-4">
+                  <h4 className="text-white font-medium text-sm uppercase tracking-wider">
+                    {group.category}
+                  </h4>
+                  <ul className="space-y-3">
+                    {group.links.map((link) => (
+                      <li key={link.label}>
+                        <a
+                          href={link.href}
+                          onClick={(e) => handleLinkClick(e, link.href)}
+                          className="text-[#B3B3B3] hover:text-white transition-colors duration-300 text-sm"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Link columns */}
-          {footerLinks.map((group) => (
-            <div key={group.category} className="min-w-0">
-              <h4 className="text-white font-semibold text-base sm:text-lg mb-3">
-                {group.category}
-              </h4>
-              <ul className="space-y-2 sm:space-y-3">
-                {group.links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      onClick={(e) => handleLinkClick(e, link.href)}
-                      className="text-[#B3B3B3] hover:text-gold-gradient transition-colors duration-300 text-sm sm:text-base wrap-break-word"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+          {/* Bottom Section */}
+          <div className="pt-8 border-t border-[#2E2E2E]/50">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="flex flex-col sm:flex-row items-center gap-4 text-center md:text-left">
+                <p className="text-[#737373] text-sm">
+                  © {currentYear} Nexfound. All rights reserved.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-6 text-sm">
+                <a
+                  href="#privacy"
+                  onClick={(e) => handleLinkClick(e, "#privacy")}
+                  className="text-[#737373] hover:text-white transition-colors duration-300"
+                >
+                  Privacy
+                </a>
+                <span className="text-[#2E2E2E]">•</span>
+                <a
+                  href="#terms"
+                  onClick={(e) => handleLinkClick(e, "#terms")}
+                  className="text-[#737373] hover:text-white transition-colors duration-300"
+                >
+                  Terms
+                </a>
+                <span className="text-[#2E2E2E]">•</span>
+                <a
+                  href="#cookies"
+                  onClick={(e) => handleLinkClick(e, "#cookies")}
+                  className="text-[#737373] hover:text-white transition-colors duration-300"
+                >
+                  Cookies
+                </a>
+              </div>
             </div>
-          ))}
-        </div>
-
-        {/* Newsletter */}
-        <div className="liquid-glass p-6 sm:p-8 md:p-10 lg:p-4 rounded-2xl mb-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center max-w-4xl mx-auto">
-            <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                {newsletterTitle}
-              </h3>
-              <p className="text-[#B3B3B3] text-sm sm:text-base">
-                {newsletterDescription}
-              </p>
-            </div>
-
-            <form
-              className="flex flex-col sm:flex-row gap-3 justify-center"
-              onSubmit={handleNewsletterSubmit}
-            >
-              <input
-                type="email"
-                placeholder="Enter your email"
-                required
-                className="flex-1 px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 text-sm sm:text-base min-w-0"
-                aria-label="Email address"
-                suppressHydrationWarning
-              />
-              <button
-                type="submit"
-                className="btn btn-primary whitespace-nowrap px-7 py-3 text-sm sm:text-sm min-w-0 shrink"
-                suppressHydrationWarning
-              >
-                <span className="whitespace-nowrap">Subscribe</span>
-              </button>
-            </form>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="pt-6 sm:pt-8 border-t border-[#2E2E2E]">
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-            <p className="text-[#737373] text-xs sm:text-sm">
-              © {currentYear} Nexfound. All rights reserved.
-            </p>
-
-            {/* <div className="flex flex-wrap justify-center md:justify-end gap-4 sm:gap-6 text-xs sm:text-sm">
-              <a
-                href="#privacy"
-                onClick={(e) => handleLinkClick(e, "#privacy")}
-                className="text-[#737373] hover:text-gold-gradient transition-colors duration-300"
-              >
-                Privacy
-              </a>
-              <a
-                href="#terms"
-                onClick={(e) => handleLinkClick(e, "#terms")}
-                className="text-[#737373] hover:text-gold-gradient transition-colors duration-300"
-              >
-                Terms
-              </a>
-              <a
-                href="#cookies"
-                onClick={(e) => handleLinkClick(e, "#cookies")}
-                className="text-[#737373] hover:text-gold-gradient transition-colors duration-300"
-              >
-                Cookies
-              </a>
-              <a
-                href="#sitemap"
-                onClick={(e) => handleLinkClick(e, "#sitemap")}
-                className="text-[#737373] hover:text-gold-gradient transition-colors duration-300"
-              >
-                Sitemap
-              </a>
-            </div> */}
           </div>
         </div>
       </div>
