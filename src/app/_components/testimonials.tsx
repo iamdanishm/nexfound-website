@@ -241,7 +241,7 @@ export default function Testimonials({
                     {/* Testimonial Quote */}
                     <div className="text-center mb-4">
                       <p className="text-white/80 text-sm leading-relaxed italic">
-                        "{testimonial.quote}"
+                        &quot;{testimonial.quote}&quot;
                       </p>
                     </div>
 

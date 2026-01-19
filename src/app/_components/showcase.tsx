@@ -28,7 +28,6 @@ type Project = {
 };
 
 export default function Showcase({ projects }: { projects: Project[] }) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -39,7 +38,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -138,7 +137,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                 ? "translate-y-0 opacity-100 scale-100"
                 : "translate-y-8 opacity-0 scale-95"
             }`}
-            style={{ columnFill: 'balance' }}
+            style={{ columnFill: "balance" }}
           >
             {projects.map((project, index) => (
               <div
@@ -148,20 +147,23 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                     ? "translate-y-0 opacity-100 scale-100"
                     : "translate-y-8 opacity-0 scale-95"
                 }`}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
                 style={{
-                  transform: index % 3 === 1 ? 'rotate(-0.5deg)' :
-                           index % 3 === 2 ? 'rotate(0.5deg)' : 'rotate(0deg)',
+                  transform:
+                    index % 3 === 1
+                      ? "rotate(-0.5deg)"
+                      : index % 3 === 2
+                        ? "rotate(0.5deg)"
+                        : "rotate(0deg)",
                 }}
               >
                 {/* Archive Card - Digital Document Style */}
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group-hover:-translate-y-1"
+                <div
+                  className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group-hover:-translate-y-1"
                   style={{
-                    boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+                    boxShadow:
+                      "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
                   }}
                 >
-
                   {/* Archive Header - File Tab Style */}
                   <div className="relative h-12 bg-gradient-to-r from-[#B08D57]/20 to-[#F4E6C0]/10 border-b border-white/10 flex items-center justify-between px-4">
                     {/* File Type Icon */}
@@ -169,7 +171,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                       <div
                         className="w-3 h-3 rounded-full opacity-80"
                         style={{
-                          background: `linear-gradient(135deg, ${project.gradient.replace('from-[', '').replace('] to-[', ', ').replace(']', '')})`,
+                          background: `linear-gradient(135deg, ${project.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")})`,
                         }}
                       />
                       <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
@@ -179,11 +181,15 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
                     {/* Status Indicator */}
                     <div className="flex items-center gap-1">
-                      <div className={`w-2 h-2 rounded-full ${
-                        project.status === 'completed' ? 'bg-green-400' :
-                        project.status === 'in-progress' ? 'bg-yellow-400' :
-                        'bg-blue-400'
-                      } animate-pulse`} />
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          project.status === "completed"
+                            ? "bg-green-400"
+                            : project.status === "in-progress"
+                              ? "bg-yellow-400"
+                              : "bg-blue-400"
+                        } animate-pulse`}
+                      />
                       <span className="text-xs text-white/60 capitalize">
                         {formatStatus(project.status)}
                       </span>
@@ -203,17 +209,20 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     ) : (
-                      <div className={`absolute inset-0 ${project.gradient} opacity-30`} />
+                      <div
+                        className={`absolute inset-0 ${project.gradient} opacity-30`}
+                      />
                     )}
 
                     {/* Subtle grid overlay */}
-                    <div className="absolute inset-0 opacity-10"
+                    <div
+                      className="absolute inset-0 opacity-10"
                       style={{
                         backgroundImage: `
                           linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
                           linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
                         `,
-                        backgroundSize: '20px 20px',
+                        backgroundSize: "20px 20px",
                       }}
                     />
 
@@ -240,12 +249,20 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                     {/* File Properties Grid */}
                     <div className="grid grid-cols-2 gap-3 mb-4">
                       <div className="bg-black/20 rounded px-3 py-2">
-                        <div className="text-xs text-white/50 uppercase tracking-wider mb-1">Users</div>
-                        <div className="text-white font-mono font-bold">{project.metrics.users}</div>
+                        <div className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                          Users
+                        </div>
+                        <div className="text-white font-mono font-bold">
+                          {project.metrics.users}
+                        </div>
                       </div>
                       <div className="bg-black/20 rounded px-3 py-2">
-                        <div className="text-xs text-white/50 uppercase tracking-wider mb-1">Rating</div>
-                        <div className="text-white font-mono font-bold">{project.metrics.rating}/5</div>
+                        <div className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                          Rating
+                        </div>
+                        <div className="text-white font-mono font-bold">
+                          {project.metrics.rating}/5
+                        </div>
                       </div>
                     </div>
 
@@ -309,8 +326,9 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                   Ready to start your next project?
                 </h3>
                 <p className="text-[#B3B3B3] text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-                  Explore our complete portfolio of transformative digital solutions
-                  and discover what's possible when vision meets execution.
+                  Explore our complete portfolio of transformative digital
+                  solutions and discover what&apos;s possible when vision meets
+                  execution.
                 </p>
 
                 <button
@@ -338,7 +356,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
                         window.scrollTo(
                           0,
-                          start + (targetPosition - start) * easedProgress
+                          start + (targetPosition - start) * easedProgress,
                         );
 
                         if (progress < 1) {

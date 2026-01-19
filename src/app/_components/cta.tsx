@@ -28,7 +28,6 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [focusedField, setFocusedField] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import SanityImage from "./sanity-image";
+import { SanityImage as SanityImageType } from "@/sanity/lib/image";
 
 type Pillar = {
   title: string;
@@ -15,7 +16,7 @@ type AboutData = {
   highlightedText?: string;
   description?: string;
   pillars?: Pillar[];
-  teamImage?: any;
+  teamImage?: SanityImageType;
   teamTagline?: string;
   foundedInfo?: string;
 };

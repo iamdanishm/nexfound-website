@@ -15,8 +15,6 @@ export const Skeleton = React.memo(function Skeleton({
   height,
   animation = true,
 }: SkeletonProps) {
-  const baseClasses = "bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700";
-
   const variantClasses = {
     text: "h-4 rounded",
     rectangular: "rounded-lg",

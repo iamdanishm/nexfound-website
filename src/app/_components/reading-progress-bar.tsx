@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const ReadingProgressBar = () => {
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const requestRef = useRef<number | null>(null);
-  const lastScrollTime = useRef(0);
 
   const scrollToTop = () => {
     // Custom smooth scroll with better easing

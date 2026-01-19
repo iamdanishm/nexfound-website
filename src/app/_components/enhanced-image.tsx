@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 // Progressive loading hook
-const useProgressiveImage = (src: string) => {
+const useProgressiveImage = () => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
@@ -46,7 +46,7 @@ const EnhancedImage = ({
   showTooltip = true,
 }: EnhancedImageProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const { loaded, handleLoad } = useProgressiveImage(src);
+  const { loaded, handleLoad } = useProgressiveImage();
 
   return (
     <div className="relative group">

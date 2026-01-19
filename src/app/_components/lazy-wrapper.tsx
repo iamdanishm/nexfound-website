@@ -15,14 +15,12 @@ export default function LazyWrapper({
   rootMargin = "50px",
   fallback = null,
 }: LazyWrapperProps) {
-  const [isVisible, setIsVisible] = useState(false);
   const [hasBeenVisible, setHasBeenVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
           setHasBeenVisible(true);
           observer.disconnect();
         }

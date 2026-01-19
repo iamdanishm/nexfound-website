@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, createContext, useContext, useRef } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 
 interface ReadingModeContextType {
   isReadingMode: boolean;
@@ -58,7 +58,6 @@ interface ReadingModeToggleProps {
 const ReadingModeToggle = ({ className = "" }: ReadingModeToggleProps) => {
   const { isReadingMode, toggleReadingMode } = useReadingMode();
   const [isMounted, setIsMounted] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setIsMounted(true);
