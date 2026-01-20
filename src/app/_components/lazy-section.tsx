@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import LazyWrapper from "./lazy-wrapper";
 import {
   Skeleton,
   ServiceCardSkeleton,
@@ -20,9 +21,17 @@ const FeaturesLoading = () => (
   </div>
 );
 
-export const LazyFeatures = dynamic(() => import("./features"), {
+const DynamicFeatures = dynamic(() => import("./features"), {
   loading: FeaturesLoading,
 });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const LazyFeatures = (props: Record<string, any>) => (
+  <LazyWrapper fallback={<FeaturesLoading />}>
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+    <DynamicFeatures {...(props as any)} />
+  </LazyWrapper>
+);
 
 const ShowcaseLoading = () => (
   <div className="py-16">
@@ -36,9 +45,17 @@ const ShowcaseLoading = () => (
   </div>
 );
 
-export const LazyShowcase = dynamic(() => import("./showcase"), {
+const DynamicShowcase = dynamic(() => import("./showcase"), {
   loading: ShowcaseLoading,
 });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const LazyShowcase = (props: Record<string, any>) => (
+  <LazyWrapper fallback={<ShowcaseLoading />}>
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+    <DynamicShowcase {...(props as any)} />
+  </LazyWrapper>
+);
 
 const AboutLoading = () => (
   <div className="py-16">
@@ -52,9 +69,17 @@ const AboutLoading = () => (
   </div>
 );
 
-export const LazyAbout = dynamic(() => import("./about"), {
+const DynamicAbout = dynamic(() => import("./about"), {
   loading: AboutLoading,
 });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const LazyAbout = (props: Record<string, any>) => (
+  <LazyWrapper fallback={<AboutLoading />}>
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+    <DynamicAbout {...(props as any)} />
+  </LazyWrapper>
+);
 
 const TestimonialsLoading = () => (
   <div className="py-16">
@@ -68,9 +93,17 @@ const TestimonialsLoading = () => (
   </div>
 );
 
-export const LazyTestimonials = dynamic(() => import("./testimonials"), {
+const DynamicTestimonials = dynamic(() => import("./testimonials"), {
   loading: TestimonialsLoading,
 });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const LazyTestimonials = (props: Record<string, any>) => (
+  <LazyWrapper fallback={<TestimonialsLoading />}>
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+    <DynamicTestimonials {...(props as any)} />
+  </LazyWrapper>
+);
 
 const BlogCarouselLoading = () => (
   <div className="py-16">
@@ -83,11 +116,19 @@ const BlogCarouselLoading = () => (
   </div>
 );
 
-export const LazyFeaturedBlogCarousel = dynamic(
+const DynamicFeaturedBlogCarousel = dynamic(
   () => import("./featured-blog-carousel"),
   {
     loading: BlogCarouselLoading,
-  }
+  },
+);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const LazyFeaturedBlogCarousel = (props: Record<string, any>) => (
+  <LazyWrapper fallback={<BlogCarouselLoading />}>
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+    <DynamicFeaturedBlogCarousel {...(props as any)} />
+  </LazyWrapper>
 );
 
 const ContactFooterLoading = () => (
@@ -101,9 +142,17 @@ const ContactFooterLoading = () => (
   </div>
 );
 
-export const LazyContactFooter = dynamic(() => import("./contact-footer"), {
+const DynamicContactFooter = dynamic(() => import("./contact-footer"), {
   loading: ContactFooterLoading,
 });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const LazyContactFooter = (props: Record<string, any>) => (
+  <LazyWrapper fallback={<ContactFooterLoading />}>
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+    <DynamicContactFooter {...(props as any)} />
+  </LazyWrapper>
+);
 
 // Blog page lazy components
 const BlogPageLoading = () => (
@@ -122,6 +171,14 @@ const BlogPageLoading = () => (
   </div>
 );
 
-export const LazyBlogPage = dynamic(() => import("../(site)/blog/page"), {
+const DynamicBlogPage = dynamic(() => import("../(site)/blog/page"), {
   loading: BlogPageLoading,
 });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const LazyBlogPage = (props: Record<string, any>) => (
+  <LazyWrapper fallback={<BlogPageLoading />}>
+    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+    <DynamicBlogPage {...(props as any)} />
+  </LazyWrapper>
+);

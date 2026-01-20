@@ -206,6 +206,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                           alt={service.title}
                           width={64}
                           height={64}
+                          sizes="64px"
                           className="w-full h-full object-contain filter brightness-0 invert drop-shadow-2xl relative z-10"
                         />
                       </div>
