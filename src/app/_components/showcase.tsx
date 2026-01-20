@@ -75,7 +75,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
           <div className="text-center mb-20">
             {/* Premium Badge */}
             <div
-              className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border transition-all duration-1000 transform ${
+              className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border transition-all duration-300 transform ${
                 isVisible
                   ? "translate-y-0 opacity-100 scale-100"
                   : "translate-y-8 opacity-0 scale-95"
@@ -98,7 +98,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
             {/* Premium Title */}
             <h2
-              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-1000 delay-200 transform ${
+              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-300 delay-100 transform ${
                 isVisible
                   ? "translate-y-0 opacity-100 scale-100"
                   : "translate-y-8 opacity-0 scale-95"
@@ -117,7 +117,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
             {/* Enhanced Description */}
             <p
-              className={`text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed transition-all duration-1000 delay-400 transform ${
+              className={`text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed transition-all duration-300 delay-200 transform ${
                 isVisible
                   ? "translate-y-0 opacity-100 scale-100"
                   : "translate-y-8 opacity-0 scale-95"
@@ -132,7 +132,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
           {/* Digital Archive Cards - Unique Masonry Layout */}
           <div
-            className={`columns-1 lg:columns-2 xl:columns-3 gap-6 mb-20 transition-all duration-1000 delay-600 transform ${
+            className={`columns-1 lg:columns-2 xl:columns-3 gap-6 mb-20 transition-all duration-300 delay-300 transform ${
               isVisible
                 ? "translate-y-0 opacity-100 scale-100"
                 : "translate-y-8 opacity-0 scale-95"
@@ -142,7 +142,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
             {projects.map((project, index) => (
               <div
                 key={project._id}
-                className={`group relative mb-6 break-inside-avoid transition-all duration-1000 delay-${700 + index * 100} transform ${
+                className={`group relative mb-6 break-inside-avoid transition-all duration-300 delay-${200 + index * 50} transform ${
                   isVisible
                     ? "translate-y-0 opacity-100 scale-100"
                     : "translate-y-8 opacity-0 scale-95"
@@ -300,7 +300,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
           {/* Enhanced CTA Section */}
           <div
-            className={`text-center transition-all duration-1000 delay-800 transform ${
+            className={`text-center transition-all duration-300 delay-400 transform ${
               isVisible
                 ? "translate-y-0 opacity-100 scale-100"
                 : "translate-y-8 opacity-0 scale-95"

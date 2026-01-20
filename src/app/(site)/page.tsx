@@ -6,8 +6,8 @@ import {
   LazyTestimonials,
   LazyAbout,
   LazyFeaturedBlogCarousel,
-  LazyContactFooter,
 } from "../_components/lazy-section";
+import ContactFooter from "../_components/contact-footer";
 import { client } from "@/sanity/lib/client";
 import {
   projectsQuery,
@@ -82,7 +82,7 @@ export default async function Home() {
           </section>
         )}
       </main>
-      <LazyContactFooter
+      <ContactFooter
         cta={settings?.cta}
         contactEmail={settings?.contactEmail}
         contactPhone={settings?.contactPhone}

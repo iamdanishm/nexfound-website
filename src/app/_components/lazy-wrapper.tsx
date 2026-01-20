@@ -89,7 +89,7 @@ export default function LazyWrapper({
   return (
     <ErrorBoundary fallback={fallback}>
       <div
-        className={`transition-opacity duration-200 ${
+        className={`transition-opacity duration-100 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
       >

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type TrustItem = { value: string; label: string };
 
@@ -27,18 +27,31 @@ export default function Hero({ hero }: { hero?: HeroData }) {
     subtitle: hero?.cta?.ctaSubtitle,
   };
 
-  const trustIndicators: TrustItem[] =
-    hero?.trustIndicators && hero.trustIndicators.length > 0
-      ? hero.trustIndicators
-      : [
-          { value: "50+", label: "Projects Delivered" },
-          { value: "98%", label: "Client Satisfaction" },
-          { value: "15+", label: "Industry Awards" },
-          { value: "24/7", label: "Support Available" },
-        ];
+  const trustIndicators: TrustItem[] = useMemo(
+    () =>
+      hero?.trustIndicators && hero.trustIndicators.length > 0
+        ? hero.trustIndicators
+        : [
+            { value: "50+", label: "Projects Delivered" },
+            { value: "98%", label: "Client Satisfaction" },
+            { value: "15+", label: "Industry Awards" },
+            { value: "24/7", label: "Support Available" },
+          ],
+    [hero?.trustIndicators],
+  );
 
   const heroRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [currentHighlightIndex, setCurrentHighlightIndex] = useState(0);
+  const [textOpacity, setTextOpacity] = useState(1);
+
+  const highlightTexts = [
+    "Start Scaling Your Business.",
+    "Start Building Your Future.",
+    "Start Innovating Today.",
+    "Start Transforming Ideas.",
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -47,7 +60,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (heroRef.current) {
@@ -57,12 +70,73 @@ export default function Hero({ hero }: { hero?: HeroData }) {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    const interval = setInterval(() => {
+      setTextOpacity(0);
+      setTimeout(() => {
+        setCurrentHighlightIndex((prev) => (prev + 1) % highlightTexts.length);
+        setTextOpacity(1);
+      }, 500);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isVisible]);
+
   return (
     <section
       ref={heroRef}
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
+      {/* Interactive Background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(176, 141, 87, 0.08) 0%, transparent 40%)`,
+        }}
+      ></div>
+
+      {/* Floating Elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div
+          className="absolute w-20 h-20 border border-[#B08D57]/20 rounded-full animate-pulse"
+          style={{
+            top: `${mousePos.y * 80 + 10}%`,
+            left: `${mousePos.x * 80 + 10}%`,
+            transform: `translate(-50%, -50%) scale(${0.5 + mousePos.x * 0.5})`,
+            animation: "float 6s ease-in-out infinite",
+          }}
+        />
+        <div
+          className="absolute w-16 h-16 bg-[#F4E6C0]/10 rounded-full blur-sm"
+          style={{
+            top: `${(1 - mousePos.y) * 70 + 15}%`,
+            right: `${mousePos.x * 70 + 15}%`,
+            transform: `translate(50%, -50%) scale(${0.3 + mousePos.y * 0.7})`,
+            animation: "float 8s ease-in-out infinite reverse",
+          }}
+        />
+        <div
+          className="absolute w-12 h-12 border-2 border-[#1A7F6B]/30 rotate-45"
+          style={{
+            bottom: `${mousePos.y * 60 + 20}%`,
+            left: `${(1 - mousePos.x) * 60 + 20}%`,
+            transform: `translate(-50%, 50%) rotate(${mousePos.x * 180}deg)`,
+            animation: "float 10s ease-in-out infinite",
+          }}
+        />
+      </div>
       {/* Main Content Container */}
       <div className="container-custom relative z-10 px-6 py-20">
         <div className="max-w-6xl mx-auto text-center">
@@ -99,12 +173,13 @@ export default function Hero({ hero }: { hero?: HeroData }) {
           >
             <span className="block text-white">{mainHeading}</span>
             <span
-              className="block bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
+              className="block bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent transition-all duration-500"
               style={{
                 textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
+                opacity: textOpacity,
               }}
             >
-              {highlightedText}
+              {highlightTexts[currentHighlightIndex]}
             </span>
           </h1>
 
@@ -178,7 +253,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
                           window.scrollTo(
                             0,
-                            start + (targetPosition - start) * easedProgress
+                            start + (targetPosition - start) * easedProgress,
                           );
 
                           if (progress < 1) {
@@ -220,7 +295,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
                           window.scrollTo(
                             0,
-                            start + (targetPosition - start) * easedProgress
+                            start + (targetPosition - start) * easedProgress,
                           );
 
                           if (progress < 1) {
@@ -308,7 +383,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
                 window.scrollTo(
                   0,
-                  start + (targetPosition - start) * easedProgress
+                  start + (targetPosition - start) * easedProgress,
                 );
 
                 if (progress < 1) {

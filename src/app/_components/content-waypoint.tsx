@@ -35,7 +35,7 @@ const ContentWaypoint = ({
       {
         threshold,
         rootMargin: "0px 0px -50px 0px",
-      }
+      },
     );
 
     const currentElement = elementRef.current;
@@ -51,20 +51,20 @@ const ContentWaypoint = ({
   }, [threshold]);
 
   const animationClasses = {
-    "fade-in": "opacity-0 animate-[fade-in_0.6s_ease-out_forwards]",
+    "fade-in": "opacity-0 animate-[fade-in_0.3s_ease-out_forwards]",
     "slide-up":
-      "opacity-0 translate-y-4 animate-[slide-up_0.6s_ease-out_forwards]",
+      "opacity-0 translate-y-4 animate-[slide-up_0.3s_ease-out_forwards]",
     "slide-left":
-      "opacity-0 -translate-x-4 animate-[slide-left_0.6s_ease-out_forwards]",
+      "opacity-0 -translate-x-4 animate-[slide-left_0.3s_ease-out_forwards]",
     "slide-right":
-      "opacity-0 translate-x-4 animate-[slide-right_0.6s_ease-out_forwards]",
-    "scale-in": "opacity-0 scale-95 animate-[scale-in_0.6s_ease-out_forwards]",
+      "opacity-0 translate-x-4 animate-[slide-right_0.3s_ease-out_forwards]",
+    "scale-in": "opacity-0 scale-95 animate-[scale-in_0.3s_ease-out_forwards]",
   };
 
   return (
     <div
       ref={elementRef}
-      className={`${isVisible ? animationClasses[animation] : "opacity-0"} ${className}`}
+      // className={`${isVisible ? animationClasses[animation] : "opacity-0"} ${className}`}
       style={{
         animationDelay: isVisible ? `${delay}ms` : undefined,
         animationFillMode: "forwards",
