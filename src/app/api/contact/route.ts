@@ -26,8 +26,12 @@ export async function POST(request: NextRequest) {
 
 
     // Send email
+    console.log('Contact form submission:', { name, email, company, message })
+    console.log('Sending to:', settings?.contactEmail)
+    console.log('Using API key:', process.env.RESEND_API_KEY?.substring(0, 10) + '...')
+
     const { data, error } = await resend.emails.send({
-      from: 'Nexfound Contact Form <hello@nexfound.in>', // Default Resend sender
+      from: 'Nexfound Contact Form <hello@nexfound.in>', // Use verified custom domain
       to: [settings?.contactEmail],
       replyTo: email, // User's email for easy reply
       subject: `New Contact Form Submission from ${name}`,
