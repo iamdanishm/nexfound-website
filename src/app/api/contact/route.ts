@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
 
     // Send email
     const { data, error } = await resend.emails.send({
-      from: 'Nexfound Contact Form <hello@send.nexfound.in>', // Default Resend sender
+      from: 'Nexfound Contact Form <hello@nexfound.in>', // Default Resend sender
       to: [settings?.contactEmail],
       replyTo: email, // User's email for easy reply
       subject: `New Contact Form Submission from ${name}`,
