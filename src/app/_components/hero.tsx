@@ -2,6 +2,29 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+// Text constants
+const TEXTS = {
+  BADGE_TEXT_DEFAULT: "Crafting Digital Excellence",
+  MAIN_HEADING_DEFAULT: "Stop Worrying About Code.",
+  HIGHLIGHTED_TEXT_DEFAULT: "Start Scaling Your Business.",
+  SUBHEADING_DEFAULT: "Premium digital service studio crafting exceptional experiences for ambitious brands.",
+  HIGHLIGHT_TEXTS: [
+    "actually scales.",
+    "investors trust.",
+    "drives revenue.",
+    "never breaks.",
+  ],
+  TRUST_INDICATORS_DEFAULT: [
+    { value: "50+", label: "Projects Delivered" },
+    { value: "98%", label: "Client Satisfaction" },
+    { value: "15+", label: "Industry Awards" },
+    { value: "24/7", label: "Support Available" },
+  ],
+  CTA_BUTTON_PRIMARY: "Start Your Project",
+  CTA_BUTTON_SECONDARY: "View Our Work",
+  SCROLL_INDICATOR_TEXT: "Discover More"
+} as const;
+
 type TrustItem = { value: string; label: string };
 
 type HeroData = {
@@ -47,10 +70,10 @@ export default function Hero({ hero }: { hero?: HeroData }) {
   const [textOpacity, setTextOpacity] = useState(1);
 
   const highlightTexts = [
-    "Start Scaling Your Business.",
-    "Start Building Your Future.",
-    "Start Innovating Today.",
-    "Start Transforming Ideas.",
+    "actually scales.",
+    "investors trust.",
+    "drives revenue.",
+    "never breaks.",
   ];
 
   useEffect(() => {

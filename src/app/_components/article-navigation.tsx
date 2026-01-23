@@ -3,6 +3,11 @@
 import { useEffect, useState } from "react";
 import { PortableTextBlock } from "@portabletext/react";
 
+// Text constants
+const TEXTS = {
+  TABLE_OF_CONTENTS: "Table of Contents"
+} as const;
+
 interface ArticleNavigationProps {
   content: PortableTextBlock[];
 }
@@ -136,7 +141,7 @@ const ArticleNavigation = ({ content }: ArticleNavigationProps) => {
     <div className="sticky top-24 self-start w-72 bg-black/95 backdrop-blur-sm rounded-lg p-4 border border-white/5">
       <div className="space-y-1">
         <h3 className="text-xs font-medium text-text-muted mb-4 uppercase tracking-wider truncate">
-          Table of Contents
+          {TEXTS.TABLE_OF_CONTENTS}
         </h3>
         <nav className="space-y-2">
           {headings.map((heading, index) => (

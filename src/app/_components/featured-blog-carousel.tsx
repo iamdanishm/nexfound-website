@@ -5,6 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
 
+// Text constants
+const TEXTS = {
+  EMPTY_STATE_TITLE: "Coming Soon",
+  EMPTY_STATE_DESCRIPTION: "We're working on exciting content. Check back soon for our latest posts.",
+  BADGE_TEXT: "Founder Intelligence",
+  TITLE_FIRST_LINE: "The Scaling",
+  TITLE_SECOND_LINE: "Playbook",
+  DESCRIPTION: "Strategies, not 'thoughts.' We break down exactly how to build enterprise-grade tech that drives revenue and increases valuation.",
+  PUBLISHED_STAMP: "PUBLISHED",
+  DEFAULT_CATEGORY: "Article",
+  DEFAULT_AUTHOR: "Nexfound"
+} as const;
+
 interface BlogPost {
   _id: string;
   title: string;
@@ -104,11 +117,10 @@ const FeaturedBlogCarousel = React.memo(function FeaturedBlogCarousel({
           <div className="text-center py-12">
             <div className="liquid-glass p-8 max-w-md mx-auto">
               <h2 className="text-xl font-semibold text-pearl mb-2">
-                Coming Soon
+                {TEXTS.EMPTY_STATE_TITLE}
               </h2>
               <p className="text-text-muted">
-                We&apos;re working on exciting content. Check back soon for our
-                latest posts.
+                {TEXTS.EMPTY_STATE_DESCRIPTION}
               </p>
             </div>
           </div>
@@ -156,7 +168,7 @@ const FeaturedBlogCarousel = React.memo(function FeaturedBlogCarousel({
                 <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
               </div>
               <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
-                Founder Intelligence
+                {TEXTS.BADGE_TEXT}
               </span>
             </div>
 
@@ -168,14 +180,14 @@ const FeaturedBlogCarousel = React.memo(function FeaturedBlogCarousel({
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              <span className="block text-white mb-3">The Scaling</span>
+              <span className="block text-white mb-3">{TEXTS.TITLE_FIRST_LINE}</span>
               <span
                 className="block bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
                 style={{
                   textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
                 }}
               >
-                Playbook
+                {TEXTS.TITLE_SECOND_LINE}
               </span>
             </h2>
 
@@ -187,9 +199,7 @@ const FeaturedBlogCarousel = React.memo(function FeaturedBlogCarousel({
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              Strategies, not &apos;thoughts.&apos; We break down exactly how to
-              build enterprise-grade tech that drives revenue and increases
-              valuation.
+              {TEXTS.DESCRIPTION}
             </p>
           </div>
 
@@ -344,7 +354,7 @@ const BlogCarouselCard = React.memo(function BlogCarouselCard({
               {/* Publication stamp effect */}
               <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded border border-blue-500/30 font-mono">
-                  PUBLISHED
+                  {TEXTS.PUBLISHED_STAMP}
                 </div>
               </div>
             </div>
@@ -358,7 +368,7 @@ const BlogCarouselCard = React.memo(function BlogCarouselCard({
                 <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse" />
               )}
               <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
-                {post.category?.title || "Article"}
+                {post.category?.title || TEXTS.DEFAULT_CATEGORY}
               </span>
             </div>
 
@@ -387,14 +397,14 @@ const BlogCarouselCard = React.memo(function BlogCarouselCard({
               <div className="flex items-center gap-2">
                 <Image
                   src="/logo-transparent.png"
-                  alt="Nexfound"
+                  alt={TEXTS.DEFAULT_AUTHOR}
                   width={20}
                   height={20}
                   sizes="20px"
                   className="rounded-full w-5 h-5"
                 />
                 <span className="text-xs text-white/60">
-                  {post.author?.name || "Nexfound"}
+                  {post.author?.name || TEXTS.DEFAULT_AUTHOR}
                 </span>
               </div>
               <div className="text-[#F4E6C0] group-hover:text-[#B08D57] transition-colors duration-300">

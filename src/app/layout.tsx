@@ -5,20 +5,12 @@ import { Toaster } from "react-hot-toast";
 import ServiceWorkerRegister from "./_components/sw-register";
 import PreloadLinks from "./_components/preload-links";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-export const metadata: Metadata = {
-  title: {
-    default: "Nexfound | Premium Tech Service for Startups and Businesses",
-    template: "%s | Nexfound",
-  },
-  description:
-    "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
-  keywords: [
+// Text constants for metadata
+const METADATA_TEXTS = {
+  TITLE_DEFAULT: "Nexfound | Premium Tech Service for Startups and Businesses",
+  TITLE_TEMPLATE: "%s | Nexfound",
+  DESCRIPTION: "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
+  KEYWORDS: [
     "Nexfound",
     "nexfound",
     "nexfound.in",
@@ -43,53 +35,84 @@ export const metadata: Metadata = {
     "MVP development",
     "scalable digital solutions",
   ],
-  applicationName: "Nexfound",
-  category: "Technology Services",
-  metadataBase: new URL("https://nexfound.in"),
+  APPLICATION_NAME: "Nexfound",
+  CATEGORY: "Technology Services",
+  METADATA_BASE_URL: "https://nexfound.in",
+  ALTERNATES_CANONICAL: "https://nexfound.in",
+  OG_TITLE: "Nexfound | Premium Tech Service for Startups and Businesses",
+  OG_DESCRIPTION: "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
+  OG_TYPE: "website",
+  OG_LOCALE: "en_US",
+  OG_COUNTRY_NAME: "India",
+  OG_EMAILS: ["hello@nexfound.in"],
+  OG_IMAGES: [
+    {
+      url: "/og-image.jpg",
+      width: 1200,
+      height: 633,
+      alt: "Nexfound - Premium Technology Services",
+    },
+  ],
+  TWITTER_CARD: "summary_large_image",
+  TWITTER_TITLE: "Nexfound | Premium Tech Service for Startups and Businesses",
+  TWITTER_DESCRIPTION: "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
+  TWITTER_CREATOR: "@iam_danishm",
+  TWITTER_SITE: "@iam_danishm",
+  ICONS: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
+  },
+  REFERRER: "origin-when-cross-origin",
+} as const;
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: METADATA_TEXTS.TITLE_DEFAULT,
+    template: METADATA_TEXTS.TITLE_TEMPLATE,
+  },
+  description: METADATA_TEXTS.DESCRIPTION,
+  keywords: METADATA_TEXTS.KEYWORDS as unknown as string[],
+  applicationName: METADATA_TEXTS.APPLICATION_NAME,
+  category: METADATA_TEXTS.CATEGORY,
+  metadataBase: new URL(METADATA_TEXTS.METADATA_BASE_URL),
   alternates: {
-    canonical: "https://nexfound.in",
+    canonical: METADATA_TEXTS.ALTERNATES_CANONICAL,
     languages: {
-      "en-US": "https://nexfound.in",
+      "en-US": METADATA_TEXTS.ALTERNATES_CANONICAL,
     },
   },
   openGraph: {
-    siteName: "Nexfound",
-    title: "Nexfound | Premium Tech Service for Startups and Businesses",
-    description:
-      "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
-    type: "website",
-    locale: "en_US",
-    url: "https://nexfound.in",
-    countryName: "India",
-    emails: ["hello@nexfound.in"],
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 633,
-        alt: "Nexfound - Premium Technology Services",
-      },
-    ],
+    siteName: METADATA_TEXTS.APPLICATION_NAME,
+    title: METADATA_TEXTS.OG_TITLE,
+    description: METADATA_TEXTS.OG_DESCRIPTION,
+    type: METADATA_TEXTS.OG_TYPE,
+    locale: METADATA_TEXTS.OG_LOCALE,
+    url: METADATA_TEXTS.METADATA_BASE_URL,
+    countryName: METADATA_TEXTS.OG_COUNTRY_NAME,
+    emails: METADATA_TEXTS.OG_EMAILS as unknown as string[],
+    images: METADATA_TEXTS.OG_IMAGES as unknown as { url: string; width: number; height: number; alt: string }[],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Nexfound | Premium Tech Service for Startups and Businesses",
-    description:
-      "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
+    card: METADATA_TEXTS.TWITTER_CARD,
+    title: METADATA_TEXTS.TWITTER_TITLE,
+    description: METADATA_TEXTS.TWITTER_DESCRIPTION,
     images: ["/og-image.jpg"],
-    creator: "@iam_danishm",
-    site: "@iam_danishm",
+    creator: METADATA_TEXTS.TWITTER_CREATOR,
+    site: METADATA_TEXTS.TWITTER_SITE,
   },
   robots: {
     index: true,
     follow: true,
   },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-    shortcut: "/favicon.ico",
-  },
-  referrer: "origin-when-cross-origin",
+  icons: METADATA_TEXTS.ICONS,
+  referrer: METADATA_TEXTS.REFERRER,
 };
 
 export default function RootLayout({

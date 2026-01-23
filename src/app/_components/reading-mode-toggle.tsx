@@ -2,6 +2,12 @@
 
 import { useState, useEffect, createContext, useContext } from "react";
 
+// Text constants
+const TEXTS = {
+  ARIA_ENTER_READING_MODE: "Enter reading mode",
+  ARIA_EXIT_READING_MODE: "Exit reading mode"
+} as const;
+
 interface ReadingModeContextType {
   isReadingMode: boolean;
   toggleReadingMode: () => void;
@@ -67,7 +73,7 @@ const ReadingModeToggle = ({ className = "" }: ReadingModeToggleProps) => {
     return (
       <button
         className={`fixed top-4 right-4 z-[60] p-3 rounded-full bg-black/80 border border-brand-bronze/30 hover:bg-black/90 hover:border-brand-bronze/50 transition-all duration-300 group ${className}`}
-        aria-label="Enter reading mode"
+        aria-label={TEXTS.ARIA_ENTER_READING_MODE}
       >
         <svg
           className="w-5 h-5 text-brand-champagne group-hover:text-pearl transition-colors"
@@ -90,7 +96,7 @@ const ReadingModeToggle = ({ className = "" }: ReadingModeToggleProps) => {
     <button
       onClick={toggleReadingMode}
       className={`fixed top-4 right-4 z-[60] p-3 rounded-full bg-black/80 border border-brand-bronze/30 hover:bg-black/90 hover:border-brand-bronze/50 transition-all duration-300 group ${className}`}
-      aria-label={isReadingMode ? "Exit reading mode" : "Enter reading mode"}
+      aria-label={isReadingMode ? TEXTS.ARIA_EXIT_READING_MODE : TEXTS.ARIA_ENTER_READING_MODE}
     >
       {isReadingMode ? (
         // Exit reading mode icon

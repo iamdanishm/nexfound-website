@@ -6,6 +6,14 @@ import {
 } from "@portabletext/react";
 import Image from "next/image";
 
+// Text constants
+const TEXTS = {
+  IMAGE_NOT_AVAILABLE: "Image not available",
+  IMAGE_DEBUG_PREFIX: "Image not available - Debug: ",
+  IMAGE_REFERENCE_NOT_EXPANDED: "Image reference found but not expanded. Please update the Sanity query to include image assets.",
+  UNABLE_TO_LOAD_IMAGE: "Unable to load image"
+} as const;
+
 interface BlogContentProps {
   content: PortableTextBlock[];
 }
@@ -16,7 +24,7 @@ const components: PortableTextComponents = {
       if (!value || !value.asset) {
         return (
           <div className="my-8 p-4 border-2 border-dashed border-gray-600 rounded-lg text-center text-gray-400">
-            Image not available - Debug: {JSON.stringify(value)}
+            {TEXTS.IMAGE_DEBUG_PREFIX}{JSON.stringify(value)}
           </div>
         );
       }
@@ -24,8 +32,7 @@ const components: PortableTextComponents = {
       if (typeof value.asset === "string") {
         return (
           <div className="my-8 p-4 border-2 border-dashed border-gray-600 rounded-lg text-center text-gray-400">
-            Image reference found but not expanded. Please update the Sanity
-            query to include image assets.
+            {TEXTS.IMAGE_REFERENCE_NOT_EXPANDED}
           </div>
         );
       }
@@ -71,7 +78,7 @@ const components: PortableTextComponents = {
 
       return (
         <div className="my-8 p-4 border-2 border-dashed border-gray-600 rounded-lg text-center text-gray-400">
-          Unable to load image
+          {TEXTS.UNABLE_TO_LOAD_IMAGE}
         </div>
       );
     },

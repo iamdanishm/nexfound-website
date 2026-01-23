@@ -69,16 +69,7 @@ export default defineType({
                 },
             ],
         }),
-        defineField({
-            name: 'metrics',
-            title: 'Project Metrics',
-            type: 'object',
-            fields: [
-                { name: 'conversion', type: 'string', title: 'Conversion Rate' },
-                { name: 'users', type: 'string', title: 'Active Users' },
-                { name: 'rating', type: 'string', title: 'User Rating' },
-            ],
-        }),
+
         defineField({
             name: 'gradient',
             title: 'Gradient Theme',

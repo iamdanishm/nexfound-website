@@ -3,6 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
 
+// Text constants
+const TEXTS = {
+  FEATURED_BADGE: "Featured",
+  READING_TIME_LABEL: "min read",
+  LOGO_ALT_TEXT: "Nexfound"
+} as const;
+
 interface BlogCardProps {
   title: string;
   slug: {
@@ -81,7 +88,7 @@ const BlogCard = React.memo(function BlogCard({
             {/* Featured Badge */}
             {featured && (
               <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-brand-bronze/20 text-brand-bronze">
-                Featured
+                {TEXTS.FEATURED_BADGE}
               </span>
             )}
 
@@ -136,7 +143,7 @@ const BlogCard = React.memo(function BlogCard({
                   <div className="flex items-center gap-2">
                     <Image
                       src="/logo-transparent.png"
-                      alt="Nexfound"
+                      alt={TEXTS.LOGO_ALT_TEXT}
                       width={20}
                       height={20}
                       sizes="20px"
@@ -151,7 +158,7 @@ const BlogCard = React.memo(function BlogCard({
                 {/* Date and Reading Time */}
                 <div className="flex items-center gap-3 text-xs text-text-muted">
                   <time>{formattedDate}</time>
-                  <span>{readingTime} min read</span>
+                  <span>{readingTime} {TEXTS.READING_TIME_LABEL}</span>
                 </div>
               </div>
 

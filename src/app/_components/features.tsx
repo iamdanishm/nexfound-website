@@ -3,6 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import SanityImage from "./sanity-image";
 
+// Text constants
+const TEXTS = {
+  BADGE_TEXT: "High-Performance Engineering",
+  TITLE_FIRST_LINE: "The Right Foundation",
+  TITLE_SECOND_LINE: "For Every Stage",
+  DESCRIPTION: "Building software in the AI era is easy; building a business that lasts is hard. Whether launching something new, modernizing legacy operations, or rescuing stalled projects, we bring the architectural precision and engineering rigor needed to turn code into a durable, high-value company asset.",
+  CTA_HEADING: "One Partner. Total Clarity.",
+  CTA_SUBHEADING: "Whether it's a new build or a rescue mission, you get a dedicated lead engineer.",
+  CTA_BUTTON: "Discuss Your Project"
+} as const;
+
 type Service = {
   _id: string;
   title: string;
@@ -76,7 +87,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                 <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
               </div>
               <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
-                Unfair Advantage
+                {TEXTS.BADGE_TEXT}
               </span>
             </div>
 
@@ -88,14 +99,16 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              <span className="block text-white mb-3">Engineering Your</span>
+              <span className="block text-white mb-3">
+                {TEXTS.TITLE_FIRST_LINE}
+              </span>
               <span
                 className="block bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
                 style={{
                   textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
                 }}
               >
-                Market Dominance
+                {TEXTS.TITLE_SECOND_LINE}
               </span>
             </h2>
 
@@ -107,9 +120,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              We don&apos;t just build apps; we build competitive moats. We
-              deliver secure, scalable, and high-performance technical assets
-              designed to increase your company&apos;s valuation.
+              {TEXTS.DESCRIPTION}
             </p>
           </div>
 
@@ -288,11 +299,10 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
 
               <div className="relative z-10">
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                  Stop Sitting on Your Idea.
+                  {TEXTS.CTA_HEADING}
                 </h3>
                 <p className="text-[#B3B3B3] text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-                  Execution is the only thing that counts. Let&apos;s turn your
-                  vision into a deployed, revenue-generating product.
+                  {TEXTS.CTA_SUBHEADING}
                 </p>
 
                 <button
@@ -334,7 +344,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                   className="group relative px-10 py-5 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-2xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center gap-3">
-                    Book Your Strategy Audit
+                    {TEXTS.CTA_BUTTON}
                     <svg
                       className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                       fill="none"

@@ -4,6 +4,62 @@ import Image from "next/image";
 import { SanityImage as SanityImageType } from "@/sanity/lib/image";
 import toast from "react-hot-toast";
 
+// Text constants
+const TEXTS = {
+  DESCRIPTION_DEFAULT: "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.",
+  NEWSLETTER_TITLE_DEFAULT: "Stay Updated",
+  NEWSLETTER_DESCRIPTION_DEFAULT: "Subscribe to our newsletter for the latest insights and exclusive content.",
+  FOOTER_LINKS_DEFAULT: [
+    {
+      category: "Services",
+      links: [
+        { label: "Brand Identity", href: "#services" },
+        { label: "Web Development", href: "#services" },
+        { label: "Mobile Apps", href: "#services" },
+        { label: "Digital Strategy", href: "#services" },
+      ],
+    },
+    {
+      category: "Company",
+      links: [
+        { label: "About Us", href: "#about" },
+        { label: "Our Work", href: "#work" },
+        { label: "Careers", href: "#careers" },
+        { label: "Blog", href: "/blog" },
+      ],
+    },
+    {
+      category: "Resources",
+      links: [
+        { label: "Case Studies", href: "#work" },
+        { label: "Testimonials", href: "#testimonials" },
+        { label: "FAQ", href: "#faq" },
+        { label: "Support", href: "#contact" },
+      ],
+    },
+    {
+      category: "Legal",
+      links: [
+        { label: "Privacy Policy", href: "#privacy" },
+        { label: "Terms of Service", href: "#terms" },
+        { label: "Cookie Policy", href: "#cookies" },
+        { label: "Sitemap", href: "#sitemap" },
+      ],
+    },
+  ],
+  EMAIL_DEFAULT: "hello@nexfound.in",
+  PHONE_DEFAULT: "+91 8286556661",
+  NEWSLETTER_PLACEHOLDER: "Enter your email",
+  NEWSLETTER_BUTTON: "Subscribe",
+  COPYRIGHT_TEXT: "© {year} Nexfound. All rights reserved.",
+  FOOTER_LINK_PRIVACY: "Privacy",
+  FOOTER_LINK_TERMS: "Terms",
+  FOOTER_LINK_COOKIES: "Cookies",
+  SUCCESS_MESSAGE: "Subscribed! You'll get our updates soon.",
+  ERROR_MESSAGE: "Subscription failed.",
+  EMAIL_ALT: "Nexfound"
+} as const;
+
 type FooterLink = {
   label: string;
   href: string;
@@ -38,54 +94,17 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
 
   const description =
     footer?.description ??
-    "Turn ambitious ideas into scalable digital products with Nexfound. We deliver premium web, mobile, and product solutions that drive real impact.";
+    TEXTS.DESCRIPTION_DEFAULT;
 
-  const newsletterTitle = footer?.newsletterTitle ?? "Stay Updated";
+  const newsletterTitle = footer?.newsletterTitle ?? TEXTS.NEWSLETTER_TITLE_DEFAULT;
   const newsletterDescription =
     footer?.newsletterDescription ??
-    "Subscribe to our newsletter for the latest insights and exclusive content.";
+    TEXTS.NEWSLETTER_DESCRIPTION_DEFAULT;
 
   const footerLinks: FooterLinkGroup[] =
     footer?.footerLinks && footer.footerLinks.length > 0
       ? footer.footerLinks
-      : [
-          {
-            category: "Services",
-            links: [
-              { label: "Brand Identity", href: "#services" },
-              { label: "Web Development", href: "#services" },
-              { label: "Mobile Apps", href: "#services" },
-              { label: "Digital Strategy", href: "#services" },
-            ],
-          },
-          {
-            category: "Company",
-            links: [
-              { label: "About Us", href: "#about" },
-              { label: "Our Work", href: "#work" },
-              { label: "Careers", href: "#careers" },
-              { label: "Blog", href: "/blog" },
-            ],
-          },
-          {
-            category: "Resources",
-            links: [
-              { label: "Case Studies", href: "#work" },
-              { label: "Testimonials", href: "#testimonials" },
-              { label: "FAQ", href: "#faq" },
-              { label: "Support", href: "#contact" },
-            ],
-          },
-          {
-            category: "Legal",
-            links: [
-              { label: "Privacy Policy", href: "#privacy" },
-              { label: "Terms of Service", href: "#terms" },
-              { label: "Cookie Policy", href: "#cookies" },
-              { label: "Sitemap", href: "#sitemap" },
-            ],
-          },
-        ];
+      : TEXTS.FOOTER_LINKS_DEFAULT as unknown as FooterLinkGroup[];
 
   const socialLinksArray = [
     {
@@ -205,10 +224,10 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
     const result = await response.json();
 
     if (result.success) {
-      toast.success("Subscribed! You'll get our updates soon.");
+      toast.success(TEXTS.SUCCESS_MESSAGE);
       emailInput.value = "";
     } else {
-      toast.error(result.error || "Subscription failed.");
+      toast.error(result.error || TEXTS.ERROR_MESSAGE);
     }
   };
 
@@ -280,7 +299,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                 >
                   <input
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder={TEXTS.NEWSLETTER_PLACEHOLDER}
                     required
                     className="flex-1 px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 text-sm"
                     aria-label="Email address"
@@ -291,7 +310,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                     className="btn btn-primary px-6 py-3 text-sm whitespace-nowrap"
                     suppressHydrationWarning
                   >
-                    Subscribe
+                    {TEXTS.NEWSLETTER_BUTTON}
                   </button>
                 </form>
               </div>
@@ -327,7 +346,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               <div className="flex flex-col sm:flex-row items-center gap-4 text-center md:text-left">
                 <p className="text-[#737373] text-sm">
-                  © {currentYear} Nexfound. All rights reserved.
+                  {TEXTS.COPYRIGHT_TEXT.replace("{year}", currentYear.toString())}
                 </p>
               </div>
 
@@ -337,7 +356,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                   onClick={(e) => handleLinkClick(e, "#privacy")}
                   className="text-[#737373] hover:text-white transition-colors duration-300"
                 >
-                  Privacy
+                  {TEXTS.FOOTER_LINK_PRIVACY}
                 </a>
                 <span className="text-[#2E2E2E]">•</span>
                 <a
@@ -345,7 +364,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                   onClick={(e) => handleLinkClick(e, "#terms")}
                   className="text-[#737373] hover:text-white transition-colors duration-300"
                 >
-                  Terms
+                  {TEXTS.FOOTER_LINK_TERMS}
                 </a>
                 <span className="text-[#2E2E2E]">•</span>
                 <a
@@ -353,7 +372,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                   onClick={(e) => handleLinkClick(e, "#cookies")}
                   className="text-[#737373] hover:text-white transition-colors duration-300"
                 >
-                  Cookies
+                  {TEXTS.FOOTER_LINK_COOKIES}
                 </a>
               </div>
             </div>

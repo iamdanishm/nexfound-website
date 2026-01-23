@@ -19,7 +19,6 @@ export const projectsQuery = groq`
       },
       alt
     },
-    metrics,
     gradient,
     tags,
     status

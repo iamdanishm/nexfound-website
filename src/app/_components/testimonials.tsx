@@ -4,6 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import SanityImageComp from "./sanity-image";
 import { SanityImage } from "@/sanity/lib/image";
 
+// Text constants
+const TEXTS = {
+  BADGE_TEXT: "The Verdict",
+  TITLE_FIRST_LINE: "Don't Trust Us.",
+  TITLE_SECOND_LINE: "Trust Them.",
+  DESCRIPTION: "We don't hide behind NDAs. We build public wins. Just non-technical founders who turned napkin sketches into revenue-generating assets.",
+  STATS_HEADING: "A Track Record of Wins",
+  DEFAULT_STATS: [
+    { value: "500+", label: "Happy Clients" },
+    { value: "4.9/5", label: "Average Rating" },
+    { value: "99%", label: "Client Retention" },
+    { value: "48h", label: "Response Time" },
+  ]
+} as const;
+
 type Project = {
   _id: string;
   title: string;
@@ -56,14 +71,7 @@ export default function Testimonials({
     return () => observer.disconnect();
   }, []);
 
-  const defaultStats: Stat[] = [
-    { value: "500+", label: "Happy Clients" },
-    { value: "4.9/5", label: "Average Rating" },
-    { value: "99%", label: "Client Retention" },
-    { value: "48h", label: "Response Time" },
-  ];
-
-  const testimonialStats = stats && stats.length > 0 ? stats : defaultStats;
+  const testimonialStats = stats && stats.length > 0 ? stats : TEXTS.DEFAULT_STATS;
 
   return (
     <section
@@ -102,7 +110,7 @@ export default function Testimonials({
                 <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
               </div>
               <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
-                The Verdict
+                {TEXTS.BADGE_TEXT}
               </span>
             </div>
 
@@ -115,7 +123,7 @@ export default function Testimonials({
               }`}
             >
               <span className="block text-white mb-3">
-                Don&apos;t Trust Us.
+                {TEXTS.TITLE_FIRST_LINE}
               </span>
               <span
                 className="block bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
@@ -123,7 +131,7 @@ export default function Testimonials({
                   textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
                 }}
               >
-                Trust Them.
+                {TEXTS.TITLE_SECOND_LINE}
               </span>
             </h2>
 
@@ -135,9 +143,7 @@ export default function Testimonials({
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              We don&apos;t hide behind NDAs. We build public wins. Just
-              non-technical founders who turned napkin sketches into
-              revenue-generating assets.
+              {TEXTS.DESCRIPTION}
             </p>
           </div>
 
@@ -312,7 +318,7 @@ export default function Testimonials({
 
               <div className="relative z-10">
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-8">
-                  A Track Record of Wins
+                  {TEXTS.STATS_HEADING}
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                   {testimonialStats.map((stat, idx) => (

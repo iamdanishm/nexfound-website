@@ -4,6 +4,20 @@ import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+// Text constants
+const TEXTS = {
+  NAV_LINKS: [
+    { href: "#work", label: "Work" },
+    { href: "#services", label: "Services" },
+    { href: "/blog", label: "Blog" },
+    { href: "#about", label: "About" },
+    { href: "#testimonials", label: "Testimonials" },
+  ],
+  CTA_BUTTON: "Let's Talk",
+  ALT_TEXT: "Nexfound",
+  BRAND_NAME: "Nexfound"
+} as const;
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -70,13 +84,7 @@ export default function Header() {
     };
   }, [isMobileMenuOpen]);
 
-  const navLinks = [
-    { href: "#work", label: "Work" },
-    { href: "#services", label: "Services" },
-    { href: "/blog", label: "Blog" },
-    { href: "#about", label: "About" },
-    { href: "#testimonials", label: "Testimonials" },
-  ];
+  const navLinks = TEXTS.NAV_LINKS;
 
   // Custom smooth scroll function with easing
   const smoothScrollTo = useCallback((target: string) => {
@@ -172,7 +180,7 @@ export default function Header() {
               <div className="relative w-14 h-14 md:w-18 md:h-18 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/logo-transparent.png"
-                  alt="Nexfound"
+                  alt={TEXTS.ALT_TEXT}
                   fill
                   sizes="(max-width: 768px) 56px, 72px"
                   className="object-contain"
@@ -180,7 +188,7 @@ export default function Header() {
                 />
               </div>
               <h1 className="font-display text-transparent bg-clip-text bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-tight whitespace-nowrap">
-                Nexfound
+                {TEXTS.BRAND_NAME}
               </h1>
             </Link>
 

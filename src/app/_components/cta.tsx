@@ -3,6 +3,43 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
+// Text constants
+const TEXTS = {
+  BADGE_TEXT_DEFAULT: "Let's Connect",
+  MAIN_HEADING_DEFAULT: "Ready to Build",
+  HIGHLIGHTED_TEXT_DEFAULT: "Something Extraordinary?",
+  DESCRIPTION_DEFAULT: "Transform your vision into reality. Schedule a consultation with our team and discover how we can elevate your digital presence.",
+  FORM_TITLE_DEFAULT: "Get Started Today",
+  QUICK_CONTACT_TITLE_DEFAULT: "Quick Contact",
+  WHY_CHOOSE_TITLE_DEFAULT: "Why Nexfound?",
+  WHY_CHOOSE_POINTS_DEFAULT: [
+    "48-hour response guarantee",
+    "Dedicated project manager",
+    "Transparent pricing model",
+    "Post-launch support included",
+  ],
+  EMAIL_DEFAULT: "hello@nexfound.in",
+  PHONE_DEFAULT: "+91 8286556661",
+  FORM_NAME_LABEL: "Your Name *",
+  FORM_EMAIL_LABEL: "Email Address *",
+  FORM_COMPANY_LABEL: "Company",
+  FORM_MESSAGE_LABEL: "Project Details *",
+  FORM_NAME_PLACEHOLDER: "John Doe",
+  FORM_EMAIL_PLACEHOLDER: "john@company.com",
+  FORM_COMPANY_PLACEHOLDER: "Your Company Ltd.",
+  FORM_MESSAGE_PLACEHOLDER: "Tell us about your project goals and requirements...",
+  BUTTON_SEND: "Send Message",
+  BUTTON_SENDING: "Sending...",
+  CONTACT_EMAIL_LABEL: "Email",
+  CONTACT_PHONE_LABEL: "Phone",
+  STAMP_SECURE: "SECURE",
+  STAMP_ACTIVE: "ACTIVE",
+  STAMP_COMMITTED: "COMMITTED",
+  HEADER_SECURE_SUBMISSION: "Secure Submission",
+  HEADER_ALWAYS_AVAILABLE: "Always Available",
+  HEADER_GUARANTEED: "Guaranteed"
+} as const;
+
 type CTAData = {
   badgeText?: string;
   mainHeading?: string;
@@ -48,26 +85,21 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
     return () => observer.disconnect();
   }, []);
 
-  const badgeText = cta?.badgeText ?? "Let's Connect";
-  const mainHeading = cta?.mainHeading ?? "Ready to Build";
-  const highlightedText = cta?.highlightedText ?? "Something Extraordinary?";
+  const badgeText = cta?.badgeText ?? TEXTS.BADGE_TEXT_DEFAULT;
+  const mainHeading = cta?.mainHeading ?? TEXTS.MAIN_HEADING_DEFAULT;
+  const highlightedText = cta?.highlightedText ?? TEXTS.HIGHLIGHTED_TEXT_DEFAULT;
   const description =
     cta?.description ??
-    "Transform your vision into reality. Schedule a consultation with our team and discover how we can elevate your digital presence.";
-  const formTitle = cta?.formTitle ?? "Get Started Today";
-  const quickContactTitle = cta?.quickContactTitle ?? "Quick Contact";
-  const email = contactEmail ?? "hello@nexfound.in";
-  const phone = contactPhone ?? "+91 8286556661";
-  const whyChooseTitle = cta?.whyChooseTitle ?? "Why Nexfound?";
+    TEXTS.DESCRIPTION_DEFAULT;
+  const formTitle = cta?.formTitle ?? TEXTS.FORM_TITLE_DEFAULT;
+  const quickContactTitle = cta?.quickContactTitle ?? TEXTS.QUICK_CONTACT_TITLE_DEFAULT;
+  const email = contactEmail ?? TEXTS.EMAIL_DEFAULT;
+  const phone = contactPhone ?? TEXTS.PHONE_DEFAULT;
+  const whyChooseTitle = cta?.whyChooseTitle ?? TEXTS.WHY_CHOOSE_TITLE_DEFAULT;
   const whyChoosePoints =
     cta?.whyChoosePoints && cta.whyChoosePoints.length > 0
       ? cta.whyChoosePoints
-      : [
-          "48-hour response guarantee",
-          "Dedicated project manager",
-          "Transparent pricing model",
-          "Post-launch support included",
-        ];
+      : TEXTS.WHY_CHOOSE_POINTS_DEFAULT;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -220,7 +252,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                 </div>
                 <div className="flex items-center gap-1">
                   <span className="text-xs text-white/60">
-                    Secure Submission
+                    {TEXTS.HEADER_SECURE_SUBMISSION}
                   </span>
                 </div>
               </div>
@@ -231,7 +263,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   {/* Name Field */}
                   <div>
                     <label className="block text-sm font-medium text-[#E0E0E0] mb-2">
-                      Your Name *
+                      {TEXTS.FORM_NAME_LABEL}
                     </label>
                     <input
                       type="text"
@@ -240,14 +272,14 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300"
-                      placeholder="John Doe"
+                      placeholder={TEXTS.FORM_NAME_PLACEHOLDER}
                     />
                   </div>
 
                   {/* Email Field */}
                   <div>
                     <label className="block text-sm font-medium text-[#E0E0E0] mb-2">
-                      Email Address *
+                      {TEXTS.FORM_EMAIL_LABEL}
                     </label>
                     <input
                       type="email"
@@ -256,14 +288,14 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300"
-                      placeholder="john@company.com"
+                      placeholder={TEXTS.FORM_EMAIL_PLACEHOLDER}
                     />
                   </div>
 
                   {/* Company Field */}
                   <div>
                     <label className="block text-sm font-medium text-[#E0E0E0] mb-2">
-                      Company
+                      {TEXTS.FORM_COMPANY_LABEL}
                     </label>
                     <input
                       type="text"
@@ -271,14 +303,14 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                       value={formData.company}
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300"
-                      placeholder="Your Company Ltd."
+                      placeholder={TEXTS.FORM_COMPANY_PLACEHOLDER}
                     />
                   </div>
 
                   {/* Message Field */}
                   <div>
                     <label className="block text-sm font-medium text-[#E0E0E0] mb-2">
-                      Project Details *
+                      {TEXTS.FORM_MESSAGE_LABEL}
                     </label>
                     <textarea
                       name="message"
@@ -287,7 +319,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                       required
                       rows={4}
                       className="w-full px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 resize-none"
-                      placeholder="Tell us about your project goals and requirements..."
+                      placeholder={TEXTS.FORM_MESSAGE_PLACEHOLDER}
                     />
                   </div>
 
@@ -319,11 +351,11 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                             />
                           </svg>
-                          <span>Sending...</span>
+                          <span>{TEXTS.BUTTON_SENDING}</span>
                         </>
                       ) : (
                         <>
-                          <span>Send Message</span>
+                          <span>{TEXTS.BUTTON_SEND}</span>
                           <svg
                             className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                             fill="none"
@@ -346,7 +378,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                 {/* Archive Stamp */}
                 <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded border border-green-500/30 font-mono transform -rotate-12">
-                    SECURE
+                    {TEXTS.STAMP_SECURE}
                   </div>
                 </div>
               </div>
@@ -375,7 +407,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   </div>
                   <div className="flex items-center gap-1">
                     <span className="text-xs text-white/60">
-                      Always Available
+                      {TEXTS.HEADER_ALWAYS_AVAILABLE}
                     </span>
                   </div>
                 </div>
@@ -403,7 +435,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                         </svg>
                       </div>
                       <div>
-                        <div className="text-sm text-[#B3B3B3]">Email</div>
+                        <div className="text-sm text-[#B3B3B3]">{TEXTS.CONTACT_EMAIL_LABEL}</div>
                         <div className="font-medium">{email}</div>
                       </div>
                     </a>
@@ -428,7 +460,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                         </svg>
                       </div>
                       <div>
-                        <div className="text-sm text-[#B3B3B3]">Phone</div>
+                        <div className="text-sm text-[#B3B3B3]">{TEXTS.CONTACT_PHONE_LABEL}</div>
                         <div className="font-medium">{phone}</div>
                       </div>
                     </a>
@@ -437,7 +469,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   {/* Archive Stamp */}
                   <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded border border-blue-500/30 font-mono transform -rotate-12">
-                      ACTIVE
+                      {TEXTS.STAMP_ACTIVE}
                     </div>
                   </div>
                 </div>
@@ -460,7 +492,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                     </span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <span className="text-xs text-white/60">Guaranteed</span>
+                    <span className="text-xs text-white/60">{TEXTS.HEADER_GUARANTEED}</span>
                   </div>
                 </div>
 
@@ -492,7 +524,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   {/* Archive Stamp */}
                   <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded border border-purple-500/30 font-mono transform -rotate-12">
-                      COMMITTED
+                      {TEXTS.STAMP_COMMITTED}
                     </div>
                   </div>
                 </div>

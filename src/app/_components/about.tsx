@@ -5,6 +5,31 @@ import Image from "next/image";
 import SanityImage from "./sanity-image";
 import { SanityImage as SanityImageType } from "@/sanity/lib/image";
 
+// Text constants
+const TEXTS = {
+  BADGE_TEXT_DEFAULT: "Digital Craftsmanship",
+  MAIN_HEADING_DEFAULT: "Building",
+  HIGHLIGHTED_TEXT_DEFAULT: "Digital Excellence",
+  DESCRIPTION_DEFAULT: "Nexfound is a premium digital studio obsessed with quality, outcomes, and timeless design. We're a cross-disciplinary team blending strategy, creativity, and engineering at every step to ensure our clients' digital presence stands above the rest.",
+  PILLARS_DEFAULT: [
+    {
+      title: "Strategy",
+      desc: "We begin every project with deep strategic thinking, understanding your business goals and crafting digital solutions that drive measurable results.",
+    },
+    {
+      title: "Design",
+      desc: "Our design philosophy combines aesthetic excellence with functional brilliance, creating experiences that captivate and convert.",
+    },
+    {
+      title: "Engineering",
+      desc: "We build robust, scalable solutions using cutting-edge technologies, ensuring your digital presence performs flawlessly at any scale.",
+    },
+  ],
+  TEAM_TAGLINE_DEFAULT: "Master Builders of Digital Experiences",
+  FOUNDED_INFO_DEFAULT: "Established 2023 · Expert Craftsmanship Team",
+  TEAM_BADGE: "Our Team"
+} as const;
+
 type Pillar = {
   title: string;
   desc: string;
@@ -43,35 +68,22 @@ export default function About({ about }: { about?: AboutData }) {
     return () => observer.disconnect();
   }, []);
 
-  const badgeText = about?.badgeText ?? "Digital Craftsmanship";
-  const mainHeading = about?.mainHeading ?? "Building";
-  const highlightedText = about?.highlightedText ?? "Digital Excellence";
+  const badgeText = about?.badgeText ?? TEXTS.BADGE_TEXT_DEFAULT;
+  const mainHeading = about?.mainHeading ?? TEXTS.MAIN_HEADING_DEFAULT;
+  const highlightedText = about?.highlightedText ?? TEXTS.HIGHLIGHTED_TEXT_DEFAULT;
   const description =
     about?.description ??
-    "Nexfound is a premium digital studio obsessed with quality, outcomes, and timeless design. We're a cross-disciplinary team blending strategy, creativity, and engineering at every step to ensure our clients' digital presence stands above the rest.";
+    TEXTS.DESCRIPTION_DEFAULT;
 
   const pillars: Pillar[] =
     about?.pillars && about.pillars.length > 0
       ? about.pillars
-      : [
-          {
-            title: "Strategy",
-            desc: "We begin every project with deep strategic thinking, understanding your business goals and crafting digital solutions that drive measurable results.",
-          },
-          {
-            title: "Design",
-            desc: "Our design philosophy combines aesthetic excellence with functional brilliance, creating experiences that captivate and convert.",
-          },
-          {
-            title: "Engineering",
-            desc: "We build robust, scalable solutions using cutting-edge technologies, ensuring your digital presence performs flawlessly at any scale.",
-          },
-        ];
+      : TEXTS.PILLARS_DEFAULT as unknown as Pillar[];
 
   const teamTagline =
-    about?.teamTagline ?? "Master Builders of Digital Experiences";
+    about?.teamTagline ?? TEXTS.TEAM_TAGLINE_DEFAULT;
   const foundedInfo =
-    about?.foundedInfo ?? "Established 2023 · Expert Craftsmanship Team";
+    about?.foundedInfo ?? TEXTS.FOUNDED_INFO_DEFAULT;
 
   return (
     <section
@@ -286,7 +298,7 @@ export default function About({ about }: { about?: AboutData }) {
                       {/* Clean Badge */}
                       <div className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <div className="bg-black/80 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full font-medium">
-                          Our Team
+                          {TEXTS.TEAM_BADGE}
                         </div>
                       </div>
                     </div>

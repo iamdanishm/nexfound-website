@@ -4,6 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import SanityImageComp from "./sanity-image";
 import { SanityImage } from "@/sanity/lib/image";
 
+// Text constants
+const TEXTS = {
+  BADGE_TEXT: "Engineering Case Studies",
+  TITLE_FIRST_LINE: "Complexity",
+  TITLE_SECOND_LINE: "Simplified",
+  DESCRIPTION: "Discover our portfolio of projects where ambitious ideas became scalable, high-impact digital products. Each project reflects our commitment to strategy, design, and engineering excellence across industries.",
+  ARCHIVE_STAMP: "ARCHIVED",
+  CTA_HEADING: "Need this level of engineering?",
+  CTA_BUTTON: "Discuss Your Architecture"
+} as const;
+
 type Project = {
   _id: string;
   title: string;
@@ -17,11 +28,6 @@ type Project = {
   };
   description: string;
   mainImage?: SanityImage;
-  metrics: {
-    conversion: string;
-    users: string;
-    rating: string;
-  };
   gradient: string;
   tags?: string[];
   status: string;
@@ -92,7 +98,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                 <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
               </div>
               <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
-                Featured Projects
+                {TEXTS.BADGE_TEXT}
               </span>
             </div>
 
@@ -104,14 +110,14 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              <span className="block text-white mb-3">Transforming</span>
+              <span className="block text-white mb-3">{TEXTS.TITLE_FIRST_LINE}</span>
               <span
                 className="block bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
                 style={{
                   textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
                 }}
               >
-                Visions Into Reality
+                {TEXTS.TITLE_SECOND_LINE}
               </span>
             </h2>
 
@@ -123,10 +129,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              Discover our portfolio of projects where ambitious ideas became
-              scalable, high-impact digital products. Each project reflects our
-              commitment to strategy, design, and engineering excellence across
-              industries.
+              {TEXTS.DESCRIPTION}
             </p>
           </div>
 
@@ -228,8 +231,8 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
                     {/* Archive stamp effect */}
                     <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded border border-red-500/30 font-mono">
-                        ARCHIVED
+                    <div className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded border border-red-500/30 font-mono">
+                        {TEXTS.ARCHIVE_STAMP}
                       </div>
                     </div>
                   </div>
@@ -245,26 +248,6 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                     <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-2">
                       {project.description}
                     </p>
-
-                    {/* File Properties Grid */}
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className="bg-black/20 rounded px-3 py-2">
-                        <div className="text-xs text-white/50 uppercase tracking-wider mb-1">
-                          Users
-                        </div>
-                        <div className="text-white font-mono font-bold">
-                          {project.metrics.users}
-                        </div>
-                      </div>
-                      <div className="bg-black/20 rounded px-3 py-2">
-                        <div className="text-xs text-white/50 uppercase tracking-wider mb-1">
-                          Rating
-                        </div>
-                        <div className="text-white font-mono font-bold">
-                          {project.metrics.rating}/5
-                        </div>
-                      </div>
-                    </div>
 
                     {/* Technology Tags - File Extensions Style */}
                     {project.tags && project.tags.length > 0 && (
@@ -318,18 +301,13 @@ export default function Showcase({ projects }: { projects: Project[] }) {
             >
               {/* Animated border effect */}
               <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
+                <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
               </div>
 
               <div className="relative z-10">
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                  Ready to start your next project?
+                  {TEXTS.CTA_HEADING}
                 </h3>
-                <p className="text-[#B3B3B3] text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-                  Explore our complete portfolio of transformative digital
-                  solutions and discover what&apos;s possible when vision meets
-                  execution.
-                </p>
 
                 <button
                   onClick={() => {
@@ -370,7 +348,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                   className="group relative px-10 py-5 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-2xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center gap-3">
-                    View All Projects
+                    {TEXTS.CTA_BUTTON}
                     <svg
                       className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
                       fill="none"
