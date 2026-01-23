@@ -7,7 +7,8 @@ const TEXTS = {
   BADGE_TEXT_DEFAULT: "Crafting Digital Excellence",
   MAIN_HEADING_DEFAULT: "Stop Worrying About Code.",
   HIGHLIGHTED_TEXT_DEFAULT: "Start Scaling Your Business.",
-  SUBHEADING_DEFAULT: "Premium digital service studio crafting exceptional experiences for ambitious brands.",
+  SUBHEADING_DEFAULT:
+    "Premium digital service studio crafting exceptional experiences for ambitious brands.",
   HIGHLIGHT_TEXTS: [
     "actually scales.",
     "investors trust.",
@@ -20,9 +21,9 @@ const TEXTS = {
     { value: "15+", label: "Industry Awards" },
     { value: "24/7", label: "Support Available" },
   ],
-  CTA_BUTTON_PRIMARY: "Start Your Project",
+  CTA_BUTTON_PRIMARY: "Get Your Roadmap Now!",
   CTA_BUTTON_SECONDARY: "View Our Work",
-  SCROLL_INDICATOR_TEXT: "Discover More"
+  SCROLL_INDICATOR_TEXT: "Discover More",
 } as const;
 
 type TrustItem = { value: string; label: string };
@@ -39,8 +40,6 @@ type HeroData = {
 export default function Hero({ hero }: { hero?: HeroData }) {
   const badgeText = hero?.badgeText ?? "Crafting Digital Excellence";
   const mainHeading = hero?.mainHeading ?? "Stop Worrying About Code.";
-  const highlightedText =
-    hero?.highlightedText ?? "Start Scaling Your Business.";
   const subheading =
     hero?.subheading ??
     "Premium digital service studio crafting exceptional experiences for ambitious brands.";
@@ -289,49 +288,10 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                     }}
                     className="group relative px-8 py-4 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
                   >
-                    <span className="relative z-10">Start Your Project</span>
+                    <span className="relative z-10">
+                      {TEXTS.CTA_BUTTON_PRIMARY}
+                    </span>
                     <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      const element = document.querySelector("#work");
-                      if (element) {
-                        const start = window.scrollY;
-                        const targetPosition =
-                          element.getBoundingClientRect().top +
-                          window.scrollY -
-                          88;
-                        const startTime = performance.now();
-                        const duration = 800;
-
-                        const easeInOutQuad = (t: number) => {
-                          return t < 0.5
-                            ? 2 * t * t
-                            : 1 - Math.pow(-2 * t + 2, 2) / 2;
-                        };
-
-                        const scrollStep = (timestamp: number) => {
-                          const elapsed = timestamp - startTime;
-                          const progress = Math.min(elapsed / duration, 1);
-                          const easedProgress = easeInOutQuad(progress);
-
-                          window.scrollTo(
-                            0,
-                            start + (targetPosition - start) * easedProgress,
-                          );
-
-                          if (progress < 1) {
-                            window.requestAnimationFrame(scrollStep);
-                          }
-                        };
-
-                        window.requestAnimationFrame(scrollStep);
-                      }
-                    }}
-                    className="group relative px-8 py-4 border-2 border-[#B08D57]/50 text-[#F4E6C0] font-semibold rounded-xl transition-all duration-300 hover:bg-[#B08D57]/10 hover:border-[#B08D57] hover:shadow-lg hover:shadow-[#B08D57]/10 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black"
-                  >
-                    View Our Work
                   </button>
                 </div>
               </div>
@@ -340,7 +300,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Enhanced Trust Indicators */}
           <div
-            className={`grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 pb-16 transition-all duration-1000 delay-800 transform ${
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 pb-16 transition-all duration-1000 delay-800 transform ${
               isVisible
                 ? "translate-y-0 opacity-100 scale-100"
                 : "translate-y-8 opacity-0 scale-95"
@@ -361,12 +321,12 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                 <div className="absolute inset-0 bg-linear-to-r from-transparent via-[#B08D57]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-shimmer" />
 
                 <div className="relative z-10">
-                  <div className="text-4xl md:text-5xl font-bold mb-4 transition-all duration-300 group-hover:scale-110">
+                  <div className="text-3xl md:text-4xl font-bold mb-4 transition-all duration-300 group-hover:scale-110">
                     <span className="text-white drop-shadow-lg">
                       {stat.value}
                     </span>
                   </div>
-                  <div className="text-sm md:text-base text-[#B3B3B3] font-semibold uppercase tracking-wider leading-tight">
+                  <div className="text-xs md:text-sm text-[#B3B3B3] font-semibold uppercase tracking-wider leading-tight">
                     {stat.label}
                   </div>
 

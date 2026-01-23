@@ -8,10 +8,12 @@ const TEXTS = {
   BADGE_TEXT: "High-Performance Engineering",
   TITLE_FIRST_LINE: "The Right Foundation",
   TITLE_SECOND_LINE: "For Every Stage",
-  DESCRIPTION: "Building software in the AI era is easy; building a business that lasts is hard. Whether launching something new, modernizing legacy operations, or rescuing stalled projects, we bring the architectural precision and engineering rigor needed to turn code into a durable, high-value company asset.",
+  DESCRIPTION:
+    "Building software in the AI era is easy; building a business that lasts is hard. Whether launching something new, modernizing legacy operations, or rescuing stalled projects, we bring the architectural precision and engineering rigor needed to turn code into a durable, high-value company asset.",
   CTA_HEADING: "One Partner. Total Clarity.",
-  CTA_SUBHEADING: "Whether it's a new build or a rescue mission, you get a dedicated lead engineer.",
-  CTA_BUTTON: "Discuss Your Project"
+  CTA_SUBHEADING:
+    "Whether it's a new build or a rescue mission, you get a dedicated lead engineer.",
+  CTA_BUTTON: "Discuss Your Project",
 } as const;
 
 type Service = {
@@ -32,6 +34,49 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const getPreviewDescription = (
+    description: string,
+    maxLength: number = 100,
+  ) => {
+    if (description.length <= maxLength) return description;
+    return description.substring(0, maxLength).trim() + "...";
+  };
+
+  useEffect(() => {
+    // Add CSS animations for tech visuals
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes circuit-flow {
+        0% { background-position: 0 0; }
+        100% { background-position: 20px 20px; }
+      }
+
+      @keyframes data-stream {
+        0% { transform: translateX(-100%); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateX(100%); opacity: 0; }
+      }
+
+      @keyframes data-stream-reverse {
+        0% { transform: translateX(100%); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateX(-100%); opacity: 0; }
+      }
+
+      @keyframes grid-shift {
+        0%, 100% { background-position: 0 0; }
+        25% { background-position: 5px 5px; }
+        50% { background-position: -5px -5px; }
+        75% { background-position: 5px -5px; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -124,9 +169,9 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
             </p>
           </div>
 
-          {/* Modern Premium Service Cards */}
+          {/* Eye-Catching Service Cards - Enhanced Design */}
           <div
-            className={`grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-20 transition-all duration-300 delay-300 transform ${
+            className={`grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-20 transition-all duration-300 delay-300 transform ${
               isVisible
                 ? "translate-y-0 opacity-100 scale-100"
                 : "translate-y-8 opacity-0 scale-95"
@@ -139,151 +184,257 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                {/* Main Card Container - Modern Design */}
+                {/* Glass Morphism Card with Tech Visuals */}
                 <div
-                  className="relative h-full p-8 lg:p-10 rounded-4xl backdrop-blur-2xl border border-[#B08D57]/30 hover:border-[#B08D57]/60 transition-all duration-700 hover:scale-y-105 overflow-hidden group-hover:shadow-2xl group-hover:shadow-[#B08D57]/20"
+                  className="relative h-full p-8 lg:p-10 rounded-3xl backdrop-blur-2xl border transition-all duration-700 hover:scale-[1.02] overflow-hidden cursor-pointer"
                   style={{
                     background:
-                      "linear-gradient(145deg, rgba(176, 141, 87, 0.05) 0%, rgba(244, 230, 192, 0.03) 25%, rgba(26, 127, 107, 0.02) 50%, rgba(0, 0, 0, 0.8) 100%)",
+                      "linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, rgba(176, 141, 87, 0.08) 25%, rgba(244, 230, 192, 0.05) 50%, rgba(26, 127, 107, 0.04) 75%, rgba(0, 0, 0, 0.8) 100%)",
+                    borderColor: "rgba(176, 141, 87, 0.6)",
+                    borderWidth: "1.5px",
                     boxShadow:
-                      "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(244, 230, 192, 0.15), 0 0 0 1px rgba(176, 141, 87, 0.1)",
+                      hoveredIndex === index
+                        ? "0 30px 100px rgba(176, 141, 87, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 0 0 1px rgba(176, 141, 87, 0.4), 0 0 40px rgba(176, 141, 87, 0.3), 0 0 80px rgba(244, 230, 192, 0.15)"
+                        : "0 25px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 0 0 1px rgba(176, 141, 87, 0.3)",
                   }}
                 >
-                  {/* Animated Background Mesh */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  {/* Tech Visuals Background Layers */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                    {/* Circuit Pattern Overlay */}
+                    <div
+                      className="absolute inset-0 opacity-20"
+                      style={{
+                        backgroundImage: `
+                          linear-gradient(rgba(176, 141, 87, 0.3) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(176, 141, 87, 0.3) 1px, transparent 1px)
+                        `,
+                        backgroundSize: "20px 20px",
+                        animation: "circuit-flow 3s linear infinite",
+                      }}
+                    />
+
+                    {/* Data Stream Lines */}
+                    <div className="absolute top-0 left-0 w-full h-full">
+                      <div
+                        className="absolute top-10 left-0 w-full h-px opacity-40 animate-pulse"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, transparent, rgba(244, 230, 192, 0.8), transparent)",
+                          animation: "data-stream 2s ease-in-out infinite",
+                        }}
+                      />
+                      <div
+                        className="absolute top-20 right-0 w-full h-px opacity-30 animate-pulse"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, transparent, rgba(176, 141, 87, 0.6), transparent)",
+                          animation:
+                            "data-stream-reverse 2.5s ease-in-out infinite",
+                          animationDelay: "0.5s",
+                        }}
+                      />
+                      <div
+                        className="absolute bottom-16 left-0 w-full h-px opacity-35 animate-pulse"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, transparent, rgba(26, 127, 107, 0.7), transparent)",
+                          animation: "data-stream 3s ease-in-out infinite",
+                          animationDelay: "1s",
+                        }}
+                      />
+                    </div>
+
+                    {/* Hexagonal Grid Pattern */}
+                    <div
+                      className="absolute inset-0 opacity-10"
+                      style={{
+                        backgroundImage: `
+                          radial-gradient(circle at 25px 25px, rgba(176, 141, 87, 0.4) 2px, transparent 2px),
+                          radial-gradient(circle at 75px 75px, rgba(244, 230, 192, 0.3) 1px, transparent 1px)
+                        `,
+                        backgroundSize: "50px 50px",
+                        animation: "grid-shift 4s ease-in-out infinite",
+                      }}
+                    />
+
+                    {/* Primary Gradient Wave */}
                     <div
                       className="absolute inset-0 animate-pulse"
                       style={{
-                        background: `radial-gradient(circle at 20% 80%, ${service.gradient.replace("from-[", "rgba(").replace("] to-[", ", 0.15) 0%, rgba(").replace("]", ", 0.08) 50%")}, transparent 70%)`,
+                        background: `linear-gradient(135deg, ${service.gradient.replace("from-[", "rgba(").replace("] to-[", ", 0.12) 0%, rgba(").replace("]", ", 0.06) 100%")})`,
+                      }}
+                    />
+
+                    {/* Secondary Animated Overlay */}
+                    <div
+                      className="absolute inset-0 animate-pulse opacity-70"
+                      style={{
+                        background: `radial-gradient(ellipse at 30% 20%, ${service.gradient.replace("from-[", "rgba(").replace("] to-[", ", 0.08) 0%, rgba(").replace("]", ", 0.03) 60%")}, transparent 80%)`,
+                        animationDelay: "0.3s",
+                      }}
+                    />
+
+                    {/* Tech Floating Elements */}
+                    <div
+                      className="absolute top-12 right-16 w-8 h-8 rounded-full opacity-30 animate-bounce"
+                      style={{
+                        background: `radial-gradient(circle, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")}, transparent)`,
+                        animationDelay: "0.1s",
+                        animationDuration: "3s",
+                        boxShadow: "0 0 20px rgba(176, 141, 87, 0.6)",
                       }}
                     />
                     <div
-                      className="absolute inset-0 animate-pulse"
+                      className="absolute bottom-20 left-12 w-6 h-6 rounded-full opacity-40 animate-bounce"
                       style={{
-                        background: `radial-gradient(circle at 80% 20%, ${service.gradient.replace("from-[", "rgba(").replace("] to-[", ", 0.1) 0%, rgba(").replace("]", ", 0.05) 50%")}, transparent 70%)`,
-                        animationDelay: "1s",
+                        background: `radial-gradient(circle, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")}, transparent)`,
+                        animationDelay: "0.7s",
+                        animationDuration: "4s",
+                        boxShadow: "0 0 15px rgba(244, 230, 192, 0.5)",
                       }}
                     />
+                    <div
+                      className="absolute top-1/2 left-8 w-4 h-4 rounded-full opacity-25 animate-bounce"
+                      style={{
+                        background: `radial-gradient(circle, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")}, transparent)`,
+                        animationDelay: "1.2s",
+                        animationDuration: "5s",
+                        boxShadow: "0 0 10px rgba(26, 127, 107, 0.4)",
+                      }}
+                    />
+
+                    {/* Binary/Data Particles */}
+                    <div className="absolute top-8 left-8 text-[#B08D57] font-mono text-xs opacity-60 animate-pulse">
+                      01
+                    </div>
+                    <div
+                      className="absolute top-16 right-12 text-[#F4E6C0] font-mono text-xs opacity-40 animate-pulse"
+                      style={{ animationDelay: "0.5s" }}
+                    >
+                      10
+                    </div>
+                    <div
+                      className="absolute bottom-12 right-8 text-[#1A7F6B] font-mono text-xs opacity-50 animate-pulse"
+                      style={{ animationDelay: "1s" }}
+                    >
+                      11
+                    </div>
+                    <div
+                      className="absolute bottom-8 left-16 text-[#B08D57] font-mono text-xs opacity-30 animate-pulse"
+                      style={{ animationDelay: "1.5s" }}
+                    >
+                      00
+                    </div>
                   </div>
 
-                  {/* Morphing Border Effect */}
-                  <div className="absolute inset-0 rounded-4xl opacity-0 group-hover:opacity-100 transition-all duration-700">
-                    <div className="absolute inset-0 rounded-4xl bg-linear-to-r from-[#B08D57]/20 via-[#F4E6C0]/10 to-[#1A7F6B]/20 animate-shimmer" />
+                  {/* Enhanced Border Animation */}
+                  <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-700">
+                    <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-[#B08D57]/20 via-[#F4E6C0]/10 to-[#1A7F6B]/15 animate-shimmer" />
                   </div>
 
-                  {/* Floating Particles */}
+                  {/* Floating Interactive Elements */}
+                  <div className="absolute top-6 right-6 w-3 h-3 bg-[#B08D57] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse" />
                   <div
-                    className="absolute top-6 right-6 w-2 h-2 bg-[#B08D57] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-bounce"
-                    style={{ animationDelay: "0.1s" }}
+                    className="absolute top-12 right-12 w-2 h-2 bg-[#F4E6C0] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"
+                    style={{ animationDelay: "0.2s" }}
                   />
                   <div
-                    className="absolute top-12 right-12 w-1.5 h-1.5 bg-[#F4E6C0] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-bounce"
-                    style={{ animationDelay: "0.3s" }}
-                  />
-                  <div
-                    className="absolute bottom-8 left-8 w-1 h-1 bg-[#1A7F6B] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-bounce"
-                    style={{ animationDelay: "0.5s" }}
+                    className="absolute bottom-8 left-8 w-2.5 h-2.5 bg-[#1A7F6B] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"
+                    style={{ animationDelay: "0.4s" }}
                   />
 
                   {/* Premium Icon Display */}
                   <div className="relative mb-8 flex justify-center">
                     <div className="relative">
-                      {/* Icon Background Glow */}
+                      {/* Enhanced Icon Glow */}
                       <div
-                        className="absolute inset-0 rounded-full blur-xl opacity-0 group-hover:opacity-60 transition-all duration-700 scale-150"
+                        className="absolute inset-0 rounded-full blur-2xl opacity-0 group-hover:opacity-70 transition-all duration-700 scale-150"
                         style={{
-                          background: `linear-gradient(135deg, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")})`,
+                          background: `conic-gradient(from 0deg, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")}, transparent, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")})`,
                         }}
                       />
 
-                      {/* Icon Container */}
+                      {/* Icon Container with Enhanced Effects */}
                       <div
-                        className="relative w-24 h-24 lg:w-28 lg:h-28 rounded-full flex items-center justify-center p-4 transition-all duration-700 group-hover:scale-110 overflow-hidden"
+                        className="relative w-20 h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center p-4 transition-all duration-700 group-hover:scale-125 group-hover:rotate-12 overflow-hidden backdrop-blur-sm"
                         style={{
                           background: `linear-gradient(135deg, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")})`,
                           boxShadow:
                             hoveredIndex === index
-                              ? "0 20px 60px rgba(176, 141, 87, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.2)"
-                              : "0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+                              ? "0 25px 80px rgba(176, 141, 87, 0.6), inset 0 3px 0 rgba(255, 255, 255, 0.4), 0 0 40px rgba(176, 141, 87, 0.3)"
+                              : "0 15px 50px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.2)",
                         }}
                       >
-                        {/* Icon Shine Effect */}
+                        {/* Icon Shine Animation */}
                         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                          <div className="absolute top-2 left-2 w-6 h-6 bg-white/30 rounded-full blur-sm animate-ping" />
+                          <div className="absolute top-2 left-2 w-8 h-8 bg-white/30 rounded-full blur-sm animate-ping" />
+                          <div
+                            className="absolute bottom-1 right-1 w-4 h-4 bg-white/20 rounded-full blur-sm animate-ping"
+                            style={{ animationDelay: "0.3s" }}
+                          />
                         </div>
 
                         <SanityImage
                           image={service.icon}
                           alt={service.title}
-                          width={64}
-                          height={64}
-                          sizes="64px"
-                          className="w-full h-full object-contain filter brightness-0 invert drop-shadow-2xl relative z-10"
+                          width={48}
+                          height={48}
+                          sizes="48px"
+                          className="w-full h-full object-contain filter brightness-0 invert drop-shadow-2xl relative z-10 transition-all duration-700 group-hover:scale-110"
                         />
                       </div>
                     </div>
                   </div>
 
-                  {/* Service Content with Premium Typography */}
+                  {/* Enhanced Typography */}
                   <div className="relative z-10 text-center">
-                    <h3 className="text-2xl lg:text-3xl font-bold text-white mb-6 transition-all duration-500 group-hover:text-[#F4E6C0]">
+                    <h3 className="text-2xl lg:text-3xl font-bold text-white mb-6 transition-all duration-500 group-hover:text-[#F4E6C0] group-hover:scale-105 transform origin-center">
                       {service.title}
                     </h3>
 
-                    <p className="text-[#B3B3B3] leading-relaxed text-base lg:text-lg transition-all duration-500 group-hover:text-[#E0E0E0]">
+                    <p className="text-[#B3B3B3] leading-relaxed text-base transition-all duration-500 group-hover:text-white/95 line-clamp-4 group-hover:line-clamp-none">
                       {service.description}
                     </p>
                   </div>
 
-                  {/* Interactive Bottom Element */}
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] group-hover:w-16 transition-all duration-700 rounded-full" />
-
-                  {/* Corner Accent */}
-                  <div className="absolute top-4 right-4 w-3 h-3 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                    <div
-                      className="w-full h-full border-2 border-[#B08D57] rounded-full animate-spin"
-                      style={{ animationDuration: "3s" }}
-                    />
+                  {/* Dynamic Bottom Accent */}
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+                    <div className="w-0 h-0.5 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] group-hover:w-20 transition-all duration-700 rounded-full" />
                   </div>
 
-                  {/* Hover Reveal Effect */}
-                  <div className="absolute inset-4 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none overflow-hidden">
-                    <div className="absolute inset-0 bg-linear-to-br from-[#B08D57]/5 via-transparent to-[#1A7F6B]/5 animate-pulse" />
-                    <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-[#F4E6C0]/50 to-transparent animate-shimmer" />
-                    <div
-                      className="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-[#B08D57]/50 to-transparent animate-shimmer"
-                      style={{ animationDelay: "0.5s" }}
-                    />
-                  </div>
-
-                  {/* Shine Effect */}
+                  {/* Enhanced Shine Effect */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                     style={{
                       background:
-                        "linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)",
+                        "linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.08) 30%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.08) 70%, transparent 100%)",
                       transform:
                         hoveredIndex === index
                           ? "translateX(100%)"
                           : "translateX(-100%)",
-                      transition: "transform 1.2s ease-in-out",
+                      transition: "transform 1.8s ease-in-out",
                     }}
                   />
+
+                  {/* Magnetic Hover Effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#B08D57]/5 to-transparent animate-pulse" />
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Enhanced CTA Section */}
+          {/* CTA Section - Matching Hero CTA */}
           <div
-            className={`text-center transition-all duration-300 delay-400 transform ${
+            className={`transition-all duration-300 delay-400 transform ${
               isVisible
                 ? "translate-y-0 opacity-100 scale-100"
                 : "translate-y-8 opacity-0 scale-95"
             }`}
           >
             <div
-              className="p-12 md:p-16 rounded-3xl backdrop-blur-xl border relative overflow-hidden group max-w-4xl mx-auto"
+              className="p-8 md:p-12 rounded-2xl backdrop-blur-xl border relative overflow-hidden group"
               style={{
                 background:
                   "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(176, 141, 87, 0.02) 100%)",
@@ -293,74 +444,63 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
               }}
             >
               {/* Animated border effect */}
-              <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
               </div>
 
-              <div className="relative z-10">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                  {TEXTS.CTA_HEADING}
-                </h3>
-                <p className="text-[#B3B3B3] text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-                  {TEXTS.CTA_SUBHEADING}
-                </p>
+              <div className="flex flex-col lg:flex-row gap-8 items-center justify-between relative z-10">
+                <div className="flex-1 text-center lg:text-left">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                    {TEXTS.CTA_HEADING}
+                  </h3>
+                  <p className="text-[#B3B3B3] text-base md:text-lg">
+                    {TEXTS.CTA_SUBHEADING}
+                  </p>
+                </div>
 
-                <button
-                  onClick={() => {
-                    const element = document.querySelector("#contact");
-                    if (element) {
-                      const start = window.scrollY;
-                      const targetPosition =
-                        element.getBoundingClientRect().top +
-                        window.scrollY -
-                        88;
-                      const startTime = performance.now();
-                      const duration = 800;
+                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                  <button
+                    onClick={() => {
+                      const element = document.querySelector("#contact");
+                      if (element) {
+                        const start = window.scrollY;
+                        const targetPosition =
+                          element.getBoundingClientRect().top +
+                          window.scrollY -
+                          88;
+                        const startTime = performance.now();
+                        const duration = 800;
 
-                      const easeInOutQuad = (t: number) => {
-                        return t < 0.5
-                          ? 2 * t * t
-                          : 1 - Math.pow(-2 * t + 2, 2) / 2;
-                      };
+                        const easeInOutQuad = (t: number) => {
+                          return t < 0.5
+                            ? 2 * t * t
+                            : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                        };
 
-                      const scrollStep = (timestamp: number) => {
-                        const elapsed = timestamp - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
-                        const easedProgress = easeInOutQuad(progress);
+                        const scrollStep = (timestamp: number) => {
+                          const elapsed = timestamp - startTime;
+                          const progress = Math.min(elapsed / duration, 1);
+                          const easedProgress = easeInOutQuad(progress);
 
-                        window.scrollTo(
-                          0,
-                          start + (targetPosition - start) * easedProgress,
-                        );
+                          window.scrollTo(
+                            0,
+                            start + (targetPosition - start) * easedProgress,
+                          );
 
-                        if (progress < 1) {
-                          window.requestAnimationFrame(scrollStep);
-                        }
-                      };
+                          if (progress < 1) {
+                            window.requestAnimationFrame(scrollStep);
+                          }
+                        };
 
-                      window.requestAnimationFrame(scrollStep);
-                    }
-                  }}
-                  className="group relative px-10 py-5 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-2xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
-                >
-                  <span className="relative z-10 flex items-center gap-3">
-                    {TEXTS.CTA_BUTTON}
-                    <svg
-                      className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </span>
-                  <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </button>
+                        window.requestAnimationFrame(scrollStep);
+                      }
+                    }}
+                    className="group relative px-8 py-4 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
+                  >
+                    <span className="relative z-10">{TEXTS.CTA_BUTTON}</span>
+                    <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -9,14 +9,15 @@ const TEXTS = {
   BADGE_TEXT: "The Verdict",
   TITLE_FIRST_LINE: "Don't Trust Us.",
   TITLE_SECOND_LINE: "Trust Them.",
-  DESCRIPTION: "We don't hide behind NDAs. We build public wins. Just non-technical founders who turned napkin sketches into revenue-generating assets.",
+  DESCRIPTION:
+    "We don't hide behind NDAs. We build public wins. Just non-technical founders who turned napkin sketches into revenue-generating assets.",
   STATS_HEADING: "A Track Record of Wins",
   DEFAULT_STATS: [
     { value: "500+", label: "Happy Clients" },
     { value: "4.9/5", label: "Average Rating" },
     { value: "99%", label: "Client Retention" },
     { value: "48h", label: "Response Time" },
-  ]
+  ],
 } as const;
 
 type Project = {
@@ -71,7 +72,8 @@ export default function Testimonials({
     return () => observer.disconnect();
   }, []);
 
-  const testimonialStats = stats && stats.length > 0 ? stats : TEXTS.DEFAULT_STATS;
+  const testimonialStats =
+    stats && stats.length > 0 ? stats : TEXTS.DEFAULT_STATS;
 
   return (
     <section
@@ -293,7 +295,7 @@ export default function Testimonials({
             ))}
           </div>
 
-          {/* Enhanced Stats Section - Client Success Metrics */}
+          {/* Stats Section */}
           <div
             className={`text-center transition-all duration-1000 delay-800 transform ${
               isVisible
@@ -301,37 +303,21 @@ export default function Testimonials({
                 : "translate-y-8 opacity-0 scale-95"
             }`}
           >
-            <div
-              className="p-12 md:p-16 rounded-3xl backdrop-blur-xl border relative overflow-hidden group max-w-4xl mx-auto"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(176, 141, 87, 0.02) 100%)",
-                borderColor: "rgba(176, 141, 87, 0.2)",
-                boxShadow:
-                  "0 20px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-              }}
-            >
-              {/* Animated border effect */}
-              <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
-              </div>
-
-              <div className="relative z-10">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-8">
-                  {TEXTS.STATS_HEADING}
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-                  {testimonialStats.map((stat, idx) => (
-                    <div key={idx} className="text-center group">
-                      <div className="text-3xl md:text-4xl font-bold text-gold-gradient mb-2 group-hover:scale-110 transition-transform duration-300">
-                        {stat.value}
-                      </div>
-                      <div className="text-sm text-[#B3B3B3] group-hover:text-white transition-colors duration-300">
-                        {stat.label}
-                      </div>
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                {TEXTS.STATS_HEADING}
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                {testimonialStats.map((stat, idx) => (
+                  <div key={idx} className="text-center">
+                    <div className="text-2xl md:text-3xl font-bold text-[#B08D57] mb-1">
+                      {stat.value}
                     </div>
-                  ))}
-                </div>
+                    <div className="text-sm text-[#B3B3B3]">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

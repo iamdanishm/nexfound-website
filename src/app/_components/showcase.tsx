@@ -9,10 +9,13 @@ const TEXTS = {
   BADGE_TEXT: "Engineering Case Studies",
   TITLE_FIRST_LINE: "Complexity",
   TITLE_SECOND_LINE: "Simplified",
-  DESCRIPTION: "Discover our portfolio of projects where ambitious ideas became scalable, high-impact digital products. Each project reflects our commitment to strategy, design, and engineering excellence across industries.",
+  DESCRIPTION:
+    "Discover our portfolio of projects where ambitious ideas became scalable, high-impact digital products. Each project reflects our commitment to strategy, design, and engineering excellence across industries.",
   ARCHIVE_STAMP: "ARCHIVED",
   CTA_HEADING: "Need this level of engineering?",
-  CTA_BUTTON: "Discuss Your Architecture"
+  CTA_SUBHEADING:
+    "Whether it's a new build or a rescue mission, you get a dedicated lead engineer.",
+  CTA_BUTTON: "Discuss Your Architecture",
 } as const;
 
 type Project = {
@@ -75,7 +78,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
         <div className="absolute bottom-1/4 right-20 w-40 h-40 border border-[#B08D57]/25 rotate-60 animate-float-slow opacity-35" />
       </div>
 
-      <div className="container-custom relative z-10 px-6 py-20">
+      <div className="container-custom relative z-10 px-6 py-10">
         <div className="max-w-6xl mx-auto">
           {/* Enhanced Section Header */}
           <div className="text-center mb-20">
@@ -110,7 +113,9 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                   : "translate-y-8 opacity-0 scale-95"
               }`}
             >
-              <span className="block text-white mb-3">{TEXTS.TITLE_FIRST_LINE}</span>
+              <span className="block text-white mb-3">
+                {TEXTS.TITLE_FIRST_LINE}
+              </span>
               <span
                 className="block bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
                 style={{
@@ -231,7 +236,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
                     {/* Archive stamp effect */}
                     <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded border border-red-500/30 font-mono">
+                      <div className="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded border border-red-500/30 font-mono">
                         {TEXTS.ARCHIVE_STAMP}
                       </div>
                     </div>
@@ -281,16 +286,16 @@ export default function Showcase({ projects }: { projects: Project[] }) {
             ))}
           </div>
 
-          {/* Enhanced CTA Section */}
+          {/* CTA Section - Matching Hero CTA */}
           <div
-            className={`text-center transition-all duration-300 delay-400 transform ${
+            className={`transition-all duration-300 delay-400 transform ${
               isVisible
                 ? "translate-y-0 opacity-100 scale-100"
                 : "translate-y-8 opacity-0 scale-95"
             }`}
           >
             <div
-              className="p-12 md:p-16 rounded-3xl backdrop-blur-xl border relative overflow-hidden group max-w-4xl mx-auto"
+              className="p-8 md:p-12 rounded-2xl backdrop-blur-xl border relative overflow-hidden group"
               style={{
                 background:
                   "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(176, 141, 87, 0.02) 100%)",
@@ -300,71 +305,63 @@ export default function Showcase({ projects }: { projects: Project[] }) {
               }}
             >
               {/* Animated border effect */}
-              <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
               </div>
 
-              <div className="relative z-10">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                  {TEXTS.CTA_HEADING}
-                </h3>
+              <div className="flex flex-col lg:flex-row gap-8 items-center justify-between relative z-10">
+                <div className="flex-1 text-center lg:text-left">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                    {TEXTS.CTA_HEADING}
+                  </h3>
+                  <p className="text-[#B3B3B3] text-base md:text-lg">
+                    {TEXTS.CTA_SUBHEADING}
+                  </p>
+                </div>
 
-                <button
-                  onClick={() => {
-                    const element = document.querySelector("#contact");
-                    if (element) {
-                      const start = window.scrollY;
-                      const targetPosition =
-                        element.getBoundingClientRect().top +
-                        window.scrollY -
-                        88;
-                      const startTime = performance.now();
-                      const duration = 800;
+                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                  <button
+                    onClick={() => {
+                      const element = document.querySelector("#contact");
+                      if (element) {
+                        const start = window.scrollY;
+                        const targetPosition =
+                          element.getBoundingClientRect().top +
+                          window.scrollY -
+                          88;
+                        const startTime = performance.now();
+                        const duration = 800;
 
-                      const easeInOutQuad = (t: number) => {
-                        return t < 0.5
-                          ? 2 * t * t
-                          : 1 - Math.pow(-2 * t + 2, 2) / 2;
-                      };
+                        const easeInOutQuad = (t: number) => {
+                          return t < 0.5
+                            ? 2 * t * t
+                            : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                        };
 
-                      const scrollStep = (timestamp: number) => {
-                        const elapsed = timestamp - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
-                        const easedProgress = easeInOutQuad(progress);
+                        const scrollStep = (timestamp: number) => {
+                          const elapsed = timestamp - startTime;
+                          const progress = Math.min(elapsed / duration, 1);
+                          const easedProgress = easeInOutQuad(progress);
 
-                        window.scrollTo(
-                          0,
-                          start + (targetPosition - start) * easedProgress,
-                        );
+                          window.scrollTo(
+                            0,
+                            start + (targetPosition - start) * easedProgress,
+                          );
 
-                        if (progress < 1) {
-                          window.requestAnimationFrame(scrollStep);
-                        }
-                      };
+                          if (progress < 1) {
+                            window.requestAnimationFrame(scrollStep);
+                          }
+                        };
 
-                      window.requestAnimationFrame(scrollStep);
-                    }
-                  }}
-                  className="group relative px-10 py-5 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-2xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
-                >
-                  <span className="relative z-10 flex items-center gap-3">
-                    {TEXTS.CTA_BUTTON}
-                    <svg
-                      className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </button>
+                        window.requestAnimationFrame(scrollStep);
+                      }
+                    }}
+                    className="group relative px-8 py-4 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
+                  >
+                    <span className="relative z-10">{TEXTS.CTA_BUTTON}</span>
+                    <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
