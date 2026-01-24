@@ -356,17 +356,17 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
 
                       {/* Icon Container with Enhanced Effects */}
                       <div
-                        className="relative w-20 h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center p-4 transition-all duration-700 group-hover:scale-125 group-hover:rotate-12 overflow-hidden backdrop-blur-sm"
+                        className="relative w-20 h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center p-4 transition-all duration-700 group-hover:scale-105 overflow-hidden backdrop-blur-sm"
                         style={{
                           background: `linear-gradient(135deg, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")})`,
                           boxShadow:
                             hoveredIndex === index
-                              ? "0 25px 80px rgba(176, 141, 87, 0.6), inset 0 3px 0 rgba(255, 255, 255, 0.4), 0 0 40px rgba(176, 141, 87, 0.3)"
+                              ? "0 25px 80px rgba(176, 141, 87, 0.3), inset 0 3px 0 rgba(255, 255, 255, 0.4), 0 0 40px rgba(176, 141, 87, 0.3)"
                               : "0 15px 50px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.2)",
                         }}
                       >
                         {/* Icon Shine Animation */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-80 transition-opacity duration-500">
                           <div className="absolute top-2 left-2 w-8 h-8 bg-white/30 rounded-full blur-sm animate-ping" />
                           <div
                             className="absolute bottom-1 right-1 w-4 h-4 bg-white/20 rounded-full blur-sm animate-ping"
@@ -377,10 +377,10 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                         <SanityImage
                           image={service.icon}
                           alt={service.title}
-                          width={48}
-                          height={48}
-                          sizes="48px"
-                          className="w-full h-full object-contain filter brightness-0 invert drop-shadow-2xl relative z-10 transition-all duration-700 group-hover:scale-110"
+                          width={96}
+                          height={96}
+                          sizes="96px"
+                          className="w-full h-full object-contain filter brightness-0 invert drop-shadow-2xl relative z-10 transition-all duration-700 group-hover:scale-102"
                         />
                       </div>
                     </div>
