@@ -22,7 +22,7 @@ const TEXTS = {
     { value: "24/7", label: "Support Available" },
   ],
   CTA_BUTTON_PRIMARY: "Get Your Roadmap Now!",
-  CTA_BUTTON_SECONDARY: "View Our Work",
+  CTA_BUTTON_SECONDARY: "Get Free AI Audit",
   SCROLL_INDICATOR_TEXT: "Discover More",
 } as const;
 
@@ -54,11 +54,11 @@ export default function Hero({ hero }: { hero?: HeroData }) {
       hero?.trustIndicators && hero.trustIndicators.length > 0
         ? hero.trustIndicators
         : [
-            { value: "50+", label: "Projects Delivered" },
-            { value: "98%", label: "Client Satisfaction" },
-            { value: "15+", label: "Industry Awards" },
-            { value: "24/7", label: "Support Available" },
-          ],
+          { value: "50+", label: "Projects Delivered" },
+          { value: "98%", label: "Client Satisfaction" },
+          { value: "15+", label: "Industry Awards" },
+          { value: "24/7", label: "Support Available" },
+        ],
     [hero?.trustIndicators],
   );
 
@@ -164,11 +164,10 @@ export default function Hero({ hero }: { hero?: HeroData }) {
         <div className="max-w-6xl mx-auto text-center">
           {/* Enhanced Badge */}
           <div
-            className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-5 mt-8 backdrop-blur-md border transition-all duration-1000 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
+            className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-5 mt-8 backdrop-blur-md border transition-all duration-1000 transform ${isVisible
+              ? "translate-y-0 opacity-100 scale-100"
+              : "translate-y-8 opacity-0 scale-95"
+              }`}
             style={{
               background:
                 "linear-gradient(135deg, rgba(176, 141, 87, 0.15) 0%, rgba(244, 230, 192, 0.08) 100%)",
@@ -187,11 +186,10 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Refined Main Heading */}
           <h1
-            className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-1000 delay-200 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
+            className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-1000 delay-200 transform ${isVisible
+              ? "translate-y-0 opacity-100 scale-100"
+              : "translate-y-8 opacity-0 scale-95"
+              }`}
           >
             <span className="block text-white">{mainHeading}</span>
             <span
@@ -207,22 +205,20 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Improved Subtitle */}
           <p
-            className={`text-lg md:text-xl text-[#B3B3B3] mb-16 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-400 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
+            className={`text-lg md:text-xl text-[#B3B3B3] mb-16 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-400 transform ${isVisible
+              ? "translate-y-0 opacity-100 scale-100"
+              : "translate-y-8 opacity-0 scale-95"
+              }`}
           >
             {subheading}
           </p>
 
           {/* Enhanced CTA Section */}
           <div
-            className={`mb-20 transition-all duration-1000 delay-600 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
+            className={`mb-20 transition-all duration-1000 delay-600 transform ${isVisible
+              ? "translate-y-0 opacity-100 scale-100"
+              : "translate-y-8 opacity-0 scale-95"
+              }`}
           >
             <div
               className="p-8 md:p-12 rounded-2xl backdrop-blur-xl border relative overflow-hidden group"
@@ -293,6 +289,14 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                     </span>
                     <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </button>
+                  <a
+                    href="/audit"
+                    className="group relative px-8 py-4 border-2 border-[#B08D57]/60 text-[#F4E6C0] font-semibold rounded-xl transition-all duration-300 hover:bg-[#B08D57]/10 hover:border-[#B08D57] hover:shadow-2xl hover:shadow-[#B08D57]/15 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden text-center"
+                  >
+                    <span className="relative z-10">
+                      {TEXTS.CTA_BUTTON_SECONDARY}
+                    </span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -300,11 +304,10 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Enhanced Trust Indicators */}
           <div
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 pb-16 transition-all duration-1000 delay-800 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 pb-16 transition-all duration-1000 delay-800 transform ${isVisible
+              ? "translate-y-0 opacity-100 scale-100"
+              : "translate-y-8 opacity-0 scale-95"
+              }`}
           >
             {trustIndicators.map((stat, index) => (
               <div
@@ -341,9 +344,8 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
       {/* Refined Scroll Indicator */}
       <div
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-1000 delay-1000 transform ${
-          isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-        }`}
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-1000 delay-1000 transform ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          }`}
       >
         <button
           onClick={() => {
