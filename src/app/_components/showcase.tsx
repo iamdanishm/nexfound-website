@@ -84,11 +84,10 @@ export default function Showcase({ projects }: { projects: Project[] }) {
           <div className="text-center mb-20">
             {/* Premium Badge */}
             <div
-              className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border transition-all duration-300 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+              className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border transition-all duration-500 transform ${isVisible
+                ? "translate-y-0 opacity-100 scale-100"
+                : "translate-y-8 opacity-0 scale-95"
+                }`}
               style={{
                 background:
                   "linear-gradient(135deg, rgba(176, 141, 87, 0.15) 0%, rgba(244, 230, 192, 0.08) 100%)",
@@ -107,11 +106,10 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
             {/* Premium Title */}
             <h2
-              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-300 delay-100 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-500 delay-75 transform ${isVisible
+                ? "translate-y-0 opacity-100 scale-100"
+                : "translate-y-8 opacity-0 scale-95"
+                }`}
             >
               <span className="block text-white mb-3">
                 {TEXTS.TITLE_FIRST_LINE}
@@ -128,11 +126,10 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
             {/* Enhanced Description */}
             <p
-              className={`text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed transition-all duration-300 delay-200 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+              className={`text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed transition-all duration-500 delay-100 transform ${isVisible
+                ? "translate-y-0 opacity-100 scale-100"
+                : "translate-y-8 opacity-0 scale-95"
+                }`}
             >
               {TEXTS.DESCRIPTION}
             </p>
@@ -140,22 +137,21 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
           {/* Digital Archive Cards - Unique Masonry Layout */}
           <div
-            className={`columns-1 lg:columns-2 xl:columns-3 gap-6 mb-20 transition-all duration-300 delay-300 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
+            className={`columns-1 lg:columns-2 xl:columns-3 gap-6 mb-20 transition-all duration-500 delay-150 transform ${isVisible
+              ? "translate-y-0 opacity-100 scale-100"
+              : "translate-y-8 opacity-0 scale-95"
+              }`}
             style={{ columnFill: "balance" }}
           >
             {projects.map((project, index) => (
               <div
                 key={project._id}
-                className={`group relative mb-6 break-inside-avoid transition-all duration-300 delay-${200 + index * 50} transform ${
-                  isVisible
-                    ? "translate-y-0 opacity-100 scale-100"
-                    : "translate-y-8 opacity-0 scale-95"
-                }`}
+                className={`group relative mb-6 break-inside-avoid transition-all duration-500 transform ${isVisible
+                  ? "translate-y-0 opacity-100 scale-100"
+                  : "translate-y-8 opacity-0 scale-95"
+                  }`}
                 style={{
+                  transitionDelay: `${50 + index * 30}ms`,
                   transform:
                     index % 3 === 1
                       ? "rotate(-0.5deg)"
@@ -190,13 +186,12 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                     {/* Status Indicator */}
                     <div className="flex items-center gap-1">
                       <div
-                        className={`w-2 h-2 rounded-full ${
-                          project.status === "completed"
-                            ? "bg-green-400"
-                            : project.status === "in-progress"
-                              ? "bg-yellow-400"
-                              : "bg-blue-400"
-                        } animate-pulse`}
+                        className={`w-2 h-2 rounded-full ${project.status === "completed"
+                          ? "bg-green-400"
+                          : project.status === "in-progress"
+                            ? "bg-yellow-400"
+                            : "bg-blue-400"
+                          } animate-pulse`}
                       />
                       <span className="text-xs text-white/60 capitalize">
                         {formatStatus(project.status)}
@@ -288,11 +283,10 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
           {/* CTA Section - Matching Hero CTA */}
           <div
-            className={`transition-all duration-300 delay-400 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
+            className={`transition-all duration-500 delay-200 transform ${isVisible
+              ? "translate-y-0 opacity-100 scale-100"
+              : "translate-y-8 opacity-0 scale-95"
+              }`}
           >
             <div
               className="p-8 md:p-12 rounded-2xl backdrop-blur-xl border relative overflow-hidden group"
@@ -330,18 +324,16 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                           window.scrollY -
                           88;
                         const startTime = performance.now();
-                        const duration = 800;
+                        const duration = 600;
 
-                        const easeInOutQuad = (t: number) => {
-                          return t < 0.5
-                            ? 2 * t * t
-                            : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                        const easeOutExpo = (t: number) => {
+                          return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
                         };
 
                         const scrollStep = (timestamp: number) => {
                           const elapsed = timestamp - startTime;
                           const progress = Math.min(elapsed / duration, 1);
-                          const easedProgress = easeInOutQuad(progress);
+                          const easedProgress = easeOutExpo(progress);
 
                           window.scrollTo(
                             0,

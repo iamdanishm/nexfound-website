@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 
 // Text constants
 const TEXTS = {
@@ -164,7 +165,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
         <div className="max-w-6xl mx-auto text-center">
           {/* Enhanced Badge */}
           <div
-            className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-5 mt-8 backdrop-blur-md border transition-all duration-1000 transform ${isVisible
+            className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-5 mt-8 backdrop-blur-md border transition-all duration-700 transform ${isVisible
               ? "translate-y-0 opacity-100 scale-100"
               : "translate-y-8 opacity-0 scale-95"
               }`}
@@ -186,7 +187,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Refined Main Heading */}
           <h1
-            className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-1000 delay-200 transform ${isVisible
+            className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-700 delay-100 transform ${isVisible
               ? "translate-y-0 opacity-100 scale-100"
               : "translate-y-8 opacity-0 scale-95"
               }`}
@@ -205,7 +206,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Improved Subtitle */}
           <p
-            className={`text-lg md:text-xl text-[#B3B3B3] mb-16 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-400 transform ${isVisible
+            className={`text-lg md:text-xl text-[#B3B3B3] mb-16 max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-200 transform ${isVisible
               ? "translate-y-0 opacity-100 scale-100"
               : "translate-y-8 opacity-0 scale-95"
               }`}
@@ -215,7 +216,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Enhanced CTA Section */}
           <div
-            className={`mb-20 transition-all duration-1000 delay-600 transform ${isVisible
+            className={`mb-20 transition-all duration-700 delay-300 transform ${isVisible
               ? "translate-y-0 opacity-100 scale-100"
               : "translate-y-8 opacity-0 scale-95"
               }`}
@@ -256,18 +257,17 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                           window.scrollY -
                           88;
                         const startTime = performance.now();
-                        const duration = 800;
+                        const duration = 600; // Snappier duration
 
-                        const easeInOutQuad = (t: number) => {
-                          return t < 0.5
-                            ? 2 * t * t
-                            : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                        // easeOutExpo
+                        const easeOutExpo = (t: number) => {
+                          return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
                         };
 
                         const scrollStep = (timestamp: number) => {
                           const elapsed = timestamp - startTime;
                           const progress = Math.min(elapsed / duration, 1);
-                          const easedProgress = easeInOutQuad(progress);
+                          const easedProgress = easeOutExpo(progress);
 
                           window.scrollTo(
                             0,
@@ -289,14 +289,14 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                     </span>
                     <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </button>
-                  <a
+                  <Link
                     href="/audit"
                     className="group relative px-8 py-4 border-2 border-[#B08D57]/60 text-[#F4E6C0] font-semibold rounded-xl transition-all duration-300 hover:bg-[#B08D57]/10 hover:border-[#B08D57] hover:shadow-2xl hover:shadow-[#B08D57]/15 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden text-center"
                   >
                     <span className="relative z-10">
                       {TEXTS.CTA_BUTTON_SECONDARY}
                     </span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -304,7 +304,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Enhanced Trust Indicators */}
           <div
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 pb-16 transition-all duration-1000 delay-800 transform ${isVisible
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 pb-16 transition-all duration-700 delay-500 transform ${isVisible
               ? "translate-y-0 opacity-100 scale-100"
               : "translate-y-8 opacity-0 scale-95"
               }`}

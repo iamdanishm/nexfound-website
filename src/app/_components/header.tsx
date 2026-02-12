@@ -13,7 +13,7 @@ const TEXTS = {
     { href: "#about", label: "About" },
     { href: "#testimonials", label: "Testimonials" },
   ],
-  CTA_BUTTON: "Let's Talk",
+  CTA_BUTTON: "AI Audit",
   ALT_TEXT: "Nexfound",
   BRAND_NAME: "Nexfound"
 } as const;
@@ -87,6 +87,7 @@ export default function Header() {
   const navLinks = TEXTS.NAV_LINKS;
 
   // Custom smooth scroll function with easing
+  // Custom smooth scroll function with premium easing
   const smoothScrollTo = useCallback((target: string) => {
     const element = document.querySelector(target);
     if (!element) return;
@@ -95,16 +96,17 @@ export default function Header() {
     const targetPosition =
       element.getBoundingClientRect().top + window.scrollY - 88; // Account for header height
     const startTime = performance.now();
-    const duration = 800;
+    const duration = 600; // Faster, snappier duration
 
-    const easeInOutQuad = (t: number) => {
-      return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    // easeOutExpo - fast start, slow settling
+    const easeOutExpo = (t: number) => {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
     };
 
     const scrollStep = (timestamp: number) => {
       const elapsed = timestamp - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const easedProgress = easeInOutQuad(progress);
+      const easedProgress = easeOutExpo(progress);
 
       window.scrollTo(0, start + (targetPosition - start) * easedProgress);
 
@@ -123,12 +125,10 @@ export default function Header() {
       if (!target) return;
 
       if (target.startsWith("#")) {
-        // Check if we're on a blog page (has # in URL or /blog in path)
-        const isBlogPage =
-          window.location.pathname.includes("/blog") ||
-          window.location.hash.includes("#");
+        // Check if we're NOT on the home page
+        const isNotHomePage = window.location.pathname !== "/";
 
-        if (isBlogPage) {
+        if (isNotHomePage) {
           // Store the target section in sessionStorage
           sessionStorage.setItem("scrollToSection", target);
           // Navigate to home page
@@ -165,9 +165,8 @@ export default function Header() {
       <div className="fixed top-0 left-0 w-full h-px pointer-events-none z-[-1]" />
 
       <header
-        className={`header h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "header-scrolled" : "header-default"
-        }`}
+        className={`header h-20 md:h-[88px] px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "header-scrolled" : "header-default"
+          }`}
       >
         <div className="container-custom h-full">
           <div className="flex items-center justify-between h-full gap-4 md:gap-6 lg:gap-10">
@@ -209,14 +208,13 @@ export default function Header() {
 
             {/* Desktop CTA */}
             <div className="hidden md:block">
-              <a
-                href="#contact"
-                onClick={handleNavClick}
-                className="btn btn-primary text-xs sm:text-sm md:text-sm lg:text-base text-center relative overflow-hidden group px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 min-w-0 shrink"
+              <Link
+                href="/audit"
+                className="btn btn-primary text-xs sm:text-sm md:text-sm lg:text-base text-center relative overflow-hidden group px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 min-w-0 shrink inline-block"
               >
-                <span className="relative z-10">Let&apos;s Talk</span>
+                <span className="relative z-10">{TEXTS.CTA_BUTTON}</span>
                 <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              </a>
+              </Link>
             </div>
 
             {/* Mobile Hamburger */}
@@ -228,19 +226,16 @@ export default function Header() {
             >
               <div className="w-6 h-5 relative flex flex-col justify-between">
                 <span
-                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] ${
-                    isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
-                  }`}
+                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
+                    }`}
                 />
                 <span
-                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] ${
-                    isMobileMenuOpen ? "opacity-0" : ""
-                  }`}
+                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] ${isMobileMenuOpen ? "opacity-0" : ""
+                    }`}
                 />
                 <span
-                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] ${
-                    isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
-                  }`}
+                  className={`block h-0.5 w-full rounded-full transition-all duration-300 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+                    }`}
                 />
               </div>
             </button>
@@ -259,11 +254,10 @@ export default function Header() {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`fixed top-20 left-0 right-0 z-40 md:hidden transition-all duration-300 ${
-          isMobileMenuOpen
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-4 opacity-0 pointer-events-none"
-        }`}
+        className={`fixed top-20 left-0 right-0 z-40 md:hidden transition-all duration-300 ${isMobileMenuOpen
+          ? "translate-y-0 opacity-100"
+          : "-translate-y-4 opacity-0 pointer-events-none"
+          }`}
       >
         <nav className="liquid-glass-header mx-4 p-8 flex flex-col space-y-6">
           {navLinks.map((link, index) => (
@@ -279,14 +273,14 @@ export default function Header() {
             </a>
           ))}
           <div className="pt-6 border-t border-[#B08D57]/20">
-            <a
-              href="#contact"
-              onClick={handleNavClick}
-              className="btn btn-primary text-sm relative overflow-hidden group w-full"
+            <Link
+              href="/audit"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="btn btn-primary text-sm relative overflow-hidden group w-full block text-center py-3"
             >
-              <span className="relative z-10">Let&apos;s Talk</span>
+              <span className="relative z-10">{TEXTS.CTA_BUTTON}</span>
               <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-            </a>
+            </Link>
           </div>
         </nav>
       </div>

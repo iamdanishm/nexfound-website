@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 
 type AuditState = "input" | "loading" | "result" | "error";
 
@@ -80,7 +81,7 @@ export default function AuditChat() {
             <div className="container-custom relative z-10 px-6 w-full max-w-3xl mx-auto">
                 {/* Header */}
                 <div
-                    className={`text-center mb-12 transition-all duration-1000 transform ${isVisible
+                    className={`text-center mb-12 transition-all duration-700 transform ${isVisible
                         ? "translate-y-0 opacity-100"
                         : "translate-y-8 opacity-0"
                         }`}
@@ -336,7 +337,7 @@ export default function AuditChat() {
 
                                     {/* CTA Buttons */}
                                     <div className="ml-11 space-y-3">
-                                        <a
+                                        <Link
                                             href="/#contact"
                                             className="block w-full px-6 py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-[1.02] text-center"
                                         >
@@ -356,7 +357,7 @@ export default function AuditChat() {
                                                     />
                                                 </svg>
                                             </span>
-                                        </a>
+                                        </Link>
                                         <button
                                             onClick={handleReset}
                                             className="w-full px-6 py-3 border border-[#B08D57]/30 text-[#F4E6C0] font-medium rounded-xl transition-all duration-300 hover:bg-[#B08D57]/10 hover:border-[#B08D57]/50 text-center"
