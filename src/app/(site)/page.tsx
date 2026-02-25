@@ -6,6 +6,7 @@ import Testimonials from "../_components/testimonials";
 import About from "../_components/about";
 import FeaturedBlogCarousel from "../_components/featured-blog-carousel";
 import ContactFooter from "../_components/contact-footer";
+import AuditChat from "../_components/audit-chat";
 import { client } from "@/sanity/lib/client";
 import {
   projectsQuery,
@@ -73,6 +74,9 @@ export default async function Home() {
             testimonials={testimonials}
             stats={settings?.testimonialStats}
           />
+        </section>
+        <section id="audit">
+          <AuditChat />
         </section>
         {featuredBlogs && featuredBlogs.length > 0 && (
           <section id="blog">

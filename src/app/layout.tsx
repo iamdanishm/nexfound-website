@@ -7,7 +7,7 @@ import PreloadLinks from "./_components/preload-links";
 
 // Text constants for metadata
 const METADATA_TEXTS = {
-  TITLE_DEFAULT: "Nexfound | Premium Tech Service for Startups and Businesses",
+  TITLE_DEFAULT: "Nexfound | Premium Tech Services & Free AI Audit",
   TITLE_TEMPLATE: "%s | Nexfound",
   DESCRIPTION: "Turn ambitious ideas into scalable digital products with Nexfound. From premium web and mobile development to strategic AI Audits, we deliver solutions that drive real impact.",
   KEYWORDS: [
@@ -47,7 +47,7 @@ const METADATA_TEXTS = {
   CATEGORY: "Technology Services",
   METADATA_BASE_URL: "https://nexfound.in",
   ALTERNATES_CANONICAL: "https://nexfound.in",
-  OG_TITLE: "Nexfound | Premium Tech Service for Startups and Businesses",
+  OG_TITLE: "Nexfound | Premium Tech Services & Free AI Audit",
   OG_DESCRIPTION: "Turn ambitious ideas into scalable digital products with Nexfound. From premium web and mobile development to strategic AI Audits, we deliver solutions that drive real impact.",
   OG_TYPE: "website",
   OG_LOCALE: "en_US",
@@ -62,7 +62,7 @@ const METADATA_TEXTS = {
     },
   ],
   TWITTER_CARD: "summary_large_image",
-  TWITTER_TITLE: "Nexfound | Premium Tech Service for Startups and Businesses",
+  TWITTER_TITLE: "Nexfound | Premium Tech Services & Free AI Audit",
   TWITTER_DESCRIPTION: "Turn ambitious ideas into scalable digital products with Nexfound. From premium web and mobile development to strategic AI Audits, we deliver solutions that drive real impact.",
   TWITTER_CREATOR: "@iam_danishm",
   TWITTER_SITE: "@iam_danishm",

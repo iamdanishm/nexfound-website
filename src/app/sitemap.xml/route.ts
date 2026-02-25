@@ -13,8 +13,7 @@ export async function GET() {
     "about",
     "testimonials",
     "contact",
-    "blog",
-    "audit"
+    "blog"
   ];
 
   // Fetch all blog posts

@@ -175,8 +175,16 @@ export default function AuditChat() {
     return (
         <section
             ref={sectionRef}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 sm:pt-32 pb-12 sm:pb-16"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 border-t border-white/5"
         >
+            {/* High-end visual transition / separator from the previous section */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px opacity-70">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#B08D57] to-transparent" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-[#F4E6C0] to-transparent blur-sm" />
+                {/* Glow drop */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-[#B08D57]/20 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
+            </div>
+
             {/* Background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-20 right-10 w-48 h-48 border-2 border-[#B08D57]/20 rotate-45 animate-float-slow opacity-40 hidden sm:block" />
@@ -372,10 +380,10 @@ export default function AuditChat() {
                                                 <div className="flex flex-col items-center">
                                                     {/* Step icon */}
                                                     <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-500 ${step.status === "done"
-                                                            ? "bg-emerald-500/20 border-2 border-emerald-500"
-                                                            : step.status === "active"
-                                                                ? "bg-[#B08D57]/20 border-2 border-[#B08D57]"
-                                                                : "bg-[#2E2E2E] border-2 border-[#3E3E3E]"
+                                                        ? "bg-emerald-500/20 border-2 border-emerald-500"
+                                                        : step.status === "active"
+                                                            ? "bg-[#B08D57]/20 border-2 border-[#B08D57]"
+                                                            : "bg-[#2E2E2E] border-2 border-[#3E3E3E]"
                                                         }`}>
                                                         {step.status === "done" ? (
                                                             <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -399,10 +407,10 @@ export default function AuditChat() {
                                                 {/* Step content */}
                                                 <div className="pt-1 sm:pt-1.5 pb-2 min-w-0">
                                                     <p className={`text-sm sm:text-base font-medium transition-colors duration-500 ${step.status === "done"
-                                                            ? "text-emerald-400"
-                                                            : step.status === "active"
-                                                                ? "text-[#F4E6C0]"
-                                                                : "text-[#5E5E5E]"
+                                                        ? "text-emerald-400"
+                                                        : step.status === "active"
+                                                            ? "text-[#F4E6C0]"
+                                                            : "text-[#5E5E5E]"
                                                         }`}>
                                                         {step.label}
                                                     </p>
@@ -650,8 +658,11 @@ export default function AuditChat() {
                                                         </p>
 
                                                         <div className="flex flex-col gap-3 pt-1 sm:pt-2">
-                                                            <Link
-                                                                href="/#contact"
+                                                            <button
+                                                                onClick={() => {
+                                                                    const element = document.querySelector("#contact");
+                                                                    element?.scrollIntoView({ behavior: "smooth" });
+                                                                }}
                                                                 className="w-full px-6 py-3.5 sm:py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-[1.02] text-center block"
                                                             >
                                                                 <span className="flex items-center justify-center gap-2 text-sm sm:text-base">
@@ -670,7 +681,7 @@ export default function AuditChat() {
                                                                         />
                                                                     </svg>
                                                                 </span>
-                                                            </Link>
+                                                            </button>
                                                             <button
                                                                 onClick={handleReset}
                                                                 className="w-full px-6 py-3 border border-[#B08D57]/20 text-[#B3B3B3] font-medium rounded-xl transition-all duration-300 hover:bg-[#B08D57]/10 hover:border-[#B08D57]/40 hover:text-[#F4E6C0] text-center text-sm"
@@ -698,8 +709,11 @@ export default function AuditChat() {
                                             </div>
 
                                             <div className="space-y-3">
-                                                <Link
-                                                    href="/#contact"
+                                                <button
+                                                    onClick={() => {
+                                                        const element = document.querySelector("#contact");
+                                                        element?.scrollIntoView({ behavior: "smooth" });
+                                                    }}
                                                     className="block w-full px-6 py-3.5 sm:py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-[1.02] text-center"
                                                 >
                                                     <span className="flex items-center justify-center gap-2 text-sm sm:text-base">
@@ -718,7 +732,7 @@ export default function AuditChat() {
                                                             />
                                                         </svg>
                                                     </span>
-                                                </Link>
+                                                </button>
                                                 <button
                                                     onClick={handleReset}
                                                     className="w-full px-6 py-3 border border-[#B08D57]/30 text-[#F4E6C0] font-medium rounded-xl transition-all duration-300 hover:bg-[#B08D57]/10 hover:border-[#B08D57]/50 text-center text-sm"

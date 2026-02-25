@@ -355,7 +355,13 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                       {TEXTS.CTA_BUTTON_PRIMARY}
                     </span>
                   </motion.button>
-                  <Link href="/audit" className="block w-full lg:w-auto">
+                  <button
+                    onClick={() => {
+                      const element = document.querySelector("#audit");
+                      element?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="block w-full lg:w-auto"
+                  >
                     <motion.div
                       whileHover={{
                         scale: 1.05,
@@ -369,7 +375,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                         {TEXTS.CTA_BUTTON_SECONDARY}
                       </span>
                     </motion.div>
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>

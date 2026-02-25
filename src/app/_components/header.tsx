@@ -208,13 +208,14 @@ export default function Header() {
 
             {/* Desktop CTA */}
             <div className="hidden md:block">
-              <Link
-                href="/audit"
+              <a
+                href="#audit"
+                onClick={handleNavClick}
                 className="btn btn-primary text-xs sm:text-sm md:text-sm lg:text-base text-center relative overflow-hidden group px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 min-w-0 shrink inline-block"
               >
                 <span className="relative z-10">{TEXTS.CTA_BUTTON}</span>
                 <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              </Link>
+              </a>
             </div>
 
             {/* Mobile Hamburger */}
@@ -273,14 +274,14 @@ export default function Header() {
             </a>
           ))}
           <div className="pt-6 border-t border-[#B08D57]/20">
-            <Link
-              href="/audit"
-              onClick={() => setIsMobileMenuOpen(false)}
+            <a
+              href="#audit"
+              onClick={handleNavClick}
               className="btn btn-primary text-sm relative overflow-hidden group w-full block text-center py-3"
             >
               <span className="relative z-10">{TEXTS.CTA_BUTTON}</span>
               <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-            </Link>
+            </a>
           </div>
         </nav>
       </div>
