@@ -405,12 +405,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   </motion.button>
                 </form>
 
-                {/* Archive Stamp */}
-                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <div className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded border border-green-500/30 font-mono transform -rotate-12">
-                    {TEXTS.STAMP_SECURE}
-                  </div>
-                </div>
+
               </div>
 
               {/* Page Curl Effect */}
@@ -497,12 +492,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                     </a>
                   </div>
 
-                  {/* Archive Stamp */}
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    <div className="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded border border-blue-500/30 font-mono transform -rotate-12">
-                      {TEXTS.STAMP_ACTIVE}
-                    </div>
-                  </div>
+
                 </div>
               </motion.div>
 
@@ -553,12 +543,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                     ))}
                   </ul>
 
-                  {/* Archive Stamp */}
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    <div className="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded border border-purple-500/30 font-mono transform -rotate-12">
-                      {TEXTS.STAMP_COMMITTED}
-                    </div>
-                  </div>
+
                 </div>
               </motion.div>
             </div>

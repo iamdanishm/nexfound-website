@@ -285,3 +285,104 @@ export function FractionalCtoSVG({ className = "" }: { className?: string }) {
         </svg>
     );
 }
+
+export function MarketRadar({ className = "" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+            {/* Outer Rings */}
+            <circle cx="100" cy="100" r="90" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.2" />
+            <circle cx="100" cy="100" r="60" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.1" />
+            <circle cx="100" cy="100" r="30" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.1" />
+
+            {/* Axis Lines */}
+            <line x1="100" y1="10" x2="100" y2="190" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.2" />
+            <line x1="10" y1="100" x2="190" y2="100" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.2" />
+
+            {/* Rotating Sweep */}
+            <motion.g
+                animate={{ rotate: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                style={{ transformOrigin: "100px 100px" }}
+            >
+                <line x1="100" y1="100" x2="100" y2="10" stroke="url(#radarSweep)" strokeWidth="2" />
+                <path d="M100 100 L100 10 A 90 90 0 0 0 60 25 Z" fill="url(#radarGradient)" opacity="0.3" />
+            </motion.g>
+
+            {/* Random Data Pings */}
+            {[
+                { cx: 140, cy: 60, delay: 0.5 },
+                { cx: 70, cy: 150, delay: 1.2 },
+                { cx: 120, cy: 130, delay: 2.1 },
+                { cx: 50, cy: 80, delay: 3.0 }
+            ].map((ping, i) => (
+                <motion.g key={i}>
+                    <motion.circle
+                        cx={ping.cx} cy={ping.cy} r="3" fill="#F4E6C0"
+                        animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: ping.delay }}
+                    />
+                    <motion.circle
+                        cx={ping.cx} cy={ping.cy} r="8" stroke="#F4E6C0" strokeWidth="0.5"
+                        animate={{ opacity: [0, 0.5, 0], scale: [1, 2.5, 3] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: ping.delay }}
+                    />
+                </motion.g>
+            ))}
+
+            <defs>
+                <linearGradient id="radarSweep" x1="100" y1="100" x2="100" y2="10">
+                    <stop offset="0%" stopColor="#B08D57" stopOpacity="0" />
+                    <stop offset="100%" stopColor="#F4E6C0" stopOpacity="1" />
+                </linearGradient>
+                <radialGradient id="radarGradient" cx="100" cy="100" r="90" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#B08D57" stopOpacity="0" />
+                    <stop offset="100%" stopColor="#B08D57" stopOpacity="0.5" />
+                </radialGradient>
+            </defs>
+        </svg>
+    );
+}
+
+export function DataFlux({ className = "" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+            {/* Flowing Paths */}
+            {[
+                "M 0 100 Q 200 50, 400 100 T 800 100",
+                "M 0 200 Q 200 250, 400 200 T 800 200",
+                "M 0 300 Q 200 350, 400 300 T 800 300",
+                "M 200 0 L 200 400",
+                "M 600 0 L 600 400"
+            ].map((d, i) => (
+                <motion.path
+                    key={i}
+                    d={d}
+                    stroke="#B08D57"
+                    strokeWidth="0.5"
+                    strokeOpacity="0.1"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", delay: i * 0.5 }}
+                />
+            ))}
+            {/* Data Bits flowing on paths */}
+            {[
+                { d: "M 0 100 Q 200 50, 400 100 T 800 100", dur: 10 },
+                { d: "M 0 200 Q 200 250, 400 200 T 800 200", dur: 12 },
+                { d: "M 0 300 Q 200 350, 400 300 T 800 300", dur: 8 }
+            ].map((path, i) => (
+                <motion.circle key={`bit-${i}`} r="2" fill="#F4E6C0">
+                    <animateMotion
+                        dur={`${path.dur}s`}
+                        repeatCount="indefinite"
+                        path={path.d}
+                    />
+                    <motion.div
+                        animate={{ opacity: [0, 1, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                    />
+                </motion.circle>
+            ))}
+        </svg>
+    );
+}
