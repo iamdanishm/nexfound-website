@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { motion, Variants } from "framer-motion";
 import SanityImageComp from "./sanity-image";
 import { SanityImage } from "@/sanity/lib/image";
 
@@ -36,27 +36,69 @@ type Project = {
   status: string;
 };
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const headerVariants: Variants = {
+  hidden: { y: 30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+    },
+  },
+};
+
+const cardContainerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { y: 40, opacity: 0, scale: 0.95 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      mass: 0.8,
+    },
+  },
+};
+
+const bgFloatVariants: Variants = {
+  animate: (custom: number) => ({
+    y: [0, custom * -15, 0],
+    x: [0, custom * 10, 0],
+    rotate: [0, custom * 10, 0],
+    transition: {
+      duration: 8 + custom * 2,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  }),
+};
+
 export default function Showcase({ projects }: { projects: Project[] }) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   const formatStatus = (status: string) => {
     return status
       .split("-")
@@ -66,28 +108,51 @@ export default function Showcase({ projects }: { projects: Project[] }) {
 
   return (
     <section
-      ref={sectionRef}
       id="work"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Enhanced Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-48 h-48 border-2 border-[#B08D57]/20 rotate-45 animate-float-slow opacity-40" />
-        <div className="absolute bottom-32 left-20 w-36 h-36 border border-[#1A7F6B]/15 rotate-12 animate-float-medium opacity-30" />
-        <div className="absolute top-1/3 left-10 w-28 h-28 bg-[#F4E6C0]/10 rounded-full animate-float-fast opacity-25" />
-        <div className="absolute bottom-1/4 right-20 w-40 h-40 border border-[#B08D57]/25 rotate-60 animate-float-slow opacity-35" />
+        <motion.div
+          custom={1.5}
+          variants={bgFloatVariants}
+          animate="animate"
+          className="absolute top-20 right-10 w-48 h-48 border-2 border-[#B08D57]/20 rotate-45 opacity-40"
+        />
+        <motion.div
+          custom={2}
+          variants={bgFloatVariants}
+          animate="animate"
+          className="absolute bottom-32 left-20 w-36 h-36 border border-[#1A7F6B]/15 rotate-12 opacity-30"
+        />
+        <motion.div
+          custom={1.2}
+          variants={bgFloatVariants}
+          animate="animate"
+          className="absolute top-1/3 left-10 w-28 h-28 bg-[#F4E6C0]/10 rounded-full opacity-25"
+        />
+        <motion.div
+          custom={2.5}
+          variants={bgFloatVariants}
+          animate="animate"
+          className="absolute bottom-1/4 right-20 w-40 h-40 border border-[#B08D57]/25 rotate-60 opacity-35"
+        />
       </div>
 
-      <div className="container-custom relative z-10 px-6 py-10">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        className="container-custom relative z-10 px-6 py-10"
+      >
         <div className="max-w-6xl mx-auto">
           {/* Enhanced Section Header */}
           <div className="text-center mb-20">
             {/* Premium Badge */}
-            <div
-              className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border transition-all duration-500 transform ${isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-                }`}
+            <motion.div
+              variants={headerVariants}
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border"
               style={{
                 background:
                   "linear-gradient(135deg, rgba(176, 141, 87, 0.15) 0%, rgba(244, 230, 192, 0.08) 100%)",
@@ -102,14 +167,12 @@ export default function Showcase({ projects }: { projects: Project[] }) {
               <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
                 {TEXTS.BADGE_TEXT}
               </span>
-            </div>
+            </motion.div>
 
             {/* Premium Title */}
-            <h2
-              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-500 delay-75 transform ${isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-                }`}
+            <motion.h2
+              variants={headerVariants}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight"
             >
               <span className="block text-white mb-3">
                 {TEXTS.TITLE_FIRST_LINE}
@@ -122,36 +185,29 @@ export default function Showcase({ projects }: { projects: Project[] }) {
               >
                 {TEXTS.TITLE_SECOND_LINE}
               </span>
-            </h2>
+            </motion.h2>
 
             {/* Enhanced Description */}
-            <p
-              className={`text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed transition-all duration-500 delay-100 transform ${isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-                }`}
+            <motion.p
+              variants={headerVariants}
+              className="text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed"
             >
               {TEXTS.DESCRIPTION}
-            </p>
+            </motion.p>
           </div>
 
           {/* Digital Archive Cards - Unique Masonry Layout */}
-          <div
-            className={`columns-1 lg:columns-2 xl:columns-3 gap-6 mb-20 transition-all duration-500 delay-150 transform ${isVisible
-              ? "translate-y-0 opacity-100 scale-100"
-              : "translate-y-8 opacity-0 scale-95"
-              }`}
+          <motion.div
+            variants={cardContainerVariants}
+            className="columns-1 lg:columns-2 xl:columns-3 gap-6 mb-20"
             style={{ columnFill: "balance" }}
           >
             {projects.map((project, index) => (
-              <div
+              <motion.div
                 key={project._id}
-                className={`group relative mb-6 break-inside-avoid transition-all duration-500 transform ${isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-                  }`}
+                variants={cardVariants}
+                className="group relative mb-6 break-inside-avoid"
                 style={{
-                  transitionDelay: `${50 + index * 30}ms`,
                   transform:
                     index % 3 === 1
                       ? "rotate(-0.5deg)"
@@ -159,10 +215,15 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                         ? "rotate(0.5deg)"
                         : "rotate(0deg)",
                 }}
+                whileHover={{
+                  y: -5,
+                  rotate: 0,
+                  transition: { duration: 0.3 },
+                }}
               >
                 {/* Archive Card - Digital Document Style */}
                 <div
-                  className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group-hover:-translate-y-1"
+                  className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10"
                   style={{
                     boxShadow:
                       "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
@@ -208,7 +269,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                         fill
                         quality={80}
                         priority={index < 3}
-                        className="object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+                        className="object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     ) : (
@@ -266,7 +327,7 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                     {/* Archive Bookmark */}
                     <div className="absolute top-0 right-0 w-0 h-0 border-l-[20px] border-l-transparent border-t-[20px] border-t-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="absolute -top-3 -right-2 text-xs font-bold text-black rotate-45">
-                        
+
                       </div>
                     </div>
                   </div>
@@ -277,17 +338,12 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                   {/* File Shadow Effect */}
                   <div className="absolute -bottom-1 -right-1 w-full h-full bg-black/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* CTA Section - Matching Hero CTA */}
-          <div
-            className={`transition-all duration-500 delay-200 transform ${isVisible
-              ? "translate-y-0 opacity-100 scale-100"
-              : "translate-y-8 opacity-0 scale-95"
-              }`}
-          >
+          <motion.div variants={headerVariants}>
             <div
               className="p-8 md:p-12 rounded-2xl backdrop-blur-xl border relative overflow-hidden group"
               style={{
@@ -314,7 +370,9 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => {
                       const element = document.querySelector("#contact");
                       if (element) {
@@ -348,17 +406,17 @@ export default function Showcase({ projects }: { projects: Project[] }) {
                         window.requestAnimationFrame(scrollStep);
                       }
                     }}
-                    className="group relative px-8 py-4 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
+                    className="group relative px-8 py-4 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
                   >
                     <span className="relative z-10">{TEXTS.CTA_BUTTON}</span>
                     <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </button>
+                  </motion.button>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

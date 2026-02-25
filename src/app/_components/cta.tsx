@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import { motion, Variants } from "framer-motion";
 
 // Text constants
 const TEXTS = {
@@ -57,6 +58,43 @@ type CTAProps = {
   contactPhone?: string;
 };
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+    },
+  },
+};
+
+const bgFloatVariants: Variants = {
+  animate: (custom: number) => ({
+    y: [0, custom * -15, 0],
+    x: [0, custom * 10, 0],
+    rotate: [0, custom * 10, 0],
+    transition: {
+      duration: 8 + custom * 2,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  }),
+};
+
 export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -65,32 +103,11 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const badgeText = cta?.badgeText ?? TEXTS.BADGE_TEXT_DEFAULT;
   const mainHeading = cta?.mainHeading ?? TEXTS.MAIN_HEADING_DEFAULT;
   const highlightedText = cta?.highlightedText ?? TEXTS.HIGHLIGHTED_TEXT_DEFAULT;
-  const description =
-    cta?.description ??
-    TEXTS.DESCRIPTION_DEFAULT;
+  const description = cta?.description ?? TEXTS.DESCRIPTION_DEFAULT;
   const formTitle = cta?.formTitle ?? TEXTS.FORM_TITLE_DEFAULT;
   const quickContactTitle = cta?.quickContactTitle ?? TEXTS.QUICK_CONTACT_TITLE_DEFAULT;
   const email = contactEmail ?? TEXTS.EMAIL_DEFAULT;
@@ -156,29 +173,51 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
 
   return (
     <section
-      ref={sectionRef}
       id="contact"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Enhanced Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-48 h-48 border-2 border-[#B08D57]/20 rotate-45 animate-float-slow opacity-40" />
-        <div className="absolute bottom-32 left-20 w-36 h-36 border border-[#1A7F6B]/15 rotate-12 animate-float-medium opacity-30" />
-        <div className="absolute top-1/3 left-10 w-28 h-28 bg-[#F4E6C0]/10 rounded-full animate-float-fast opacity-25" />
-        <div className="absolute bottom-1/4 right-20 w-40 h-40 border border-[#B08D57]/25 rotate-60 animate-float-slow opacity-35" />
+        <motion.div
+          custom={1.5}
+          variants={bgFloatVariants}
+          animate="animate"
+          className="absolute top-20 right-10 w-48 h-48 border-2 border-[#B08D57]/20 rotate-45 opacity-40"
+        />
+        <motion.div
+          custom={2}
+          variants={bgFloatVariants}
+          animate="animate"
+          className="absolute bottom-32 left-20 w-36 h-36 border border-[#1A7F6B]/15 rotate-12 opacity-30"
+        />
+        <motion.div
+          custom={1.2}
+          variants={bgFloatVariants}
+          animate="animate"
+          className="absolute top-1/3 left-10 w-28 h-28 bg-[#F4E6C0]/10 rounded-full opacity-25"
+        />
+        <motion.div
+          custom={2.5}
+          variants={bgFloatVariants}
+          animate="animate"
+          className="absolute bottom-1/4 right-20 w-40 h-40 border border-[#B08D57]/25 rotate-60 opacity-35"
+        />
       </div>
 
-      <div className="container-custom relative z-10 px-6 py-5 pb-20">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        className="container-custom relative z-10 px-6 py-5 pb-20"
+      >
         <div className="max-w-6xl mx-auto">
           {/* Enhanced Section Header */}
           <div className="text-center mb-20">
             {/* Premium Badge */}
-            <div
-              className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border transition-all duration-1000 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+            <motion.div
+              variants={itemVariants}
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border"
               style={{
                 background:
                   "linear-gradient(135deg, rgba(176, 141, 87, 0.15) 0%, rgba(244, 230, 192, 0.08) 100%)",
@@ -193,15 +232,12 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
               <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
                 {badgeText}
               </span>
-            </div>
+            </motion.div>
 
             {/* Premium Title */}
-            <h2
-              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-1000 delay-200 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+            <motion.h2
+              variants={itemVariants}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight"
             >
               <span className="block text-white mb-3">{mainHeading}</span>
               <span
@@ -212,31 +248,23 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
               >
                 {highlightedText}
               </span>
-            </h2>
+            </motion.h2>
 
             {/* Enhanced Description */}
-            <p
-              className={`text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed transition-all duration-1000 delay-400 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+            <motion.p
+              variants={itemVariants}
+              className="text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed"
             >
               {description}
-            </p>
+            </motion.p>
           </div>
 
           {/* Communication Documents Layout */}
-          <div
-            className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 transition-all duration-1000 delay-600 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
-          >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
             {/* Project Inquiry Document - Contact Form */}
-            <div
-              className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10"
+            <motion.div
+              variants={itemVariants}
+              className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group"
               style={{
                 boxShadow:
                   "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
@@ -324,10 +352,12 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   </div>
 
                   {/* Submit Button */}
-                  <button
+                  <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full px-6 py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-2xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                    className="w-full relative px-6 py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed group-hover:shadow-[0_0_20px_rgba(176,141,87,0.3)]"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
                       {isSubmitting ? (
@@ -372,11 +402,11 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                         </>
                       )}
                     </span>
-                  </button>
+                  </motion.button>
                 </form>
 
                 {/* Archive Stamp */}
-                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                   <div className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded border border-green-500/30 font-mono transform -rotate-12">
                     {TEXTS.STAMP_SECURE}
                   </div>
@@ -385,13 +415,14 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
 
               {/* Page Curl Effect */}
               <div className="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-bl from-white/10 to-white/5 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            </div>
+            </motion.div>
 
             {/* Communication Protocols - Contact Info */}
             <div className="space-y-8">
               {/* Contact Protocol Document */}
-              <div
-                className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10"
+              <motion.div
+                variants={itemVariants}
+                className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group"
                 style={{
                   boxShadow:
                     "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
@@ -417,9 +448,9 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   <div className="space-y-4">
                     <a
                       href={`mailto:${email}`}
-                      className="flex items-center gap-4 text-[#E0E0E0] hover:text-gold-gradient transition-colors duration-300 group"
+                      className="flex items-center gap-4 text-[#E0E0E0] hover:text-gold-gradient transition-colors duration-300 group/link"
                     >
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#B08D57] to-[#F4E6C0] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#B08D57] to-[#F4E6C0] flex items-center justify-center group-hover/link:scale-110 transition-transform duration-300">
                         <svg
                           className="w-6 h-6 text-black"
                           fill="none"
@@ -442,9 +473,9 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
 
                     <a
                       href={`tel:${phone.replace(/\s/g, "")}`}
-                      className="flex items-center gap-4 text-[#E0E0E0] hover:text-gold-gradient transition-colors duration-300 group"
+                      className="flex items-center gap-4 text-[#E0E0E0] hover:text-gold-gradient transition-colors duration-300 group/link"
                     >
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1A7F6B] to-[#0D3B66] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1A7F6B] to-[#0D3B66] flex items-center justify-center group-hover/link:scale-110 transition-transform duration-300">
                         <svg
                           className="w-6 h-6 text-white"
                           fill="none"
@@ -467,17 +498,18 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   </div>
 
                   {/* Archive Stamp */}
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <div className="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded border border-blue-500/30 font-mono transform -rotate-12">
                       {TEXTS.STAMP_ACTIVE}
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Service Charter Document */}
-              <div
-                className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10"
+              <motion.div
+                variants={itemVariants}
+                className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group"
                 style={{
                   boxShadow:
                     "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
@@ -522,17 +554,17 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   </ul>
 
                   {/* Archive Stamp */}
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <div className="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded border border-purple-500/30 font-mono transform -rotate-12">
                       {TEXTS.STAMP_COMMITTED}
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

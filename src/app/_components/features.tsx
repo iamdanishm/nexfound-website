@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { motion, Variants } from "framer-motion";
 import SanityImage from "./sanity-image";
+import {
+  MvpArchitectureSVG,
+  CodeRescueSVG,
+  ProcessAutomationSVG,
+  FractionalCtoSVG,
+} from "./animated-shapes";
 
 // Text constants
 const TEXTS = {
@@ -30,18 +37,56 @@ type Service = {
   gradient: string;
 };
 
+// --- Animation Variants ---
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 40, opacity: 0, scale: 0.95 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      mass: 0.8,
+    },
+  },
+};
+
+const badgeVariants: Variants = {
+  hidden: { y: -20, opacity: 0, scale: 0.9 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    scale: 1,
+    transition: { type: "spring", stiffness: 120, damping: 14 },
+  },
+};
+
+const cardContainerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
+    },
+  },
+};
+
 export default function FeatFeatures({ services }: { services: Service[] }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const getPreviewDescription = (
-    description: string,
-    maxLength: number = 100,
-  ) => {
-    if (description.length <= maxLength) return description;
-    return description.substring(0, maxLength).trim() + "...";
-  };
 
   useEffect(() => {
     // Add CSS animations for tech visuals
@@ -78,115 +123,139 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
     };
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
       id="services"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden py-24"
     >
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-48 h-48 border-2 border-[#B08D57]/20 rotate-45 animate-float-slow opacity-40" />
-        <div className="absolute bottom-32 left-20 w-36 h-36 border border-[#1A7F6B]/15 rotate-12 animate-float-medium opacity-30" />
-        <div className="absolute top-1/3 left-10 w-28 h-28 bg-[#F4E6C0]/10 rounded-full animate-float-fast opacity-25" />
-        <div className="absolute bottom-1/4 right-20 w-40 h-40 border border-[#B08D57]/25 rotate-60 animate-float-slow opacity-35" />
+      {/* Enhanced Background Elements with Framer Motion */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 opacity-40">
+        {/* Tech Connectivity Nodes SVG */}
+        <motion.svg
+          className="absolute top-0 right-0 w-[800px] h-[800px] text-[#B08D57]"
+          viewBox="0 0 800 800"
+          fill="none"
+          initial={{ opacity: 0, scale: 1.1, rotate: -5 }}
+          whileInView={{ opacity: 0.15, scale: 1, rotate: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 2.5, ease: "easeOut" }}
+        >
+          <g stroke="currentColor" strokeWidth="1" strokeDasharray="4 8">
+            <path d="M 800 0 L 400 400 L 800 800" />
+            <path d="M 600 0 L 200 600" />
+            <path d="M 1000 200 L 500 500" />
+          </g>
+          <g fill="currentColor" fillOpacity="0.5">
+            <circle cx="400" cy="400" r="4">
+              <animate attributeName="r" values="4;8;4" dur="3s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="200" cy="600" r="3">
+              <animate attributeName="r" values="3;6;3" dur="4s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="500" cy="500" r="5">
+              <animate attributeName="r" values="5;10;5" dur="2.5s" repeatCount="indefinite" />
+            </circle>
+          </g>
+        </motion.svg>
+
+        <motion.div
+          animate={{
+            y: [0, -20, 0],
+            rotate: [45, 50, 45],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-20 right-10 w-48 h-48 border-2 border-[#B08D57]/20 opacity-40"
+        />
+        <motion.div
+          animate={{
+            y: [0, 20, 0],
+            rotate: [12, -5, 12],
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-32 left-20 w-36 h-36 border border-[#1A7F6B]/15 opacity-30"
+        />
       </div>
 
-      <div className="container-custom relative z-10 px-6 py-10">
+      <motion.div
+        className="container-custom relative z-10 px-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={containerVariants}
+      >
         <div className="max-w-6xl mx-auto">
           {/* Enhanced Section Header */}
           <div className="text-center mb-20">
             {/* Premium Badge */}
-            <div
-              className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 md:mb-12 backdrop-blur-md border transition-all duration-300 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(176, 141, 87, 0.15) 0%, rgba(244, 230, 192, 0.08) 100%)",
-                borderColor: "rgba(176, 141, 87, 0.4)",
-                boxShadow: "0 8px 32px rgba(176, 141, 87, 0.1)",
-              }}
+            <motion.div
+              variants={badgeVariants}
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-8 md:mb-12 backdrop-blur-md border border-[#B08D57]/40 shadow-[0_8px_32px_rgba(176,141,87,0.1)] bg-gradient-to-br from-[#B08D57]/15 to-[#F4E6C0]/5"
             >
-              <div className="relative">
-                <div className="w-3 h-3 bg-[#B08D57] rounded-full animate-pulse" />
-                <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
+              <div className="relative flex items-center justify-center w-3 h-3">
+                <motion.div
+                  className="w-2 h-2 bg-[#B08D57] rounded-full"
+                  animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <motion.div
+                  className="absolute inset-0 bg-[#F4E6C0] rounded-full opacity-50"
+                  animate={{ scale: [1, 2.5, 1], opacity: [0.8, 0, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                />
               </div>
               <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
                 {TEXTS.BADGE_TEXT}
               </span>
-            </div>
+            </motion.div>
 
             {/* Premium Title */}
-            <h2
-              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-300 delay-100 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+            <motion.h2
+              variants={itemVariants}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight"
             >
               <span className="block text-white mb-3">
                 {TEXTS.TITLE_FIRST_LINE}
               </span>
               <span
-                className="block bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
+                className="block bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
                 style={{
                   textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
                 }}
               >
                 {TEXTS.TITLE_SECOND_LINE}
               </span>
-            </h2>
+            </motion.h2>
 
             {/* Enhanced Description */}
-            <p
-              className={`text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed transition-all duration-300 delay-200 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+            <motion.p
+              variants={itemVariants}
+              className="text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed"
             >
               {TEXTS.DESCRIPTION}
-            </p>
+            </motion.p>
           </div>
 
           {/* Eye-Catching Service Cards - Enhanced Design */}
-          <div
-            className={`grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-20 transition-all duration-300 delay-300 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
+          <motion.div
+            variants={cardContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-20"
           >
             {services.map((service, index) => (
-              <div
+              <motion.div
                 key={service._id}
+                variants={itemVariants}
                 className="group relative h-full"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 {/* Glass Morphism Card with Tech Visuals */}
-                <div
-                  className="relative h-full p-8 lg:p-10 rounded-3xl backdrop-blur-2xl border transition-all duration-700 hover:scale-[1.02] overflow-hidden cursor-pointer"
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="relative h-full p-8 lg:p-10 rounded-3xl backdrop-blur-2xl border overflow-hidden cursor-pointer"
                   style={{
                     background:
                       "linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, rgba(176, 141, 87, 0.08) 25%, rgba(244, 230, 192, 0.05) 50%, rgba(26, 127, 107, 0.04) 75%, rgba(0, 0, 0, 0.8) 100%)",
@@ -198,150 +267,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                         : "0 25px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 0 0 1px rgba(176, 141, 87, 0.3)",
                   }}
                 >
-                  {/* Tech Visuals Background Layers */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
-                    {/* Circuit Pattern Overlay */}
-                    <div
-                      className="absolute inset-0 opacity-20"
-                      style={{
-                        backgroundImage: `
-                          linear-gradient(rgba(176, 141, 87, 0.3) 1px, transparent 1px),
-                          linear-gradient(90deg, rgba(176, 141, 87, 0.3) 1px, transparent 1px)
-                        `,
-                        backgroundSize: "20px 20px",
-                        animation: "circuit-flow 3s linear infinite",
-                      }}
-                    />
-
-                    {/* Data Stream Lines */}
-                    <div className="absolute top-0 left-0 w-full h-full">
-                      <div
-                        className="absolute top-10 left-0 w-full h-px opacity-40 animate-pulse"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, transparent, rgba(244, 230, 192, 0.8), transparent)",
-                          animation: "data-stream 2s ease-in-out infinite",
-                        }}
-                      />
-                      <div
-                        className="absolute top-20 right-0 w-full h-px opacity-30 animate-pulse"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, transparent, rgba(176, 141, 87, 0.6), transparent)",
-                          animation:
-                            "data-stream-reverse 2.5s ease-in-out infinite",
-                          animationDelay: "0.5s",
-                        }}
-                      />
-                      <div
-                        className="absolute bottom-16 left-0 w-full h-px opacity-35 animate-pulse"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, transparent, rgba(26, 127, 107, 0.7), transparent)",
-                          animation: "data-stream 3s ease-in-out infinite",
-                          animationDelay: "1s",
-                        }}
-                      />
-                    </div>
-
-                    {/* Hexagonal Grid Pattern */}
-                    <div
-                      className="absolute inset-0 opacity-10"
-                      style={{
-                        backgroundImage: `
-                          radial-gradient(circle at 25px 25px, rgba(176, 141, 87, 0.4) 2px, transparent 2px),
-                          radial-gradient(circle at 75px 75px, rgba(244, 230, 192, 0.3) 1px, transparent 1px)
-                        `,
-                        backgroundSize: "50px 50px",
-                        animation: "grid-shift 4s ease-in-out infinite",
-                      }}
-                    />
-
-                    {/* Primary Gradient Wave */}
-                    <div
-                      className="absolute inset-0 animate-pulse"
-                      style={{
-                        background: `linear-gradient(135deg, ${service.gradient.replace("from-[", "rgba(").replace("] to-[", ", 0.12) 0%, rgba(").replace("]", ", 0.06) 100%")})`,
-                      }}
-                    />
-
-                    {/* Secondary Animated Overlay */}
-                    <div
-                      className="absolute inset-0 animate-pulse opacity-70"
-                      style={{
-                        background: `radial-gradient(ellipse at 30% 20%, ${service.gradient.replace("from-[", "rgba(").replace("] to-[", ", 0.08) 0%, rgba(").replace("]", ", 0.03) 60%")}, transparent 80%)`,
-                        animationDelay: "0.3s",
-                      }}
-                    />
-
-                    {/* Tech Floating Elements */}
-                    <div
-                      className="absolute top-12 right-16 w-8 h-8 rounded-full opacity-30 animate-bounce"
-                      style={{
-                        background: `radial-gradient(circle, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")}, transparent)`,
-                        animationDelay: "0.1s",
-                        animationDuration: "3s",
-                        boxShadow: "0 0 20px rgba(176, 141, 87, 0.6)",
-                      }}
-                    />
-                    <div
-                      className="absolute bottom-20 left-12 w-6 h-6 rounded-full opacity-40 animate-bounce"
-                      style={{
-                        background: `radial-gradient(circle, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")}, transparent)`,
-                        animationDelay: "0.7s",
-                        animationDuration: "4s",
-                        boxShadow: "0 0 15px rgba(244, 230, 192, 0.5)",
-                      }}
-                    />
-                    <div
-                      className="absolute top-1/2 left-8 w-4 h-4 rounded-full opacity-25 animate-bounce"
-                      style={{
-                        background: `radial-gradient(circle, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")}, transparent)`,
-                        animationDelay: "1.2s",
-                        animationDuration: "5s",
-                        boxShadow: "0 0 10px rgba(26, 127, 107, 0.4)",
-                      }}
-                    />
-
-                    {/* Binary/Data Particles */}
-                    <div className="absolute top-8 left-8 text-[#B08D57] font-mono text-xs opacity-60 animate-pulse">
-                      01
-                    </div>
-                    <div
-                      className="absolute top-16 right-12 text-[#F4E6C0] font-mono text-xs opacity-40 animate-pulse"
-                      style={{ animationDelay: "0.5s" }}
-                    >
-                      10
-                    </div>
-                    <div
-                      className="absolute bottom-12 right-8 text-[#1A7F6B] font-mono text-xs opacity-50 animate-pulse"
-                      style={{ animationDelay: "1s" }}
-                    >
-                      11
-                    </div>
-                    <div
-                      className="absolute bottom-8 left-16 text-[#B08D57] font-mono text-xs opacity-30 animate-pulse"
-                      style={{ animationDelay: "1.5s" }}
-                    >
-                      00
-                    </div>
-                  </div>
-
-                  {/* Enhanced Border Animation */}
-                  <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-700">
-                    <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-[#B08D57]/20 via-[#F4E6C0]/10 to-[#1A7F6B]/15 animate-shimmer" />
-                  </div>
-
-                  {/* Floating Interactive Elements */}
-                  <div className="absolute top-6 right-6 w-3 h-3 bg-[#B08D57] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse" />
-                  <div
-                    className="absolute top-12 right-12 w-2 h-2 bg-[#F4E6C0] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"
-                    style={{ animationDelay: "0.2s" }}
-                  />
-                  <div
-                    className="absolute bottom-8 left-8 w-2.5 h-2.5 bg-[#1A7F6B] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"
-                    style={{ animationDelay: "0.4s" }}
-                  />
+                  {/* Extraneous background animations have been removed to preserve a clean, professional aesthetic */}
 
                   {/* Premium Icon Display */}
                   <div className="relative mb-8 flex justify-center">
@@ -356,7 +282,7 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
 
                       {/* Icon Container with Enhanced Effects */}
                       <div
-                        className="relative w-20 h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center p-4 transition-all duration-700 group-hover:scale-105 overflow-hidden backdrop-blur-sm"
+                        className="relative w-24 h-24 lg:w-28 lg:h-28 rounded-full flex items-center justify-center p-4 transition-transform duration-700 group-hover:scale-105 overflow-hidden backdrop-blur-sm"
                         style={{
                           background: `linear-gradient(135deg, ${service.gradient.replace("from-[", "").replace("] to-[", ", ").replace("]", "")})`,
                           boxShadow:
@@ -365,6 +291,9 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                               : "0 15px 50px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.2)",
                         }}
                       >
+                        {/* Dark Overlay for SVG Contrast */}
+                        <div className="absolute inset-0 bg-black/50 rounded-full" />
+
                         {/* Icon Shine Animation */}
                         <div className="absolute inset-0 opacity-0 group-hover:opacity-80 transition-opacity duration-500">
                           <div className="absolute top-2 left-2 w-8 h-8 bg-white/30 rounded-full blur-sm animate-ping" />
@@ -374,14 +303,24 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                           />
                         </div>
 
-                        <SanityImage
-                          image={service.icon}
-                          alt={service.title}
-                          width={96}
-                          height={96}
-                          sizes="96px"
-                          className="w-full h-full object-contain filter brightness-0 invert drop-shadow-2xl relative z-10 transition-all duration-700 group-hover:scale-102"
-                        />
+                        {service.title.toLowerCase().includes("mvp") ? (
+                          <MvpArchitectureSVG className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10 transition-transform duration-700 group-hover:scale-[1.05]" />
+                        ) : service.title.toLowerCase().includes("rescue") ? (
+                          <CodeRescueSVG className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10 transition-transform duration-700 group-hover:scale-[1.05]" />
+                        ) : service.title.toLowerCase().includes("automation") ? (
+                          <ProcessAutomationSVG className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10 transition-transform duration-700 group-hover:scale-[1.05]" />
+                        ) : service.title.toLowerCase().includes("cto") ? (
+                          <FractionalCtoSVG className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10 transition-transform duration-700 group-hover:scale-[1.05]" />
+                        ) : (
+                          <SanityImage
+                            image={service.icon}
+                            alt={service.title}
+                            width={96}
+                            height={96}
+                            sizes="96px"
+                            className="w-full h-full object-contain filter brightness-0 invert drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10 transition-transform duration-700 group-hover:scale-[1.05]"
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -392,14 +331,14 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                       {service.title}
                     </h3>
 
-                    <p className="text-[#B3B3B3] leading-relaxed text-base transition-all duration-500 group-hover:text-white/95 line-clamp-4 group-hover:line-clamp-none">
+                    <p className="text-[#B3B3B3] leading-relaxed text-base transition-colors duration-500 group-hover:text-white/95 line-clamp-4 group-hover:line-clamp-none">
                       {service.description}
                     </p>
                   </div>
 
                   {/* Dynamic Bottom Accent */}
                   <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-                    <div className="w-0 h-0.5 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] group-hover:w-20 transition-all duration-700 rounded-full" />
+                    <div className="w-0 h-0.5 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] group-hover:w-20 transition-all duration-700 rounded-full" />
                   </div>
 
                   {/* Enhanced Shine Effect */}
@@ -420,18 +359,17 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                     <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#B08D57]/5 to-transparent animate-pulse" />
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* CTA Section - Matching Hero CTA */}
-          <div
-            className={`transition-all duration-300 delay-400 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={itemVariants}
           >
             <div
               className="p-8 md:p-12 rounded-2xl backdrop-blur-xl border relative overflow-hidden group"
@@ -444,8 +382,8 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
               }}
             >
               {/* Animated border effect */}
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
               </div>
 
               <div className="flex flex-col lg:flex-row gap-8 items-center justify-between relative z-10">
@@ -459,53 +397,24 @@ export default function FeatFeatures({ services }: { services: Service[] }) {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(176,141,87,0.4)" }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => {
                       const element = document.querySelector("#contact");
-                      if (element) {
-                        const start = window.scrollY;
-                        const targetPosition =
-                          element.getBoundingClientRect().top +
-                          window.scrollY -
-                          88;
-                        const startTime = performance.now();
-                        const duration = 800;
-
-                        const easeInOutQuad = (t: number) => {
-                          return t < 0.5
-                            ? 2 * t * t
-                            : 1 - Math.pow(-2 * t + 2, 2) / 2;
-                        };
-
-                        const scrollStep = (timestamp: number) => {
-                          const elapsed = timestamp - startTime;
-                          const progress = Math.min(elapsed / duration, 1);
-                          const easedProgress = easeInOutQuad(progress);
-
-                          window.scrollTo(
-                            0,
-                            start + (targetPosition - start) * easedProgress,
-                          );
-
-                          if (progress < 1) {
-                            window.requestAnimationFrame(scrollStep);
-                          }
-                        };
-
-                        window.requestAnimationFrame(scrollStep);
-                      }
+                      element?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="group relative px-8 py-4 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
+                    className="relative px-8 py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl overflow-hidden"
                   >
                     <span className="relative z-10">{TEXTS.CTA_BUTTON}</span>
-                    <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </button>
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  </motion.button>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

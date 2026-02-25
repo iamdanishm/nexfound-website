@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 
 // Text constants
 const TEXTS = {
@@ -38,6 +39,61 @@ type HeroData = {
   trustIndicators?: TrustItem[];
 };
 
+// --- Animation Variants ---
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 30, opacity: 0, scale: 0.95 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      mass: 0.8,
+    },
+  },
+};
+
+const badgeVariants: Variants = {
+  hidden: { y: -20, opacity: 0, scale: 0.9 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    scale: 1,
+    transition: { type: "spring", stiffness: 120, damping: 14 },
+  },
+};
+
+const trustContainerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.6 },
+  },
+};
+
+const trustItemVariants: Variants = {
+  hidden: { scale: 0.8, opacity: 0, y: 20 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 150, damping: 12 },
+  },
+};
+
 export default function Hero({ hero }: { hero?: HeroData }) {
   const badgeText = hero?.badgeText ?? "Crafting Digital Excellence";
   const mainHeading = hero?.mainHeading ?? "Stop Worrying About Code.";
@@ -60,14 +116,11 @@ export default function Hero({ hero }: { hero?: HeroData }) {
           { value: "15+", label: "Industry Awards" },
           { value: "24/7", label: "Support Available" },
         ],
-    [hero?.trustIndicators],
+    [hero?.trustIndicators]
   );
 
-  const heroRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [currentHighlightIndex, setCurrentHighlightIndex] = useState(0);
-  const [textOpacity, setTextOpacity] = useState(1);
 
   const highlightTexts = [
     "actually scales.",
@@ -75,23 +128,6 @@ export default function Hero({ hero }: { hero?: HeroData }) {
     "drives revenue.",
     "never breaks.",
   ];
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (heroRef.current) {
-      observer.observe(heroRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -105,136 +141,195 @@ export default function Hero({ hero }: { hero?: HeroData }) {
   }, []);
 
   useEffect(() => {
-    if (!isVisible) return;
     const interval = setInterval(() => {
-      setTextOpacity(0);
-      setTimeout(() => {
-        setCurrentHighlightIndex((prev) => (prev + 1) % highlightTexts.length);
-        setTextOpacity(1);
-      }, 500);
+      setCurrentHighlightIndex((prev) => (prev + 1) % highlightTexts.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [isVisible]);
+  }, [highlightTexts.length]);
 
   return (
     <section
-      ref={heroRef}
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
     >
-      {/* Interactive Background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `radial-gradient(circle at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(176, 141, 87, 0.08) 0%, transparent 40%)`,
+      {/* Interactive Background Gradient tied to mouse */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-0"
+        animate={{
+          background: `radial-gradient(circle at ${mousePos.x * 100}% ${mousePos.y * 100
+            }%, rgba(176, 141, 87, 0.08) 0%, transparent 40%)`,
         }}
-      ></div>
+        transition={{ type: "tween", ease: "linear", duration: 0.1 }}
+      />
 
-      {/* Floating Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="absolute w-20 h-20 border border-[#B08D57]/20 rounded-full animate-pulse"
-          style={{
-            top: `${mousePos.y * 80 + 10}%`,
-            left: `${mousePos.x * 80 + 10}%`,
-            transform: `translate(-50%, -50%) scale(${0.5 + mousePos.x * 0.5})`,
-            animation: "float 6s ease-in-out infinite",
+      {/* Energetic Background SVGs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-40">
+        {/* Animated Grid SVG */}
+        <motion.svg
+          className="absolute inset-0 w-full h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+        >
+          <defs>
+            <pattern
+              id="hero-grid"
+              width="60"
+              height="60"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 60 0 L 0 0 0 60"
+                fill="none"
+                stroke="rgba(176,141,87,0.05)"
+                strokeWidth="1"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hero-grid)" />
+        </motion.svg>
+
+        {/* Dynamic Abstract Tech Shape 1 */}
+        <motion.svg
+          className="absolute top-[10%] left-[10%] w-64 h-64 text-[#B08D57]"
+          viewBox="0 0 100 100"
+          fill="none"
+          initial={{ rotate: 0, scale: 0.8, opacity: 0 }}
+          animate={{
+            rotate: [0, 90, 180, 360],
+            scale: [0.8, 1.1, 0.9, 0.8],
+            opacity: [0.1, 0.2, 0.1],
           }}
-        />
-        <div
-          className="absolute w-16 h-16 bg-[#F4E6C0]/10 rounded-full blur-sm"
-          style={{
-            top: `${(1 - mousePos.y) * 70 + 15}%`,
-            right: `${mousePos.x * 70 + 15}%`,
-            transform: `translate(50%, -50%) scale(${0.3 + mousePos.y * 0.7})`,
-            animation: "float 8s ease-in-out infinite reverse",
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
           }}
-        />
-        <div
-          className="absolute w-12 h-12 border-2 border-[#1A7F6B]/30 rotate-45"
-          style={{
-            bottom: `${mousePos.y * 60 + 20}%`,
-            left: `${(1 - mousePos.x) * 60 + 20}%`,
-            transform: `translate(-50%, 50%) rotate(${mousePos.x * 180}deg)`,
-            animation: "float 10s ease-in-out infinite",
+        >
+          <path
+            d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            strokeDasharray="4 4"
+          />
+          <circle cx="50" cy="50" r="20" stroke="currentColor" strokeWidth="0.5" />
+        </motion.svg>
+
+        {/* Dynamic Abstract Tech Shape 2 */}
+        <motion.svg
+          className="absolute bottom-[20%] right-[10%] w-80 h-80 text-[#1A7F6B]"
+          viewBox="0 0 100 100"
+          fill="none"
+          initial={{ rotate: 360, x: 50 }}
+          animate={{
+            rotate: [360, 180, 0],
+            x: [50, 0, 50],
+            y: [0, -30, 0],
+            opacity: [0.05, 0.15, 0.05],
           }}
-        />
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <rect
+            x="30"
+            y="30"
+            width="40"
+            height="40"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            transform="rotate(45 50 50)"
+          />
+          <path
+            d="M 10 50 Q 50 10 90 50 T 10 50"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            strokeDasharray="2 6"
+          />
+        </motion.svg>
       </div>
+
       {/* Main Content Container */}
-      <div className="container-custom relative z-10 px-6 py-20">
+      <motion.div
+        className="container-custom relative z-10 px-6 py-20"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="max-w-6xl mx-auto text-center">
           {/* Enhanced Badge */}
-          <div
-            className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-5 mt-8 backdrop-blur-md border transition-all duration-700 transform ${isVisible
-              ? "translate-y-0 opacity-100 scale-100"
-              : "translate-y-8 opacity-0 scale-95"
-              }`}
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(176, 141, 87, 0.15) 0%, rgba(244, 230, 192, 0.08) 100%)",
-              borderColor: "rgba(176, 141, 87, 0.4)",
-              boxShadow: "0 8px 32px rgba(176, 141, 87, 0.1)",
-            }}
+          <motion.div
+            variants={badgeVariants}
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-5 mt-8 backdrop-blur-md border border-[#B08D57]/40 shadow-[0_8px_32px_rgba(176,141,87,0.1)] bg-gradient-to-br from-[#B08D57]/15 to-[#F4E6C0]/5"
           >
-            <div className="relative">
-              <div className="w-3 h-3 bg-[#B08D57] rounded-full animate-pulse" />
-              <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
+            <div className="relative flex items-center justify-center w-3 h-3">
+              <motion.div
+                className="w-2 h-2 bg-[#B08D57] rounded-full"
+                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute inset-0 bg-[#F4E6C0] rounded-full opacity-50"
+                animate={{ scale: [1, 2.5, 1], opacity: [0.8, 0, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+              />
             </div>
             <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
               {badgeText}
             </span>
-          </div>
+          </motion.div>
 
           {/* Refined Main Heading */}
-          <h1
-            className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-700 delay-100 transform ${isVisible
-              ? "translate-y-0 opacity-100 scale-100"
-              : "translate-y-8 opacity-0 scale-95"
-              }`}
+          <motion.h1
+            variants={itemVariants}
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight"
           >
             <span className="block text-white">{mainHeading}</span>
-            <span
-              className="block bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent transition-all duration-500"
-              style={{
-                textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
-                opacity: textOpacity,
-              }}
-            >
-              {highlightTexts[currentHighlightIndex]}
+            <span className="block h-[1.2em] relative overflow-hidden mt-2">
+              {/* Using AnimatePresence for the text change if we wanted, but simple motion key works too */}
+              <motion.span
+                key={currentHighlightIndex}
+                initial={{ y: 50, opacity: 0, scale: 0.95 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                exit={{ y: -50, opacity: 0, scale: 1.05 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20,
+                  mass: 0.5,
+                }}
+                className="absolute inset-0 flex justify-center bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent filter drop-shadow-[0_0_20px_rgba(176,141,87,0.4)]"
+              >
+                {highlightTexts[currentHighlightIndex]}
+              </motion.span>
             </span>
-          </h1>
+          </motion.h1>
 
           {/* Improved Subtitle */}
-          <p
-            className={`text-lg md:text-xl text-[#B3B3B3] mb-16 max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-200 transform ${isVisible
-              ? "translate-y-0 opacity-100 scale-100"
-              : "translate-y-8 opacity-0 scale-95"
-              }`}
+          <motion.p
+            variants={itemVariants}
+            className="text-lg md:text-xl text-[#B3B3B3] mb-16 max-w-2xl mx-auto leading-relaxed"
           >
             {subheading}
-          </p>
+          </motion.p>
 
           {/* Enhanced CTA Section */}
-          <div
-            className={`mb-20 transition-all duration-700 delay-300 transform ${isVisible
-              ? "translate-y-0 opacity-100 scale-100"
-              : "translate-y-8 opacity-0 scale-95"
-              }`}
-          >
-            <div
-              className="p-8 md:p-12 rounded-2xl backdrop-blur-xl border relative overflow-hidden group"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(176, 141, 87, 0.02) 100%)",
-                borderColor: "rgba(176, 141, 87, 0.2)",
-                boxShadow:
-                  "0 20px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-              }}
-            >
-              {/* Animated border effect */}
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-transparent via-[#B08D57]/20 to-transparent animate-shimmer" />
-              </div>
+          <motion.div variants={itemVariants} className="mb-20">
+            <div className="p-8 md:p-12 rounded-2xl backdrop-blur-xl border border-[#B08D57]/20 shadow-[0_20px_60px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] bg-gradient-to-br from-white/5 to-[#B08D57]/5 relative overflow-hidden group">
+              {/* Hover shimmer effect managed by Framer Motion or CSS */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-[#B08D57]/10 to-transparent z-0"
+                animate={{ x: ["-100%", "200%"] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear",
+                  repeatDelay: 1,
+                }}
+              />
 
               <div className="flex flex-col lg:flex-row gap-8 items-center justify-between relative z-10">
                 <div className="flex-1 text-center lg:text-left">
@@ -247,84 +342,60 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(176,141,87,0.4)" }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => {
                       const element = document.querySelector("#contact");
-                      if (element) {
-                        const start = window.scrollY;
-                        const targetPosition =
-                          element.getBoundingClientRect().top +
-                          window.scrollY -
-                          88;
-                        const startTime = performance.now();
-                        const duration = 600; // Snappier duration
-
-                        // easeOutExpo
-                        const easeOutExpo = (t: number) => {
-                          return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-                        };
-
-                        const scrollStep = (timestamp: number) => {
-                          const elapsed = timestamp - startTime;
-                          const progress = Math.min(elapsed / duration, 1);
-                          const easedProgress = easeOutExpo(progress);
-
-                          window.scrollTo(
-                            0,
-                            start + (targetPosition - start) * easedProgress,
-                          );
-
-                          if (progress < 1) {
-                            window.requestAnimationFrame(scrollStep);
-                          }
-                        };
-
-                        window.requestAnimationFrame(scrollStep);
-                      }
+                      element?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="group relative px-8 py-4 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#B08D57]/25 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden"
+                    className="relative px-8 py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-xl overflow-hidden"
                   >
                     <span className="relative z-10">
                       {TEXTS.CTA_BUTTON_PRIMARY}
                     </span>
-                    <div className="absolute inset-0 bg-linear-to-r from-[#F4E6C0] to-[#B08D57] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </button>
-                  <Link
-                    href="/audit"
-                    className="group relative px-8 py-4 border-2 border-[#B08D57]/60 text-[#F4E6C0] font-semibold rounded-xl transition-all duration-300 hover:bg-[#B08D57]/10 hover:border-[#B08D57] hover:shadow-2xl hover:shadow-[#B08D57]/15 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden text-center"
-                  >
-                    <span className="relative z-10">
-                      {TEXTS.CTA_BUTTON_SECONDARY}
-                    </span>
+                  </motion.button>
+                  <Link href="/audit" className="block w-full lg:w-auto">
+                    <motion.div
+                      whileHover={{
+                        scale: 1.05,
+                        backgroundColor: "rgba(176,141,87,0.1)",
+                        boxShadow: "0 0 20px rgba(176,141,87,0.2)",
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      className="group relative px-8 py-4 border-2 border-[#B08D57]/60 text-[#F4E6C0] font-semibold rounded-xl text-center w-full h-full flex items-center justify-center cursor-pointer"
+                    >
+                      <span className="relative z-10">
+                        {TEXTS.CTA_BUTTON_SECONDARY}
+                      </span>
+                    </motion.div>
                   </Link>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Enhanced Trust Indicators */}
-          <div
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 pb-16 transition-all duration-700 delay-500 transform ${isVisible
-              ? "translate-y-0 opacity-100 scale-100"
-              : "translate-y-8 opacity-0 scale-95"
-              }`}
+          <motion.div
+            variants={trustContainerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 pb-16"
           >
             {trustIndicators.map((stat, index) => (
-              <div
+              <motion.div
                 key={`${stat.label}-${index}`}
-                className="group text-center p-8 rounded-2xl backdrop-blur-md border border-[#B08D57]/20 hover:border-[#B08D57]/40 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-[#B08D57]/10 relative overflow-hidden"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(176, 141, 87, 0.08) 0%, rgba(244, 230, 192, 0.04) 100%)",
-                  boxShadow:
-                    "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(244, 230, 192, 0.1)",
+                variants={trustItemVariants}
+                whileHover={{
+                  scale: 1.05,
+                  y: -5,
+                  borderColor: "rgba(176,141,87,0.4)",
+                  boxShadow: "0 15px 30px rgba(176,141,87,0.15)",
                 }}
+                className="group text-center p-8 rounded-2xl backdrop-blur-md border border-[#B08D57]/20 bg-gradient-to-br from-[#B08D57]/10 to-[#F4E6C0]/5 relative overflow-hidden"
               >
-                {/* Animated background effect */}
-                <div className="absolute inset-0 bg-linear-to-r from-transparent via-[#B08D57]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-shimmer" />
-
                 <div className="relative z-10">
-                  <div className="text-3xl md:text-4xl font-bold mb-4 transition-all duration-300 group-hover:scale-110">
+                  <div className="text-3xl md:text-4xl font-bold mb-4">
                     <span className="text-white drop-shadow-lg">
                       {stat.value}
                     </span>
@@ -332,62 +403,38 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                   <div className="text-xs md:text-sm text-[#B3B3B3] font-semibold uppercase tracking-wider leading-tight">
                     {stat.label}
                   </div>
-
-                  {/* Decorative element */}
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-linear-to-r from-[#B08D57] to-[#F4E6C0] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Refined Scroll Indicator */}
-      <div
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-1000 delay-1000 transform ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-          }`}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
       >
         <button
           onClick={() => {
             const element = document.querySelector("#services");
-            if (element) {
-              const start = window.scrollY;
-              const targetPosition =
-                element.getBoundingClientRect().top + window.scrollY - 88;
-              const startTime = performance.now();
-              const duration = 800;
-
-              const easeInOutQuad = (t: number) => {
-                return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-              };
-
-              const scrollStep = (timestamp: number) => {
-                const elapsed = timestamp - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easedProgress = easeInOutQuad(progress);
-
-                window.scrollTo(
-                  0,
-                  start + (targetPosition - start) * easedProgress,
-                );
-
-                if (progress < 1) {
-                  window.requestAnimationFrame(scrollStep);
-                }
-              };
-
-              window.requestAnimationFrame(scrollStep);
-            }
+            element?.scrollIntoView({ behavior: "smooth" });
           }}
-          className="group flex flex-col items-center gap-3 text-[#B3B3B3] hover:text-[#F4E6C0] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black rounded-lg p-2"
+          className="group flex flex-col items-center gap-3 text-[#B3B3B3] hover:text-[#F4E6C0] transition-colors duration-300 p-2"
           aria-label="Scroll to services"
         >
           <span className="text-xs uppercase tracking-[0.2em] font-semibold opacity-70 group-hover:opacity-100 transition-opacity">
-            Discover More
+            {TEXTS.SCROLL_INDICATOR_TEXT}
           </span>
-          <div className="relative">
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
+          >
             <svg
-              className="w-6 h-6 transition-transform duration-300 group-hover:translate-y-1"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -399,12 +446,9 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                 d="M19 14l-7 7m0 0l-7-7m7 7V3"
               />
             </svg>
-            <div className="absolute inset-0 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity">
-              <div className="w-full h-full border-2 border-[#B08D57] rounded-full animate-ping" />
-            </div>
-          </div>
+          </motion.div>
         </button>
-      </div>
+      </motion.div>
     </section>
   );
 }
