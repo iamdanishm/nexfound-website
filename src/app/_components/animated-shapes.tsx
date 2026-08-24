@@ -2,387 +2,293 @@
 
 import { motion } from "framer-motion";
 
-export function TechNodeNetwork({ className = "" }: { className?: string }) {
-    return (
-        <div className={`relative w-full h-full ${className}`}>
-            <svg
-                viewBox="0 0 400 300"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full origin-center"
-            >
-                {/* Animated paths simulating data flow or connections */}
-                <motion.path
-                    d="M 50 150 C 100 50, 200 250, 350 150"
-                    stroke="url(#grad1)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 0.8 }}
-                    transition={{
-                        duration: 4,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                    }}
-                />
-                <motion.path
-                    d="M 50 200 C 150 200, 250 100, 350 100"
-                    stroke="url(#grad2)"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeDasharray="4 8"
-                    initial={{ pathOffset: 0, opacity: 0 }}
-                    animate={{ pathOffset: -20, opacity: 0.5 }}
-                    transition={{
-                        duration: 2,
-                        ease: "linear",
-                        repeat: Infinity,
-                    }}
-                />
-
-                {/* Pulsing Nodes */}
-                <motion.circle
-                    cx="50"
-                    cy="150"
-                    r="4"
-                    fill="#B08D57"
-                    animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.circle
-                    cx="200"
-                    cy="150"
-                    r="6"
-                    fill="#F4E6C0"
-                    animate={{ scale: [1, 1.8, 1], opacity: [0.3, 0.8, 0.3] }}
-                    transition={{
-                        duration: 2.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 0.5,
-                    }}
-                />
-                <motion.circle
-                    cx="350"
-                    cy="150"
-                    r="4"
-                    fill="#1A7F6B"
-                    animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                    transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 1,
-                    }}
-                />
-
-                <defs>
-                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#B08D57" stopOpacity="0.2" />
-                        <stop offset="50%" stopColor="#F4E6C0" stopOpacity="1" />
-                        <stop offset="100%" stopColor="#1A7F6B" stopOpacity="0.2" />
-                    </linearGradient>
-                    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#1A7F6B" stopOpacity="0.2" />
-                        <stop offset="50%" stopColor="#E0E0E0" stopOpacity="0.8" />
-                        <stop offset="100%" stopColor="#0D3B66" stopOpacity="0.2" />
-                    </linearGradient>
-                </defs>
-            </svg>
-        </div>
-    );
-}
-
-export function CyberHexagons({ className = "" }: { className?: string }) {
-    const hexPath =
-        "M 50 0 L 100 25 L 100 75 L 50 100 L 0 75 L 0 25 Z";
-
-    return (
-        <div className={`relative w-full h-full ${className}`}>
-            <svg
-                viewBox="0 0 200 200"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full"
-            >
-                <motion.g
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                    style={{ transformOrigin: "100px 100px" }}
-                >
-                    {/* Inner Hex */}
-                    <motion.path
-                        d={hexPath}
-                        stroke="#B08D57"
-                        strokeWidth="0.5"
-                        strokeOpacity="0.6"
-                        fill="rgba(176, 141, 87, 0.05)"
-                        transform="translate(50, 50)"
-                        initial={{ scale: 0.8 }}
-                        animate={{ scale: 1.1 }}
-                        transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            repeatType: "reverse",
-                            ease: "easeInOut",
-                        }}
-                    />
-                    {/* Outer Ring of Hexagons */}
-                    {[0, 1, 2, 3, 4, 5].map((i) => {
-                        const angle = (i * Math.PI) / 3;
-                        const x = 50 + 75 * Math.cos(angle);
-                        const y = 50 + 75 * Math.sin(angle);
-                        return (
-                            <motion.path
-                                key={i}
-                                d={hexPath}
-                                stroke="#1A7F6B"
-                                strokeWidth="1"
-                                strokeOpacity="0.3"
-                                transform={`translate(${x}, ${y}) scale(0.3)`}
-                                animate={{
-                                    opacity: [0.1, 0.5, 0.1],
-                                    scale: [0.3, 0.35, 0.3],
-                                }}
-                                transition={{
-                                    duration: 3,
-                                    delay: i * 0.5,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                }}
-                            />
-                        );
-                    })}
-                </motion.g>
-            </svg>
-        </div>
-    );
-}
-
 export function MvpArchitectureSVG({ className = "" }: { className?: string }) {
-    // A glowing, building-up rocket/architecture symbol
-    return (
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-            <motion.path
-                d="M100 20 L130 60 L130 140 L70 140 L70 60 Z"
-                stroke="white"
-                strokeWidth="6"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
-            />
-            <motion.path
-                d="M100 20 L100 140"
-                stroke="white"
-                strokeWidth="4"
-                strokeDasharray="4 4"
-                animate={{ y: [0, -10, 0], opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.path
-                d="M70 140 L40 180 M130 140 L160 180 M100 140 L100 180"
-                stroke="white"
-                strokeWidth="6"
-                strokeLinecap="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1, ease: "easeOut", repeat: Infinity, repeatType: "reverse" }}
-            />
-            <motion.circle cx="100" cy="80" r="16" stroke="white" strokeWidth="3" fill="none" animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
-            <motion.line x1="100" y1="20" x2="100" y2="0" stroke="white" strokeWidth="2" animate={{ opacity: [0, 1, 0], y: [0, -10, 0] }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} />
-        </svg>
-    );
+  return (
+    <div className={`relative w-full h-full flex items-center justify-center ${className}`}>
+      <svg
+        viewBox="0 0 200 200"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full"
+      >
+        <defs>
+          <linearGradient id="goldGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#F4E6C0" />
+            <stop offset="50%" stopColor="#DFCA9F" />
+            <stop offset="100%" stopColor="#AA895B" />
+          </linearGradient>
+          <linearGradient id="goldLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#DFCA9F" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#8C6A38" stopOpacity="0.2" />
+          </linearGradient>
+        </defs>
+
+        {/* Isometric Grid Foundation */}
+        <path
+          d="M100 30 L165 67.5 L165 142.5 L100 180 L35 142.5 L35 67.5 Z"
+          stroke="rgba(223, 202, 159, 0.25)"
+          strokeWidth="1.5"
+          fill="rgba(10, 10, 15, 0.6)"
+        />
+        <path
+          d="M100 30 L100 105 L165 142.5 M100 105 L35 142.5"
+          stroke="rgba(223, 202, 159, 0.15)"
+          strokeWidth="1.5"
+        />
+
+        {/* Floating Core Node */}
+        <motion.rect
+          x="82"
+          y="87"
+          width="36"
+          height="36"
+          rx="8"
+          fill="url(#goldGrad1)"
+          animate={{ y: [87, 83, 87], rotate: [0, 4, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <rect
+          x="88"
+          y="93"
+          width="24"
+          height="24"
+          rx="4"
+          fill="#050507"
+        />
+
+        {/* Dynamic Connected Peripheral Blocks */}
+        <motion.circle
+          cx="50"
+          cy="85"
+          r="6"
+          fill="#DFCA9F"
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
+        />
+        <motion.circle
+          cx="150"
+          cy="85"
+          r="6"
+          fill="#C5A880"
+          animate={{ opacity: [1, 0.4, 1] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
+        />
+        <motion.circle
+          cx="100"
+          cy="155"
+          r="6"
+          fill="#F4E6C0"
+          animate={{ scale: [1, 1.3, 1] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        />
+
+        {/* Connection Pulses */}
+        <path
+          d="M56 85 L82 100 M144 85 L118 100 M100 149 L100 123"
+          stroke="url(#goldLineGrad)"
+          strokeWidth="1.5"
+          strokeDasharray="4 3"
+        />
+      </svg>
+    </div>
+  );
 }
 
 export function CodeRescueSVG({ className = "" }: { className?: string }) {
-    // A shield with a pulse line/code brackets inside
-    return (
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-            <motion.path
-                d="M100 10 L170 40 L170 100 C170 150 100 190 100 190 C100 190 30 150 30 100 L30 40 Z"
-                stroke="white"
-                strokeWidth="8"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 3, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
-            />
-            {/* Pulse line */}
-            <motion.path
-                d="M60 100 L80 100 L90 70 L110 130 L120 100 L140 100"
-                stroke="white"
-                strokeWidth="5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1.5, ease: "linear", repeat: Infinity }}
-            />
-            {/* Code Brackets */}
-            <motion.path d="M50 70 L30 100 L50 130" stroke="rgba(255,255,255,0.4)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" animate={{ x: [0, -5, 0], opacity: [0.5, 1, 0.5] }} transition={{ duration: 2, repeat: Infinity }} />
-            <motion.path d="M150 70 L170 100 L150 130" stroke="rgba(255,255,255,0.4)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" animate={{ x: [0, 5, 0], opacity: [0.5, 1, 0.5] }} transition={{ duration: 2, repeat: Infinity }} />
-        </svg>
-    );
+  return (
+    <div className={`relative w-full h-full flex items-center justify-center ${className}`}>
+      <svg
+        viewBox="0 0 200 200"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full"
+      >
+        <defs>
+          <linearGradient id="rescueGold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="50%" stopColor="#DFCA9F" />
+            <stop offset="100%" stopColor="#8C6A38" />
+          </linearGradient>
+        </defs>
+
+        {/* Outer Diagnostic Shield */}
+        <motion.circle
+          cx="100"
+          cy="100"
+          r="65"
+          stroke="rgba(223, 202, 159, 0.2)"
+          strokeWidth="1.5"
+          strokeDasharray="6 6"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+        />
+        <circle
+          cx="100"
+          cy="100"
+          r="48"
+          stroke="rgba(255, 255, 255, 0.08)"
+          strokeWidth="1"
+        />
+
+        {/* Center Precision Diamond & Shield */}
+        <path
+          d="M100 60 L135 85 L135 125 L100 145 L65 125 L65 85 Z"
+          fill="rgba(16, 16, 24, 0.8)"
+          stroke="url(#rescueGold)"
+          strokeWidth="1.5"
+        />
+
+        {/* Check & Radar Line */}
+        <motion.path
+          d="M85 102 L96 113 L118 89"
+          stroke="#F4E6C0"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+        />
+      </svg>
+    </div>
+  );
 }
 
 export function ProcessAutomationSVG({ className = "" }: { className?: string }) {
-    // Interlocking gears and connection nodes
-    return (
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-            {/* Left Gear */}
-            <motion.g animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "70px 70px" }}>
-                <circle cx="70" cy="70" r="30" stroke="white" strokeWidth="8" strokeDasharray="15 10" />
-                <circle cx="70" cy="70" r="15" fill="none" stroke="white" strokeWidth="6" />
-            </motion.g>
-            {/* Right Gear */}
-            <motion.g animate={{ rotate: -360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "135px 120px" }}>
-                <circle cx="135" cy="120" r="25" stroke="white" strokeWidth="8" strokeDasharray="12 8" />
-                <circle cx="135" cy="120" r="10" fill="none" stroke="white" strokeWidth="6" />
-            </motion.g>
-            {/* Infinity path / connections */}
-            <motion.path
-                d="M70 70 C 150 -10, 50 180, 135 120"
-                stroke="rgba(255,255,255,0.6)"
-                strokeWidth="3"
-                strokeDasharray="4 4"
-                initial={{ pathOffset: 0 }}
-                animate={{ pathOffset: -20 }}
-                transition={{ duration: 1, ease: "linear", repeat: Infinity }}
-            />
-        </svg>
-    );
+  return (
+    <div className={`relative w-full h-full flex items-center justify-center ${className}`}>
+      <svg
+        viewBox="0 0 200 200"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full"
+      >
+        <defs>
+          <linearGradient id="streamGold" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#AA895B" stopOpacity="0.2" />
+            <stop offset="50%" stopColor="#F4E6C0" stopOpacity="1" />
+            <stop offset="100%" stopColor="#DFCA9F" stopOpacity="0.2" />
+          </linearGradient>
+        </defs>
+
+        {/* Looping Infinity / Automation Pipeline */}
+        <path
+          d="M50 100 C50 70, 90 70, 100 100 C110 130, 150 130, 150 100 C150 70, 110 70, 100 100 C90 130, 50 130, 50 100 Z"
+          stroke="rgba(255, 255, 255, 0.1)"
+          strokeWidth="2"
+        />
+        <motion.path
+          d="M50 100 C50 70, 90 70, 100 100 C110 130, 150 130, 150 100 C150 70, 110 70, 100 100 C90 130, 50 130, 50 100 Z"
+          stroke="url(#streamGold)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray="40 160"
+          animate={{ strokeDashoffset: [-200, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+        />
+
+        {/* Pipeline Nodes */}
+        <circle cx="50" cy="100" r="7" fill="#14141B" stroke="#DFCA9F" strokeWidth="2" />
+        <circle cx="100" cy="100" r="9" fill="#050507" stroke="#F4E6C0" strokeWidth="2" />
+        <circle cx="150" cy="100" r="7" fill="#14141B" stroke="#DFCA9F" strokeWidth="2" />
+      </svg>
+    </div>
+  );
 }
 
 export function FractionalCtoSVG({ className = "" }: { className?: string }) {
-    // A glowing node/brain or strategy chess piece
-    return (
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-            {/* Strategy crown/head */}
-            <motion.path
-                d="M50 150 L50 90 L70 120 L100 60 L130 120 L150 90 L150 150 Z"
-                stroke="white"
-                strokeWidth="8"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 2.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
-            />
-            <motion.path
-                d="M50 160 L150 160"
-                stroke="white"
-                strokeWidth="8"
-                strokeLinecap="round"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-            {/* Central glowing node (strategy/brain) */}
-            <motion.circle cx="100" cy="60" r="8" fill="white" animate={{ scale: [1, 1.5, 1], filter: ["blur(0px)", "blur(4px)", "blur(0px)"] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
-            <motion.circle cx="70" cy="120" r="5" fill="white" animate={{ scale: [1, 1.5, 1], filter: ["blur(0px)", "blur(2px)", "blur(0px)"] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} />
-            <motion.circle cx="130" cy="120" r="5" fill="white" animate={{ scale: [1, 1.5, 1], filter: ["blur(0px)", "blur(2px)", "blur(0px)"] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }} />
-            {/* Connection lines */}
-            <motion.path d="M100 60 L70 120 M100 60 L130 120 M70 120 L130 120" stroke="rgba(255,255,255,0.4)" strokeWidth="2" animate={{ opacity: [0.3, 0.8, 0.3] }} transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }} />
-        </svg>
-    );
+  return (
+    <div className={`relative w-full h-full flex items-center justify-center ${className}`}>
+      <svg
+        viewBox="0 0 200 200"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full"
+      >
+        <defs>
+          <linearGradient id="ctoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#8C6A38" />
+            <stop offset="50%" stopColor="#DFCA9F" />
+            <stop offset="100%" stopColor="#FFFFFF" />
+          </linearGradient>
+        </defs>
+
+        {/* Growth Matrix Grid */}
+        <line x1="40" y1="150" x2="160" y2="150" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1.5" />
+        <line x1="40" y1="40" x2="40" y2="150" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1.5" />
+
+        {/* Exponential Trajectory Curve */}
+        <motion.path
+          d="M40 140 Q90 135 120 90 T160 45"
+          stroke="url(#ctoGrad)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          fill="none"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1.5 }}
+        />
+
+        {/* Strategic Target Points */}
+        <circle cx="90" cy="120" r="4" fill="#C5A880" />
+        <circle cx="125" cy="80" r="5" fill="#DFCA9F" />
+        <motion.circle
+          cx="160"
+          cy="45"
+          r="7"
+          fill="#F4E6C0"
+          animate={{ scale: [1, 1.4, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+      </svg>
+    </div>
+  );
 }
 
 export function MarketRadar({ className = "" }: { className?: string }) {
-    return (
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-            {/* Outer Rings */}
-            <circle cx="100" cy="100" r="90" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.2" />
-            <circle cx="100" cy="100" r="60" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.1" />
-            <circle cx="100" cy="100" r="30" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.1" />
-
-            {/* Axis Lines */}
-            <line x1="100" y1="10" x2="100" y2="190" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.2" />
-            <line x1="10" y1="100" x2="190" y2="100" stroke="#B08D57" strokeWidth="0.5" strokeOpacity="0.2" />
-
-            {/* Rotating Sweep */}
-            <motion.g
-                animate={{ rotate: 360 }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                style={{ transformOrigin: "100px 100px" }}
-            >
-                <line x1="100" y1="100" x2="100" y2="10" stroke="url(#radarSweep)" strokeWidth="2" />
-                <path d="M100 100 L100 10 A 90 90 0 0 0 60 25 Z" fill="url(#radarGradient)" opacity="0.3" />
-            </motion.g>
-
-            {/* Random Data Pings */}
-            {[
-                { cx: 140, cy: 60, delay: 0.5 },
-                { cx: 70, cy: 150, delay: 1.2 },
-                { cx: 120, cy: 130, delay: 2.1 },
-                { cx: 50, cy: 80, delay: 3.0 }
-            ].map((ping, i) => (
-                <motion.g key={i}>
-                    <motion.circle
-                        cx={ping.cx} cy={ping.cy} r="3" fill="#F4E6C0"
-                        animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: ping.delay }}
-                    />
-                    <motion.circle
-                        cx={ping.cx} cy={ping.cy} r="8" stroke="#F4E6C0" strokeWidth="0.5"
-                        animate={{ opacity: [0, 0.5, 0], scale: [1, 2.5, 3] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: ping.delay }}
-                    />
-                </motion.g>
-            ))}
-
-            <defs>
-                <linearGradient id="radarSweep" x1="100" y1="100" x2="100" y2="10">
-                    <stop offset="0%" stopColor="#B08D57" stopOpacity="0" />
-                    <stop offset="100%" stopColor="#F4E6C0" stopOpacity="1" />
-                </linearGradient>
-                <radialGradient id="radarGradient" cx="100" cy="100" r="90" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#B08D57" stopOpacity="0" />
-                    <stop offset="100%" stopColor="#B08D57" stopOpacity="0.5" />
-                </radialGradient>
-            </defs>
-        </svg>
-    );
+  return (
+    <div className={`relative w-28 h-28 ${className}`}>
+      <svg viewBox="0 0 100 100" fill="none" className="w-full h-full">
+        <circle cx="50" cy="50" r="45" stroke="rgba(223, 202, 159, 0.2)" strokeWidth="1" />
+        <circle cx="50" cy="50" r="30" stroke="rgba(223, 202, 159, 0.25)" strokeWidth="1" />
+        <circle cx="50" cy="50" r="15" stroke="rgba(223, 202, 159, 0.3)" strokeWidth="1" />
+        <line x1="50" y1="5" x2="50" y2="95" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="1" />
+        <line x1="5" y1="50" x2="95" y2="50" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="1" />
+        <g className="animate-radar-sweep origin-center">
+          <path
+            d="M50 50 L50 5 A45 45 0 0 1 95 50 Z"
+            fill="url(#radarSweepGrad)"
+            opacity="0.5"
+          />
+        </g>
+        <defs>
+          <linearGradient id="radarSweepGrad" x1="50" y1="50" x2="85" y2="20">
+            <stop offset="0%" stopColor="#DFCA9F" stopOpacity="0" />
+            <stop offset="100%" stopColor="#DFCA9F" stopOpacity="0.4" />
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="3" fill="#DFCA9F" />
+      </svg>
+    </div>
+  );
 }
 
 export function DataFlux({ className = "" }: { className?: string }) {
-    return (
-        <svg viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-            {/* Flowing Paths */}
-            {[
-                "M 0 100 Q 200 50, 400 100 T 800 100",
-                "M 0 200 Q 200 250, 400 200 T 800 200",
-                "M 0 300 Q 200 350, 400 300 T 800 300",
-                "M 200 0 L 200 400",
-                "M 600 0 L 600 400"
-            ].map((d, i) => (
-                <motion.path
-                    key={i}
-                    d={d}
-                    stroke="#B08D57"
-                    strokeWidth="0.5"
-                    strokeOpacity="0.1"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", delay: i * 0.5 }}
-                />
-            ))}
-            {/* Data Bits flowing on paths */}
-            {[
-                { d: "M 0 100 Q 200 50, 400 100 T 800 100", dur: 10 },
-                { d: "M 0 200 Q 200 250, 400 200 T 800 200", dur: 12 },
-                { d: "M 0 300 Q 200 350, 400 300 T 800 300", dur: 8 }
-            ].map((path, i) => (
-                <motion.circle key={`bit-${i}`} r="2" fill="#F4E6C0">
-                    <animateMotion
-                        dur={`${path.dur}s`}
-                        repeatCount="indefinite"
-                        path={path.d}
-                    />
-                    <motion.div
-                        animate={{ opacity: [0, 1, 0] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                    />
-                </motion.circle>
-            ))}
-        </svg>
-    );
+  return (
+    <div className={`flex items-center gap-1.5 ${className}`}>
+      {[0, 1, 2, 3].map((i) => (
+        <motion.div
+          key={i}
+          className="w-1 bg-[#DFCA9F] rounded-full"
+          animate={{ height: ["8px", "24px", "8px"] }}
+          transition={{
+            duration: 1.2,
+            repeat: Infinity,
+            delay: i * 0.2,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
 }

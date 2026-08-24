@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
 import { blogPostsQuery } from "@/app/lib/queries";
 
-export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexfound.in";

@@ -20,14 +20,14 @@ interface BlogPost {
   author?: {
     _id: string;
     name: string;
-    slug: { current: string };
+    slug?: { current: string };
     bio?: string;
   };
   tags?: string[];
   category?: {
     _id: string;
     title: string;
-    color: string;
+    color?: string;
   };
   featuredImage?: {
     asset: {
@@ -43,7 +43,7 @@ interface Category {
   _id: string;
   title: string;
   slug: { current: string };
-  color: string;
+  color?: string;
 }
 
 export default function BlogPage() {
@@ -60,8 +60,8 @@ export default function BlogPage() {
           client.fetch(blogPostsQuery),
           client.fetch(blogCategoriesQuery),
         ]);
-        setPosts(postsData);
-        setCategories(categoriesData);
+        setPosts(postsData || []);
+        setCategories(categoriesData || []);
       } catch (error) {
         console.error("Error fetching blog data:", error);
       } finally {
@@ -76,14 +76,12 @@ export default function BlogPage() {
   const filteredPosts = useMemo(() => {
     let filtered = posts;
 
-    // Category filter
     if (selectedCategory) {
       filtered = filtered.filter(
         (post) => post.category?._id === selectedCategory
       );
     }
 
-    // Search filter
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
@@ -96,7 +94,6 @@ export default function BlogPage() {
       );
     }
 
-    // Sort posts by date (newest first)
     filtered.sort(
       (a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
@@ -105,55 +102,49 @@ export default function BlogPage() {
     return filtered;
   }, [posts, selectedCategory, searchQuery]);
 
-  const handleCategoryFilter = (categoryId: string | null) => {
-    setSelectedCategory(categoryId);
-  };
-
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#050507] text-[#F7F7F9]">
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-16 overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-br from-black via-gray-900 to-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-brand-bronze/10 via-transparent to-transparent" />
-
+      <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="container-custom relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="mb-6">
-              <span className="inline-block px-4 py-2 bg-brand-bronze/10 border border-brand-bronze/20 rounded-full text-brand-champagne text-sm font-medium mb-4">
-                Our Thoughts & Insights
-              </span>
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="mb-4 inline-block">
+              <div className="luxury-pill">
+                <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
+                <span className="text-xs font-semibold tracking-wider text-[#DFCA9F] uppercase">
+                  Founder Intelligence
+                </span>
+              </div>
             </div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-pearl mb-6 leading-tight">
-              The Nexfound
-              <span className="block text-gold-gradient-animated">Blog</span>
+
+            <h1 className="text-4xl sm:text-6xl font-display font-bold text-white mb-6 tracking-tight">
+              The Nexfound <span className="text-gold-gradient">Dispatch.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-text-muted max-w-3xl mx-auto leading-relaxed">
-              Discover our latest insights on design, technology, and the future
-              of digital experiences. Stories from our team, industry trends,
-              and behind-the-scenes looks at what drives us.
+
+            <p className="text-base sm:text-lg text-[#A2A2B0] leading-relaxed">
+              Tactical engineering breakdowns, technical strategy, and architectural playbooks for founders building at scale.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Search and Filters */}
-      <section className="py-8">
+      {/* Search and Category Filters */}
+      <section className="pb-12">
         <div className="container-custom">
           {/* Search Bar */}
-          <div className="max-w-2xl mx-auto mb-8">
+          <div className="max-w-xl mx-auto mb-8">
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search posts by title, content, author, or tags..."
+                placeholder="Search articles by title, topic, or tag..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 pr-12 bg-[#1A1A1A] border border-[#2E2E2E] rounded-xl text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 text-sm sm:text-base"
-                suppressHydrationWarning
+                className="w-full px-5 py-3.5 pr-12 bg-[#0A0A10] border border-white/[0.1] rounded-2xl text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
               />
               <svg
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#737373]"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A2A2B0]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -168,30 +159,30 @@ export default function BlogPage() {
             </div>
           </div>
 
-          {/* Category Filter */}
+          {/* Category Filter Pills */}
           {categories.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-2">
               <button
-                onClick={() => handleCategoryFilter(null)}
-                className={`px-6 py-3 font-medium rounded-full transition-all ${
+                onClick={() => setSelectedCategory(null)}
+                className={`px-4 py-2 text-xs font-mono rounded-full transition-all ${
                   selectedCategory === null
-                    ? "bg-brand-bronze text-black"
-                    : "border border-brand-bronze/20 text-text-primary hover:border-brand-bronze hover:text-brand-champagne"
+                    ? "bg-[#DFCA9F] text-[#050507] font-bold shadow-[0_0_15px_rgba(223,202,159,0.3)]"
+                    : "bg-white/[0.03] text-[#A2A2B0] border border-white/[0.06] hover:border-white/20 hover:text-white"
                 }`}
               >
-                All Posts
+                ALL ARTICLES
               </button>
               {categories.map((category) => (
                 <button
                   key={category._id}
-                  onClick={() => handleCategoryFilter(category._id)}
-                  className={`px-6 py-3 font-medium rounded-full transition-all ${
+                  onClick={() => setSelectedCategory(category._id)}
+                  className={`px-4 py-2 text-xs font-mono rounded-full transition-all ${
                     selectedCategory === category._id
-                      ? "bg-brand-bronze text-black"
-                      : "border border-brand-bronze/20 text-text-primary hover:border-brand-bronze hover:text-brand-champagne"
+                      ? "bg-[#DFCA9F] text-[#050507] font-bold shadow-[0_0_15px_rgba(223,202,159,0.3)]"
+                      : "bg-white/[0.03] text-[#A2A2B0] border border-white/[0.06] hover:border-white/20 hover:text-white"
                   }`}
                 >
-                  {category.title}
+                  {category.title.toUpperCase()}
                 </button>
               ))}
             </div>
@@ -199,83 +190,43 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Blog Posts */}
-      <section className="py-16">
+      {/* Blog Posts Grid */}
+      <section className="pb-24">
         <div className="container-custom">
           {loading ? (
-            <div className="text-center py-12">
-              <div className="liquid-glass p-8 max-w-md mx-auto">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-bronze mx-auto mb-4"></div>
-                <p className="text-text-muted">Loading posts...</p>
+            <div className="text-center py-16">
+              <div className="glass-card p-8 max-w-sm mx-auto">
+                <div className="w-8 h-8 rounded-full border-2 border-[#DFCA9F] border-t-transparent animate-spin mx-auto mb-4" />
+                <p className="text-xs font-mono text-[#A2A2B0]">Loading articles...</p>
               </div>
             </div>
           ) : filteredPosts.length === 0 ? (
-            posts.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="liquid-glass p-8 max-w-md mx-auto">
-                  <h2 className="text-xl font-semibold text-pearl mb-2">
-                    Coming Soon
-                  </h2>
-                  <p className="text-text-muted">
-                    We&apos;re working on exciting content. Check back soon for
-                    our latest posts.
-                  </p>
-                </div>
+            <div className="text-center py-16">
+              <div className="glass-card p-8 max-w-md mx-auto">
+                <h3 className="text-lg font-display font-bold text-white mb-2">
+                  No Articles Found
+                </h3>
+                <p className="text-xs text-[#A2A2B0] mb-4">
+                  {searchQuery
+                    ? `No articles matched "${searchQuery}". Try a different keyword.`
+                    : "Articles are currently in editorial review."}
+                </p>
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="btn-luxury-secondary py-2 px-4 text-xs font-mono"
+                  >
+                    Clear Search
+                  </button>
+                )}
               </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="liquid-glass p-8 max-w-md mx-auto">
-                  <h2 className="text-xl font-semibold text-pearl mb-2">
-                    No posts found
-                  </h2>
-                  <p className="text-text-muted mb-4">
-                    {searchQuery
-                      ? `No posts match "${searchQuery}". Try adjusting your search.`
-                      : selectedCategory
-                        ? "No posts available in this category."
-                        : "No posts available."}
-                  </p>
-                  <div className="flex gap-2 justify-center">
-                    {searchQuery && (
-                      <button
-                        onClick={() => setSearchQuery("")}
-                        className="btn btn-secondary"
-                      >
-                        Clear Search
-                      </button>
-                    )}
-                    {selectedCategory && (
-                      <button
-                        onClick={() => handleCategoryFilter(null)}
-                        className="btn btn-primary"
-                      >
-                        View All Posts
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )
+            </div>
           ) : (
-            <>
-              {/* All Posts in Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredPosts.map((post) => (
-                  <BlogCard
-                    key={post._id}
-                    title={post.title}
-                    slug={post.slug}
-                    publishedAt={post.publishedAt}
-                    excerpt={post.excerpt}
-                    featured={post.featured}
-                    author={post.author}
-                    tags={post.tags}
-                    category={post.category}
-                    featuredImage={post.featuredImage}
-                  />
-                ))}
-              </div>
-            </>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {filteredPosts.map((post) => (
+                <BlogCard key={post._id} {...post} />
+              ))}
+            </div>
           )}
         </div>
       </section>

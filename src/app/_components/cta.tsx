@@ -6,39 +6,20 @@ import { motion, Variants } from "framer-motion";
 
 // Text constants
 const TEXTS = {
-  BADGE_TEXT_DEFAULT: "Let's Connect",
+  BADGE_TEXT_DEFAULT: "Start a Project",
   MAIN_HEADING_DEFAULT: "Ready to Build",
-  HIGHLIGHTED_TEXT_DEFAULT: "Something Extraordinary?",
-  DESCRIPTION_DEFAULT: "Transform your vision into reality. Schedule a consultation with our team and discover how we can elevate your digital presence.",
-  FORM_TITLE_DEFAULT: "Get Started Today",
-  QUICK_CONTACT_TITLE_DEFAULT: "Quick Contact",
-  WHY_CHOOSE_TITLE_DEFAULT: "Why Nexfound?",
-  WHY_CHOOSE_POINTS_DEFAULT: [
-    "48-hour response guarantee",
-    "Dedicated project manager",
-    "Transparent pricing model",
-    "Post-launch support included",
-  ],
+  HIGHLIGHTED_TEXT_DEFAULT: "Your Next Big Idea?",
+  DESCRIPTION_DEFAULT:
+    "Tell us about your product goals, timeline, and budget. We'll get back to you within 24 hours with an actionable plan.",
+  FORM_TITLE_DEFAULT: "Project Inquiry",
   EMAIL_DEFAULT: "hello@nexfound.in",
   PHONE_DEFAULT: "+91 8286556661",
-  FORM_NAME_LABEL: "Your Name *",
-  FORM_EMAIL_LABEL: "Email Address *",
-  FORM_COMPANY_LABEL: "Company",
-  FORM_MESSAGE_LABEL: "Project Details *",
-  FORM_NAME_PLACEHOLDER: "John Doe",
-  FORM_EMAIL_PLACEHOLDER: "john@company.com",
-  FORM_COMPANY_PLACEHOLDER: "Your Company Ltd.",
-  FORM_MESSAGE_PLACEHOLDER: "Tell us about your project goals and requirements...",
-  BUTTON_SEND: "Send Message",
-  BUTTON_SENDING: "Sending...",
-  CONTACT_EMAIL_LABEL: "Email",
-  CONTACT_PHONE_LABEL: "Phone",
-  STAMP_SECURE: "SECURE",
-  STAMP_ACTIVE: "ACTIVE",
-  STAMP_COMMITTED: "COMMITTED",
-  HEADER_SECURE_SUBMISSION: "Secure Submission",
-  HEADER_ALWAYS_AVAILABLE: "Always Available",
-  HEADER_GUARANTEED: "Guaranteed"
+  WHY_CHOOSE_POINTS_DEFAULT: [
+    "Direct communication with experienced developers",
+    "Quick turnaround & clear milestone roadmaps",
+    "Transparent pricing with no surprise costs",
+    "Clean, scale-ready code with post-launch support",
+  ],
 } as const;
 
 type CTAData = {
@@ -58,12 +39,14 @@ type CTAProps = {
   contactPhone?: string;
 };
 
+const BUDGET_OPTIONS = ["$5k - $15k", "$15k - $35k", "$35k - $75k", "$75k+"];
+
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.12,
       delayChildren: 0.1,
     },
   },
@@ -76,23 +59,10 @@ const itemVariants: Variants = {
     opacity: 1,
     transition: {
       type: "spring",
-      stiffness: 100,
-      damping: 15,
+      stiffness: 90,
+      damping: 16,
     },
   },
-};
-
-const bgFloatVariants: Variants = {
-  animate: (custom: number) => ({
-    y: [0, custom * -15, 0],
-    x: [0, custom * 10, 0],
-    rotate: [0, custom * 10, 0],
-    transition: {
-      duration: 8 + custom * 2,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  }),
 };
 
 export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
@@ -101,19 +71,18 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
     email: "",
     company: "",
     message: "",
+    budget: "$15k - $35k",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const badgeText = cta?.badgeText ?? TEXTS.BADGE_TEXT_DEFAULT;
   const mainHeading = cta?.mainHeading ?? TEXTS.MAIN_HEADING_DEFAULT;
-  const highlightedText = cta?.highlightedText ?? TEXTS.HIGHLIGHTED_TEXT_DEFAULT;
+  const highlightedText =
+    cta?.highlightedText ?? TEXTS.HIGHLIGHTED_TEXT_DEFAULT;
   const description = cta?.description ?? TEXTS.DESCRIPTION_DEFAULT;
-  const formTitle = cta?.formTitle ?? TEXTS.FORM_TITLE_DEFAULT;
-  const quickContactTitle = cta?.quickContactTitle ?? TEXTS.QUICK_CONTACT_TITLE_DEFAULT;
   const email = contactEmail ?? TEXTS.EMAIL_DEFAULT;
   const phone = contactPhone ?? TEXTS.PHONE_DEFAULT;
-  const whyChooseTitle = cta?.whyChooseTitle ?? TEXTS.WHY_CHOOSE_TITLE_DEFAULT;
-  const whyChoosePoints =
+  const whyPoints =
     cta?.whyChoosePoints && cta.whyChoosePoints.length > 0
       ? cta.whyChoosePoints
       : TEXTS.WHY_CHOOSE_POINTS_DEFAULT;
@@ -125,9 +94,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -137,419 +104,231 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
         throw new Error(data.error || "Failed to send message");
       }
 
-      // Success
-      setFormData({ name: "", email: "", company: "", message: "" });
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        message: "",
+        budget: "$15k - $35k",
+      });
       toast.success(
-        "Thank you for reaching out! We've received your message and will get back to you within 24 hours.",
+        "Inquiry received. A senior engineer will review your specs and reply within 24 hours.",
         {
           duration: 6000,
           icon: "✨",
-        },
+        }
       );
     } catch (error) {
       console.error("Form submission error:", error);
       toast.error(
         error instanceof Error
           ? error.message
-          : `We couldn't send your message. Please try again or email us at ${email}`,
-        {
-          duration: 7000,
-          icon: "⚠️",
-        },
+          : "Failed to send message. Please email hello@nexfound.in directly."
       );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
   return (
-    <section
-      id="contact"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <section id="contact" className="relative py-14 sm:py-18 overflow-hidden bg-[#030305]">
+      <div className="container-custom relative z-10">
         <motion.div
-          custom={1.5}
-          variants={bgFloatVariants}
-          animate="animate"
-          className="absolute top-20 right-10 w-48 h-48 border-2 border-[#B08D57]/20 rotate-45 opacity-40"
-        />
-        <motion.div
-          custom={2}
-          variants={bgFloatVariants}
-          animate="animate"
-          className="absolute bottom-32 left-20 w-36 h-36 border border-[#1A7F6B]/15 rotate-12 opacity-30"
-        />
-        <motion.div
-          custom={1.2}
-          variants={bgFloatVariants}
-          animate="animate"
-          className="absolute top-1/3 left-10 w-28 h-28 bg-[#F4E6C0]/10 rounded-full opacity-25"
-        />
-        <motion.div
-          custom={2.5}
-          variants={bgFloatVariants}
-          animate="animate"
-          className="absolute bottom-1/4 right-20 w-40 h-40 border border-[#B08D57]/25 rotate-60 opacity-35"
-        />
-      </div>
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="max-w-6xl mx-auto"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            {/* Left Column: Narrative & Guarantees */}
+            <motion.div variants={itemVariants} className="lg:col-span-5 space-y-6">
+              <div>
+                <div className="luxury-badge mb-3">
+                  <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
+                  <span className="text-xs font-mono font-semibold tracking-wider text-[#DFCA9F] uppercase">
+                    {badgeText}
+                  </span>
+                </div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        className="container-custom relative z-10 px-6 py-5 pb-20"
-      >
-        <div className="max-w-6xl mx-auto">
-          {/* Enhanced Section Header */}
-          <div className="text-center mb-20">
-            {/* Premium Badge */}
-            <motion.div
-              variants={itemVariants}
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(176, 141, 87, 0.15) 0%, rgba(244, 230, 192, 0.08) 100%)",
-                borderColor: "rgba(176, 141, 87, 0.4)",
-                boxShadow: "0 8px 32px rgba(176, 141, 87, 0.1)",
-              }}
-            >
-              <div className="relative">
-                <div className="w-3 h-3 bg-[#B08D57] rounded-full animate-pulse" />
-                <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-4">
+                  <span>{mainHeading} </span>
+                  <span className="text-gold-foil block">{highlightedText}</span>
+                </h2>
+
+                <p className="text-sm sm:text-base text-[#9E9EB0] leading-relaxed">
+                  {description}
+                </p>
               </div>
-              <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
-                {badgeText}
-              </span>
+
+              {/* Direct Contact Pills */}
+              <div className="space-y-3 pt-4 border-t border-white/[0.08]">
+                <a
+                  href={`mailto:${email}`}
+                  className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-[#DFCA9F]/40 hover:bg-white/[0.05] transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-[#DFCA9F]/10 flex items-center justify-center text-[#DFCA9F] group-hover:scale-105 transition-transform">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[#A2A2B0]">Direct Email</div>
+                    <div className="text-sm font-semibold text-white group-hover:text-[#DFCA9F] transition-colors">{email}</div>
+                  </div>
+                </a>
+
+                <a
+                  href={`tel:${phone}`}
+                  className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-[#DFCA9F]/40 hover:bg-white/[0.05] transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-[#DFCA9F]/10 flex items-center justify-center text-[#DFCA9F] group-hover:scale-105 transition-transform">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[#A2A2B0]">Phone / WhatsApp</div>
+                    <div className="text-sm font-semibold text-white group-hover:text-[#DFCA9F] transition-colors">{phone}</div>
+                  </div>
+                </a>
+              </div>
+
+              {/* Engineering Guarantees */}
+              <div className="space-y-2.5 pt-2">
+                {whyPoints.map((point, idx) => (
+                  <div key={idx} className="flex items-center gap-2.5 text-xs text-[#D4D4DF]">
+                    <span className="text-[#DFCA9F]">✦</span>
+                    <span>{point}</span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
 
-            {/* Premium Title */}
-            <motion.h2
-              variants={itemVariants}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight"
-            >
-              <span className="block text-white mb-3">{mainHeading}</span>
-              <span
-                className="block bg-gradient-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
-                style={{
-                  textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
-                }}
-              >
-                {highlightedText}
-              </span>
-            </motion.h2>
+            {/* Right Column: Luxury Form */}
+            <motion.div variants={itemVariants} className="lg:col-span-7">
+              <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-white/[0.1] shadow-2xl">
+                <h3 className="text-2xl font-display font-bold text-white mb-6">
+                  {TEXTS.FORM_TITLE_DEFAULT}
+                </h3>
 
-            {/* Enhanced Description */}
-            <motion.p
-              variants={itemVariants}
-              className="text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed"
-            >
-              {description}
-            </motion.p>
-          </div>
-
-          {/* Communication Documents Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-            {/* Project Inquiry Document - Contact Form */}
-            <motion.div
-              variants={itemVariants}
-              className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group"
-              style={{
-                boxShadow:
-                  "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-              }}
-            >
-              {/* Document Header - Form Title Tab Style */}
-              <div className="relative h-12 bg-gradient-to-r from-[#B08D57]/20 to-[#F4E6C0]/10 border-b border-white/10 flex items-center justify-between px-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
-                  <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
-                    {formTitle}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-xs text-white/60">
-                    {TEXTS.HEADER_SECURE_SUBMISSION}
-                  </span>
-                </div>
-              </div>
-
-              {/* Document Content - Form Body */}
-              <div className="p-6 bg-gradient-to-b from-transparent to-black/20">
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  {/* Name Field */}
+                  {/* Budget Selector */}
                   <div>
-                    <label className="block text-sm font-medium text-[#E0E0E0] mb-2">
-                      {TEXTS.FORM_NAME_LABEL}
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2.5">
+                      Estimated Project Scope / Budget
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {BUDGET_OPTIONS.map((opt) => (
+                        <button
+                          type="button"
+                          key={opt}
+                          onClick={() => setFormData({ ...formData, budget: opt })}
+                          className={`py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all ${
+                            formData.budget === opt
+                              ? "bg-[#DFCA9F] text-[#050507] font-bold shadow-[0_0_15px_rgba(223,202,159,0.3)]"
+                              : "bg-white/[0.03] text-[#A2A2B0] border border-white/[0.06] hover:border-white/20"
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
+                        Your Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="John Doe"
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
+                        Work Email *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="john@company.com"
+                        value={formData.email}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
+                      Company / Product Name
                     </label>
                     <input
                       type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300"
-                      placeholder={TEXTS.FORM_NAME_PLACEHOLDER}
-                    />
-                  </div>
-
-                  {/* Email Field */}
-                  <div>
-                    <label className="block text-sm font-medium text-[#E0E0E0] mb-2">
-                      {TEXTS.FORM_EMAIL_LABEL}
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300"
-                      placeholder={TEXTS.FORM_EMAIL_PLACEHOLDER}
-                    />
-                  </div>
-
-                  {/* Company Field */}
-                  <div>
-                    <label className="block text-sm font-medium text-[#E0E0E0] mb-2">
-                      {TEXTS.FORM_COMPANY_LABEL}
-                    </label>
-                    <input
-                      type="text"
-                      name="company"
+                      placeholder="Acme Technologies"
                       value={formData.company}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300"
-                      placeholder={TEXTS.FORM_COMPANY_PLACEHOLDER}
+                      onChange={(e) =>
+                        setFormData({ ...formData, company: e.target.value })
+                      }
+                      className="w-full px-4 py-3 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
                     />
                   </div>
 
-                  {/* Message Field */}
                   <div>
-                    <label className="block text-sm font-medium text-[#E0E0E0] mb-2">
-                      {TEXTS.FORM_MESSAGE_LABEL}
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
+                      Architecture & Scope Details *
                     </label>
                     <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
                       required
                       rows={4}
-                      className="w-full px-4 py-3 rounded-lg bg-[#1A1A1A] border border-[#2E2E2E] text-white placeholder-[#737373] focus:outline-none focus:border-[#B08D57] focus:ring-2 focus:ring-[#B08D57]/20 transition-all duration-300 resize-none"
-                      placeholder={TEXTS.FORM_MESSAGE_PLACEHOLDER}
+                      placeholder="Tell us about the product goals, existing codebase (if any), timeline, or specific challenges..."
+                      value={formData.message}
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
+                      className="w-full px-4 py-3 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors resize-none"
                     />
                   </div>
 
-                  {/* Submit Button */}
-                  <motion.button
+                  <button
                     type="submit"
                     disabled={isSubmitting}
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                    className="w-full relative px-6 py-4 bg-gradient-to-r from-[#B08D57] to-[#F4E6C0] text-black font-semibold rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#B08D57] focus:ring-offset-2 focus:ring-offset-black overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed group-hover:shadow-[0_0_20px_rgba(176,141,87,0.3)]"
+                    className="btn-gold w-full py-4 text-sm uppercase tracking-wider font-bold rounded-xl shadow-[0_0_25px_rgba(223,202,159,0.4)] hover:shadow-[0_0_35px_rgba(223,202,159,0.6)] cursor-pointer"
                   >
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isSubmitting ? (
-                        <>
-                          <svg
-                            className="animate-spin h-5 w-5"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                              fill="none"
-                            />
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            />
-                          </svg>
-                          <span>{TEXTS.BUTTON_SENDING}</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>{TEXTS.BUTTON_SEND}</span>
-                          <svg
-                            className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M14 5l7 7m0 0l-7 7m7-7H3"
-                            />
-                          </svg>
-                        </>
-                      )}
+                    <span>
+                      {isSubmitting ? "Submitting Inquiry..." : "Submit Project Inquiry"}
                     </span>
-                  </motion.button>
+                    <svg
+                      className="w-4 h-4 ml-1.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.5}
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  </button>
                 </form>
-
-
               </div>
-
-              {/* Page Curl Effect */}
-              <div className="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-bl from-white/10 to-white/5 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             </motion.div>
-
-            {/* Communication Protocols - Contact Info */}
-            <div className="space-y-8">
-              {/* Contact Protocol Document */}
-              <motion.div
-                variants={itemVariants}
-                className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group"
-                style={{
-                  boxShadow:
-                    "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-                }}
-              >
-                {/* Document Header */}
-                <div className="relative h-12 bg-gradient-to-r from-[#B08D57]/20 to-[#F4E6C0]/10 border-b border-white/10 flex items-center justify-between px-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                    <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
-                      {quickContactTitle}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-white/60">
-                      {TEXTS.HEADER_ALWAYS_AVAILABLE}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Document Content */}
-                <div className="p-6 bg-gradient-to-b from-transparent to-black/20">
-                  <div className="space-y-4">
-                    <a
-                      href={`mailto:${email}`}
-                      className="flex items-center gap-4 text-[#E0E0E0] hover:text-gold-gradient transition-colors duration-300 group/link"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#B08D57] to-[#F4E6C0] flex items-center justify-center group-hover/link:scale-110 transition-transform duration-300">
-                        <svg
-                          className="w-6 h-6 text-black"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                          />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-sm text-[#B3B3B3]">{TEXTS.CONTACT_EMAIL_LABEL}</div>
-                        <div className="font-medium">{email}</div>
-                      </div>
-                    </a>
-
-                    <a
-                      href={`tel:${phone.replace(/\s/g, "")}`}
-                      className="flex items-center gap-4 text-[#E0E0E0] hover:text-gold-gradient transition-colors duration-300 group/link"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1A7F6B] to-[#0D3B66] flex items-center justify-center group-hover/link:scale-110 transition-transform duration-300">
-                        <svg
-                          className="w-6 h-6 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                          />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-sm text-[#B3B3B3]">{TEXTS.CONTACT_PHONE_LABEL}</div>
-                        <div className="font-medium">{phone}</div>
-                      </div>
-                    </a>
-                  </div>
-
-
-                </div>
-              </motion.div>
-
-              {/* Service Charter Document */}
-              <motion.div
-                variants={itemVariants}
-                className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group"
-                style={{
-                  boxShadow:
-                    "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-                }}
-              >
-                {/* Document Header */}
-                <div className="relative h-12 bg-gradient-to-r from-[#B08D57]/20 to-[#F4E6C0]/10 border-b border-white/10 flex items-center justify-between px-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse" />
-                    <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
-                      {whyChooseTitle}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-white/60">{TEXTS.HEADER_GUARANTEED}</span>
-                  </div>
-                </div>
-
-                {/* Document Content */}
-                <div className="p-6 bg-gradient-to-b from-transparent to-black/20">
-                  <ul className="space-y-4">
-                    {whyChoosePoints.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#B08D57] to-[#F4E6C0] flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <svg
-                            className="w-4 h-4 text-black"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={3}
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                        </div>
-                        <span className="text-[#E0E0E0]">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-
-                </div>
-              </motion.div>
-            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }

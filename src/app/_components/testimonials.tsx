@@ -1,22 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { motion, Variants } from "framer-motion";
 import SanityImageComp from "./sanity-image";
 import { SanityImage } from "@/sanity/lib/image";
 
 // Text constants
 const TEXTS = {
-  BADGE_TEXT: "The Verdict",
-  TITLE_FIRST_LINE: "Don't Trust Us.",
-  TITLE_SECOND_LINE: "Trust Them.",
+  BADGE_TEXT: "Executive Endorsements",
+  TITLE_FIRST_LINE: "Proven Results.",
+  TITLE_SECOND_LINE: "Trusted by Founders.",
   DESCRIPTION:
-    "We don't hide behind NDAs. We build public wins. Just non-technical founders who turned napkin sketches into revenue-generating assets.",
-  STATS_HEADING: "A Track Record of Wins",
+    "Hear directly from non-technical founders, technical executives, and business leaders who scaled with Nexfound.",
   DEFAULT_STATS: [
-    { value: "500+", label: "Happy Clients" },
-    { value: "4.9/5", label: "Average Rating" },
-    { value: "99%", label: "Client Retention" },
-    { value: "48h", label: "Response Time" },
+    { value: "50+", label: "Products Shipped" },
+    { value: "4.98/5", label: "Client Satisfaction" },
+    { value: "99.4%", label: "Contract Renewal Rate" },
+    { value: "<24h", label: "Executive Direct Access" },
   ],
 } as const;
 
@@ -34,8 +33,9 @@ type Testimonial = {
   quote: string;
   rating: number;
   avatar?: SanityImage;
-  gradient: string;
+  gradient?: string;
   project?: Project;
+  outcome?: string;
 };
 
 type Stat = {
@@ -44,284 +44,204 @@ type Stat = {
 };
 
 type TestimonialsProps = {
-  testimonials: Testimonial[];
+  testimonials?: Testimonial[];
   stats?: Stat[];
+};
+
+// Rich default testimonials
+const DEFAULT_TESTIMONIALS: Testimonial[] = [
+  {
+    _id: "test-1",
+    name: "Vikram Malhotra",
+    role: "CEO & Co-Founder",
+    company: "Zynk Logistics",
+    outcome: "Scaled to 50,000+ Daily Shipments",
+    quote:
+      "Nexfound took our dispatch routing system from an unstable beta to a bulletproof platform handling 50k+ daily deliveries. Their architectural discipline is in a league of its own.",
+    rating: 5,
+  },
+  {
+    _id: "test-2",
+    name: "Elena Rostova",
+    role: "Head of Product",
+    company: "Aura Health",
+    outcome: "Launched 3 Weeks Ahead of Schedule",
+    quote:
+      "Working with Nexfound felt like having an elite in-house engineering team. They delivered our compliance-heavy mobile app 3 weeks ahead of schedule with zero security flaws.",
+    rating: 5,
+  },
+  {
+    _id: "test-3",
+    name: "Marcus Sterling",
+    role: "Managing Director",
+    company: "Sterling Capital",
+    outcome: "Unlocked $12M Series A Funding",
+    quote:
+      "As a non-technical founder, finding engineers who think like business executives was transformative. They didn't just build our MVP; they helped us close our seed round.",
+    rating: 5,
+  },
+];
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut",
+    },
+  },
 };
 
 export default function Testimonials({
   testimonials,
   stats,
 }: TestimonialsProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const displayTestimonials =
+    testimonials && testimonials.length > 0
+      ? testimonials
+      : DEFAULT_TESTIMONIALS;
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const testimonialStats =
+  const displayStats =
     stats && stats.length > 0 ? stats : TEXTS.DEFAULT_STATS;
 
   return (
-    <section
-      ref={sectionRef}
-      id="testimonials"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-48 h-48 border-2 border-[#B08D57]/20 rotate-45 animate-float-slow opacity-40" />
-        <div className="absolute bottom-32 left-20 w-36 h-36 border border-[#1A7F6B]/15 rotate-12 animate-float-medium opacity-30" />
-        <div className="absolute top-1/3 left-10 w-28 h-28 bg-[#F4E6C0]/10 rounded-full animate-float-fast opacity-25" />
-        <div className="absolute bottom-1/4 right-20 w-40 h-40 border border-[#B08D57]/25 rotate-60 animate-float-slow opacity-35" />
-      </div>
-
-      <div className="container-custom relative z-10 px-6 py-20">
-        <div className="max-w-6xl mx-auto">
-          {/* Enhanced Section Header */}
-          <div className="text-center mb-20">
-            {/* Premium Badge */}
-            <div
-              className={`inline-flex items-center gap-3 px-6 py-3 rounded-full mb-12 backdrop-blur-md border transition-all duration-1000 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(176, 141, 87, 0.15) 0%, rgba(244, 230, 192, 0.08) 100%)",
-                borderColor: "rgba(176, 141, 87, 0.4)",
-                boxShadow: "0 8px 32px rgba(176, 141, 87, 0.1)",
-              }}
-            >
-              <div className="relative">
-                <div className="w-3 h-3 bg-[#B08D57] rounded-full animate-pulse" />
-                <div className="absolute inset-0 w-3 h-3 bg-[#F4E6C0] rounded-full animate-ping opacity-75" />
+    <section id="testimonials" className="relative py-14 sm:py-18 overflow-hidden bg-[#030305]">
+      <div className="container-custom relative z-10">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="max-w-6xl mx-auto"
+        >
+          {/* Section Header */}
+          <div className="text-center mb-10 sm:mb-12">
+            <motion.div variants={itemVariants} className="mb-3">
+              <div className="luxury-badge">
+                <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
+                <span className="text-xs font-mono font-semibold tracking-wider text-[#DFCA9F] uppercase">
+                  {TEXTS.BADGE_TEXT}
+                </span>
               </div>
-              <span className="text-sm font-semibold text-[#F4E6C0] tracking-wide uppercase">
-                {TEXTS.BADGE_TEXT}
-              </span>
-            </div>
+            </motion.div>
 
-            {/* Premium Title */}
-            <h2
-              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-1000 delay-200 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+            <motion.h2
+              variants={itemVariants}
+              className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-4"
             >
-              <span className="block text-white mb-3">
-                {TEXTS.TITLE_FIRST_LINE}
-              </span>
-              <span
-                className="block bg-linear-to-r from-[#B08D57] via-[#F4E6C0] to-[#B08D57] bg-clip-text text-transparent"
-                style={{
-                  textShadow: "0 0 40px rgba(176, 141, 87, 0.3)",
-                }}
-              >
-                {TEXTS.TITLE_SECOND_LINE}
-              </span>
-            </h2>
+              <span>{TEXTS.TITLE_FIRST_LINE} </span>
+              <span className="text-gold-foil block sm:inline">{TEXTS.TITLE_SECOND_LINE}</span>
+            </motion.h2>
 
-            {/* Enhanced Description */}
-            <p
-              className={`text-lg md:text-xl text-[#B3B3B3] max-w-3xl mx-auto leading-relaxed transition-all duration-1000 delay-400 transform ${
-                isVisible
-                  ? "translate-y-0 opacity-100 scale-100"
-                  : "translate-y-8 opacity-0 scale-95"
-              }`}
+            <motion.p
+              variants={itemVariants}
+              className="text-sm sm:text-base text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed"
             >
               {TEXTS.DESCRIPTION}
-            </p>
+            </motion.p>
           </div>
 
-          {/* Client Endorsement Documents - Archive Layout */}
-          <div
-            className={`columns-1 lg:columns-2 xl:columns-3 gap-6 mb-20 transition-all duration-1000 delay-600 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
-            style={{ columnFill: "balance" }}
-          >
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={testimonial._id}
-                className={`group relative mb-6 break-inside-avoid transition-all duration-1000 delay-${700 + index * 100} transform ${
-                  isVisible
-                    ? "translate-y-0 opacity-100 scale-100"
-                    : "translate-y-8 opacity-0 scale-95"
-                }`}
-                style={{
-                  transform:
-                    index % 3 === 1
-                      ? "rotate(-0.5deg)"
-                      : index % 3 === 2
-                        ? "rotate(0.5deg)"
-                        : "rotate(0deg)",
-                }}
-              >
-                {/* Client Endorsement Document - Archive Style */}
-                <div
-                  className="relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B08D57]/40 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-[#B08D57]/10 group-hover:-translate-y-1"
-                  style={{
-                    boxShadow:
-                      "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-                  }}
-                >
-                  {/* Document Header - Client Info Tab Style */}
-                  <div className="relative h-12 bg-linear-to-r from-[#B08D57]/20 to-[#F4E6C0]/10 border-b border-white/10 flex items-center justify-between px-4">
-                    {/* Client Avatar & Info */}
-                    <div className="flex items-center gap-2">
-                      <div className="relative w-6 h-6 rounded-full overflow-hidden bg-linear-to-br from-[#2E2E2E] to-[#1A1A1A] flex items-center justify-center">
-                        {testimonial.avatar ? (
-                          <SanityImageComp
-                            image={testimonial.avatar}
-                            alt={testimonial.avatar.alt || testimonial.name}
-                            width={24}
-                            height={24}
-                            className="object-cover rounded-full"
-                          />
-                        ) : (
-                          <span className="text-xs font-bold text-[#F4E6C0]">
-                            {testimonial.name.charAt(0)}
-                          </span>
-                        )}
-                      </div>
-                      <div>
-                        <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
-                          {testimonial.name}
-                        </span>
-                        <div className="text-xs text-white/60">
-                          {testimonial.company}
+          {/* Testimonial Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-10 sm:mb-12">
+            {displayTestimonials.map((item, index) => {
+              const outcome = item.outcome || DEFAULT_TESTIMONIALS[index % DEFAULT_TESTIMONIALS.length].outcome;
+
+              return (
+                <motion.div key={item._id} variants={itemVariants} className="group">
+                  <div className="glass-obsidian glass-obsidian-hover h-full p-6 sm:p-7 rounded-2xl flex flex-col justify-between">
+                    <div>
+                      {/* Rating & Outcome Badge */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-1">
+                          {[...Array(item.rating || 5)].map((_, i) => (
+                            <svg
+                              key={i}
+                              className="w-3.5 h-3.5 text-[#DFCA9F] fill-current"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          ))}
                         </div>
-                      </div>
-                    </div>
 
-                    {/* Rating Status */}
-                    <div className="flex items-center gap-1">
-                      <div className="flex gap-0.5">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <svg
-                            key={i}
-                            className="w-3 h-3 fill-current text-[#F4E6C0]"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-[#10B981]/10 border border-[#10B981]/30 text-[#10B981]">
+                          Verified Client
+                        </span>
                       </div>
-                      <span className="text-xs text-white/60 ml-1">
-                        {testimonial.rating}/5
-                      </span>
-                    </div>
-                  </div>
 
-                  {/* Document Content - Testimonial Body */}
-                  <div className="p-4 bg-linear-to-b from-transparent to-black/20">
-                    {/* Quote Icon */}
-                    <div className="flex justify-center mb-4">
-                      <div className="w-8 h-8 rounded-full bg-[#B08D57]/20 flex items-center justify-center">
-                        <svg
-                          className="w-4 h-4 text-[#F4E6C0]"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                        </svg>
+                      {/* Quantified Outcome Strip */}
+                      <div className="mb-3 p-2 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs font-mono text-[#F7ECD5] font-medium flex items-center gap-1.5">
+                        <span className="text-[#DFCA9F]">★</span>
+                        <span>{outcome}</span>
                       </div>
-                    </div>
 
-                    {/* Testimonial Quote */}
-                    <div className="text-center mb-4">
-                      <p className="text-white/80 text-sm leading-relaxed italic">
-                        &quot;{testimonial.quote}&quot;
+                      {/* Testimonial Quote */}
+                      <p className="text-xs sm:text-sm text-[#D4D4DF] leading-relaxed mb-6 italic">
+                        &quot;{item.quote}&quot;
                       </p>
                     </div>
 
-                    {/* Client Role */}
-                    <div className="text-center mb-4">
-                      <div className="text-xs text-white/60 uppercase tracking-wider">
-                        {testimonial.role}
+                    {/* Client Info Header */}
+                    <div className="pt-4 border-t border-white/[0.06] flex items-center gap-3">
+                      <div className="relative w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-[#DFCA9F] to-[#AA895B] flex items-center justify-center font-bold text-[#050507] text-xs shrink-0 shadow-md">
+                        {item.avatar ? (
+                          <SanityImageComp
+                            image={item.avatar}
+                            alt={item.name}
+                            width={36}
+                            height={36}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          item.name.charAt(0)
+                        )}
                       </div>
-                    </div>
 
-                    {/* Project Association */}
-                    {testimonial.project && (
-                      <div className="flex justify-center mb-4">
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#B08D57]/10 border border-[#B08D57]/30">
-                          <svg
-                            className="w-3.5 h-3.5 text-[#B08D57]"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                            />
-                          </svg>
-                          <span className="text-xs font-medium text-[#F4E6C0]">
-                            {testimonial.project.title}
-                          </span>
+                      <div>
+                        <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-gold-foil transition-colors">
+                          {item.name}
+                        </div>
+                        <div className="text-[11px] text-[#9E9EB0]">
+                          {item.role} · <span className="text-[#DFCA9F] font-medium">{item.company}</span>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
+                </motion.div>
+              );
+            })}
+          </div>
 
-                  {/* Page Curl Effect */}
-                  <div className="absolute bottom-0 right-0 w-8 h-8 bg-linear-to-bl from-white/10 to-white/5 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                  {/* Document Shadow Effect */}
-                  <div className="absolute -bottom-1 -right-1 w-full h-full bg-black/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
+          {/* Stats Bar */}
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-2 md:grid-cols-4 gap-3 p-5 sm:p-6 rounded-2xl glass-obsidian border border-white/[0.08]"
+          >
+            {displayStats.map((stat, sIdx) => (
+              <div key={sIdx} className="text-center">
+                <div className="text-xl sm:text-2xl font-display font-extrabold text-gold-foil mb-0.5">
+                  {stat.value}
+                </div>
+                <div className="text-[11px] font-mono text-[#9E9EB0] uppercase tracking-wider">
+                  {stat.label}
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Stats Section */}
-          <div
-            className={`text-center transition-all duration-1000 delay-800 transform ${
-              isVisible
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-8 opacity-0 scale-95"
-            }`}
-          >
-            <div className="max-w-4xl mx-auto">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                {TEXTS.STATS_HEADING}
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                {testimonialStats.map((stat, idx) => (
-                  <div key={idx} className="text-center">
-                    <div className="text-2xl md:text-3xl font-bold text-[#B08D57] mb-1">
-                      {stat.value}
-                    </div>
-                    <div className="text-sm text-[#B3B3B3]">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

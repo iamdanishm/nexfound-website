@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import "./(site)/globals.css";
 import { Toaster } from "react-hot-toast";
 import ServiceWorkerRegister from "./_components/sw-register";
@@ -7,48 +7,30 @@ import PreloadLinks from "./_components/preload-links";
 
 // Text constants for metadata
 const METADATA_TEXTS = {
-  TITLE_DEFAULT: "Nexfound | Premium Tech Services & Free AI Audit",
+  TITLE_DEFAULT: "Nexfound | Custom Web & Mobile Product Development",
   TITLE_TEMPLATE: "%s | Nexfound",
-  DESCRIPTION: "Turn ambitious ideas into scalable digital products with Nexfound. From premium web and mobile development to strategic AI Audits, we deliver solutions that drive real impact.",
+  DESCRIPTION:
+    "We partner with ambitious founders to design, build, and scale custom web and mobile apps. Quality code, fast turnarounds, and transparent communication.",
   KEYWORDS: [
     "Nexfound",
     "nexfound",
     "nexfound.in",
     "nexfoundco",
     "Nexfoundco",
-    "startup",
-    "business",
-    "premium digital services",
-    "product development",
-    "web design",
-    "software development",
-    "product design",
-    "tech services",
-    "technology services",
-    "digital studio",
-    "startup app development",
-    "web development",
-    "mobile app development",
-    "UX/UI design",
-    "product strategy",
     "digital product development",
+    "web development",
+    "mobile apps",
     "MVP development",
-    "scalable digital solutions",
-    "AI Audit",
-    "AI consulting",
-    "AI automation",
-    "AI integration",
-    "AI readiness assessment",
-    "technology audit",
-    "business AI solutions",
-    "AI strategy",
+    "custom software",
+    "codebase rescue",
   ],
   APPLICATION_NAME: "Nexfound",
   CATEGORY: "Technology Services",
   METADATA_BASE_URL: "https://nexfound.in",
   ALTERNATES_CANONICAL: "https://nexfound.in",
-  OG_TITLE: "Nexfound | Premium Tech Services & Free AI Audit",
-  OG_DESCRIPTION: "Turn ambitious ideas into scalable digital products with Nexfound. From premium web and mobile development to strategic AI Audits, we deliver solutions that drive real impact.",
+  OG_TITLE: "Nexfound | Custom Web & Mobile Product Development",
+  OG_DESCRIPTION:
+    "We partner with ambitious founders to design, build, and scale custom web and mobile apps. Quality code, fast turnarounds, and transparent communication.",
   OG_TYPE: "website",
   OG_LOCALE: "en_US",
   OG_COUNTRY_NAME: "India",
@@ -62,8 +44,9 @@ const METADATA_TEXTS = {
     },
   ],
   TWITTER_CARD: "summary_large_image",
-  TWITTER_TITLE: "Nexfound | Premium Tech Services & Free AI Audit",
-  TWITTER_DESCRIPTION: "Turn ambitious ideas into scalable digital products with Nexfound. From premium web and mobile development to strategic AI Audits, we deliver solutions that drive real impact.",
+  TWITTER_TITLE: "Nexfound | Architecture-First Digital Engineering Studio",
+  TWITTER_DESCRIPTION:
+    "We architect and engineer scalable digital products for ambitious brands. From Day-1 MVP builds to enterprise scale engineering and codebase rescues.",
   TWITTER_CREATOR: "@iam_danishm",
   TWITTER_SITE: "@iam_danishm",
   ICONS: {
@@ -74,10 +57,18 @@ const METADATA_TEXTS = {
   REFERRER: "origin-when-cross-origin",
 } as const;
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-outfit",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -105,7 +96,12 @@ export const metadata: Metadata = {
     url: METADATA_TEXTS.METADATA_BASE_URL,
     countryName: METADATA_TEXTS.OG_COUNTRY_NAME,
     emails: METADATA_TEXTS.OG_EMAILS as unknown as string[],
-    images: METADATA_TEXTS.OG_IMAGES as unknown as { url: string; width: number; height: number; alt: string }[],
+    images: METADATA_TEXTS.OG_IMAGES as unknown as {
+      url: string;
+      width: number;
+      height: number;
+      alt: string;
+    }[],
   },
   twitter: {
     card: METADATA_TEXTS.TWITTER_CARD,
@@ -129,51 +125,56 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} data-scroll-behavior="smooth">
-      <body className="relative min-h-screen">
-        {/* Unified Website Background */}
-        <div className="fixed inset-0 -z-10">
-          {/* Enhanced Animated Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
-            {/* Dynamic gradient overlay */}
-            <div className="absolute inset-0 opacity-40">
-              <div
-                className="absolute inset-0 transition-all duration-1000 ease-out"
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 50%, rgba(176, 141, 87, 0.4) 0%, rgba(244, 230, 192, 0.2) 20%, rgba(26, 127, 107, 0.15) 40%, transparent 70%)",
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#B08D57]/5 to-transparent animate-pulse" />
-            </div>
+    <html
+      lang="en"
+      className={`${outfit.variable} ${plusJakarta.variable}`}
+      data-scroll-behavior="smooth"
+    >
+      <body className="relative min-h-screen bg-[#050507] text-[#F7F7F9] font-sans antialiased overflow-x-hidden selection:bg-[#DFCA9F]/30 selection:text-white">
+        {/* Luxury Ambient Lighting Canvas */}
+        <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+          {/* Top Center Radiant Champagne Aura */}
+          <div
+            className="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[1000px] h-[700px] rounded-full opacity-60 blur-[140px]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(223, 202, 159, 0.18) 0%, rgba(197, 168, 128, 0.08) 40%, transparent 70%)",
+            }}
+          />
 
-            {/* Subtle animated grid */}
-            <div
-              className="absolute inset-0 opacity-[0.02] animate-pulse"
-              style={{
-                backgroundImage: `
-                  linear-gradient(rgba(176, 141, 87, 0.3) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(176, 141, 87, 0.3) 1px, transparent 1px)
-                `,
-                backgroundSize: "100px 100px",
-              }}
-            />
-          </div>
+          {/* Secondary Ambient Side Glow */}
+          <div
+            className="absolute top-[40%] -right-[15%] w-[800px] h-[800px] rounded-full opacity-40 blur-[160px]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(170, 137, 91, 0.12) 0%, rgba(140, 106, 56, 0.04) 50%, transparent 70%)",
+            }}
+          />
 
-          {/* Floating geometric shapes */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-20 left-10 w-32 h-32 border-2 border-[#B08D57]/30 rotate-45 animate-float-slow opacity-60" />
-            <div className="absolute top-40 right-20 w-24 h-24 border-2 border-[#1A7F6B]/25 rotate-12 animate-float-medium opacity-50" />
-            <div className="absolute bottom-32 left-20 w-20 h-20 border-2 border-[#F4E6C0]/20 rotate-30 animate-float-fast opacity-40" />
-            <div className="absolute bottom-40 right-32 w-16 h-16 bg-[#B08D57]/20 rotate-60 animate-float-slow opacity-70" />
-            <div className="absolute top-1/3 right-1/4 w-28 h-28 border border-[#B08D57]/25 rotate-75 animate-float-medium opacity-45" />
-            <div className="absolute bottom-1/3 left-1/3 w-22 h-22 bg-[#1A7F6B]/15 rotate-45 animate-float-fast opacity-55" />
-          </div>
+          {/* Bottom Ambient Glow */}
+          <div
+            className="absolute -bottom-[10%] -left-[10%] w-[700px] h-[700px] rounded-full opacity-35 blur-[150px]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(223, 202, 159, 0.1) 0%, rgba(197, 168, 128, 0.03) 50%, transparent 70%)",
+            }}
+          />
 
-          {/* Enhanced decorative elements */}
-          <div className="absolute top-1/4 left-16 w-64 h-64 bg-[#B08D57]/10 rounded-full blur-3xl animate-float-slow opacity-30" />
-          <div className="absolute bottom-1/4 right-16 w-48 h-48 bg-[#1A7F6B]/8 rounded-full blur-3xl animate-float-medium opacity-20" />
-          <div className="absolute top-1/2 right-8 w-32 h-32 bg-[#F4E6C0]/5 rounded-full blur-2xl animate-float-fast opacity-25" />
+          {/* Ultra-fine Architectural Grid with Radial Vignette */}
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px)
+              `,
+              backgroundSize: "64px 64px",
+              maskImage:
+                "radial-gradient(ellipse 90% 80% at 50% 50%, black 40%, transparent 95%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse 90% 80% at 50% 50%, black 40%, transparent 95%)",
+            }}
+          />
         </div>
 
         <PreloadLinks />
@@ -181,44 +182,43 @@ export default function RootLayout({
         <Toaster
           position="top-right"
           toastOptions={{
-            // Custom styling for success toast
             success: {
               duration: 5000,
               style: {
                 background:
-                  "linear-gradient(135deg, rgba(176, 141, 87, 0.95) 0%, rgba(244, 230, 192, 0.95) 100%)",
-                color: "#000",
-                padding: "16px 20px",
-                borderRadius: "12px",
+                  "linear-gradient(135deg, rgba(24, 24, 32, 0.95) 0%, rgba(12, 12, 18, 0.98) 100%)",
+                color: "#F7ECD5",
+                padding: "16px 22px",
+                borderRadius: "14px",
                 fontSize: "14px",
                 fontWeight: "600",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(176, 141, 87, 0.3)",
-                boxShadow: "0 8px 32px rgba(176, 141, 87, 0.4)",
+                backdropFilter: "blur(16px)",
+                border: "1px solid rgba(223, 202, 159, 0.35)",
+                boxShadow:
+                  "0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(197, 168, 128, 0.15)",
               },
               iconTheme: {
-                primary: "#000",
-                secondary: "#F4E6C0",
+                primary: "#DFCA9F",
+                secondary: "#050507",
               },
             },
-            // Custom styling for error toast
             error: {
               duration: 5000,
               style: {
                 background:
-                  "linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(220, 38, 38, 0.95) 100%)",
-                color: "#fff",
-                padding: "16px 20px",
-                borderRadius: "12px",
+                  "linear-gradient(135deg, rgba(30, 15, 15, 0.95) 0%, rgba(15, 8, 8, 0.98) 100%)",
+                color: "#ffc9c9",
+                padding: "16px 22px",
+                borderRadius: "14px",
                 fontSize: "14px",
                 fontWeight: "600",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(239, 68, 68, 0.3)",
-                boxShadow: "0 8px 32px rgba(239, 68, 68, 0.4)",
+                backdropFilter: "blur(16px)",
+                border: "1px solid rgba(239, 68, 68, 0.35)",
+                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)",
               },
               iconTheme: {
-                primary: "#fff",
-                secondary: "#ef4444",
+                primary: "#ef4444",
+                secondary: "#ffffff",
               },
             },
           }}
