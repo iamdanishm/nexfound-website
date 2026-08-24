@@ -1,5 +1,6 @@
 import Header from "../_components/header";
 import Hero from "../_components/hero";
+import Scroll3DBackground from "../_components/scroll-3d-background";
 import Comparison from "../_components/comparison";
 import Features from "../_components/features";
 import ArchitectureExplorer from "../_components/architecture-explorer";
@@ -69,7 +70,8 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className="bg-[#030305] text-[#F0F0F5] overflow-hidden">
+      <Scroll3DBackground />
+      <main className="relative z-10 text-[#F0F0F5] overflow-hidden">
         <section id="home">
           <Hero hero={settings?.hero} />
         </section>

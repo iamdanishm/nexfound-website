@@ -118,7 +118,7 @@ export default function About({ about }: { about?: AboutData }) {
       : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4";
 
   return (
-    <section id="about" className="relative py-14 sm:py-18 overflow-hidden bg-[#030305]">
+    <section id="about" className="relative py-14 sm:py-18 overflow-hidden bg-transparent">
       <div className="container-custom relative z-10">
         <motion.div
           variants={containerVariants}

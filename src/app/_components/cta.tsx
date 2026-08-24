@@ -131,7 +131,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
   };
 
   return (
-    <section id="contact" className="relative py-14 sm:py-18 overflow-hidden bg-[#030305]">
+    <section id="contact" className="relative py-14 sm:py-18 overflow-hidden bg-transparent">
       <div className="container-custom relative z-10">
         <motion.div
           variants={containerVariants}

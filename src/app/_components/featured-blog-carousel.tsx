@@ -80,7 +80,7 @@ export default function FeaturedBlogCarousel({
   if (!posts || posts.length === 0) return null;
 
   return (
-    <section id="blog" className="relative py-14 sm:py-18 overflow-hidden bg-[#030305]">
+    <section id="blog" className="relative py-14 sm:py-18 overflow-hidden bg-transparent">
       <div className="container-custom relative z-10">
         <motion.div
           variants={containerVariants}

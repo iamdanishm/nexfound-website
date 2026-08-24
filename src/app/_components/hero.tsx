@@ -86,7 +86,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
   return (
     <section
       id="home"
-      className="relative flex flex-col justify-center items-center pt-32 pb-14 sm:pb-18 overflow-hidden bg-[#030305]"
+      className="relative flex flex-col justify-center items-center pt-32 pb-14 sm:pb-18 overflow-hidden bg-transparent"
     >
       {/* Ambient Top Glow */}
       <div

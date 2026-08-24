@@ -69,11 +69,11 @@ body {
 
 /* High-Grade Obsidian Glass Surface */
 .glass-obsidian {
-  background: linear-gradient(145deg, rgba(22, 22, 32, 0.6) 0%, rgba(8, 8, 12, 0.85) 100%);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background: linear-gradient(145deg, rgba(16, 16, 24, 0.85) 0%, rgba(8, 8, 12, 0.94) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 .glass-obsidian-hover {
@@ -81,8 +81,9 @@ body {
 }
 
 .glass-obsidian-hover:hover {
-  border-color: rgba(223, 202, 159, 0.4);
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 30px rgba(197, 168, 128, 0.15), inset 0 1px 0 rgba(244, 230, 192, 0.25);
+  background: linear-gradient(145deg, rgba(20, 20, 30, 0.9) 0%, rgba(10, 10, 16, 0.96) 100%);
+  border-color: rgba(223, 202, 159, 0.45);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 30px rgba(197, 168, 128, 0.15), inset 0 1px 0 rgba(244, 230, 192, 0.3);
   transform: translateY(-4px);
 }
 

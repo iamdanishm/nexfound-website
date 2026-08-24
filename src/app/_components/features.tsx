@@ -138,7 +138,7 @@ export default function Features({ services }: { services?: Service[] }) {
   };
 
   return (
-    <section id="services" className="relative py-14 sm:py-18 overflow-hidden bg-[#030305]">
+    <section id="services" className="relative py-14 sm:py-18 overflow-hidden bg-transparent">
       <div className="container-custom relative z-10">
         <motion.div
           variants={containerVariants}
