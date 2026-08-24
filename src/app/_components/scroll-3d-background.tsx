@@ -33,7 +33,7 @@ export default function Scroll3DBackground() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Apple-Grade Procedural 3D Holographic & Kinetic Canvas Engine
+  // Apple-Grade Procedural 3D Holographic & Kinetic Canvas Engine (Optimized & Deferred)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -44,10 +44,13 @@ export default function Scroll3DBackground() {
     let width = 0;
     let height = 0;
     let dpr = 1;
+    let isRunning = true;
+    let isMobile = false;
 
     const handleResize = () => {
       if (!canvas) return;
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      isMobile = window.innerWidth < 768;
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = width * dpr;
@@ -57,8 +60,8 @@ export default function Scroll3DBackground() {
     handleResize();
     window.addEventListener("resize", handleResize);
 
-    // 1. Initialize 3D Constellation Particles
-    const PARTICLE_COUNT = 55;
+    // 1. Initialize 3D Constellation Particles (Optimized count for mobile & desktop)
+    const PARTICLE_COUNT = window.innerWidth < 768 ? 24 : 45;
     const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
       x: (Math.random() - 0.5) * 1400,
       y: (Math.random() - 0.5) * 1400,
@@ -69,7 +72,7 @@ export default function Scroll3DBackground() {
     }));
 
     // 2. Initialize 3D Gyroscope Ring Points (3 Nested Orthogonal Rings)
-    const RING_POINTS = 48;
+    const RING_POINTS = window.innerWidth < 768 ? 32 : 48;
     const rings = [
       { radius: 180, plane: "xy", speed: 0.004, tilt: 0.3 },
       { radius: 240, plane: "yz", speed: -0.003, tilt: 0.6 },
@@ -79,6 +82,7 @@ export default function Scroll3DBackground() {
     let time = 0;
 
     const render = () => {
+      if (!isRunning) return;
       time += 0.008;
 
       // Smooth mouse lerp in ref
@@ -229,8 +233,8 @@ export default function Scroll3DBackground() {
       // ==========================================
       // C. Render Kinetic Harmonic Wave Ribbons
       // ==========================================
-      const ribbonCount = 4;
-      const points = 40;
+      const ribbonCount = isMobile ? 2 : 4;
+      const points = isMobile ? 24 : 40;
 
       for (let r = 0; r < ribbonCount; r++) {
         const offset = (r / ribbonCount) * Math.PI * 2;
@@ -244,7 +248,7 @@ export default function Scroll3DBackground() {
           const u = i / points;
           const px = u * width;
 
-          // Continuous harmonic wave formula (never jumps on mouse move)
+          // Continuous harmonic wave formula
           const wave1 = Math.sin(u * 5.2 + time * 1.2 + offset + scrollDisplacement) * 40;
           const wave2 = Math.cos(u * 2.8 - time * 0.7 + offset * 0.4) * 28;
           const mouseInfluence = Math.sin(u * Math.PI) * (mY - 0.5) * 45;
@@ -274,11 +278,39 @@ export default function Scroll3DBackground() {
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    // Defer animation loop start until main thread is idle to eliminate TBT
+    let startTimeout: NodeJS.Timeout | number;
+    if ("requestIdleCallback" in window) {
+      (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void }).requestIdleCallback(
+        () => {
+          animationFrameId = requestAnimationFrame(render);
+        },
+        { timeout: 300 }
+      );
+    } else {
+      startTimeout = setTimeout(() => {
+        animationFrameId = requestAnimationFrame(render);
+      }, 150);
+    }
+
+    // Page visibility listener to pause when backgrounded
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isRunning = false;
+        cancelAnimationFrame(animationFrameId);
+      } else {
+        isRunning = true;
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
+      isRunning = false;
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
+      if (startTimeout) clearTimeout(startTimeout);
     };
   }, []);
 

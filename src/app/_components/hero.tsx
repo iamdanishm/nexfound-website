@@ -102,7 +102,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
           
           {/* Eyebrow Badge */}
           <motion.div
-            initial={{ y: 15, opacity: 0 }}
+            initial={false}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.4 }}
             className="mb-6"
@@ -115,23 +115,23 @@ export default function Hero({ hero }: { hero?: HeroData }) {
             </div>
           </motion.div>
 
-          {/* Clean Single Headline with Centered Multi-word Ticker */}
+          {/* Clean Single Headline with Centered Multi-word Ticker (Instant Paint for LCP) */}
           <motion.div
-            initial={{ y: 20, opacity: 0 }}
+            initial={false}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
+            transition={{ duration: 0.5 }}
             className="mb-6 text-center w-full"
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold tracking-tight text-white leading-[1.15]">
               <span>We build software that</span>
               <br />
               <div className="relative h-[1.3em] w-full flex items-center justify-center overflow-hidden mt-1">
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" initial={false}>
                   <motion.span
                     key={wordIdx}
-                    initial={{ y: 40, opacity: 0 }}
+                    initial={wordIdx === 0 ? false : { y: 35, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -40, opacity: 0 }}
+                    exit={{ y: -35, opacity: 0 }}
                     transition={{ duration: 0.35, ease: "easeOut" }}
                     className="text-gold-foil font-extrabold text-center block whitespace-nowrap px-2"
                   >
@@ -144,9 +144,9 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Subheading Narrative */}
           <motion.p
-            initial={{ y: 15, opacity: 0 }}
+            initial={false}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            transition={{ duration: 0.5 }}
             className="text-base sm:text-lg md:text-xl text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed mb-8 font-normal"
           >
             {subheading}
@@ -154,9 +154,9 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Dual Action Buttons */}
           <motion.div
-            initial={{ y: 15, opacity: 0 }}
+            initial={false}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            transition={{ duration: 0.5 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto mb-12"
           >
             <button
@@ -180,9 +180,9 @@ export default function Hero({ hero }: { hero?: HeroData }) {
 
           {/* Bento Proof Counter Grid */}
           <motion.div
-            initial={{ y: 20, opacity: 0 }}
+            initial={false}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+            transition={{ duration: 0.6 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full"
           >
             {trustStats.map((stat, idx) => (

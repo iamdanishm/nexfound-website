@@ -1,15 +1,10 @@
+import dynamic from "next/dynamic";
 import Header from "../_components/header";
 import Hero from "../_components/hero";
-import Scroll3DBackground from "../_components/scroll-3d-background";
 import Comparison from "../_components/comparison";
 import Features from "../_components/features";
-import ArchitectureExplorer from "../_components/architecture-explorer";
-import Showcase from "../_components/showcase";
 import About from "../_components/about";
-import Testimonials from "../_components/testimonials";
-import FeaturedBlogCarousel from "../_components/featured-blog-carousel";
 import ContactFooter from "../_components/contact-footer";
-// import AuditChat from "../_components/audit-chat";
 import { client } from "@/sanity/lib/client";
 import {
   projectsQuery,
@@ -19,35 +14,28 @@ import {
   featuredBlogPostsQuery,
 } from "../lib/queries";
 
+// Dynamic imports for heavy below-the-fold & interactive components
+const Scroll3DBackground = dynamic(
+  () => import("../_components/scroll-3d-background")
+);
+const ArchitectureExplorer = dynamic(
+  () => import("../_components/architecture-explorer")
+);
+const Showcase = dynamic(() => import("../_components/showcase"));
+const Testimonials = dynamic(() => import("../_components/testimonials"));
+const FeaturedBlogCarousel = dynamic(
+  () => import("../_components/featured-blog-carousel")
+);
+
 async function getData() {
   try {
     const [projects, testimonials, services, settings, featuredBlogs] =
       await Promise.all([
-        client.fetch(
-          projectsQuery,
-          {},
-          { cache: "no-cache", next: { revalidate: 60 } }
-        ),
-        client.fetch(
-          testimonialsQuery,
-          {},
-          { cache: "no-cache", next: { revalidate: 60 } }
-        ),
-        client.fetch(
-          servicesQuery,
-          {},
-          { cache: "no-cache", next: { revalidate: 60 } }
-        ),
-        client.fetch(
-          settingsQuery,
-          {},
-          { cache: "no-cache", next: { revalidate: 60 } }
-        ),
-        client.fetch(
-          featuredBlogPostsQuery,
-          {},
-          { cache: "no-cache", next: { revalidate: 60 } }
-        ),
+        client.fetch(projectsQuery, {}, { next: { revalidate: 60 } }),
+        client.fetch(testimonialsQuery, {}, { next: { revalidate: 60 } }),
+        client.fetch(servicesQuery, {}, { next: { revalidate: 60 } }),
+        client.fetch(settingsQuery, {}, { next: { revalidate: 60 } }),
+        client.fetch(featuredBlogPostsQuery, {}, { next: { revalidate: 60 } }),
       ]);
 
     return { projects, testimonials, services, settings, featuredBlogs };

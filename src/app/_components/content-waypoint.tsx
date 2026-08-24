@@ -64,7 +64,7 @@ const ContentWaypoint = ({
   return (
     <div
       ref={elementRef}
-      // className={`${isVisible ? animationClasses[animation] : "opacity-0"} ${className}`}
+      className={`${isVisible ? animationClasses[animation] : "opacity-0"} ${className}`}
       style={{
         animationDelay: isVisible ? `${delay}ms` : undefined,
         animationFillMode: "forwards",

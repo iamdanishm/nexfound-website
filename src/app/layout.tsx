@@ -3,7 +3,6 @@ import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import "./(site)/globals.css";
 import { Toaster } from "react-hot-toast";
 import ServiceWorkerRegister from "./_components/sw-register";
-import PreloadLinks from "./_components/preload-links";
 
 // Text constants for metadata
 const METADATA_TEXTS = {
@@ -61,14 +60,12 @@ const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -177,7 +174,6 @@ export default function RootLayout({
           />
         </div>
 
-        <PreloadLinks />
         <ServiceWorkerRegister />
         <Toaster
           position="top-right"
