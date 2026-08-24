@@ -104,6 +104,18 @@ export default function About({ about }: { about?: AboutData }) {
 
   // If Sanity provides custom pillars, map them nicely
   const hasCustomPillars = Boolean(about?.pillars && about.pillars.length > 0);
+  const itemsCount = hasCustomPillars
+    ? about?.pillars?.length || 3
+    : DEFAULT_PHASES.length;
+
+  const gridColsClass =
+    itemsCount === 1
+      ? "grid grid-cols-1 max-w-md mx-auto"
+      : itemsCount === 2
+      ? "grid grid-cols-1 md:grid-cols-2 max-w-3xl mx-auto"
+      : itemsCount === 3
+      ? "grid grid-cols-1 md:grid-cols-3 max-w-5xl mx-auto"
+      : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4";
 
   return (
     <section id="about" className="relative py-14 sm:py-18 overflow-hidden bg-[#030305]">
@@ -142,8 +154,8 @@ export default function About({ about }: { about?: AboutData }) {
             </motion.p>
           </div>
 
-          {/* 4-Step Interactive Process Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-10 sm:mb-12">
+          {/* Interactive Process Grid - Perfectly Centered */}
+          <div className={`${gridColsClass} gap-4 sm:gap-5 mb-10 sm:mb-12`}>
             {hasCustomPillars
               ? about?.pillars?.map((pillar, idx) => {
                   const isActive = activeStep === idx;
