@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export type HeroData = {
@@ -18,61 +18,38 @@ export type HeroData = {
   }[];
 };
 
-const DEFAULT_WORDS = [
-  "scales effortlessly.",
-  "investors back.",
-  "users love.",
-  "drives revenue.",
-  "never breaks.",
+const POSITIONING_WORDS = [
+  "focused MVP.",
+  "usable web app.",
+  "validated mobile app.",
+  "production release.",
 ];
 
-const DEFAULT_STATS = [
-  { value: "$40M+", label: "Client Revenue Generated" },
-  { value: "50+", label: "Apps & MVPs Shipped" },
-  { value: "99.4%", label: "On-Time Delivery" },
-  { value: "<24h", label: "Direct Founder Support" },
+const POSITIONING_PILLARS = [
+  { value: "Web or Mobile", label: "Picked to validate fastest" },
+  { value: "Smallest Scope", label: "Zero bloat, launch-ready" },
+  { value: "From ₹50,000", label: "Transparent entry floor" },
+  { value: "100% IP & Code", label: "Complete founder ownership" },
 ];
 
-export default function Hero({ hero }: { hero?: HeroData }) {
+export default function Hero() {
   const [wordIdx, setWordIdx] = useState(0);
 
-  // Compute rotating words list from Sanity (supports comma-separated) or fallback defaults
-  const rotatingWords = useMemo(() => {
-    if (hero?.highlightedText && hero.highlightedText.includes(",")) {
-      return hero.highlightedText
-        .split(",")
-        .map((w) => w.trim())
-        .filter(Boolean);
-    }
-    if (hero?.highlightedText && hero.highlightedText.trim()) {
-      return [
-        hero.highlightedText.trim(),
-        ...DEFAULT_WORDS.filter(
-          (w) => w.toLowerCase() !== hero.highlightedText?.toLowerCase()
-        ),
-      ];
-    }
-    return DEFAULT_WORDS;
-  }, [hero?.highlightedText]);
-
-  // Continuously cycle rotating words
+  // Continuously cycle rotating focus words
   useEffect(() => {
-    if (rotatingWords.length <= 1) return;
     const interval = setInterval(() => {
-      setWordIdx((prev) => (prev + 1) % rotatingWords.length);
+      setWordIdx((prev) => (prev + 1) % POSITIONING_WORDS.length);
     }, 2800);
     return () => clearInterval(interval);
-  }, [rotatingWords]);
+  }, []);
 
-  const badgeText = hero?.badgeText || "Fast, Reliable Product Development";
+  const badgeText = "MVP DEVELOPMENT & LAUNCH PARTNER";
   const subheading =
-    hero?.subheading ||
-    "Your dedicated product team. We partner with ambitious founders to design, build, and scale custom web and mobile apps in weeks — with clean code and zero friction.";
-  const ctaPrimary = hero?.cta?.ctaTitle || "Discuss Your Project";
-  const trustStats =
-    hero?.trustIndicators && hero.trustIndicators.length > 0
-      ? hero.trustIndicators
-      : DEFAULT_STATS;
+    "Nexfound helps founders and small businesses turn a clear product idea into a focused, usable MVP—starting with the web or mobile platform that proves it fastest.";
+  const supportingText =
+    "We handle product scoping, backend architecture, development, testing, and launch preparation so you can validate your idea without hiring a full-time technical team.";
+  const ctaPrimary = "Discuss your product idea";
+  const trustStats = POSITIONING_PILLARS;
 
   const scrollToSection = (id: string) => {
     const el = document.querySelector(id);
@@ -115,7 +92,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
             </div>
           </motion.div>
 
-          {/* Clean Single Headline with Centered Multi-word Ticker (Instant Paint for LCP) */}
+          {/* Clean Headline with Centered Multi-word Ticker */}
           <motion.div
             initial={false}
             animate={{ y: 0, opacity: 1 }}
@@ -123,7 +100,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
             className="mb-6 text-center w-full"
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold tracking-tight text-white leading-[1.15]">
-              <span>We build software that</span>
+              <span>Turn your product idea into a</span>
               <br />
               <div className="relative h-[1.3em] w-full flex items-center justify-center overflow-hidden mt-1">
                 <AnimatePresence mode="wait" initial={false}>
@@ -135,7 +112,7 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                     transition={{ duration: 0.35, ease: "easeOut" }}
                     className="text-gold-foil font-extrabold text-center block whitespace-nowrap px-2"
                   >
-                    {rotatingWords[wordIdx]}
+                    {POSITIONING_WORDS[wordIdx]}
                   </motion.span>
                 </AnimatePresence>
               </div>
@@ -147,9 +124,19 @@ export default function Hero({ hero }: { hero?: HeroData }) {
             initial={false}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="text-base sm:text-lg md:text-xl text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed mb-8 font-normal"
+            className="text-base sm:text-lg md:text-xl text-[#F0F0F5] max-w-3xl mx-auto leading-relaxed mb-4 font-normal"
           >
             {subheading}
+          </motion.p>
+
+          {/* Supporting Clarification */}
+          <motion.p
+            initial={false}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-sm sm:text-base text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed mb-8 font-normal"
+          >
+            {supportingText}
           </motion.p>
 
           {/* Dual Action Buttons */}
@@ -170,10 +157,10 @@ export default function Hero({ hero }: { hero?: HeroData }) {
             </button>
 
             <button
-              onClick={() => scrollToSection("#work")}
+              onClick={() => scrollToSection("#process")}
               className="btn-noir w-full sm:w-auto text-sm sm:text-base py-3.5 px-8"
             >
-              <span>See Our Work</span>
+              <span>See the 6-Step Process</span>
               <span className="text-[#DFCA9F] ml-1">↓</span>
             </button>
           </motion.div>
@@ -190,10 +177,10 @@ export default function Hero({ hero }: { hero?: HeroData }) {
                 key={idx}
                 className="glass-obsidian glass-obsidian-hover p-4 sm:p-5 text-center rounded-2xl group cursor-default"
               >
-                <div className="text-xl sm:text-2xl md:text-3xl font-display font-extrabold text-gold-foil mb-0.5 tracking-tight group-hover:scale-105 transition-transform">
+                <div className="text-lg sm:text-xl md:text-2xl font-display font-extrabold text-gold-foil mb-1 tracking-tight group-hover:scale-105 transition-transform">
                   {stat.value}
                 </div>
-                <div className="text-xs sm:text-sm text-white font-medium">
+                <div className="text-xs sm:text-sm text-[#A2A2B0] font-medium leading-tight">
                   {stat.label}
                 </div>
               </div>

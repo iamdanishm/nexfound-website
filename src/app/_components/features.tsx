@@ -1,133 +1,8 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
-import SanityImage from "./sanity-image";
-import {
-  MvpArchitectureSVG,
-  CodeRescueSVG,
-  ProcessAutomationSVG,
-  FractionalCtoSVG,
-} from "./animated-shapes";
+import { motion } from "framer-motion";
 
-// Text constants
-const TEXTS = {
-  BADGE_TEXT: "What We Do",
-  TITLE_FIRST_LINE: "High-Quality Development",
-  TITLE_SECOND_LINE: "For Every Stage.",
-  DESCRIPTION:
-    "From early-stage MVP prototypes to full-scale web platforms and automation, we build software that works reliably from day one.",
-  CTA_HEADING: "Have a project in mind?",
-  CTA_SUBHEADING:
-    "Talk directly with our developers to discuss timeline, scope, and pricing.",
-  CTA_BUTTON: "Discuss Your Project",
-} as const;
-
-type Service = {
-  _id: string;
-  title: string;
-  icon: {
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-    _type: string;
-  };
-  description: string;
-  gradient?: string;
-};
-
-// Fallback services if Sanity is empty
-const DEFAULT_SERVICES = [
-  {
-    _id: "srv-1",
-    title: "MVP & Web App Development",
-    description:
-      "Turn your concept into a live, fast web application with modern tech, clean code, and smooth user experience.",
-    iconName: "mvp",
-    tag: "01 // ZERO TO ONE",
-  },
-  {
-    _id: "srv-2",
-    title: "Codebase Fixes & Upgrades",
-    description:
-      "Fix bugs, speed up slow endpoints, eliminate technical debt, and get your project back on track fast.",
-    iconName: "rescue",
-    tag: "02 // RECOVERY & SCALE",
-  },
-  {
-    _id: "srv-3",
-    title: "AI & Workflow Automation",
-    description:
-      "Integrate custom AI features, smart automation, and internal tools that save your team hours every week.",
-    iconName: "automation",
-    tag: "03 // INTELLIGENCE",
-  },
-  {
-    _id: "srv-4",
-    title: "Technical Consulting & Advisory",
-    description:
-      "Help you choose the right tech stack, plan for growth, and make smart technical decisions without costly mistakes.",
-    iconName: "cto",
-    tag: "04 // STRATEGIC",
-  },
-];
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.4,
-      ease: "easeOut",
-    },
-  },
-};
-
-export default function Features({ services }: { services?: Service[] }) {
-  const displayServices =
-    services && services.length >= 4 ? services : (DEFAULT_SERVICES as unknown as Service[]);
-
-  const renderVisual = (title: string, index: number, icon?: Service["icon"]) => {
-    const lower = title.toLowerCase();
-    if (lower.includes("mvp") || lower.includes("architecture") || index === 0) {
-      return <MvpArchitectureSVG className="w-14 h-14 sm:w-16 sm:h-16" />;
-    }
-    if (lower.includes("rescue") || lower.includes("refactor") || index === 1) {
-      return <CodeRescueSVG className="w-14 h-14 sm:w-16 sm:h-16" />;
-    }
-    if (lower.includes("automation") || lower.includes("ai") || index === 2) {
-      return <ProcessAutomationSVG className="w-14 h-14 sm:w-16 sm:h-16" />;
-    }
-    if (lower.includes("cto") || lower.includes("advisory") || index === 3) {
-      return <FractionalCtoSVG className="w-14 h-14 sm:w-16 sm:h-16" />;
-    }
-    if (icon) {
-      return (
-        <SanityImage
-          image={icon}
-          alt={title}
-          width={64}
-          height={64}
-          sizes="64px"
-          className="w-14 h-14 object-contain filter brightness-0 invert drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
-        />
-      );
-    }
-    return <MvpArchitectureSVG className="w-14 h-14" />;
-  };
-
+export default function Features() {
   const scrollToContact = () => {
     const el = document.querySelector("#contact");
     if (el) {
@@ -138,122 +13,196 @@ export default function Features({ services }: { services?: Service[] }) {
   };
 
   return (
-    <section id="services" className="relative py-14 sm:py-18 overflow-hidden bg-transparent">
+    <section id="services" className="relative py-16 sm:py-24 overflow-hidden bg-transparent">
+      {/* Background Radial Glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] rounded-full opacity-15 pointer-events-none blur-[140px]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(223, 202, 159, 0.2) 0%, transparent 70%)",
+        }}
+      />
+
       <div className="container-custom relative z-10">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          className="max-w-6xl mx-auto"
-        >
-          {/* Section Header */}
-          <div className="text-center mb-10 sm:mb-12">
-            <motion.div variants={itemVariants} className="mb-3">
-              <div className="luxury-badge">
-                <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
-                <span className="text-xs font-mono font-semibold tracking-wider text-[#DFCA9F] uppercase">
-                  {TEXTS.BADGE_TEXT}
-                </span>
-              </div>
-            </motion.div>
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="luxury-badge mb-4">
+              <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
+              <span className="text-xs font-mono font-semibold tracking-wider text-[#DFCA9F] uppercase">
+                Services & Pricing Structure
+              </span>
+            </div>
 
-            <motion.h2
-              variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-4"
-            >
-              <span>{TEXTS.TITLE_FIRST_LINE} </span>
-              <span className="text-gold-foil block sm:inline">{TEXTS.TITLE_SECOND_LINE}</span>
-            </motion.h2>
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-6 font-display">
+              <span>Our Primary Offer & </span>
+              <span className="text-gold-foil block sm:inline">Secondary Services.</span>
+            </h2>
 
-            <motion.p
-              variants={itemVariants}
-              className="text-sm sm:text-base text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed"
-            >
-              {TEXTS.DESCRIPTION}
-            </motion.p>
+            <p className="text-base sm:text-lg text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed">
+              We don&apos;t claim to build everything for everyone. We focus on MVP development from idea to launch, backed by targeted technical rescue when needed.
+            </p>
           </div>
 
-          {/* Compact 2x2 Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 mb-10 sm:mb-12">
-            {displayServices.slice(0, 4).map((service, index) => {
-              const tag =
-                DEFAULT_SERVICES[index]?.tag ?? `0${index + 1} // CAPABILITY`;
+          {/* PRIMARY OFFER (Dominant Bento Card) */}
+          <motion.div
+            initial={false}
+            whileHover={{ y: -3 }}
+            transition={{ duration: 0.3 }}
+            className="mb-8 glass-obsidian p-7 sm:p-10 rounded-3xl border border-[#DFCA9F]/30 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_30px_rgba(223,202,159,0.08)] relative overflow-hidden group"
+          >
+            {/* Ambient Corner Flare */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-[#DFCA9F]/15 via-transparent to-transparent rounded-full blur-2xl pointer-events-none" />
 
-              return (
-                <motion.div
-                  key={service._id || index}
-                  variants={itemVariants}
-                  className="group relative"
-                >
-                  <div className="glass-obsidian glass-obsidian-hover p-6 sm:p-7 rounded-2xl flex flex-col justify-between h-full">
-                    {/* Top Tag & Visual Blueprint */}
-                    <div className="flex items-start justify-between gap-4 mb-5">
-                      <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono tracking-wider text-[#DFCA9F] font-semibold">
-                        {tag}
-                      </div>
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/25 mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F] animate-pulse" />
+                  <span className="text-[11px] font-mono uppercase tracking-widest text-[#DFCA9F] font-bold">
+                    Primary 90-Day Offer
+                  </span>
+                </div>
 
-                      <div className="relative p-1.5 rounded-xl bg-[#050507]/60 border border-white/[0.08] group-hover:border-[#DFCA9F]/30 transition-colors duration-300">
-                        {renderVisual(service.title, index, service.icon)}
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div>
-                      <h3 className="text-lg sm:text-xl font-display font-bold text-white mb-2 group-hover:text-gold-foil transition-colors duration-300">
-                        {service.title}
-                      </h3>
-                      <p className="text-[#9E9EB0] text-xs sm:text-sm leading-relaxed group-hover:text-[#D4D4DF] transition-colors duration-300">
-                        {service.description}
-                      </p>
-                    </div>
-
-                    {/* Bottom Hairline */}
-                    <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between">
-                      <span className="text-[11px] font-mono text-[#686878] group-hover:text-[#DFCA9F] font-medium uppercase transition-colors">
-                        Zero Tech Debt Guarantee
-                      </span>
-                      <svg
-                        className="w-3.5 h-3.5 text-[#686878] group-hover:text-[#DFCA9F] group-hover:translate-x-1 transition-all"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Compact Section Conversion Strip */}
-          <motion.div variants={itemVariants}>
-            <div className="glass-obsidian p-6 sm:p-8 rounded-2xl border border-white/[0.1] flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
-              <div>
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-white mb-1">
-                  {TEXTS.CTA_HEADING}
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold text-white mb-3 tracking-tight">
+                  MVP Development: Idea to First Release
                 </h3>
-                <p className="text-[#9E9EB0] text-xs sm:text-sm">
-                  {TEXTS.CTA_SUBHEADING}
+
+                <p className="text-sm sm:text-base text-[#C2C2D0] leading-relaxed mb-6 font-normal">
+                  For founders and small businesses with a validated market idea and the budget to build it right. We take full technical responsibility from initial scope reduction through production deployment.
                 </p>
+
+                {/* Key Deliverables Bullet Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-[#DFCA9F]">
+                    <span className="font-bold">✓</span>
+                    <span className="text-[#E0E0EC]">Ruthless scope reduction to smallest useful MVP</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-[#DFCA9F]">
+                    <span className="font-bold">✓</span>
+                    <span className="text-[#E0E0EC]">Web or Mobile platform recommendation</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-[#DFCA9F]">
+                    <span className="font-bold">✓</span>
+                    <span className="text-[#E0E0EC]">Production-ready backend, auth, db & APIs</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-[#DFCA9F]">
+                    <span className="font-bold">✓</span>
+                    <span className="text-[#E0E0EC]">100% Code, database and IP handover</span>
+                  </div>
+                </div>
               </div>
 
-              <button
-                onClick={scrollToContact}
-                className="btn-gold shrink-0 text-xs sm:text-sm py-3 px-6"
-              >
-                <span>{TEXTS.CTA_BUTTON}</span>
-              </button>
+              <div className="flex flex-col items-center lg:items-end justify-center shrink-0 border-t lg:border-t-0 lg:border-l border-white/[0.08] pt-6 lg:pt-0 lg:pl-8">
+                <div className="text-xs font-mono uppercase text-[#9E9EB0] mb-1">
+                  Starting Floor
+                </div>
+                <div className="text-3xl sm:text-4xl font-extrabold text-gold-foil font-display mb-1">
+                  From ₹50,000
+                </div>
+                <div className="text-[11px] text-[#808090] text-center lg:text-right max-w-[200px] mb-5">
+                  Small, focused single-platform builds. Larger MVPs quoted by scope.
+                </div>
+                <button
+                  onClick={scrollToContact}
+                  className="btn-gold py-3 px-6 text-xs sm:text-sm font-bold uppercase tracking-wider w-full lg:w-auto"
+                >
+                  <span>Discuss Your MVP Scope</span>
+                </button>
+              </div>
             </div>
           </motion.div>
-        </motion.div>
+
+          {/* SECONDARY SERVICES (Clearly Subordinated Cards) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {/* Product Improvement */}
+            <div className="glass-obsidian p-6 sm:p-8 rounded-3xl border border-white/[0.08] flex flex-col justify-between group hover:border-[#DFCA9F]/30 transition-colors">
+              <div>
+                <div className="inline-flex items-center px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono uppercase tracking-wider text-[#A2A2B0] font-semibold mb-4">
+                  Secondary Service
+                </div>
+                <h4 className="text-xl font-bold font-display text-white mb-2 group-hover:text-gold-foil transition-colors">
+                  Product Improvement
+                </h4>
+                <p className="text-xs sm:text-sm text-[#9E9EB0] leading-relaxed mb-5">
+                  For existing web or mobile products that need new feature workflows, UX overhauls, payment or API integrations, and speed optimization.
+                </p>
+                <ul className="space-y-2 text-xs text-[#A2A2B0] mb-6">
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#DFCA9F] font-bold">→</span>
+                    <span>Targeted feature additions to active codebases</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#DFCA9F] font-bold">→</span>
+                    <span>Third-party API & payment gateway integrations</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#DFCA9F] font-bold">→</span>
+                    <span>Database indexing and latency reduction</span>
+                  </li>
+                </ul>
+              </div>
+              <button
+                onClick={scrollToContact}
+                className="text-xs font-mono font-semibold text-[#DFCA9F] hover:underline inline-flex items-center gap-1.5"
+              >
+                Inquire about improvements <span>→</span>
+              </button>
+            </div>
+
+            {/* Technical Rescue */}
+            <div className="glass-obsidian p-6 sm:p-8 rounded-3xl border border-white/[0.08] flex flex-col justify-between group hover:border-[#DFCA9F]/30 transition-colors">
+              <div>
+                <div className="inline-flex items-center px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono uppercase tracking-wider text-[#A2A2B0] font-semibold mb-4">
+                  Secondary Service
+                </div>
+                <h4 className="text-xl font-bold font-display text-white mb-2 group-hover:text-gold-foil transition-colors">
+                  Technical Rescue
+                </h4>
+                <p className="text-xs sm:text-sm text-[#9E9EB0] leading-relaxed mb-5">
+                  For incomplete, buggy, abandoned, or AI-generated codebases that need architectural stabilization, security audits, and a reliable path to launch.
+                </p>
+                <ul className="space-y-2 text-xs text-[#A2A2B0] mb-6">
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#DFCA9F] font-bold">→</span>
+                    <span>In-depth codebase and dependency audit</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#DFCA9F] font-bold">→</span>
+                    <span>Auth, database schema, and security patching</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#DFCA9F] font-bold">→</span>
+                    <span>Clear remediation plan to unblock production launch</span>
+                  </li>
+                </ul>
+              </div>
+              <button
+                onClick={scrollToContact}
+                className="text-xs font-mono font-semibold text-[#DFCA9F] hover:underline inline-flex items-center gap-1.5"
+              >
+                Inquire about technical rescue <span>→</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Pricing Direction Transparency Note */}
+          <div className="glass-obsidian p-6 sm:p-7 rounded-2xl border border-white/[0.08] text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <span className="text-xs font-mono uppercase tracking-wider text-[#DFCA9F] font-bold block mb-1">
+                Pricing Policy & Estimates
+              </span>
+              <p className="text-xs sm:text-sm text-[#9E9EB0] max-w-2xl leading-relaxed">
+                Projects are scoped individually. Small focused builds may start from ₹50,000; larger MVPs are priced according to platform, features, integrations, and delivery requirements. We use a structured discovery step to prevent vague ideas from causing wasted effort.
+              </p>
+            </div>
+            <button
+              onClick={scrollToContact}
+              className="btn-noir text-xs py-2.5 px-5 shrink-0 whitespace-nowrap"
+            >
+              <span>Request an Estimate</span>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );

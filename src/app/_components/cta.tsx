@@ -6,19 +6,19 @@ import { motion, Variants } from "framer-motion";
 
 // Text constants
 const TEXTS = {
-  BADGE_TEXT_DEFAULT: "Start a Project",
-  MAIN_HEADING_DEFAULT: "Ready to Build",
-  HIGHLIGHTED_TEXT_DEFAULT: "Your Next Big Idea?",
+  BADGE_TEXT_DEFAULT: "Discovery & Qualification",
+  MAIN_HEADING_DEFAULT: "Discuss Your",
+  HIGHLIGHTED_TEXT_DEFAULT: "Product Idea.",
   DESCRIPTION_DEFAULT:
-    "Tell us about your product goals, timeline, and budget. We'll get back to you within 24 hours with an actionable plan.",
-  FORM_TITLE_DEFAULT: "Project Inquiry",
+    "Tell us what you want to build. We will evaluate technical feasibility, recommend the right first platform (web or mobile), and help you isolate the smallest useful release.",
+  FORM_TITLE_DEFAULT: "Project Discovery & Scope Inquiry",
   EMAIL_DEFAULT: "hello@nexfound.in",
-  PHONE_DEFAULT: "+91 8286556661",
-  WHY_CHOOSE_POINTS_DEFAULT: [
-    "Direct communication with experienced developers",
-    "Quick turnaround & clear milestone roadmaps",
-    "Transparent pricing with no surprise costs",
-    "Clean, scale-ready code with post-launch support",
+  PHONE_DEFAULT: "+91 9321456661",
+  DISCOVERY_POINTS_DEFAULT: [
+    "Feasibility check & ruthless scope reduction",
+    "Web vs. Mobile first strategic recommendation",
+    "Transparent estimate with starting floor of ₹50,000",
+    "No-obligation direct technical discussion with builder",
   ],
 } as const;
 
@@ -39,7 +39,21 @@ type CTAProps = {
   contactPhone?: string;
 };
 
-const BUDGET_OPTIONS = ["$5k - $15k", "$15k - $35k", "$35k - $75k", "$75k+"];
+const PLATFORM_OPTIONS = [
+  "Web First",
+  "Mobile First",
+  "Both Platforms",
+  "Need Guidance",
+];
+
+const BUDGET_OPTIONS = [
+  "From ₹50,000 (Focused Build)",
+  "₹50,000 – ₹1,50,000",
+  "₹1,50,000 – ₹4,00,000",
+  "Custom / Technical Rescue",
+];
+
+const TIMELINE_OPTIONS = ["< 30 Days", "1 – 2 Months", "Flexible / Exploring"];
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -70,8 +84,10 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
     name: "",
     email: "",
     company: "",
+    platform: "Web First",
+    budget: "₹50,000 – ₹1,50,000",
+    timeline: "< 30 Days",
     message: "",
-    budget: "$15k - $35k",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -82,20 +98,35 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
   const description = cta?.description ?? TEXTS.DESCRIPTION_DEFAULT;
   const email = contactEmail ?? TEXTS.EMAIL_DEFAULT;
   const phone = contactPhone ?? TEXTS.PHONE_DEFAULT;
-  const whyPoints =
+  const discoveryPoints =
     cta?.whyChoosePoints && cta.whyChoosePoints.length > 0
       ? cta.whyChoosePoints
-      : TEXTS.WHY_CHOOSE_POINTS_DEFAULT;
+      : TEXTS.DISCOVERY_POINTS_DEFAULT;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Compose formatted message containing the structured discovery qualifications
+    const formattedMessage = `
+[PLATFORM PREFERENCE]: ${formData.platform}
+[BUDGET TIER]: ${formData.budget}
+[TARGET TIMELINE]: ${formData.timeline}
+
+[IDEA & CORE WORKFLOW]:
+${formData.message}
+`.trim();
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          message: formattedMessage,
+        }),
       });
 
       const data = await response.json();
@@ -108,14 +139,16 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
         name: "",
         email: "",
         company: "",
+        platform: "Web First",
+        budget: "₹50,000 – ₹1,50,000",
+        timeline: "< 30 Days",
         message: "",
-        budget: "$15k - $35k",
       });
       toast.success(
-        "Inquiry received. A senior engineer will review your specs and reply within 24 hours.",
+        "Discovery inquiry received. We will review your idea and reply with an initial assessment within 24 hours.",
         {
           duration: 6000,
-          icon: "✨",
+          icon: "🚀",
         }
       );
     } catch (error) {
@@ -131,7 +164,7 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
   };
 
   return (
-    <section id="contact" className="relative py-14 sm:py-18 overflow-hidden bg-transparent">
+    <section id="contact" className="relative py-16 sm:py-24 overflow-hidden bg-transparent">
       <div className="container-custom relative z-10">
         <motion.div
           variants={containerVariants}
@@ -179,7 +212,9 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                 </a>
 
                 <a
-                  href={`tel:${phone}`}
+                  href={`https://wa.me/919321456661`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-[#DFCA9F]/40 hover:bg-white/[0.05] transition-all group"
                 >
                   <div className="w-10 h-10 rounded-xl bg-[#DFCA9F]/10 flex items-center justify-center text-[#DFCA9F] group-hover:scale-105 transition-transform">
@@ -188,43 +223,71 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                     </svg>
                   </div>
                   <div>
-                    <div className="text-xs text-[#A2A2B0]">Phone / WhatsApp</div>
+                    <div className="text-xs text-[#A2A2B0]">WhatsApp & Direct Line</div>
                     <div className="text-sm font-semibold text-white group-hover:text-[#DFCA9F] transition-colors">{phone}</div>
                   </div>
                 </a>
               </div>
 
-              {/* Engineering Guarantees */}
+              {/* Discovery Guarantees */}
               <div className="space-y-2.5 pt-2">
-                {whyPoints.map((point, idx) => (
+                {discoveryPoints.map((point, idx) => (
                   <div key={idx} className="flex items-center gap-2.5 text-xs text-[#D4D4DF]">
                     <span className="text-[#DFCA9F]">✦</span>
                     <span>{point}</span>
                   </div>
                 ))}
               </div>
+
+              {/* Pricing Floor Clarification */}
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs text-[#9E9EB0] leading-relaxed">
+                <span className="text-[#DFCA9F] font-semibold">Pricing Note:</span> Small focused builds start from ₹50,000. Larger MVPs are estimated by platform, features, and delivery requirements.
+              </div>
             </motion.div>
 
-            {/* Right Column: Luxury Form */}
+            {/* Right Column: Structured Qualification Form */}
             <motion.div variants={itemVariants} className="lg:col-span-7">
-              <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-white/[0.1] shadow-2xl">
-                <h3 className="text-2xl font-display font-bold text-white mb-6">
+              <div className="glass-panel p-7 sm:p-9 rounded-3xl border border-white/[0.1] shadow-2xl">
+                <h3 className="text-xl sm:text-2xl font-display font-bold text-white mb-5">
                   {TEXTS.FORM_TITLE_DEFAULT}
                 </h3>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  {/* Budget Selector */}
+                  {/* Platform Preference Selector */}
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2.5">
-                      Estimated Project Scope / Budget
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
+                      Preferred First Platform *
                     </label>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {PLATFORM_OPTIONS.map((opt) => (
+                        <button
+                          type="button"
+                          key={opt}
+                          onClick={() => setFormData({ ...formData, platform: opt })}
+                          className={`py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all ${
+                            formData.platform === opt
+                              ? "bg-[#DFCA9F] text-[#050507] font-bold shadow-[0_0_15px_rgba(223,202,159,0.3)]"
+                              : "bg-white/[0.03] text-[#A2A2B0] border border-white/[0.06] hover:border-white/20"
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Budget Tier Selector */}
+                  <div>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
+                      Target Budget Range *
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {BUDGET_OPTIONS.map((opt) => (
                         <button
                           type="button"
                           key={opt}
                           onClick={() => setFormData({ ...formData, budget: opt })}
-                          className={`py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all ${
+                          className={`py-2.5 px-3 rounded-xl text-xs font-mono font-medium text-left transition-all ${
                             formData.budget === opt
                               ? "bg-[#DFCA9F] text-[#050507] font-bold shadow-[0_0_15px_rgba(223,202,159,0.3)]"
                               : "bg-white/[0.03] text-[#A2A2B0] border border-white/[0.06] hover:border-white/20"
@@ -236,63 +299,88 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                     </div>
                   </div>
 
+                  {/* Timeline Selector */}
+                  <div>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
+                      Desired Timeline
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {TIMELINE_OPTIONS.map((opt) => (
+                        <button
+                          type="button"
+                          key={opt}
+                          onClick={() => setFormData({ ...formData, timeline: opt })}
+                          className={`py-2 px-2.5 rounded-xl text-xs font-mono font-medium text-center transition-all ${
+                            formData.timeline === opt
+                              ? "bg-[#DFCA9F] text-[#050507] font-bold shadow-[0_0_15px_rgba(223,202,159,0.3)]"
+                              : "bg-white/[0.03] text-[#A2A2B0] border border-white/[0.06] hover:border-white/20"
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Name & Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-1.5">
                         Your Name *
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="John Doe"
+                        placeholder="Danish"
                         value={formData.name}
                         onChange={(e) =>
                           setFormData({ ...formData, name: e.target.value })
                         }
-                        className="w-full px-4 py-3 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
-                        Work Email *
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-1.5">
+                        Email Address *
                       </label>
                       <input
                         type="email"
                         required
-                        placeholder="john@company.com"
+                        placeholder="danish@example.com"
                         value={formData.email}
                         onChange={(e) =>
                           setFormData({ ...formData, email: e.target.value })
                         }
-                        className="w-full px-4 py-3 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
-                      Company / Product Name
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-1.5">
+                      Company or Product Name (Optional)
                     </label>
                     <input
                       type="text"
-                      placeholder="Acme Technologies"
+                      placeholder="MyProduct / Stealth Idea"
                       value={formData.company}
                       onChange={(e) =>
                         setFormData({ ...formData, company: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#08080E] border border-white/[0.1] text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
                     />
                   </div>
 
+                  {/* Product Idea Details */}
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-2">
-                      Architecture & Scope Details *
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#A2A2B0] mb-1.5">
+                      Idea, Target Users & Core Workflow *
                     </label>
                     <textarea
                       required
                       rows={4}
-                      placeholder="Tell us about the product goals, existing codebase (if any), timeline, or specific challenges..."
+                      placeholder="What does your product do? Who is the core user? What is the single most important action they take in the app?"
                       value={formData.message}
                       onChange={(e) =>
                         setFormData({ ...formData, message: e.target.value })
@@ -304,10 +392,10 @@ export default function CTA({ cta, contactEmail, contactPhone }: CTAProps) {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="btn-gold w-full py-4 text-sm uppercase tracking-wider font-bold rounded-xl shadow-[0_0_25px_rgba(223,202,159,0.4)] hover:shadow-[0_0_35px_rgba(223,202,159,0.6)] cursor-pointer"
+                    className="btn-gold w-full py-3.5 text-sm uppercase tracking-wider font-bold rounded-xl shadow-[0_0_25px_rgba(223,202,159,0.4)] hover:shadow-[0_0_35px_rgba(223,202,159,0.6)] cursor-pointer"
                   >
                     <span>
-                      {isSubmitting ? "Submitting Inquiry..." : "Submit Project Inquiry"}
+                      {isSubmitting ? "Submitting Discovery Request..." : "Submit Discovery Request"}
                     </span>
                     <svg
                       className="w-4 h-4 ml-1.5"

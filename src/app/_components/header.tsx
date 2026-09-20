@@ -8,14 +8,14 @@ import { motion, AnimatePresence } from "framer-motion";
 // Text constants
 const TEXTS = {
   NAV_LINKS: [
-    { href: "#services", label: "Services" },
-    { href: "#architecture", label: "Tech Stack" },
-    { href: "#work", label: "Our Work" },
-    { href: "#standard", label: "Why Us" },
-    { href: "#about", label: "About" },
+    { href: "#approach", label: "Approach" },
+    { href: "#process", label: "Process" },
+    { href: "#platform-strategy", label: "Web vs Mobile" },
+    { href: "#services", label: "Services & Pricing" },
+    { href: "#work", label: "Proof" },
     { href: "/blog", label: "Blog" },
   ],
-  CTA_BUTTON: "Contact Us",
+  CTA_BUTTON: "Discuss Your Idea",
   ALT_TEXT: "Nexfound Monogram",
   BRAND_NAME: "Nexfound",
 } as const;

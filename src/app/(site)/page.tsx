@@ -18,6 +18,10 @@ import {
 const Scroll3DBackground = dynamic(
   () => import("../_components/scroll-3d-background")
 );
+const Process = dynamic(() => import("../_components/process"));
+const PlatformStrategy = dynamic(
+  () => import("../_components/platform-strategy")
+);
 const ArchitectureExplorer = dynamic(
   () => import("../_components/architecture-explorer")
 );
@@ -52,44 +56,54 @@ async function getData() {
 }
 
 export default async function Home() {
-  const { projects, testimonials, services, settings, featuredBlogs } =
-    await getData();
+  const { testimonials, settings, featuredBlogs } = await getData();
 
   return (
     <>
       <Header />
       <Scroll3DBackground />
       <main className="relative z-10 text-[#F0F0F5] overflow-hidden">
+        {/* 1. Hero: Turn your product idea into a focused MVP */}
         <section id="home">
-          <Hero hero={settings?.hero} />
+          <Hero />
         </section>
 
-        {/* The Nexfound Standard vs Traditional Agency Trap */}
-        <section id="standard">
+        {/* 2. Problem/Value: DIY Prototyping vs Accountable Technical Partner */}
+        <section id="approach">
           <Comparison />
         </section>
 
-        {/* Core Capabilities */}
-        <section id="services">
-          <Features services={services} />
+        {/* 3. The 6-Step Scope-to-Launch Process */}
+        <section id="process">
+          <Process />
         </section>
 
-        {/* Interactive Architecture Explorer */}
+        {/* 4. Platform Strategy: Web vs Mobile First Decision */}
+        <section id="platform-strategy">
+          <PlatformStrategy />
+        </section>
+
+        {/* 5. Primary Offer (MVP) & Secondary Services (Rescue / Improvement) with ₹50,000 floor */}
+        <section id="services">
+          <Features />
+        </section>
+
+        {/* 6. Interactive Architecture Explorer */}
         <section id="architecture">
           <ArchitectureExplorer />
         </section>
 
-        {/* Case Studies & Work */}
+        {/* 7. Proof: EV Dock, DalalFree, and MVP Delivery */}
         <section id="work">
-          <Showcase projects={projects} />
+          <Showcase />
         </section>
 
-        {/* Studio Philosophy & Pillars */}
+        {/* 8. Studio Philosophy & Pillars */}
         <section id="about">
           <About about={settings?.about} />
         </section>
 
-        {/* Executive Endorsements & Proof */}
+        {/* 9. Executive Endorsements & Proof */}
         <section id="testimonials">
           <Testimonials
             testimonials={testimonials}
@@ -97,12 +111,7 @@ export default async function Home() {
           />
         </section>
 
-        {/* AI Diagnostic Workstation (Temporarily commented as requested) */}
-        {/* <section id="audit">
-          <AuditChat />
-        </section> */}
-
-        {/* Founder Insights Dispatch */}
+        {/* 10. Founder Insights Dispatch */}
         {featuredBlogs && featuredBlogs.length > 0 && (
           <section id="blog">
             <FeaturedBlogCarousel posts={featuredBlogs} />

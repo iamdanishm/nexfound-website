@@ -1,89 +1,83 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import SanityImageComp from "./sanity-image";
-import { SanityImage } from "@/sanity/lib/image";
 
 // Text constants
 const TEXTS = {
-  BADGE_TEXT: "Featured Work",
-  TITLE_FIRST_LINE: "Recent Work.",
-  TITLE_SECOND_LINE: "Real Results.",
+  BADGE_TEXT: "Proof & Credibility",
+  TITLE_FIRST_LINE: "Transparent Experience. ",
+  TITLE_SECOND_LINE: "Real Proof.",
   DESCRIPTION:
-    "Explore recent projects we've built and delivered for ambitious founders and companies.",
-  CTA_HEADING: "Ready to build your product?",
+    "We present honest engineering proof and active in-house product execution—never inflated vanity metrics or exaggerated agency claims.",
+  CTA_HEADING: "Have an MVP idea ready to build?",
   CTA_SUBHEADING:
-    "Let's talk through your requirements and start building something exceptional.",
-  CTA_BUTTON: "Get in Touch",
+    "Let's discuss your requirements, recommend the right first platform, and outline an execution plan.",
+  CTA_BUTTON: "Discuss Your Product Idea",
 } as const;
 
 type Project = {
   _id: string;
   title: string;
-  slug: { current: string };
   category: {
     _id: string;
     title: string;
-    slug?: { current: string };
-    color?: string;
   };
   description: string;
-  mainImage?: SanityImage;
-  gradient?: string;
   tags?: string[];
   status?: string;
   metrics?: { label: string; value: string }[];
   highlight?: string;
+  proofType?: string;
 };
 
-// Rich default project data
-const DEFAULT_PROJECTS: Project[] = [
+// Truthful, grounded project data aligned with nexfound-positioning.md
+const GROUNDED_PROJECTS: Project[] = [
   {
-    _id: "proj-1",
-    title: "Apex Global Fleet & Logistics Engine",
-    slug: { current: "apex-logistics" },
-    category: { _id: "cat-1", title: "Enterprise SaaS" },
+    _id: "proj-evdock",
+    title: "EV Dock — Charging Network Mobile App",
+    category: { _id: "cat-mobile", title: "Mobile Engineering" },
     description:
-      "Engineered an event-driven fleet orchestration platform processing 50k+ daily shipments with sub-40ms WebSocket telemetry and automated route optimization.",
-    tags: ["Next.js 15", "TypeScript", "PostgreSQL", "Redis", "Kafka", "AWS"],
-    status: "Production Grade",
-    highlight: "Zero-Downtime Event Sourcing Migration",
+      "Danish's professional mobile development contribution. Engineered native mobile architecture for electric vehicle charging stations, integrating real-time telemetry, map navigation, and hardware Bluetooth connectivity.",
+    tags: ["Flutter", "Dart", "BLE Connectivity", "Maps SDK", "State Management"],
+    status: "Professional Experience",
+    highlight: "Real-world hardware & mobile integration",
+    proofType: "Professional Contribution",
     metrics: [
-      { label: "Throughput", value: "50k req/s" },
-      { label: "Latency", value: "32ms" },
-      { label: "MRR Growth", value: "+340%" },
+      { label: "Platform", value: "Mobile Native" },
+      { label: "Connectivity", value: "BLE / IoT" },
+      { label: "Execution", value: "Direct Code" },
     ],
   },
   {
-    _id: "proj-2",
-    title: "Veritas AI Compliance & Audit Pipeline",
-    slug: { current: "veritas-ai" },
-    category: { _id: "cat-2", title: "AI Infrastructure" },
+    _id: "proj-dalalfree",
+    title: "DalalFree — Direct Real Estate Platform",
+    category: { _id: "cat-product", title: "Nexfound Product" },
     description:
-      "Architected an enterprise multi-agent document analysis system parsing 10,000+ legal filings per hour with verifiable zero data leak RAG indexing.",
-    tags: ["Python", "FastAPI", "Pinecone", "Claude 3.5", "Docker", "Next.js"],
-    status: "SOC-2 Certified",
-    highlight: "99.2% Extraction Accuracy at Scale",
+      "A Nexfound-owned product being built from scratch as an end-to-end real estate web platform, backend, and mobile application. Demonstrates full-stack capability and our disciplined staged web-to-mobile expansion.",
+    tags: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind CSS", "Node.js"],
+    status: "Active Build",
+    highlight: "End-to-End Staged Web & Mobile Build",
+    proofType: "In-House Product",
     metrics: [
-      { label: "Parse Speed", value: "1.2s / doc" },
-      { label: "Accuracy", value: "99.2%" },
-      { label: "Cost Saved", value: "68%" },
+      { label: "Stage", value: "Active Build" },
+      { label: "Approach", value: "Staged Rollout" },
+      { label: "Ownership", value: "100% In-House" },
     ],
   },
   {
-    _id: "proj-3",
-    title: "Lumina Wealth & High-Frequency Trading Portal",
-    slug: { current: "lumina-wealth" },
-    category: { _id: "cat-3", title: "Fintech Platform" },
+    _id: "proj-mvp-rescue",
+    title: "Focused MVPs & Technical Stabilization",
+    category: { _id: "cat-mvp", title: "MVP & Rescue" },
     description:
-      "Delivered a bank-grade portfolio management and real-time execution workstation featuring double-entry ledger accuracy and live streaming charting.",
-    tags: ["React 19", "Node.js", "PostgreSQL", "WebSockets", "AWS KMS"],
-    status: "Live & Scaled",
-    highlight: "$12M Seed Round Closed Post-Launch",
+      "Turnaround first-release MVPs and technical rescue for incomplete, buggy, or AI-generated prototypes. Structured schemas, secure authentication, payment webhooks, and clean deployment handover with 100% IP.",
+    tags: ["MVP Scoping", "Supabase / Postgres", "Auth Security", "Stripe / Razorpay", "Docker"],
+    status: "Production Ready",
+    highlight: "Clean handovers with zero vendor lock-in",
+    proofType: "Anonymized Work",
     metrics: [
-      { label: "AUM Managed", value: "$180M+" },
-      { label: "Uptime", value: "99.99%" },
-      { label: "Active Users", value: "120k+" },
+      { label: "Timeline", value: "3-4 Weeks" },
+      { label: "IP Handover", value: "100% Client" },
+      { label: "Tech Debt", value: "Eliminated" },
     ],
   },
 ];
@@ -111,9 +105,9 @@ const itemVariants: Variants = {
   },
 };
 
-export default function Showcase({ projects }: { projects?: Project[] }) {
-  const displayProjects =
-    projects && projects.length > 0 ? projects : DEFAULT_PROJECTS;
+export default function Showcase() {
+  // Use grounded projects that match nexfound-positioning.md
+  const displayProjects = GROUNDED_PROJECTS;
 
   const scrollToContact = () => {
     const el = document.querySelector("#contact");
@@ -125,7 +119,7 @@ export default function Showcase({ projects }: { projects?: Project[] }) {
   };
 
   return (
-    <section id="work" className="relative py-14 sm:py-18 overflow-hidden bg-transparent">
+    <section id="work" className="relative py-16 sm:py-24 overflow-hidden bg-transparent">
       <div className="container-custom relative z-10">
         <motion.div
           variants={containerVariants}
@@ -135,7 +129,7 @@ export default function Showcase({ projects }: { projects?: Project[] }) {
           className="max-w-6xl mx-auto"
         >
           {/* Section Header */}
-          <div className="text-center mb-10 sm:mb-12">
+          <div className="text-center mb-12 sm:mb-16">
             <motion.div variants={itemVariants} className="mb-3">
               <div className="luxury-badge">
                 <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
@@ -162,11 +156,10 @@ export default function Showcase({ projects }: { projects?: Project[] }) {
           </div>
 
           {/* High-Craft Editorial Case Study Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10 sm:mb-12">
-            {displayProjects.map((project, index) => {
-              const defaultMetrics = DEFAULT_PROJECTS[index % DEFAULT_PROJECTS.length].metrics;
-              const metrics = project.metrics || defaultMetrics;
-              const highlight = project.highlight || DEFAULT_PROJECTS[index % DEFAULT_PROJECTS.length].highlight;
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+            {displayProjects.map((project) => {
+              const metrics = project.metrics;
+              const highlight = project.highlight;
 
               return (
                 <motion.div
@@ -174,42 +167,30 @@ export default function Showcase({ projects }: { projects?: Project[] }) {
                   variants={itemVariants}
                   className="group relative"
                 >
-                  <div className="glass-obsidian glass-obsidian-hover p-6 sm:p-7 rounded-3xl h-full flex flex-col justify-between overflow-hidden">
+                  <div className="glass-obsidian glass-obsidian-hover p-6 sm:p-7 rounded-3xl h-full flex flex-col justify-between overflow-hidden border border-white/[0.08]">
                     <div>
                       {/* Visual Showcase Glass Frame */}
-                      <div className="relative h-44 w-full rounded-2xl overflow-hidden mb-5 bg-[#090910] border border-white/[0.08] p-4 flex flex-col justify-between">
-                        {project.mainImage ? (
-                          <SanityImageComp
-                            image={project.mainImage}
-                            alt={project.mainImage.alt || project.title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
-                        ) : (
-                          <>
-                            {/* Simulated Glass Architecture HUD Header */}
-                            <div className="flex items-center justify-between z-10">
-                              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-[#DFCA9F]/10 border border-[#DFCA9F]/30 text-[#DFCA9F]">
-                                {project.category.title}
-                              </span>
-                              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono bg-white/[0.05] border border-white/10 text-white">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
-                                <span>{project.status || "Live"}</span>
-                              </span>
-                            </div>
+                      <div className="relative h-40 w-full rounded-2xl overflow-hidden mb-5 bg-[#090910] border border-white/[0.08] p-4 flex flex-col justify-between">
+                        {/* Simulated HUD Header */}
+                        <div className="flex items-center justify-between z-10">
+                          <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-[#DFCA9F]/10 border border-[#DFCA9F]/30 text-[#DFCA9F]">
+                            {project.category.title}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono bg-white/[0.05] border border-white/10 text-white">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+                            <span>{project.status || "Verified"}</span>
+                          </span>
+                        </div>
 
-                            {/* Simulated Metrics Strip */}
-                            <div className="grid grid-cols-3 gap-2 z-10 pt-2 border-t border-white/[0.06]">
-                              {metrics?.map((m, mIdx) => (
-                                <div key={mIdx} className="text-center p-1.5 rounded-xl bg-white/[0.03] border border-white/[0.04]">
-                                  <div className="text-xs font-mono font-bold text-[#F7ECD5]">{m.value}</div>
-                                  <div className="text-[9px] font-mono text-[#9E9EB0] uppercase">{m.label}</div>
-                                </div>
-                              ))}
+                        {/* Simulated Metrics Strip */}
+                        <div className="grid grid-cols-3 gap-2 z-10 pt-2 border-t border-white/[0.06]">
+                          {metrics?.map((m, mIdx) => (
+                            <div key={mIdx} className="text-center p-1.5 rounded-xl bg-white/[0.03] border border-white/[0.04]">
+                              <div className="text-xs font-mono font-bold text-[#F7ECD5]">{m.value}</div>
+                              <div className="text-[9px] font-mono text-[#9E9EB0] uppercase">{m.label}</div>
                             </div>
-                          </>
-                        )}
+                          ))}
+                        </div>
                       </div>
 
                       {/* Highlight Tag */}
@@ -224,7 +205,7 @@ export default function Showcase({ projects }: { projects?: Project[] }) {
                       </h3>
 
                       {/* Description */}
-                      <p className="text-xs sm:text-sm text-[#9E9EB0] leading-relaxed mb-5 line-clamp-3">
+                      <p className="text-xs sm:text-sm text-[#9E9EB0] leading-relaxed mb-5">
                         {project.description}
                       </p>
                     </div>
@@ -233,7 +214,7 @@ export default function Showcase({ projects }: { projects?: Project[] }) {
                     <div>
                       {project.tags && project.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/[0.06]">
-                          {project.tags.slice(0, 4).map((tag, tIdx) => (
+                          {project.tags.map((tag, tIdx) => (
                             <span
                               key={tIdx}
                               className="px-2 py-0.5 rounded-md text-[11px] font-mono text-[#9E9EB0] bg-white/[0.03] border border-white/[0.06] group-hover:border-[#DFCA9F]/30 group-hover:text-[#DFCA9F] transition-colors"
