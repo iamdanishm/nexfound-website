@@ -436,10 +436,10 @@ export default function CinematicReel() {
                 </span>
               </div>
               <div className="space-y-3 text-xs text-zinc-300">
-                <h3 className="text-sm font-bold text-white font-display">
+                <p className="text-sm font-bold text-white font-display">
                   Startup Idea: 1-Click Direct Booking &amp; Payments
                   <span className="inline-block w-[2px] h-3.5 ml-1 bg-amber-400 animate-pulse align-middle" />
-                </h3>
+                </p>
                 <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 text-xs">
                   <span className="font-bold text-amber-400 block mb-0.5">🚨 The Problem:</span>
                   Local businesses waste 15+ hours weekly chasing clients manually on WhatsApp.
@@ -491,12 +491,12 @@ export default function CinematicReel() {
               </span>
               <span>30-Day Sprint · Notes to Launch</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
+            <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
               Still letting your app idea collect dust in your{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A]">
                 notes app?
               </span>
-            </h1>
+            </h2>
             <p className="text-xs sm:text-sm text-zinc-300 mt-1 leading-relaxed max-w-sm mx-auto">
               Nexfound turns your concept into a live app in 30 days—starting from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup>.
             </p>
@@ -514,10 +514,10 @@ export default function CinematicReel() {
                 <span>Sitting for 8 months</span>
               </span>
             </div>
-            <h3 className="text-sm sm:text-base font-bold text-white font-display leading-snug">
+            <p className="text-sm sm:text-base font-bold text-white font-display leading-snug">
               Startup Idea: 1-Click Direct Booking &amp; Payments
               <span className="inline-block w-[2px] h-3.5 ml-1 bg-amber-400 animate-pulse align-middle" />
-            </h3>
+            </p>
             <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 text-xs sm:text-sm leading-relaxed">
               <span className="font-bold text-amber-400 block mb-0.5">🚨 The Problem:</span>
               Businesses waste 15+ hrs weekly chasing clients on WhatsApp.

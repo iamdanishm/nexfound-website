@@ -125,6 +125,105 @@ export const metadata: Metadata = {
   referrer: METADATA_TEXTS.REFERRER,
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://nexfound.in/#website",
+      "url": "https://nexfound.in",
+      "name": "Nexfound",
+      "description":
+        "Nexfound helps founders and small businesses turn a clear product idea into a focused, usable MVP.",
+      "publisher": {
+        "@id": "https://nexfound.in/#organization",
+      },
+      "inLanguage": "en-US",
+    },
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": "https://nexfound.in/#organization",
+      "name": "Nexfound",
+      "alternateName": ["Nexfound MVP Studio", "Nexfound Technologies"],
+      "url": "https://nexfound.in",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://nexfound.in/#logo",
+        "url": "https://nexfound.in/apple-touch-icon.png",
+        "caption": "Nexfound",
+      },
+      "image": "https://nexfound.in/og-image.jpg",
+      "description":
+        "Nexfound helps founders and businesses turn raw concepts into live, payment-ready web and mobile MVPs in 30 days—starting from ₹50,000.",
+      "email": "hello@nexfound.in",
+      "founder": {
+        "@type": "Person",
+        "@id": "https://nexfound.in/#founder",
+        "name": "Danish",
+        "jobTitle": "Founder & Technical Lead",
+        "url": "https://x.com/iam_danishm",
+        "sameAs": [
+          "https://x.com/iam_danishm",
+          "https://github.com/iamdanishm",
+        ],
+      },
+      "sameAs": [
+        "https://x.com/iam_danishm",
+        "https://github.com/iamdanishm",
+      ],
+      "priceRange": "₹50,000 - ₹2,50,000",
+      "currenciesAccepted": "INR, USD",
+      "paymentAccepted": "UPI, Credit Card, Bank Transfer, Stripe",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN",
+      },
+      "areaServed": {
+        "@type": "AdministrativeArea",
+        "name": "Worldwide",
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "MVP Development Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "30-Day MVP Sprint",
+              "description":
+                "Turn your product idea into a live, payment-ready web or mobile app in 30 days with direct payments and 100% code ownership.",
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "50000",
+              "priceCurrency": "INR",
+            },
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Custom Web & Mobile Development",
+              "description":
+                "Full-stack Next.js web applications, Flutter & React Native mobile applications.",
+            },
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Codebase Rescue & Refactoring",
+              "description":
+                "Audit, refactor, and stabilize stalled contractor codebases.",
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -136,6 +235,14 @@ export default function RootLayout({
       className={`${outfit.variable} ${plusJakarta.variable} ${newsreader.variable}`}
       data-scroll-behavior="smooth"
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
+      </head>
       <body className="relative min-h-screen bg-[#030305] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-indigo-500/30 selection:text-white bg-grain">
         {/* Atmospheric Studio Ambient Lighting */}
         <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
