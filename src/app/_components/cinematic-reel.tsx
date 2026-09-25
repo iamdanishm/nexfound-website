@@ -203,25 +203,29 @@ export default function CinematicReel() {
         <div className="text-[11px] font-mono font-bold text-[#DFCA9F] mb-1">
           {SLIDES[currentSlide].number} / 06
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           {SLIDES.map((s, idx) => (
             <button
               key={s.id}
               onClick={() => goToSlide(idx)}
-              title={s.label}
-              className={`w-2 transition-all rounded-full ${
-                currentSlide === idx
-                  ? "h-8 bg-[#DFCA9F] shadow-[0_0_12px_rgba(223,202,159,0.8)]"
-                  : "h-2 bg-white/20 hover:bg-white/40"
-              }`}
-            />
+              aria-label={`Jump to slide ${s.number}: ${s.label}`}
+              className="w-6 h-6 flex items-center justify-center cursor-pointer group"
+            >
+              <span
+                className={`w-2 transition-all rounded-full ${
+                  currentSlide === idx
+                    ? "h-8 bg-[#DFCA9F] shadow-[0_0_12px_rgba(223,202,159,0.8)]"
+                    : "h-2 bg-white/20 group-hover:bg-white/40"
+                }`}
+              />
+            </button>
           ))}
         </div>
         {currentSlide < SLIDES.length - 1 && (
           <button
             onClick={() => goToSlide(currentSlide + 1)}
-            className="mt-2 w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-xs text-[#DFCA9F] transition-all animate-bounce"
-            title="Next Slide"
+            aria-label="Next slide"
+            className="mt-1 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-xs text-[#DFCA9F] transition-all animate-bounce cursor-pointer"
           >
             ↓
           </button>
@@ -249,8 +253,8 @@ export default function CinematicReel() {
           {/* Slide Counter & Label Badge (Fluid Spring Animated Width) */}
           <button
             onClick={() => goToSlide(currentSlide)}
-            className="flex items-center gap-1 text-left cursor-pointer shrink-0"
-            title={SLIDES[currentSlide].label}
+            className="h-8 flex items-center gap-1 text-left cursor-pointer shrink-0 py-1"
+            aria-label={`Current slide ${SLIDES[currentSlide].number}: ${SLIDES[currentSlide].label}`}
           >
             <span className="font-mono font-bold text-xs text-[#DFCA9F] tabular-nums shrink-0">
               {SLIDES[currentSlide].number}/06
@@ -279,26 +283,30 @@ export default function CinematicReel() {
           <div className="w-[1px] h-3.5 bg-white/20 shrink-0 mx-1" />
 
           {/* Horizontal Progress Indicator Track (Direct motion buttons, spring-animated width & centered baseline) */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1 shrink-0">
             {SLIDES.map((s, idx) => (
-              <motion.button
+              <button
                 key={`m-dot-${s.id}`}
                 onClick={() => goToSlide(idx)}
                 aria-label={`Jump to slide ${s.number}: ${s.label}`}
-                animate={{
-                  width: currentSlide === idx ? 24 : 8,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 380,
-                  damping: 28,
-                }}
-                className={`h-2 rounded-full cursor-pointer relative before:absolute before:-inset-y-3 before:-inset-x-1.5 before:content-[''] ${
-                  currentSlide === idx
-                    ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] shadow-[0_0_10px_rgba(223,202,159,0.85)]"
-                    : "bg-white/25 hover:bg-white/50"
-                }`}
-              />
+                className="h-8 min-w-[14px] flex items-center justify-center px-0.5 cursor-pointer"
+              >
+                <motion.span
+                  animate={{
+                    width: currentSlide === idx ? 24 : 8,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 380,
+                    damping: 28,
+                  }}
+                  className={`h-2 rounded-full block ${
+                    currentSlide === idx
+                      ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] shadow-[0_0_10px_rgba(223,202,159,0.85)]"
+                      : "bg-white/25 hover:bg-white/50"
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
@@ -307,7 +315,7 @@ export default function CinematicReel() {
             {currentSlide < SLIDES.length - 1 ? (
               <button
                 onClick={() => goToSlide(currentSlide + 1)}
-                className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[10px] text-[#DFCA9F] active:scale-90 transition-transform cursor-pointer"
+                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-xs text-[#DFCA9F] active:scale-90 transition-transform cursor-pointer"
                 aria-label="Next slide"
               >
                 ↓
@@ -315,7 +323,7 @@ export default function CinematicReel() {
             ) : (
               <button
                 onClick={() => goToSlide(0)}
-                className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[10px] text-[#DFCA9F] active:scale-90 transition-transform cursor-pointer"
+                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-xs text-[#DFCA9F] active:scale-90 transition-transform cursor-pointer"
                 aria-label="Back to top"
               >
                 ↑
@@ -1583,7 +1591,7 @@ export default function CinematicReel() {
                       src="/images/dalalfree_real_platform.jpg"
                       alt="DalalFree Direct Property Platform"
                       fill
-                      sizes="100vw"
+                      sizes="(max-width: 640px) 393px, 450px"
                       className="object-cover transition-transform duration-700 group-hover/m-img:scale-105"
                       priority
                     />
@@ -1621,7 +1629,7 @@ export default function CinematicReel() {
                       src="/images/ev-dock-showcase.jpg"
                       alt="EV Dock Mobile Smart Charger System"
                       fill
-                      sizes="100vw"
+                      sizes="(max-width: 640px) 393px, 450px"
                       className="object-cover transition-transform duration-700 group-hover/m-img:scale-105"
                       priority
                     />

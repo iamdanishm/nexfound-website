@@ -2,8 +2,7 @@
 
 > Nexfound builds focused, payment-ready web and mobile MVPs in 30 days starting from ₹50,000.
 
-## Overview
-Nexfound (https://nexfound.in) is an elite product development studio founded by Danish (@iam_danishm). We help non-technical founders, early-stage startups, and small businesses turn raw concepts and notes into live, validated, revenue-ready MVPs.
+Nexfound ([nexfound.in](https://nexfound.in)) is an elite product development studio founded by Danish ([@iam_danishm](https://x.com/iam_danishm)). We help non-technical founders, early-stage startups, and small businesses turn raw concepts and notes into live, validated, revenue-ready MVPs.
 
 ## Key Principles
 - **One Platform First**: We prioritize whether a Web-First (Next.js) or Mobile-First (Flutter / React Native) approach validates customer demand quickest, avoiding costly multi-platform premature optimization.
@@ -12,14 +11,14 @@ Nexfound (https://nexfound.in) is an elite product development studio founded by
 - **Fixed Timeline & Predictable Pricing**: Strict 30-day turnaround, starting from ₹50,000 INR ($600 USD) with no hidden agency retainer traps.
 
 ## Core Services
-- **30-Day MVP Sprint**: Full-stack MVP development, responsive UI, database schema, user authentication, direct payments integration, transactional emails, analytics, and admin dashboard.
-- **Custom Web & Mobile Development**: High-performance Next.js web applications, Flutter cross-platform mobile apps for iOS and Android.
-- **Codebase Rescue**: Rapid technical audit, refactoring, security hardening, and stabilization for stalled, buggy, or abandoned contractor projects.
-- **Founder Technical Partnership**: Post-launch feature iteration, architecture advisory, and technical scaling support.
+- [30-Day MVP Sprint](https://nexfound.in/#the-30-day-fix): Full-stack MVP development, responsive UI, database schema, user authentication, direct payments integration, transactional emails, analytics, and admin dashboard.
+- [Custom Web & Mobile Development](https://nexfound.in/#what-you-get): High-performance Next.js web applications, Flutter cross-platform mobile apps for iOS and Android.
+- [Codebase Rescue](https://nexfound.in/#the-trap): Rapid technical audit, refactoring, security hardening, and stabilization for stalled, buggy, or abandoned contractor projects.
+- [Founder Technical Partnership](https://nexfound.in/#the-launch): Post-launch feature iteration, architecture advisory, and technical scaling support.
 
 ## Case Studies
-- **DalalFree**: Zero-brokerage commercial real estate marketplace with map search, OTP authentication, and automated landlord lead routing. Launched in 24 days.
-- **EV Dock**: Real-time EV charging station discovery and slot reservation platform with interactive mapping, station availability, and instant UPI checkout. Launched in 28 days.
+- [DalalFree](https://nexfound.in/#proof): Zero-brokerage commercial real estate marketplace with map search, OTP authentication, and automated landlord lead routing. Launched in 24 days.
+- [EV Dock](https://nexfound.in/#proof): Real-time EV charging station discovery and slot reservation platform with interactive mapping, station availability, and instant UPI checkout. Launched in 28 days.
 
 ## Technology Stack
 - **Frontend**: Next.js, React, TypeScript, Tailwind CSS, Framer Motion
@@ -28,8 +27,8 @@ Nexfound (https://nexfound.in) is an elite product development studio founded by
 - **Payments & Billing**: Razorpay, Stripe, Cashfree, UPI
 - **Deployment & Cloud**: Vercel, AWS, Cloudflare
 
-## Key Contacts & Links
-- Website: https://nexfound.in
-- Founder X (Twitter): https://x.com/iam_danishm
-- GitHub: https://github.com/iamdanishm
-- Inquiries: hello@nexfound.in
+## Key Links & Documentation
+- [Official Website](https://nexfound.in): Nexfound home page and MVP model
+- [Founder on X / Twitter](https://x.com/iam_danishm): Danish (@iam_danishm)
+- [GitHub Organization](https://github.com/iamdanishm): Open source and code repositories
+- [Direct Contact & Inquiries](mailto:hello@nexfound.in): Email Danish directly to discuss your product idea
