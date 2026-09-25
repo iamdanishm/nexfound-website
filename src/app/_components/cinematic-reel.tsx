@@ -280,20 +280,20 @@ export default function CinematicReel() {
           </button>
 
           {/* Divider */}
-          <div className="w-[1px] h-3.5 bg-white/20 shrink-0 mx-1" />
+          <div className="w-[1px] h-3.5 bg-white/20 shrink-0 mx-1.5" />
 
           {/* Horizontal Progress Indicator Track (Direct motion buttons, spring-animated width & centered baseline) */}
-          <div className="flex items-center gap-1 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             {SLIDES.map((s, idx) => (
               <button
                 key={`m-dot-${s.id}`}
                 onClick={() => goToSlide(idx)}
                 aria-label={`Jump to slide ${s.number}: ${s.label}`}
-                className="h-8 min-w-[14px] flex items-center justify-center px-0.5 cursor-pointer"
+                className="h-8 w-6 flex items-center justify-center cursor-pointer"
               >
                 <motion.span
                   animate={{
-                    width: currentSlide === idx ? 24 : 8,
+                    width: currentSlide === idx ? 20 : 6,
                   }}
                   transition={{
                     type: "spring",
@@ -311,7 +311,7 @@ export default function CinematicReel() {
           </div>
 
           {/* Next Slide Arrow Button */}
-          <div className="shrink-0 flex items-center ml-1">
+          <div className="shrink-0 flex items-center ml-2.5">
             {currentSlide < SLIDES.length - 1 ? (
               <button
                 onClick={() => goToSlide(currentSlide + 1)}
@@ -491,8 +491,8 @@ export default function CinematicReel() {
         {/* ----------------- MOBILE 100VH REEL VIEW (Cohesive & Spacious) ----------------- */}
         <div className="lg:hidden flex flex-col justify-center items-center h-full w-full max-w-[420px] mx-auto z-10 pt-12 pb-14 px-3.5">
           {/* Top text block */}
-          <div className="text-center mb-4 sm:mb-6">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-zinc-300 mb-1">
+          <div className="text-center mb-4 sm:mb-6 min-h-[128px] flex flex-col justify-center">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-zinc-300 mb-1 mx-auto">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
@@ -511,7 +511,7 @@ export default function CinematicReel() {
           </div>
 
           {/* Center Visual: The Note Card (Bold, readable & full width) */}
-          <div className="w-full rounded-2xl bg-[#12131F] border border-white/20 p-4 sm:p-5 shadow-2xl relative text-left space-y-2.5 mb-4 sm:mb-5">
+          <div className="w-full rounded-2xl bg-[#12131F] border border-white/20 p-4 sm:p-5 shadow-2xl relative text-left space-y-2.5 mb-4 sm:mb-5 min-h-[250px]">
             <div className="w-12 h-1 bg-black/60 rounded-full mx-auto mb-2" />
             <div className="flex items-center justify-between pb-1.5 border-b border-white/10">
               <span className="text-xs sm:text-sm font-mono text-amber-400 font-semibold flex items-center gap-1.5">
