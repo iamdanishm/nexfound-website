@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import { Outfit, Plus_Jakarta_Sans, Newsreader } from "next/font/google";
 import "./(site)/globals.css";
 import { Toaster } from "react-hot-toast";
 import ServiceWorkerRegister from "./_components/sw-register";
@@ -70,6 +70,13 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-newsreader",
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
     default: METADATA_TEXTS.TITLE_DEFAULT,
@@ -126,36 +133,36 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${plusJakarta.variable}`}
+      className={`${outfit.variable} ${plusJakarta.variable} ${newsreader.variable}`}
       data-scroll-behavior="smooth"
     >
-      <body className="relative min-h-screen bg-[#050507] text-[#F7F7F9] font-sans antialiased overflow-x-hidden selection:bg-[#DFCA9F]/30 selection:text-white">
-        {/* Luxury Ambient Lighting Canvas */}
+      <body className="relative min-h-screen bg-[#030305] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-indigo-500/30 selection:text-white bg-grain">
+        {/* Atmospheric Studio Ambient Lighting */}
         <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-          {/* Top Center Radiant Champagne Aura */}
+          {/* Top Center Ambient Aura */}
           <div
-            className="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[1000px] h-[700px] rounded-full opacity-60 blur-[140px]"
+            className="absolute -top-[25%] left-1/2 -translate-x-1/2 w-[1100px] h-[800px] rounded-full opacity-30 blur-[160px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(223, 202, 159, 0.18) 0%, rgba(197, 168, 128, 0.08) 40%, transparent 70%)",
+                "radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(139, 92, 246, 0.08) 45%, transparent 70%)",
             }}
           />
 
-          {/* Secondary Ambient Side Glow */}
+          {/* Secondary Subtle Ambient Glow */}
           <div
-            className="absolute top-[40%] -right-[15%] w-[800px] h-[800px] rounded-full opacity-40 blur-[160px]"
+            className="absolute top-[40%] -right-[15%] w-[800px] h-[800px] rounded-full opacity-20 blur-[180px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(170, 137, 91, 0.12) 0%, rgba(140, 106, 56, 0.04) 50%, transparent 70%)",
+                "radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(99, 102, 241, 0.04) 50%, transparent 70%)",
             }}
           />
 
           {/* Bottom Ambient Glow */}
           <div
-            className="absolute -bottom-[10%] -left-[10%] w-[700px] h-[700px] rounded-full opacity-35 blur-[150px]"
+            className="absolute -bottom-[10%] -left-[10%] w-[700px] h-[700px] rounded-full opacity-20 blur-[170px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(223, 202, 159, 0.1) 0%, rgba(197, 168, 128, 0.03) 50%, transparent 70%)",
+                "radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%)",
             }}
           />
 
@@ -184,20 +191,20 @@ export default function RootLayout({
               duration: 5000,
               style: {
                 background:
-                  "linear-gradient(135deg, rgba(24, 24, 32, 0.95) 0%, rgba(12, 12, 18, 0.98) 100%)",
-                color: "#F7ECD5",
+                  "rgba(10, 10, 16, 0.95)",
+                color: "#FFFFFF",
                 padding: "16px 22px",
                 borderRadius: "14px",
                 fontSize: "14px",
                 fontWeight: "600",
                 backdropFilter: "blur(16px)",
-                border: "1px solid rgba(223, 202, 159, 0.35)",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
                 boxShadow:
-                  "0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(197, 168, 128, 0.15)",
+                  "0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(99, 102, 241, 0.2)",
               },
               iconTheme: {
-                primary: "#DFCA9F",
-                secondary: "#050507",
+                primary: "#10B981",
+                secondary: "#030305",
               },
             },
             error: {

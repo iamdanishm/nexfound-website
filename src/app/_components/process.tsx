@@ -1,55 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
+import TiltCard from "./tilt-card";
 
-const PROCESS_STEPS = [
+const SPRINTS = [
   {
     step: "01",
-    title: "Scope Discipline",
-    tagline: "Cut the fat before writing code",
-    description:
-      "We interrogate your product idea to isolate the smallest useful version that proves value to real users. Non-essential features are archived for post-launch.",
-    deliverable: "Refined feature backlog & MVP specification",
+    tag: "WEEK 1 · SCOPE & FOUNDATION",
+    title: "Isolate the Core Workflow",
+    desc: "We strip away distractions and identify the single feature that makes customers open their wallets. We choose the right first platform (web or mobile) and map out the exact user journey.",
+    deliverable: "1-Feature Roadmap & Wireframe Prototype",
+    badgeColor: "text-amber-300 border-amber-500/20 bg-amber-500/10",
   },
   {
     step: "02",
-    title: "Platform Recommendation",
-    tagline: "Web or mobile: choose the fastest path",
-    description:
-      "Instead of doubling costs by building both platforms on day one, we recommend the single platform (web or mobile) that validates your product fastest with least friction.",
-    deliverable: "Platform justification & user workflow mapping",
+    tag: "WEEKS 2–3 · RAPID BUILD",
+    title: "Design, Build & Integrate Payments",
+    desc: "We build a sleek, high-converting interface, reliable database, secure user accounts, and direct payment processing (UPI/Cards). You get continuous staging links to test it as we build.",
+    deliverable: "Live Staging App with Working Payments",
+    badgeColor: "text-indigo-400 border-indigo-500/20 bg-indigo-500/10",
   },
   {
     step: "03",
-    title: "Technical Architecture",
-    tagline: "Solid foundation, zero rework",
-    description:
-      "We design the schema, secure authentication flows, database relationships, third-party integrations, and cloud infrastructure so your product doesn't crash on launch.",
-    deliverable: "System topology & data flow architecture",
-  },
-  {
-    step: "04",
-    title: "Agile Production Build",
-    tagline: "Rapid, production-ready code",
-    description:
-      "We build the agreed core product workflows using modern, battle-tested full-stack technologies. Direct communication with your builder, no layers of bureaucracy.",
-    deliverable: "Working product build with weekly progress demos",
-  },
-  {
-    step: "05",
-    title: "Hardening & Testing",
-    tagline: "Catch blockers before your users do",
-    description:
-      "We stress-test edge cases, patch security flaws, optimize database queries, and resolve all critical usability blockers preventing a seamless first release.",
-    deliverable: "Passed QA audit & verified production build",
-  },
-  {
-    step: "06",
-    title: "Launch & Expansion",
-    tagline: "Ship to production, plan next steps",
-    description:
-      "We deploy to your live infrastructure, configure domains, and hand over 100% of the code and IP. Once real user data is in, we decide when to expand to the second platform.",
-    deliverable: "Live deployment, DNS/domain setup & 100% IP handover",
+    tag: "WEEK 4 · LAUNCH & HANDOVER",
+    title: "Live Production Launch & Full Ownership",
+    desc: "We connect your custom domain, stress-test real transactions, and hand over 100% of the code and cloud accounts directly to you. You own everything—zero lock-in.",
+    deliverable: "Live Production App & 100% Code Handover",
+    badgeColor: "text-emerald-400 border-emerald-500/20 bg-emerald-500/10",
   },
 ];
 
@@ -64,108 +40,79 @@ export default function Process() {
   };
 
   return (
-    <section id="process" className="relative py-16 sm:py-24 overflow-hidden bg-transparent">
-      {/* Subtle Background Glow */}
+    <section id="process" className="relative py-16 sm:py-24 overflow-hidden bg-transparent scroll-mt-24">
+      {/* Background Ambience */}
       <div
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[850px] h-[500px] rounded-full opacity-15 pointer-events-none blur-[140px]"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full opacity-10 pointer-events-none blur-[150px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(223, 202, 159, 0.2) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(223, 202, 159, 0.2) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 70%)",
         }}
       />
 
-      <div className="container-custom relative z-10">
-        <div className="max-w-5xl mx-auto">
-          {/* Section Header */}
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="luxury-badge mb-4">
-              <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
-              <span className="text-xs font-semibold tracking-wider text-[#DFCA9F] uppercase">
-                The Scope-to-Launch Roadmap
-              </span>
+      <div className="container-custom relative z-10 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-10 sm:mb-14">
+            <div className="studio-badge mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
+              <span>The 4-Week Sprint Roadmap</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-6 font-display">
-              <span>How We Take You From </span>
-              <span className="text-gold-foil block sm:inline">Idea to First Release.</span>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 font-display">
+              <span>From Idea to Real Customers in </span>
+              <span className="text-gold-gradient block sm:inline">4 Predictable Weeks.</span>
             </h2>
 
-            <p className="text-base sm:text-lg text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed">
-              A structured 6-step delivery process designed to eliminate wasted engineering hours and get a usable first version into users&apos; hands.
+            <p className="text-sm sm:text-base md:text-lg text-zinc-300 max-w-2xl mx-auto leading-relaxed">
+              No endless discovery meetings or disappearing developers. A transparent, milestone-driven sprint designed to get your product into paying customers&apos; hands.
             </p>
           </div>
 
-          {/* 6-Step Process Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {PROCESS_STEPS.map((step) => (
-              <motion.div
-                key={step.step}
-                initial={false}
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.25 }}
-                className="glass-obsidian glass-obsidian-hover p-6 sm:p-7 rounded-2xl border border-white/[0.08] flex flex-col justify-between group relative overflow-hidden"
+          {/* 3-Sprint Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-10 sm:mb-12">
+            {SPRINTS.map((sprint) => (
+              <TiltCard
+                key={sprint.step}
+                className="p-6 sm:p-7 rounded-2xl sm:rounded-3xl bg-[#08080E]/90 border border-white/[0.08] hover:border-white/[0.2] transition-colors flex flex-col justify-between group"
+                maxTilt={2}
+                glareOpacity={0.08}
               >
-                {/* Subtle Step Glow Watermark */}
-                <span className="absolute top-3 right-4 font-mono font-black text-4xl text-white/[0.04] group-hover:text-[#DFCA9F]/10 transition-colors pointer-events-none select-none">
-                  {step.step}
-                </span>
-
                 <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-[#DFCA9F]/10 text-[#DFCA9F] border border-[#DFCA9F]/20">
-                      Step {step.step}
+                  <div className="flex items-center justify-between mb-4 sm:mb-5">
+                    <span className="text-2xl sm:text-3xl font-display font-extrabold text-[#DFCA9F]">
+                      {sprint.step}
                     </span>
-                    <span className="text-xs text-[#A2A2B0] font-medium tracking-wide">
-                      {step.tagline}
+                    <span className={`text-[10px] font-mono font-semibold px-2.5 py-1 rounded-full border ${sprint.badgeColor}`}>
+                      {sprint.tag}
                     </span>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold font-display text-white mb-2.5 group-hover:text-gold-foil transition-colors">
-                    {step.title}
+                  <h3 className="text-lg sm:text-xl font-bold font-display text-white mb-2.5 group-hover:text-zinc-200 transition-colors">
+                    {sprint.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-[#9E9EB0] leading-relaxed mb-6">
-                    {step.description}
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6 font-normal">
+                    {sprint.desc}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-white/[0.06] flex items-center gap-2">
-                  <svg
-                    className="w-3.5 h-3.5 text-[#DFCA9F] shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-xs font-mono text-[#DFCA9F]/90 truncate">
-                    {step.deliverable}
-                  </span>
+                <div className="pt-4 border-t border-white/[0.06] text-xs font-mono text-zinc-300 flex items-center gap-2">
+                  <span className="text-emerald-400 font-bold">✓</span>
+                  <span>{sprint.deliverable}</span>
                 </div>
-              </motion.div>
+              </TiltCard>
             ))}
           </div>
 
-          {/* Bottom Process CTA Banner */}
-          <div className="mt-12 p-6 sm:p-8 rounded-2xl glass-obsidian border border-[#DFCA9F]/20 text-center flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div className="text-left">
-              <h4 className="text-lg sm:text-xl font-bold text-white mb-1 font-display">
-                Have an idea ready to be scoped?
-              </h4>
-              <p className="text-xs sm:text-sm text-[#9E9EB0]">
-                Let&apos;s break it down into the smallest valuable first release.
-              </p>
-            </div>
+          {/* Bottom Action Prompt */}
+          <div className="text-center">
             <button
               onClick={scrollToContact}
-              className="btn-gold py-3 px-6 text-xs sm:text-sm font-bold uppercase tracking-wider shrink-0"
+              className="btn-primary text-xs sm:text-sm py-3.5 px-8 font-semibold tracking-wider uppercase inline-flex items-center gap-2 group"
             >
-              <span>Discuss Your Product Idea</span>
+              <span>Map Your 4-Week Sprint Roadmap</span>
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
             </button>
           </div>
         </div>

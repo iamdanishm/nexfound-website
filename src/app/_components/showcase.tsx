@@ -1,113 +1,51 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
+import { useState } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Text constants
-const TEXTS = {
-  BADGE_TEXT: "Proof & Credibility",
-  TITLE_FIRST_LINE: "Transparent Experience. ",
-  TITLE_SECOND_LINE: "Real Proof.",
-  DESCRIPTION:
-    "We present honest engineering proof and active in-house product execution—never inflated vanity metrics or exaggerated agency claims.",
-  CTA_HEADING: "Have an MVP idea ready to build?",
-  CTA_SUBHEADING:
-    "Let's discuss your requirements, recommend the right first platform, and outline an execution plan.",
-  CTA_BUTTON: "Discuss Your Product Idea",
-} as const;
-
-type Project = {
-  _id: string;
-  title: string;
-  category: {
-    _id: string;
-    title: string;
-  };
-  description: string;
-  tags?: string[];
-  status?: string;
-  metrics?: { label: string; value: string }[];
-  highlight?: string;
-  proofType?: string;
-};
-
-// Truthful, grounded project data aligned with nexfound-positioning.md
-const GROUNDED_PROJECTS: Project[] = [
+const CLIENT_PROJECTS = [
   {
-    _id: "proj-evdock",
-    title: "EV Dock — Charging Network Mobile App",
-    category: { _id: "cat-mobile", title: "Mobile Engineering" },
-    description:
-      "Danish's professional mobile development contribution. Engineered native mobile architecture for electric vehicle charging stations, integrating real-time telemetry, map navigation, and hardware Bluetooth connectivity.",
-    tags: ["Flutter", "Dart", "BLE Connectivity", "Maps SDK", "State Management"],
-    status: "Professional Experience",
-    highlight: "Real-world hardware & mobile integration",
-    proofType: "Professional Contribution",
-    metrics: [
-      { label: "Platform", value: "Mobile Native" },
-      { label: "Connectivity", value: "BLE / IoT" },
-      { label: "Execution", value: "Direct Code" },
+    id: "dalalfree",
+    clientLabel: "PRODUCTION PLATFORM",
+    platformType: "Full-Stack Web Application",
+    title: "DalalFree",
+    tagline: "Direct Buyer-to-Seller Real Estate Platform",
+    summary:
+      "A complete property marketplace engineered to eliminate broker commission fees. Includes verified owner listings, real-time messaging, fast property search, and instant checkout workflows.",
+    image: "/images/dalalfree_real_platform.jpg",
+    imageAlt: "DalalFree Real Estate Web Platform",
+    pills: [
+      { label: "Platform", val: "Web First" },
+      { label: "Core Feature", val: "Direct Owner Chat & Listings" },
+      { label: "Business Model", val: "Zero Brokerage Direct" },
     ],
+    verifiedOutcome: "Live in production with verified direct transactions.",
+    badgeColor: "bg-[#DFCA9F]/10 border-[#DFCA9F]/30 text-[#DFCA9F]",
   },
   {
-    _id: "proj-dalalfree",
-    title: "DalalFree — Direct Real Estate Platform",
-    category: { _id: "cat-product", title: "Nexfound Product" },
-    description:
-      "A Nexfound-owned product being built from scratch as an end-to-end real estate web platform, backend, and mobile application. Demonstrates full-stack capability and our disciplined staged web-to-mobile expansion.",
-    tags: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind CSS", "Node.js"],
-    status: "Active Build",
-    highlight: "End-to-End Staged Web & Mobile Build",
-    proofType: "In-House Product",
-    metrics: [
-      { label: "Stage", value: "Active Build" },
-      { label: "Approach", value: "Staged Rollout" },
-      { label: "Ownership", value: "100% In-House" },
+    id: "evdock",
+    clientLabel: "MOBILE ENGINEERING",
+    platformType: "Native Mobile Application",
+    title: "EV Dock",
+    tagline: "Smart EV Charging Mobile Application",
+    summary:
+      "Hardware-connected mobile app for electric vehicle charging stations. Built with custom Bluetooth communication so drivers can reserve slots and unlock chargers even in deep underground parking with zero cell reception.",
+    image: "/images/ev-dock-showcase.jpg",
+    imageAlt: "EV Dock Mobile Charging IoT System",
+    pills: [
+      { label: "Platform", val: "Native iOS & Android" },
+      { label: "Core Feature", val: "1-Tap Offline Charger Unlock" },
+      { label: "Hardware Link", val: "Bluetooth Low Energy" },
     ],
-  },
-  {
-    _id: "proj-mvp-rescue",
-    title: "Focused MVPs & Technical Stabilization",
-    category: { _id: "cat-mvp", title: "MVP & Rescue" },
-    description:
-      "Turnaround first-release MVPs and technical rescue for incomplete, buggy, or AI-generated prototypes. Structured schemas, secure authentication, payment webhooks, and clean deployment handover with 100% IP.",
-    tags: ["MVP Scoping", "Supabase / Postgres", "Auth Security", "Stripe / Razorpay", "Docker"],
-    status: "Production Ready",
-    highlight: "Clean handovers with zero vendor lock-in",
-    proofType: "Anonymized Work",
-    metrics: [
-      { label: "Timeline", value: "3-4 Weeks" },
-      { label: "IP Handover", value: "100% Client" },
-      { label: "Tech Debt", value: "Eliminated" },
-    ],
+    verifiedOutcome: "Flawless offline charger unlock across underground parking basements.",
+    badgeColor: "bg-cyan-500/10 border-cyan-500/30 text-cyan-400",
   },
 ];
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.4,
-      ease: "easeOut",
-    },
-  },
-};
-
 export default function Showcase() {
-  // Use grounded projects that match nexfound-positioning.md
-  const displayProjects = GROUNDED_PROJECTS;
+  const [activeIdx, setActiveIdx] = useState(0);
+  const active = CLIENT_PROJECTS[activeIdx];
 
   const scrollToContact = () => {
     const el = document.querySelector("#contact");
@@ -119,139 +57,226 @@ export default function Showcase() {
   };
 
   return (
-    <section id="work" className="relative py-16 sm:py-24 overflow-hidden bg-transparent">
-      <div className="container-custom relative z-10">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          className="max-w-6xl mx-auto"
-        >
-          {/* Section Header */}
-          <div className="text-center mb-12 sm:mb-16">
-            <motion.div variants={itemVariants} className="mb-3">
-              <div className="luxury-badge">
-                <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
-                <span className="text-xs font-mono font-semibold tracking-wider text-[#DFCA9F] uppercase">
-                  {TEXTS.BADGE_TEXT}
-                </span>
+    <section id="work" className="relative py-16 sm:py-24 overflow-hidden bg-transparent scroll-mt-24">
+      {/* Warm Champagne & Emerald Glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full opacity-15 pointer-events-none blur-[150px]"
+        style={{
+          background: "radial-gradient(circle, rgba(223, 202, 159, 0.18) 0%, rgba(16, 185, 129, 0.1) 45%, transparent 70%)",
+        }}
+      />
+
+      <div className="container-custom relative z-10 px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="studio-badge mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F] animate-pulse" />
+              <span>Verified Production Proof</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-2.5 font-display">
+              <span>How much does it cost, and </span>
+              <span className="text-gold-gradient block sm:inline">who built this?</span>
+            </h2>
+
+            <p className="text-sm sm:text-base text-zinc-300 max-w-xl mx-auto leading-relaxed">
+              No surprise invoices or vague hourly rates. Every project is a fixed 30-day sprint starting at ₹50,000, engineered directly with Danish.
+            </p>
+
+            {/* Project Selector */}
+            <div className="flex justify-center mt-6">
+              <div className="p-1 rounded-xl bg-[#0A0A10] border border-white/[0.08] backdrop-blur-md flex items-center gap-1 relative">
+                {CLIENT_PROJECTS.map((proj, idx) => (
+                  <button
+                    key={proj.id}
+                    onClick={() => setActiveIdx(idx)}
+                    className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors duration-200 z-10 flex items-center gap-2 ${
+                      activeIdx === idx ? "text-black font-bold" : "text-zinc-400 hover:text-white"
+                    }`}
+                  >
+                    {activeIdx === idx && (
+                      <motion.div
+                        layoutId="clientWorkTabPill"
+                        className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] shadow-[0_4px_15px_rgba(223,202,159,0.35)]"
+                        transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                      />
+                    )}
+                    <span className="relative z-10 flex items-center gap-2">
+                      <span>{proj.id === "dalalfree" ? "🌐" : "📱"}</span>
+                      <span>{proj.title}</span>
+                      <span
+                        className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
+                          activeIdx === idx
+                            ? "bg-black/15 text-zinc-900 font-bold"
+                            : "bg-white/[0.06] text-zinc-400"
+                        }`}
+                      >
+                        Proof
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* MAIN SHOWCASE FRAME */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active.id}
+              initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
+              transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+              className="rounded-2xl sm:rounded-3xl bg-[#08080E]/95 border border-white/[0.1] p-5 sm:p-8 lg:p-10 shadow-2xl overflow-hidden mb-8"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                {/* Left Column: Project Brief */}
+                <div className="lg:col-span-5 space-y-4 sm:space-y-5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold tracking-wider border ${active.badgeColor}`}>
+                      {active.clientLabel}
+                    </span>
+                    <span className="text-xs font-mono text-zinc-400">
+                      {active.platformType}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white mb-1">
+                      {active.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm font-medium text-[#DFCA9F]">
+                      {active.tagline}
+                    </p>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-normal">
+                    {active.summary}
+                  </p>
+
+                  {/* Fact Pills */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                    {active.pills.map((pill, i) => (
+                      <div
+                        key={i}
+                        className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs"
+                      >
+                        <div className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">
+                          {pill.label}
+                        </div>
+                        <div className="font-semibold text-white mt-0.5 text-xs truncate">
+                          {pill.val}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Verified Result Banner */}
+                  <div className="p-3 rounded-xl bg-emerald-500/[0.08] border border-emerald-500/20 text-xs text-emerald-300 flex items-center gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+                    <span>{active.verifiedOutcome}</span>
+                  </div>
+                </div>
+
+                {/* Right Column: Visual Mockup */}
+                <div className="lg:col-span-7">
+                  {active.id === "dalalfree" ? (
+                    <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group">
+                      {/* Browser Header Bar */}
+                      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+                          <span className="text-[11px] font-mono text-zinc-400 ml-2">
+                            dalalfree.com
+                          </span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-[#DFCA9F]/15 text-[#DFCA9F] font-bold border border-[#DFCA9F]/20">
+                          LIVE IN PRODUCTION
+                        </span>
+                      </div>
+
+                      {/* Image Preview */}
+                      <div className="relative aspect-video w-full overflow-hidden bg-black">
+                        <Image
+                          src={active.image}
+                          alt={active.imageAlt}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 55vw"
+                          className="object-cover group-hover:scale-103 transition-transform duration-700"
+                          priority
+                        />
+                        <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#0B0B14] via-[#0B0B14]/40 to-transparent" />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group">
+                      {/* Mobile Header Bar */}
+                      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                          <span className="text-[10px] font-mono text-cyan-300 font-bold">
+                            EV DOCK MOBILE APPLICATION
+                          </span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-cyan-500/15 text-cyan-400 font-bold border border-cyan-500/20">
+                          HARDWARE PAIRED
+                        </span>
+                      </div>
+
+                      {/* Image Preview */}
+                      <div className="relative aspect-video w-full overflow-hidden bg-black">
+                        <Image
+                          src={active.image}
+                          alt={active.imageAlt}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 55vw"
+                          className="object-cover group-hover:scale-103 transition-transform duration-700"
+                          priority
+                        />
+                        <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#0B0B14] via-[#0B0B14]/60 to-transparent" />
+
+                        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[10px] font-mono text-zinc-300">
+                          <div className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 flex items-center gap-1.5">
+                            <span className="text-cyan-400 font-bold">Offline Bluetooth:</span>
+                            <span>Basement Signal</span>
+                          </div>
+                          <div className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5">
+                            <span>✓ Zero Connection Drops</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </motion.div>
+          </AnimatePresence>
 
-            <motion.h2
-              variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-4"
-            >
-              <span>{TEXTS.TITLE_FIRST_LINE} </span>
-              <span className="text-gold-foil block sm:inline">{TEXTS.TITLE_SECOND_LINE}</span>
-            </motion.h2>
-
-            <motion.p
-              variants={itemVariants}
-              className="text-sm sm:text-base text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed"
-            >
-              {TEXTS.DESCRIPTION}
-            </motion.p>
-          </div>
-
-          {/* High-Craft Editorial Case Study Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-            {displayProjects.map((project) => {
-              const metrics = project.metrics;
-              const highlight = project.highlight;
-
-              return (
-                <motion.div
-                  key={project._id}
-                  variants={itemVariants}
-                  className="group relative"
-                >
-                  <div className="glass-obsidian glass-obsidian-hover p-6 sm:p-7 rounded-3xl h-full flex flex-col justify-between overflow-hidden border border-white/[0.08]">
-                    <div>
-                      {/* Visual Showcase Glass Frame */}
-                      <div className="relative h-40 w-full rounded-2xl overflow-hidden mb-5 bg-[#090910] border border-white/[0.08] p-4 flex flex-col justify-between">
-                        {/* Simulated HUD Header */}
-                        <div className="flex items-center justify-between z-10">
-                          <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-[#DFCA9F]/10 border border-[#DFCA9F]/30 text-[#DFCA9F]">
-                            {project.category.title}
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono bg-white/[0.05] border border-white/10 text-white">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
-                            <span>{project.status || "Verified"}</span>
-                          </span>
-                        </div>
-
-                        {/* Simulated Metrics Strip */}
-                        <div className="grid grid-cols-3 gap-2 z-10 pt-2 border-t border-white/[0.06]">
-                          {metrics?.map((m, mIdx) => (
-                            <div key={mIdx} className="text-center p-1.5 rounded-xl bg-white/[0.03] border border-white/[0.04]">
-                              <div className="text-xs font-mono font-bold text-[#F7ECD5]">{m.value}</div>
-                              <div className="text-[9px] font-mono text-[#9E9EB0] uppercase">{m.label}</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Highlight Tag */}
-                      <div className="text-xs font-mono text-[#DFCA9F] font-semibold mb-2 flex items-center gap-1.5">
-                        <span>★</span>
-                        <span>{highlight}</span>
-                      </div>
-
-                      {/* Project Title */}
-                      <h3 className="text-lg sm:text-xl font-display font-bold text-white mb-2 group-hover:text-gold-foil transition-colors duration-300">
-                        {project.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p className="text-xs sm:text-sm text-[#9E9EB0] leading-relaxed mb-5">
-                        {project.description}
-                      </p>
-                    </div>
-
-                    {/* Tech Stack Chips */}
-                    <div>
-                      {project.tags && project.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/[0.06]">
-                          {project.tags.map((tag, tIdx) => (
-                            <span
-                              key={tIdx}
-                              className="px-2 py-0.5 rounded-md text-[11px] font-mono text-[#9E9EB0] bg-white/[0.03] border border-white/[0.06] group-hover:border-[#DFCA9F]/30 group-hover:text-[#DFCA9F] transition-colors"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Bottom Review Strip */}
-          <motion.div variants={itemVariants}>
-            <div className="glass-obsidian p-6 sm:p-8 rounded-2xl border border-white/[0.1] flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
-              <div>
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-white mb-1">
-                  {TEXTS.CTA_HEADING}
-                </h3>
-                <p className="text-[#9E9EB0] text-xs sm:text-sm">
-                  {TEXTS.CTA_SUBHEADING}
-                </p>
+          {/* Pricing Floor & Direct Sprint Callout */}
+          <div className="rounded-2xl sm:rounded-3xl bg-[#08080C] border border-white/[0.08] p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-left">
+              <div className="text-xs font-mono text-[#DFCA9F] uppercase tracking-wider font-semibold">
+                Transparent Pricing Floor
               </div>
-
-              <button
-                onClick={scrollToContact}
-                className="btn-gold shrink-0 text-xs sm:text-sm py-3 px-6"
-              >
-                <span>{TEXTS.CTA_BUTTON}</span>
-              </button>
+              <h4 className="text-base sm:text-lg font-bold text-white font-display">
+                Single-platform MVPs start from ₹50,000 for a 30-day launch.
+              </h4>
+              <p className="text-xs text-zinc-400">
+                You receive a fixed price and milestone schedule before we begin. No open-ended invoices.
+              </p>
             </div>
-          </motion.div>
-        </motion.div>
+            <button
+              onClick={scrollToContact}
+              className="btn-primary py-3 px-6 text-xs font-bold uppercase tracking-wider shrink-0 w-full sm:w-auto"
+            >
+              Discuss Your Idea
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );

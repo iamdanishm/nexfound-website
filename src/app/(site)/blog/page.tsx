@@ -108,22 +108,20 @@ export default function BlogPage() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 overflow-hidden">
-        <div className="container-custom relative z-10">
+        <div className="container-custom relative z-10 px-4 sm:px-6">
           <div className="text-center max-w-3xl mx-auto">
             <div className="mb-4 inline-block">
-              <div className="luxury-pill">
-                <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
-                <span className="text-xs font-semibold tracking-wider text-[#DFCA9F] uppercase">
-                  Founder Intelligence
-                </span>
+              <div className="studio-badge">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                <span>Founder Intelligence</span>
               </div>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-display font-bold text-white mb-6 tracking-tight">
-              The Nexfound <span className="text-gold-gradient">Dispatch.</span>
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-bold text-white mb-4 tracking-tight">
+              The Nexfound <span className="text-titanium">Dispatch.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-[#A2A2B0] leading-relaxed">
+            <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-2xl mx-auto">
               Tactical engineering breakdowns, technical strategy, and architectural playbooks for founders building at scale.
             </p>
           </div>
@@ -132,7 +130,7 @@ export default function BlogPage() {
 
       {/* Search and Category Filters */}
       <section className="pb-12">
-        <div className="container-custom">
+        <div className="container-custom px-4 sm:px-6">
           {/* Search Bar */}
           <div className="max-w-xl mx-auto mb-8">
             <div className="relative">
@@ -141,10 +139,10 @@ export default function BlogPage() {
                 placeholder="Search articles by title, topic, or tag..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 py-3.5 pr-12 bg-[#0A0A10] border border-white/[0.1] rounded-2xl text-white placeholder:text-[#525260] text-sm focus:outline-none focus:border-[#DFCA9F] transition-colors"
+                className="w-full px-5 py-3.5 pr-12 bg-[#0A0A10] border border-white/[0.1] rounded-2xl text-white placeholder:text-zinc-500 text-sm focus:outline-none focus:border-indigo-400 transition-colors"
               />
               <svg
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A2A2B0]"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -166,8 +164,8 @@ export default function BlogPage() {
                 onClick={() => setSelectedCategory(null)}
                 className={`px-4 py-2 text-xs font-mono rounded-full transition-all ${
                   selectedCategory === null
-                    ? "bg-[#DFCA9F] text-[#050507] font-bold shadow-[0_0_15px_rgba(223,202,159,0.3)]"
-                    : "bg-white/[0.03] text-[#A2A2B0] border border-white/[0.06] hover:border-white/20 hover:text-white"
+                    ? "bg-white text-black font-bold shadow-lg"
+                    : "bg-white/[0.03] text-zinc-400 border border-white/[0.08] hover:border-white/20 hover:text-white"
                 }`}
               >
                 ALL ARTICLES
@@ -178,8 +176,8 @@ export default function BlogPage() {
                   onClick={() => setSelectedCategory(category._id)}
                   className={`px-4 py-2 text-xs font-mono rounded-full transition-all ${
                     selectedCategory === category._id
-                      ? "bg-[#DFCA9F] text-[#050507] font-bold shadow-[0_0_15px_rgba(223,202,159,0.3)]"
-                      : "bg-white/[0.03] text-[#A2A2B0] border border-white/[0.06] hover:border-white/20 hover:text-white"
+                      ? "bg-white text-black font-bold shadow-lg"
+                      : "bg-white/[0.03] text-zinc-400 border border-white/[0.08] hover:border-white/20 hover:text-white"
                   }`}
                 >
                   {category.title.toUpperCase()}
@@ -192,21 +190,21 @@ export default function BlogPage() {
 
       {/* Blog Posts Grid */}
       <section className="pb-24">
-        <div className="container-custom">
+        <div className="container-custom px-4 sm:px-6">
           {loading ? (
             <div className="text-center py-16">
-              <div className="glass-card p-8 max-w-sm mx-auto">
-                <div className="w-8 h-8 rounded-full border-2 border-[#DFCA9F] border-t-transparent animate-spin mx-auto mb-4" />
-                <p className="text-xs font-mono text-[#A2A2B0]">Loading articles...</p>
+              <div className="p-8 max-w-sm mx-auto rounded-2xl bg-[#08080C] border border-white/[0.08]">
+                <div className="w-8 h-8 rounded-full border-2 border-indigo-400 border-t-transparent animate-spin mx-auto mb-4" />
+                <p className="text-xs font-mono text-zinc-400">Loading articles...</p>
               </div>
             </div>
           ) : filteredPosts.length === 0 ? (
             <div className="text-center py-16">
-              <div className="glass-card p-8 max-w-md mx-auto">
+              <div className="p-8 max-w-md mx-auto rounded-2xl bg-[#08080C] border border-white/[0.08]">
                 <h3 className="text-lg font-display font-bold text-white mb-2">
                   No Articles Found
                 </h3>
-                <p className="text-xs text-[#A2A2B0] mb-4">
+                <p className="text-xs text-zinc-400 mb-4">
                   {searchQuery
                     ? `No articles matched "${searchQuery}". Try a different keyword.`
                     : "Articles are currently in editorial review."}
@@ -214,7 +212,7 @@ export default function BlogPage() {
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="btn-luxury-secondary py-2 px-4 text-xs font-mono"
+                    className="btn-secondary py-2 px-4 text-xs font-mono"
                   >
                     Clear Search
                   </button>

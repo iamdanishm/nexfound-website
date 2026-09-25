@@ -56,13 +56,11 @@ export default function ContactFooter({
 }: ContactFooterProps) {
   return (
     <>
-      <section id="contact">
-        <CTA
-          cta={cta}
-          contactEmail={contactEmail}
-          contactPhone={contactPhone}
-        />
-      </section>
+      <CTA
+        cta={cta}
+        contactEmail={contactEmail}
+        contactPhone={contactPhone}
+      />
       <Footer footer={footer} socialLinks={socialLinks} />
     </>
   );

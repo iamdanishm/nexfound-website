@@ -1,6 +1,45 @@
 "use client";
 
-import { motion } from "framer-motion";
+import TiltCard from "./tilt-card";
+
+const DELIVERABLES = [
+  {
+    icon: "🌐",
+    title: "Live App on Your Custom Domain",
+    subtitle: "Lightning-fast & responsive across every screen",
+    desc: "A polished, modern product running live on your domain. Built to load in under a second and look exceptional on iPhones, Android devices, and laptops.",
+    outcome: "Instant credibility with your first 100 customers.",
+    badge: "DELIVERABLE 01",
+    badgeColor: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400",
+  },
+  {
+    icon: "💳",
+    title: "Instant Customer Checkout & Payments",
+    subtitle: "UPI, Credit Cards, Apple Pay & NetBanking",
+    desc: "Seamless checkout connected directly to your Stripe or Razorpay account. Every rupee and dollar paid by your users deposits directly into your bank.",
+    outcome: "Start collecting real revenue on Day 30.",
+    badge: "DELIVERABLE 02",
+    badgeColor: "bg-[#DFCA9F]/10 border-[#DFCA9F]/20 text-[#DFCA9F]",
+  },
+  {
+    icon: "📊",
+    title: "Simple Founder Control Panel",
+    subtitle: "Manage your business without touching code",
+    desc: "A clean, human-friendly admin screen where you can view new signups, monitor live sales, manage user accounts, and download customer data with one click.",
+    outcome: "You run the business without calling a developer.",
+    badge: "DELIVERABLE 03",
+    badgeColor: "bg-indigo-500/10 border-indigo-500/20 text-indigo-400",
+  },
+  {
+    icon: "🔑",
+    title: "100% Code & Cloud Ownership",
+    subtitle: "Zero hostage fees or agency lock-in",
+    desc: "Every line of code and cloud account is transferred directly to your GitHub and your server accounts. You own 100% of your intellectual property forever.",
+    outcome: "Complete freedom. No monthly agency retainers.",
+    badge: "DELIVERABLE 04",
+    badgeColor: "bg-cyan-500/10 border-cyan-500/20 text-cyan-400",
+  },
+];
 
 export default function Features() {
   const scrollToContact = () => {
@@ -13,193 +52,94 @@ export default function Features() {
   };
 
   return (
-    <section id="services" className="relative py-16 sm:py-24 overflow-hidden bg-transparent">
-      {/* Background Radial Glow */}
+    <section id="services" className="relative py-14 sm:py-20 overflow-hidden bg-transparent scroll-mt-24">
+      {/* Background Ambience */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] rounded-full opacity-15 pointer-events-none blur-[140px]"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full opacity-10 pointer-events-none blur-[140px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(223, 202, 159, 0.2) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(223, 202, 159, 0.22) 0%, transparent 70%)",
         }}
       />
 
-      <div className="container-custom relative z-10">
+      <div className="container-custom relative z-10 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="luxury-badge mb-4">
-              <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
-              <span className="text-xs font-mono font-semibold tracking-wider text-[#DFCA9F] uppercase">
-                Services & Pricing Structure
-              </span>
+          {/* Section Header */}
+          <div className="text-center mb-10 sm:mb-14">
+            <div className="studio-badge mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Zero Tech Jargon · 100% Tangible Deliverables</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-6 font-display">
-              <span>Our Primary Offer & </span>
-              <span className="text-gold-foil block sm:inline">Secondary Services.</span>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-2.5 font-display">
+              <span>What do you actually get when we </span>
+              <span className="text-gold-gradient block sm:inline">hand you the keys?</span>
             </h2>
 
-            <p className="text-base sm:text-lg text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed">
-              We don&apos;t claim to build everything for everyone. We focus on MVP development from idea to launch, backed by targeted technical rescue when needed.
+            <p className="text-xs sm:text-base text-zinc-300 max-w-xl mx-auto leading-relaxed">
+              No developer mumbo-jumbo. No vendor lock-in. Just everything you need to start signing up customers and taking payments on day 30.
             </p>
           </div>
 
-          {/* PRIMARY OFFER (Dominant Bento Card) */}
-          <motion.div
-            initial={false}
-            whileHover={{ y: -3 }}
-            transition={{ duration: 0.3 }}
-            className="mb-8 glass-obsidian p-7 sm:p-10 rounded-3xl border border-[#DFCA9F]/30 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_30px_rgba(223,202,159,0.08)] relative overflow-hidden group"
-          >
-            {/* Ambient Corner Flare */}
-            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-[#DFCA9F]/15 via-transparent to-transparent rounded-full blur-2xl pointer-events-none" />
-
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-              <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/25 mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F] animate-pulse" />
-                  <span className="text-[11px] font-mono uppercase tracking-widest text-[#DFCA9F] font-bold">
-                    Primary 90-Day Offer
-                  </span>
-                </div>
-
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold text-white mb-3 tracking-tight">
-                  MVP Development: Idea to First Release
-                </h3>
-
-                <p className="text-sm sm:text-base text-[#C2C2D0] leading-relaxed mb-6 font-normal">
-                  For founders and small businesses with a validated market idea and the budget to build it right. We take full technical responsibility from initial scope reduction through production deployment.
-                </p>
-
-                {/* Key Deliverables Bullet Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-[#DFCA9F]">
-                    <span className="font-bold">✓</span>
-                    <span className="text-[#E0E0EC]">Ruthless scope reduction to smallest useful MVP</span>
-                  </div>
-                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-[#DFCA9F]">
-                    <span className="font-bold">✓</span>
-                    <span className="text-[#E0E0EC]">Web or Mobile platform recommendation</span>
-                  </div>
-                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-[#DFCA9F]">
-                    <span className="font-bold">✓</span>
-                    <span className="text-[#E0E0EC]">Production-ready backend, auth, db & APIs</span>
-                  </div>
-                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-[#DFCA9F]">
-                    <span className="font-bold">✓</span>
-                    <span className="text-[#E0E0EC]">100% Code, database and IP handover</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-center lg:items-end justify-center shrink-0 border-t lg:border-t-0 lg:border-l border-white/[0.08] pt-6 lg:pt-0 lg:pl-8">
-                <div className="text-xs font-mono uppercase text-[#9E9EB0] mb-1">
-                  Starting Floor
-                </div>
-                <div className="text-3xl sm:text-4xl font-extrabold text-gold-foil font-display mb-1">
-                  From ₹50,000
-                </div>
-                <div className="text-[11px] text-[#808090] text-center lg:text-right max-w-[200px] mb-5">
-                  Small, focused single-platform builds. Larger MVPs quoted by scope.
-                </div>
-                <button
-                  onClick={scrollToContact}
-                  className="btn-gold py-3 px-6 text-xs sm:text-sm font-bold uppercase tracking-wider w-full lg:w-auto"
-                >
-                  <span>Discuss Your MVP Scope</span>
-                </button>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* SECONDARY SERVICES (Clearly Subordinated Cards) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {/* Product Improvement */}
-            <div className="glass-obsidian p-6 sm:p-8 rounded-3xl border border-white/[0.08] flex flex-col justify-between group hover:border-[#DFCA9F]/30 transition-colors">
-              <div>
-                <div className="inline-flex items-center px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono uppercase tracking-wider text-[#A2A2B0] font-semibold mb-4">
-                  Secondary Service
-                </div>
-                <h4 className="text-xl font-bold font-display text-white mb-2 group-hover:text-gold-foil transition-colors">
-                  Product Improvement
-                </h4>
-                <p className="text-xs sm:text-sm text-[#9E9EB0] leading-relaxed mb-5">
-                  For existing web or mobile products that need new feature workflows, UX overhauls, payment or API integrations, and speed optimization.
-                </p>
-                <ul className="space-y-2 text-xs text-[#A2A2B0] mb-6">
-                  <li className="flex items-center gap-2">
-                    <span className="text-[#DFCA9F] font-bold">→</span>
-                    <span>Targeted feature additions to active codebases</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-[#DFCA9F] font-bold">→</span>
-                    <span>Third-party API & payment gateway integrations</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-[#DFCA9F] font-bold">→</span>
-                    <span>Database indexing and latency reduction</span>
-                  </li>
-                </ul>
-              </div>
-              <button
-                onClick={scrollToContact}
-                className="text-xs font-mono font-semibold text-[#DFCA9F] hover:underline inline-flex items-center gap-1.5"
+          {/* 4 Deliverables Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 mb-8 sm:mb-10">
+            {DELIVERABLES.map((del) => (
+              <TiltCard
+                key={del.badge}
+                className="p-6 sm:p-7 rounded-2xl sm:rounded-3xl bg-[#08080C]/90 border border-white/[0.08] hover:border-white/[0.18] transition-colors flex flex-col justify-between group shadow-xl"
+                maxTilt={2}
+                glareOpacity={0.06}
               >
-                Inquire about improvements <span>→</span>
-              </button>
-            </div>
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-3xl">{del.icon}</span>
+                    <span className={`text-[10px] font-mono font-semibold px-2.5 py-1 rounded-full border ${del.badgeColor}`}>
+                      {del.badge}
+                    </span>
+                  </div>
 
-            {/* Technical Rescue */}
-            <div className="glass-obsidian p-6 sm:p-8 rounded-3xl border border-white/[0.08] flex flex-col justify-between group hover:border-[#DFCA9F]/30 transition-colors">
-              <div>
-                <div className="inline-flex items-center px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono uppercase tracking-wider text-[#A2A2B0] font-semibold mb-4">
-                  Secondary Service
+                  <h3 className="text-lg sm:text-xl font-bold font-display text-white mb-1.5">
+                    {del.title}
+                  </h3>
+
+                  <div className="text-xs font-mono text-zinc-400 mb-3">
+                    {del.subtitle}
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-normal mb-5">
+                    {del.desc}
+                  </p>
                 </div>
-                <h4 className="text-xl font-bold font-display text-white mb-2 group-hover:text-gold-foil transition-colors">
-                  Technical Rescue
-                </h4>
-                <p className="text-xs sm:text-sm text-[#9E9EB0] leading-relaxed mb-5">
-                  For incomplete, buggy, abandoned, or AI-generated codebases that need architectural stabilization, security audits, and a reliable path to launch.
-                </p>
-                <ul className="space-y-2 text-xs text-[#A2A2B0] mb-6">
-                  <li className="flex items-center gap-2">
-                    <span className="text-[#DFCA9F] font-bold">→</span>
-                    <span>In-depth codebase and dependency audit</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-[#DFCA9F] font-bold">→</span>
-                    <span>Auth, database schema, and security patching</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-[#DFCA9F] font-bold">→</span>
-                    <span>Clear remediation plan to unblock production launch</span>
-                  </li>
-                </ul>
-              </div>
-              <button
-                onClick={scrollToContact}
-                className="text-xs font-mono font-semibold text-[#DFCA9F] hover:underline inline-flex items-center gap-1.5"
-              >
-                Inquire about technical rescue <span>→</span>
-              </button>
-            </div>
+
+                <div className="pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-xs">
+                  <span className="text-zinc-400 font-mono text-[11px]">Real Outcome:</span>
+                  <span className="text-emerald-300 font-semibold">{del.outcome}</span>
+                </div>
+              </TiltCard>
+            ))}
           </div>
 
-          {/* Pricing Direction Transparency Note */}
-          <div className="glass-obsidian p-6 sm:p-7 rounded-2xl border border-white/[0.08] text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <span className="text-xs font-mono uppercase tracking-wider text-[#DFCA9F] font-bold block mb-1">
-                Pricing Policy & Estimates
-              </span>
-              <p className="text-xs sm:text-sm text-[#9E9EB0] max-w-2xl leading-relaxed">
-                Projects are scoped individually. Small focused builds may start from ₹50,000; larger MVPs are priced according to platform, features, integrations, and delivery requirements. We use a structured discovery step to prevent vague ideas from causing wasted effort.
+          {/* Pricing Floor & Direct Sprint Callout */}
+          <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#0C0D16] to-[#0A0A10] border border-[#DFCA9F]/25 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 text-xs font-mono text-[#DFCA9F]">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>TRANSPARENT PRICING FLOOR</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-bold font-display text-white">
+                Focused 30-Day Sprints starting from ₹50,000.
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-300 max-w-xl leading-relaxed">
+                No open-ended hourly billing or surprise invoices. We isolate your core workflow, agree on a fixed deliverable scope, and ship in 30 days.
               </p>
             </div>
+
             <button
               onClick={scrollToContact}
-              className="btn-noir text-xs py-2.5 px-5 shrink-0 whitespace-nowrap"
+              className="btn-primary py-3.5 px-8 text-xs sm:text-sm font-bold uppercase tracking-wider shrink-0 w-full md:w-auto flex items-center justify-center gap-2"
             >
-              <span>Request an Estimate</span>
+              <span>Discuss Your Scope</span>
+              <span>→</span>
             </button>
           </div>
         </div>

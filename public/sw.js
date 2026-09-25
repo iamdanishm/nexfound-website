@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CACHE_NAME = "nexfound-v1.0.0";
 const STATIC_CACHE_NAME = "nexfound-static-v1.0.0";
 const DYNAMIC_CACHE_NAME = "nexfound-dynamic-v1.0.0";

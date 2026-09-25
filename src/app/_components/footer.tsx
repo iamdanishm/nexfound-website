@@ -8,34 +8,35 @@ import toast from "react-hot-toast";
 // Text constants
 const TEXTS = {
   DESCRIPTION_DEFAULT:
-    "We partner with ambitious founders and teams to design, build, and scale modern web apps, mobile apps, and custom digital products.",
+    "Nexfound turns raw product concepts into live, payment-ready web and mobile MVPs in 30 days.",
   NEWSLETTER_TITLE_DEFAULT: "Founder Dispatch",
   NEWSLETTER_DESCRIPTION_DEFAULT:
-    "Get practical product insights, tech breakdowns, and updates directly in your inbox.",
+    "Practical product insights, launch strategies, and direct lessons from building in public.",
   FOOTER_LINKS_DEFAULT: [
     {
-      category: "Services",
+      category: "Navigation",
       links: [
-        { label: "MVP & Web Apps", href: "#services" },
-        { label: "Codebase Fixes", href: "#services" },
-        { label: "AI Automation", href: "#services" },
-        { label: "Technical Advisory", href: "#services" },
+        { label: "Reality Check", href: "#comparison" },
+        { label: "30-Day Sprint", href: "#process" },
+        { label: "Web vs Mobile", href: "#platform-strategy" },
+        { label: "What You Get", href: "#services" },
+        { label: "Live Proof", href: "#work" },
       ],
     },
     {
-      category: "Company",
+      category: "Specialized",
       links: [
-        { label: "About Us", href: "#about" },
-        { label: "Our Work", href: "#work" },
-        { label: "Why Us", href: "#standard" },
-        { label: "Blog", href: "/blog" },
+        { label: "Codebase Rescues", href: "#contact" },
+        { label: "Technical Advisory", href: "#contact" },
+        { label: "The Dispatch", href: "/blog" },
       ],
     },
     {
-      category: "Get in Touch",
+      category: "Direct Contact",
       links: [
-        { label: "Start a Project", href: "#contact" },
-        { label: "Contact Us", href: "#contact" },
+        { label: "Discuss Your Idea", href: "#contact" },
+        { label: "WhatsApp Founder Chat", href: "https://wa.me/919321456661" },
+        { label: "Email: hello@nexfound.in", href: "mailto:hello@nexfound.in" },
       ],
     },
   ],
@@ -112,10 +113,10 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
         />
       </div>
 
-      <div className="container-custom relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 border-b border-white/[0.08]">
+      <div className="container-custom relative z-10 px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-white/[0.08]">
           {/* Brand & Mission Column */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className="lg:col-span-4 space-y-5">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative w-9 h-9">
                 <Image
@@ -126,27 +127,27 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                   className="object-contain"
                 />
               </div>
-              <span className="font-display font-bold text-2xl tracking-tight text-white group-hover:text-gold-gradient transition-colors">
-                Nexfound<span className="text-[#DFCA9F]">.</span>
+              <span className="font-display font-bold text-2xl tracking-tight text-white transition-colors">
+                Nexfound<span className="text-indigo-400">.</span>
               </span>
             </Link>
 
-            <p className="text-sm text-[#A2A2B0] leading-relaxed max-w-sm">
+            <p className="text-sm text-zinc-400 leading-relaxed max-w-sm">
               {description}
             </p>
 
             {/* Live Studio Status */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs text-[#D4D4DF]">
-              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs text-zinc-300">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>Available for New Projects</span>
             </div>
           </div>
 
           {/* Navigation Links Columns */}
-          <div className="lg:col-span-5 grid grid-cols-3 gap-6">
+          <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-6">
             {footerLinks.map((group, idx) => (
               <div key={idx} className="space-y-4">
-                <h4 className="text-xs font-mono font-bold tracking-widest text-[#DFCA9F] uppercase">
+                <h4 className="text-xs font-mono font-bold tracking-widest text-zinc-200 uppercase">
                   {group.category}
                 </h4>
                 <ul className="space-y-2.5">
@@ -154,7 +155,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                     <li key={lIdx}>
                       <a
                         href={link.href}
-                        className="text-xs sm:text-sm text-[#A2A2B0] hover:text-white transition-colors"
+                        className="text-xs sm:text-sm text-zinc-400 hover:text-white transition-colors"
                       >
                         {link.label}
                       </a>
@@ -167,10 +168,10 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
 
           {/* Newsletter Column */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-xs font-mono font-bold tracking-widest text-[#DFCA9F] uppercase">
+            <h4 className="text-xs font-mono font-bold tracking-widest text-zinc-200 uppercase">
               {newsletterTitle}
             </h4>
-            <p className="text-xs text-[#A2A2B0] leading-relaxed">
+            <p className="text-xs text-zinc-400 leading-relaxed">
               {newsletterDescription}
             </p>
 
@@ -181,12 +182,12 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                 placeholder="architect@domain.com"
                 value={newsletterEmail}
                 onChange={(e) => setNewsletterEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 pr-10 rounded-xl bg-[#0A0A10] border border-white/[0.1] text-xs text-white placeholder:text-[#525260] focus:outline-none focus:border-[#DFCA9F] transition-colors"
+                className="w-full px-3.5 py-2.5 pr-10 rounded-xl bg-[#0A0A10] border border-white/[0.1] text-xs text-white placeholder:text-[#525260] focus:outline-none focus:border-white/40 transition-colors"
               />
               <button
                 type="submit"
                 disabled={isSubscribing}
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-[#DFCA9F] text-[#050507] flex items-center justify-center hover:bg-white transition-colors font-bold"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-white text-black flex items-center justify-center hover:bg-zinc-200 transition-colors font-bold"
                 aria-label="Subscribe"
               >
                 →
@@ -196,18 +197,18 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
         </div>
 
         {/* Bottom Copyright & Social Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#686878]">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
           <div>
             {TEXTS.COPYRIGHT_TEXT.replace("{year}", currentYear.toString())}
           </div>
 
           {/* Social Links */}
-          <div className="flex items-center gap-6 text-[#A2A2B0]">
+          <div className="flex items-center gap-6 text-zinc-400">
             <a
               href={socialLinks?.twitter ?? "https://twitter.com/iam_danishm"}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#DFCA9F] transition-colors"
+              className="hover:text-white transition-colors"
             >
               Twitter / X
             </a>
@@ -215,13 +216,13 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               href={socialLinks?.linkedin ?? "https://linkedin.com"}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#DFCA9F] transition-colors"
+              className="hover:text-white transition-colors"
             >
               LinkedIn
             </a>
             <a
               href="mailto:hello@nexfound.in"
-              className="hover:text-[#DFCA9F] transition-colors"
+              className="hover:text-white transition-colors"
             >
               hello@nexfound.in
             </a>

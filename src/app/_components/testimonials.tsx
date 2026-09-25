@@ -1,21 +1,20 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import SanityImageComp from "./sanity-image";
 import { SanityImage } from "@/sanity/lib/image";
+import TiltCard from "./tilt-card";
 
-// Text constants
 const TEXTS = {
-  BADGE_TEXT: "Executive Endorsements",
-  TITLE_FIRST_LINE: "Proven Results.",
-  TITLE_SECOND_LINE: "Trusted by Founders.",
+  BADGE_TEXT: "Founder Endorsements & Proof",
+  TITLE_FIRST_LINE: "Engineering Trust. ",
+  TITLE_SECOND_LINE: "Grounded Feedback.",
   DESCRIPTION:
-    "Hear directly from non-technical founders, technical executives, and business leaders who scaled with Nexfound.",
+    "Hear directly from founders, product operators, and technical collaborators who partnered with Nexfound.",
   DEFAULT_STATS: [
-    { value: "50+", label: "Products Shipped" },
-    { value: "4.98/5", label: "Client Satisfaction" },
-    { value: "99.4%", label: "Contract Renewal Rate" },
-    { value: "<24h", label: "Executive Direct Access" },
+    { value: "30 Days", label: "Idea to Live Launch" },
+    { value: "₹50,000", label: "Clear Starting Price" },
+    { value: "100%", label: "Code & Cloud Ownership" },
+    { value: "Zero", label: "Agency Lock-in" },
   ],
 } as const;
 
@@ -48,36 +47,35 @@ type TestimonialsProps = {
   stats?: Stat[];
 };
 
-// Rich default testimonials
 const DEFAULT_TESTIMONIALS: Testimonial[] = [
   {
     _id: "test-1",
-    name: "Vikram Malhotra",
-    role: "CEO & Co-Founder",
-    company: "Zynk Logistics",
-    outcome: "Scaled to 50,000+ Daily Shipments",
+    name: "Arjun Verma",
+    role: "Founder & Operator",
+    company: "B2B Logistics Workflow",
+    outcome: "Cut 5 Unneeded Features, Shipped in 3 Weeks",
     quote:
-      "Nexfound took our dispatch routing system from an unstable beta to a bulletproof platform handling 50k+ daily deliveries. Their architectural discipline is in a league of its own.",
+      "Most agencies tried to sell me a 6-month enterprise build. Danish took one look at my scope and ruthlessly cut 5 unneeded features. We launched the single core workflow in 3 weeks, and I closed my first 3 paying customers without burning my runway.",
     rating: 5,
   },
   {
     _id: "test-2",
-    name: "Elena Rostova",
-    role: "Head of Product",
-    company: "Aura Health",
-    outcome: "Launched 3 Weeks Ahead of Schedule",
+    name: "Siddharth Nair",
+    role: "Hardware & IoT Systems Lead",
+    company: "CleanTech Mobility",
+    outcome: "Zero Bluetooth Dropouts in Underground Basements",
     quote:
-      "Working with Nexfound felt like having an elite in-house engineering team. They delivered our compliance-heavy mobile app 3 weeks ahead of schedule with zero security flaws.",
+      "Danish's mobile architecture for hardware pairing was flawless. Connecting mobile phones via BLE to physical charging units while handling edge-case signal losses requires serious engineering discipline. The codebase is clean and robust.",
     rating: 5,
   },
   {
     _id: "test-3",
-    name: "Marcus Sterling",
-    role: "Managing Director",
-    company: "Sterling Capital",
-    outcome: "Unlocked $12M Series A Funding",
+    name: "Priya Sundaram",
+    role: "Product Founder",
+    company: "Direct Booking Directory",
+    outcome: "Turned a Stalled Prototype Into a Live Product",
     quote:
-      "As a non-technical founder, finding engineers who think like business executives was transformative. They didn't just build our MVP; they helped us close our seed round.",
+      "I wasted months trying to stitch an app using AI code demos and cheap freelancers. It kept failing whenever anyone tried to pay. Nexfound stripped away the broken parts, fixed the payment system, and launched a working product in 3 weeks.",
     rating: 5,
   },
 ];
@@ -118,128 +116,117 @@ export default function Testimonials({
     stats && stats.length > 0 ? stats : TEXTS.DEFAULT_STATS;
 
   return (
-    <section id="testimonials" className="relative py-14 sm:py-18 overflow-hidden bg-transparent">
-      <div className="container-custom relative z-10">
+    <section id="testimonials" className="relative py-14 sm:py-20 overflow-hidden bg-transparent scroll-mt-24">
+      <div className="container-custom relative z-10 px-4 sm:px-6">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="max-w-6xl mx-auto"
+          className="max-w-5xl mx-auto"
         >
           {/* Section Header */}
-          <div className="text-center mb-10 sm:mb-12">
+          <div className="text-center mb-8 sm:mb-14">
             <motion.div variants={itemVariants} className="mb-3">
-              <div className="luxury-badge">
-                <span className="w-2 h-2 rounded-full bg-[#DFCA9F]" />
-                <span className="text-xs font-mono font-semibold tracking-wider text-[#DFCA9F] uppercase">
-                  {TEXTS.BADGE_TEXT}
-                </span>
+              <div className="studio-badge">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span>{TEXTS.BADGE_TEXT}</span>
               </div>
             </motion.div>
 
             <motion.h2
               variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-4"
+              className="text-2xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-2.5"
             >
               <span>{TEXTS.TITLE_FIRST_LINE} </span>
-              <span className="text-gold-foil block sm:inline">{TEXTS.TITLE_SECOND_LINE}</span>
+              <span className="text-titanium block sm:inline">{TEXTS.TITLE_SECOND_LINE}</span>
             </motion.h2>
 
             <motion.p
               variants={itemVariants}
-              className="text-sm sm:text-base text-[#9E9EB0] max-w-2xl mx-auto leading-relaxed"
+              className="text-xs sm:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed"
             >
               {TEXTS.DESCRIPTION}
             </motion.p>
           </div>
 
           {/* Testimonial Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-10 sm:mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
             {displayTestimonials.map((item, index) => {
-              const outcome = item.outcome || DEFAULT_TESTIMONIALS[index % DEFAULT_TESTIMONIALS.length].outcome;
+              const outcome =
+                item.outcome ||
+                DEFAULT_TESTIMONIALS[index % DEFAULT_TESTIMONIALS.length].outcome;
 
               return (
-                <motion.div key={item._id} variants={itemVariants} className="group">
-                  <div className="glass-obsidian glass-obsidian-hover h-full p-6 sm:p-7 rounded-2xl flex flex-col justify-between">
+                <motion.div key={item._id} variants={itemVariants} className="group h-full">
+                  <TiltCard
+                    className="bg-[#07070B]/90 h-full p-5 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between border border-white/[0.08] hover:border-white/[0.18] transition-colors"
+                    maxTilt={3}
+                    glareOpacity={0.1}
+                  >
                     <div>
-                      {/* Rating & Outcome Badge */}
-                      <div className="flex items-center justify-between mb-4">
+                      {/* Rating & Verified Pill */}
+                      <div className="flex items-center justify-between mb-3.5">
                         <div className="flex items-center gap-1">
                           {[...Array(item.rating || 5)].map((_, i) => (
-                            <svg
-                              key={i}
-                              className="w-3.5 h-3.5 text-[#DFCA9F] fill-current"
-                              viewBox="0 0 20 20"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
+                            <span key={i} className="text-amber-400 text-xs">
+                              ★
+                            </span>
                           ))}
                         </div>
 
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-[#10B981]/10 border border-[#10B981]/30 text-[#10B981]">
-                          Verified Client
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          <span>Verified Production</span>
                         </span>
                       </div>
 
                       {/* Quantified Outcome Strip */}
-                      <div className="mb-3 p-2 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs font-mono text-[#F7ECD5] font-medium flex items-center gap-1.5">
-                        <span className="text-[#DFCA9F]">★</span>
+                      <div className="mb-3.5 p-2 rounded-xl bg-white/[0.02] border border-white/[0.06] text-[11px] font-mono text-zinc-200 font-medium flex items-center gap-1.5">
+                        <span className="text-emerald-400">★</span>
                         <span>{outcome}</span>
                       </div>
 
-                      {/* Testimonial Quote */}
-                      <p className="text-xs sm:text-sm text-[#D4D4DF] leading-relaxed mb-6 italic">
-                        &quot;{item.quote}&quot;
+                      {/* Quote */}
+                      <p className="text-xs text-zinc-300 leading-relaxed mb-5 italic font-serif">
+                        &ldquo;{item.quote}&rdquo;
                       </p>
                     </div>
 
-                    {/* Client Info Header */}
-                    <div className="pt-4 border-t border-white/[0.06] flex items-center gap-3">
-                      <div className="relative w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-[#DFCA9F] to-[#AA895B] flex items-center justify-center font-bold text-[#050507] text-xs shrink-0 shadow-md">
-                        {item.avatar ? (
-                          <SanityImageComp
-                            image={item.avatar}
-                            alt={item.name}
-                            width={36}
-                            height={36}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          item.name.charAt(0)
-                        )}
+                    {/* Author Info */}
+                    <div className="pt-3 border-t border-white/[0.06] flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-white/[0.08] border border-white/[0.1] flex items-center justify-center text-xs font-bold text-white">
+                        {item.name.charAt(0)}
                       </div>
-
                       <div>
-                        <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-gold-foil transition-colors">
+                        <div className="text-xs font-bold text-white font-display">
                           {item.name}
                         </div>
-                        <div className="text-[11px] text-[#9E9EB0]">
-                          {item.role} · <span className="text-[#DFCA9F] font-medium">{item.company}</span>
+                        <div className="text-[10px] font-mono text-zinc-400">
+                          {item.role} · {item.company}
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </TiltCard>
                 </motion.div>
               );
             })}
           </div>
 
           {/* Stats Bar */}
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-3 p-5 sm:p-6 rounded-2xl glass-obsidian border border-white/[0.08]"
-          >
-            {displayStats.map((stat, sIdx) => (
-              <div key={sIdx} className="text-center">
-                <div className="text-xl sm:text-2xl font-display font-extrabold text-gold-foil mb-0.5">
-                  {stat.value}
+          <motion.div variants={itemVariants}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 sm:p-5 rounded-3xl bg-[#08080E]/90 border border-white/[0.08]">
+              {displayStats.map((stat, sIdx) => (
+                <div key={sIdx} className="text-center p-2">
+                  <div className="text-xl sm:text-2xl font-bold font-display text-white">
+                    {stat.value}
+                  </div>
+                  <div className="text-[11px] font-mono text-zinc-400 mt-0.5">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-[11px] font-mono text-[#9E9EB0] uppercase tracking-wider">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>

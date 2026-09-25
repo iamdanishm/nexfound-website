@@ -66,7 +66,7 @@ const BlogCard = React.memo(function BlogCard({
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#181824] to-[#0A0A0F] text-xs font-mono text-[#DFCA9F]">
+              <div className="w-full h-full flex items-center justify-center bg-[#0C0C14] text-xs font-mono text-zinc-400">
                 {category?.title || "ARTICLE"}
               </div>
             )}
@@ -74,7 +74,7 @@ const BlogCard = React.memo(function BlogCard({
             {/* Category Badge */}
             {category && (
               <div className="absolute top-3 left-3">
-                <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-[#050507]/80 backdrop-blur-md border border-white/10 text-[#F7ECD5]">
+                <span className="px-2.5 py-1 text-xs font-medium font-mono rounded-full bg-[#050507]/80 backdrop-blur-md border border-white/10 text-zinc-200">
                   {category.title}
                 </span>
               </div>
@@ -82,7 +82,7 @@ const BlogCard = React.memo(function BlogCard({
 
             {featured && (
               <div className="absolute top-3 right-3">
-                <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-[#DFCA9F] text-[#050507] font-semibold">
+                <span className="px-2.5 py-1 text-xs font-medium font-mono rounded-full bg-white text-black font-semibold">
                   Featured
                 </span>
               </div>
@@ -90,13 +90,13 @@ const BlogCard = React.memo(function BlogCard({
           </div>
 
           {/* Title */}
-          <h2 className="text-xl font-display font-bold text-white mb-2.5 group-hover:text-gold-gradient transition-colors line-clamp-2">
+          <h2 className="text-xl font-display font-bold text-white mb-2.5 group-hover:text-zinc-200 transition-colors line-clamp-2">
             {title}
           </h2>
 
           {/* Excerpt */}
           {excerpt && (
-            <p className="text-sm text-[#A2A2B0] mb-4 line-clamp-3 leading-relaxed">
+            <p className="text-sm text-zinc-400 mb-4 line-clamp-3 leading-relaxed">
               {excerpt}
             </p>
           )}
@@ -107,7 +107,7 @@ const BlogCard = React.memo(function BlogCard({
               {tags.slice(0, 3).map((tag, index) => (
                 <span
                   key={index}
-                  className="px-2 py-0.5 text-xs font-mono rounded-md bg-white/[0.03] border border-white/[0.06] text-[#A2A2B0]"
+                  className="px-2 py-0.5 text-xs font-mono rounded-md bg-white/[0.03] border border-white/[0.06] text-zinc-400"
                 >
                   #{tag}
                 </span>
@@ -117,12 +117,12 @@ const BlogCard = React.memo(function BlogCard({
         </div>
 
         {/* Footer */}
-        <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs text-[#686878]">
+        <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-zinc-400">
           <div className="flex items-center gap-2">
-            {author?.name && <span className="text-[#A2A2B0] font-medium">{author.name} ·</span>}
+            {author?.name && <span className="text-zinc-300 font-medium">{author.name} ·</span>}
             <span>{formattedDate}</span>
           </div>
-          <span className="text-[#DFCA9F] group-hover:translate-x-1 transition-transform font-medium">
+          <span className="text-indigo-400 group-hover:translate-x-1 transition-transform font-medium">
             Read Post →
           </span>
         </div>
