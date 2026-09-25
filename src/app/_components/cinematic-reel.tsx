@@ -241,7 +241,7 @@ export default function CinematicReel() {
       >
         <motion.div
           animate={{
-            width: labelWidths[currentSlide] ? 214 + labelWidths[currentSlide] : "auto",
+            width: labelWidths[currentSlide] ? 218 + labelWidths[currentSlide] : "auto",
           }}
           transition={{
             type: "spring",
@@ -253,8 +253,9 @@ export default function CinematicReel() {
           {/* Slide Counter & Label Badge (Fluid Spring Animated Width) */}
           <button
             onClick={() => goToSlide(currentSlide)}
-            className="h-8 flex items-center gap-1 text-left cursor-pointer shrink-0 py-1"
+            className="flex items-center gap-1 text-left cursor-pointer shrink-0"
             aria-label={`Current slide ${SLIDES[currentSlide].number}: ${SLIDES[currentSlide].label}`}
+            title={SLIDES[currentSlide].label}
           >
             <span className="font-mono font-bold text-xs text-[#DFCA9F] tabular-nums shrink-0">
               {SLIDES[currentSlide].number}/06
@@ -280,42 +281,38 @@ export default function CinematicReel() {
           </button>
 
           {/* Divider */}
-          <div className="w-[1px] h-3.5 bg-white/20 shrink-0 mx-1.5" />
+          <div className="w-[1px] h-3.5 bg-white/20 shrink-0 mx-1" />
 
           {/* Horizontal Progress Indicator Track (Direct motion buttons, spring-animated width & centered baseline) */}
           <div className="flex items-center gap-2 shrink-0">
             {SLIDES.map((s, idx) => (
-              <button
+              <motion.button
                 key={`m-dot-${s.id}`}
                 onClick={() => goToSlide(idx)}
                 aria-label={`Jump to slide ${s.number}: ${s.label}`}
-                className="h-8 w-6 flex items-center justify-center cursor-pointer"
-              >
-                <motion.span
-                  animate={{
-                    width: currentSlide === idx ? 20 : 6,
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 380,
-                    damping: 28,
-                  }}
-                  className={`h-2 rounded-full block ${
-                    currentSlide === idx
-                      ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] shadow-[0_0_10px_rgba(223,202,159,0.85)]"
-                      : "bg-white/25 hover:bg-white/50"
-                  }`}
-                />
-              </button>
+                animate={{
+                  width: currentSlide === idx ? 24 : 8,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 380,
+                  damping: 28,
+                }}
+                className={`h-2 rounded-full cursor-pointer relative before:absolute before:-inset-y-3 before:-inset-x-1.5 before:content-[''] ${
+                  currentSlide === idx
+                    ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] shadow-[0_0_10px_rgba(223,202,159,0.85)]"
+                    : "bg-white/25 hover:bg-white/50"
+                }`}
+              />
             ))}
           </div>
 
           {/* Next Slide Arrow Button */}
-          <div className="shrink-0 flex items-center ml-2.5">
+          <div className="shrink-0 flex items-center ml-1.5">
             {currentSlide < SLIDES.length - 1 ? (
               <button
                 onClick={() => goToSlide(currentSlide + 1)}
-                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-xs text-[#DFCA9F] active:scale-90 transition-transform cursor-pointer"
+                className="w-5.5 h-5.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[10px] text-[#DFCA9F] active:scale-90 transition-transform cursor-pointer"
                 aria-label="Next slide"
               >
                 ↓
@@ -323,7 +320,7 @@ export default function CinematicReel() {
             ) : (
               <button
                 onClick={() => goToSlide(0)}
-                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-xs text-[#DFCA9F] active:scale-90 transition-transform cursor-pointer"
+                className="w-5.5 h-5.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[10px] text-[#DFCA9F] active:scale-90 transition-transform cursor-pointer"
                 aria-label="Back to top"
               >
                 ↑
