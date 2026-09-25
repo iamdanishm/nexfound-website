@@ -142,9 +142,9 @@ export default function CinematicReel() {
         <div className="flex items-center gap-2 pointer-events-auto">
           <button
             onClick={() => goToSlide(0)}
-            className="flex items-center gap-2 sm:gap-2.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-black/80 border border-white/10 backdrop-blur-xl hover:border-[#DFCA9F]/40 transition-colors shadow-lg"
+            className="group flex items-center gap-2 sm:gap-2.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-black/80 border border-white/10 backdrop-blur-xl hover:border-[#DFCA9F]/40 transition-all shadow-lg cursor-pointer"
           >
-            <div className="relative w-5 h-5 sm:w-7 sm:h-7 flex-shrink-0">
+            <div className="relative w-5 h-5 sm:w-7 sm:h-7 flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
               <Image
                 src="/logo-transparent.png"
                 alt="Nexfound Logo"
@@ -155,10 +155,14 @@ export default function CinematicReel() {
               />
             </div>
             <span className="text-xs sm:text-base font-display font-extrabold tracking-tight text-white">
-              Nexfound<span className="text-[#DFCA9F]">.</span>
+              Nexfound<span className="inline-block text-[#DFCA9F] transition-transform duration-300 group-hover:scale-125">.</span>
             </span>
-            <span className="text-[10px] font-mono text-[#DFCA9F] bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 px-2 py-0.5 rounded-full hidden sm:inline">
-              30-Day Sprint
+            <span className="text-[10px] font-mono text-[#DFCA9F] bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 px-2 py-0.5 rounded-full hidden sm:inline-flex items-center gap-1.5">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DFCA9F] opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#DFCA9F]" />
+              </span>
+              <span>30-Day Sprint</span>
             </span>
           </button>
         </div>
@@ -169,10 +173,10 @@ export default function CinematicReel() {
             <button
               key={s.id}
               onClick={() => goToSlide(idx)}
-              className={`px-3 py-1 rounded-full text-xs font-mono transition-all ${
+              className={`px-3 py-1 rounded-full text-xs font-mono transition-all cursor-pointer ${
                 currentSlide === idx
-                  ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold shadow-md"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold shadow-md shadow-[#DFCA9F]/20"
+                  : "text-zinc-400 hover:text-white hover:bg-white/5"
               }`}
             >
               {s.label}
@@ -184,9 +188,10 @@ export default function CinematicReel() {
         <div className="flex items-center gap-2 pointer-events-auto">
           <button
             onClick={() => goToSlide(5)}
-            className="px-3 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold font-mono uppercase tracking-wider bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-lg shadow-[#DFCA9F]/20 hover:scale-105 active:scale-95 transition-all"
+            className="group px-3 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold font-mono uppercase tracking-wider bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-lg shadow-[#DFCA9F]/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
           >
-            Discuss Idea
+            <span>Discuss Idea</span>
+            <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
           </button>
         </div>
       </header>
@@ -334,7 +339,10 @@ export default function CinematicReel() {
         <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
           <div className="lg:col-span-7 space-y-5 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-zinc-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
               <span>30-Day Sprint · Napkin Note to First Customer</span>
             </div>
 
@@ -350,21 +358,44 @@ export default function CinematicReel() {
             </p>
 
             <div className="grid grid-cols-4 gap-2.5 pt-1 max-w-xl">
-              <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/10 text-center">
+              <div className="group p-3 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-indigo-400/40 hover:-translate-y-1 hover:bg-white/[0.07] transition-all duration-300 text-center cursor-default">
+                <div className="w-7 h-7 mx-auto mb-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-300 group-hover:scale-110 group-hover:bg-indigo-500/20 group-hover:border-indigo-400/40 transition-all duration-300">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="9" />
+                    <polyline points="12 6 12 12 15 15" className="origin-center group-hover:rotate-45 transition-transform duration-500" />
+                  </svg>
+                </div>
                 <div className="text-lg font-bold font-display text-white">30 Days</div>
                 <div className="text-[10px] text-zinc-400 font-mono">To Live Launch</div>
               </div>
-              <div className="p-3 rounded-2xl bg-white/[0.04] border border-[#DFCA9F]/30 text-center">
+              <div className="group p-3 rounded-2xl bg-white/[0.04] border border-[#DFCA9F]/30 hover:border-[#DFCA9F]/60 hover:-translate-y-1 hover:bg-[#DFCA9F]/[0.08] transition-all duration-300 text-center cursor-default shadow-[0_0_15px_rgba(223,202,159,0.08)]">
+                <div className="w-7 h-7 mx-auto mb-1 rounded-lg bg-[#DFCA9F]/15 border border-[#DFCA9F]/30 flex items-center justify-center text-[#DFCA9F] group-hover:scale-110 group-hover:bg-[#DFCA9F]/25 transition-all duration-300">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M6 3h12M6 8h12M6 13l6 8M6 13h4a4 4 0 0 0 0-8" />
+                  </svg>
+                </div>
                 <div className="text-lg font-bold font-display text-[#DFCA9F]">
                   From ₹50k<sup className="text-[9px] text-[#DFCA9F]/70 font-normal">*</sup>
                 </div>
                 <div className="text-[10px] text-zinc-400 font-mono">Starting Floor</div>
               </div>
-              <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/10 text-center">
+              <div className="group p-3 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 hover:-translate-y-1 hover:bg-white/[0.07] transition-all duration-300 text-center cursor-default">
+                <div className="w-7 h-7 mx-auto mb-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 group-hover:bg-emerald-500/20 group-hover:border-emerald-400/40 transition-all duration-300">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                </div>
                 <div className="text-lg font-bold font-display text-white">100% Yours</div>
                 <div className="text-[10px] text-zinc-400 font-mono">Full Ownership</div>
               </div>
-              <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/10 text-center">
+              <div className="group p-3 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-cyan-400/40 hover:-translate-y-1 hover:bg-white/[0.07] transition-all duration-300 text-center cursor-default">
+                <div className="w-7 h-7 mx-auto mb-1 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-300 group-hover:scale-110 group-hover:bg-cyan-500/20 group-hover:border-cyan-400/40 transition-all duration-300">
+                  <svg className="w-3.5 h-3.5 origin-bottom-left group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+                    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                  </svg>
+                </div>
                 <div className="text-lg font-bold font-display text-white">1 Platform</div>
                 <div className="text-[10px] text-zinc-400 font-mono">Prove It Fast</div>
               </div>
@@ -373,15 +404,17 @@ export default function CinematicReel() {
             <div className="flex items-center gap-3 pt-2">
               <button
                 onClick={() => goToSlide(5)}
-                className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-105 active:scale-95 transition-transform"
+                className="group px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-105 active:scale-95 transition-transform flex items-center gap-1.5 cursor-pointer"
               >
-                Discuss Your Idea (Takes 60s) →
+                <span>Discuss Your Idea (Takes 60s)</span>
+                <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
               </button>
               <button
                 onClick={() => goToSlide(1)}
-                className="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs uppercase tracking-wider transition-colors"
+                className="group px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-1.5 cursor-pointer"
               >
-                See What Happens Next ↓
+                <span>See What Happens Next</span>
+                <span className="inline-block transition-transform duration-200 group-hover:translate-y-0.5">↓</span>
               </button>
             </div>
 
@@ -391,39 +424,55 @@ export default function CinematicReel() {
           </div>
 
           <div className="lg:col-span-5 flex justify-center">
-            <div className="w-full max-w-sm rounded-[36px] bg-[#12131F] border-2 border-white/15 p-5 shadow-2xl relative shadow-indigo-500/10 text-left">
+            <div className="w-full max-w-sm rounded-[36px] bg-[#12131F] border-2 border-white/15 p-5 shadow-2xl relative shadow-indigo-500/10 text-left hover:border-white/25 transition-colors">
               <div className="w-12 h-1 bg-black/60 rounded-full mx-auto mb-3" />
               <div className="flex items-center justify-between pb-2.5 border-b border-white/10 mb-3">
-                <span className="text-xs font-mono text-amber-400 font-semibold">📁 Notes &gt; 2:14 AM</span>
-                <span className="text-[10px] font-mono text-zinc-500">Sitting for 8 months</span>
+                <span className="text-xs font-mono text-amber-400 font-semibold flex items-center gap-1.5">
+                  <span>📁 Notes &gt; 2:14 AM</span>
+                </span>
+                <span className="text-[10px] font-mono text-zinc-500 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping inline-block" />
+                  <span>Sitting for 8 months</span>
+                </span>
               </div>
               <div className="space-y-3 text-xs text-zinc-300">
                 <h3 className="text-sm font-bold text-white font-display">
                   Startup Idea: 1-Click Direct Booking &amp; Payments
+                  <span className="inline-block w-[2px] h-3.5 ml-1 bg-amber-400 animate-pulse align-middle" />
                 </h3>
                 <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 text-xs">
                   <span className="font-bold text-amber-400 block mb-0.5">🚨 The Problem:</span>
                   Local businesses waste 15+ hours weekly chasing clients manually on WhatsApp.
                 </div>
-                <div className="space-y-1.5 text-xs text-zinc-300">
+                <div className="space-y-2 text-xs text-zinc-300">
                   <div className="text-[10px] font-mono uppercase text-zinc-400">What users actually need:</div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-emerald-400 font-bold">✓</span>
+                  <div className="flex items-center gap-2 group/chk">
+                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0 group-hover/chk:scale-110 transition-transform">
+                      ✓
+                    </span>
                     <span>1-Click booking link</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-emerald-400 font-bold">✓</span>
+                  <div className="flex items-center gap-2 group/chk">
+                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0 group-hover/chk:scale-110 transition-transform">
+                      ✓
+                    </span>
                     <span>Direct UPI/Card payment to bank</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-emerald-400 font-bold">✓</span>
+                  <div className="flex items-center gap-2 group/chk">
+                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0 group-hover/chk:scale-110 transition-transform">
+                      ✓
+                    </span>
                     <span>Instant confirmation WhatsApp</span>
                   </div>
                 </div>
                 <div className="pt-2 border-t border-white/10 text-[11px] flex justify-between items-center">
                   <span className="text-red-400 line-through">Agency: ₹12L &middot; 7 Mo</span>
-                  <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">
-                    Nexfound: 30 Days
+                  <span className="text-emerald-400 font-bold bg-emerald-500/15 border border-emerald-500/25 px-2.5 py-0.5 rounded flex items-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.15)]">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+                    </span>
+                    <span>Nexfound: 30 Days</span>
                   </span>
                 </div>
               </div>
@@ -436,7 +485,10 @@ export default function CinematicReel() {
           {/* Top text block */}
           <div className="text-center mb-4 sm:mb-6">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-zinc-300 mb-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+              </span>
               <span>30-Day Sprint · Notes to Launch</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
@@ -454,11 +506,17 @@ export default function CinematicReel() {
           <div className="w-full rounded-2xl bg-[#12131F] border border-white/20 p-4 sm:p-5 shadow-2xl relative text-left space-y-2.5 mb-4 sm:mb-5">
             <div className="w-12 h-1 bg-black/60 rounded-full mx-auto mb-2" />
             <div className="flex items-center justify-between pb-1.5 border-b border-white/10">
-              <span className="text-xs sm:text-sm font-mono text-amber-400 font-semibold">📁 Notes &gt; 2:14 AM</span>
-              <span className="text-xs font-mono text-zinc-400">Sitting for 8 months</span>
+              <span className="text-xs sm:text-sm font-mono text-amber-400 font-semibold flex items-center gap-1.5">
+                <span>📁 Notes &gt; 2:14 AM</span>
+              </span>
+              <span className="text-xs font-mono text-zinc-400 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping inline-block" />
+                <span>Sitting for 8 months</span>
+              </span>
             </div>
             <h3 className="text-sm sm:text-base font-bold text-white font-display leading-snug">
               Startup Idea: 1-Click Direct Booking &amp; Payments
+              <span className="inline-block w-[2px] h-3.5 ml-1 bg-amber-400 animate-pulse align-middle" />
             </h3>
             <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 text-xs sm:text-sm leading-relaxed">
               <span className="font-bold text-amber-400 block mb-0.5">🚨 The Problem:</span>
@@ -466,22 +524,32 @@ export default function CinematicReel() {
             </div>
             <div className="space-y-1.5 text-xs sm:text-sm text-zinc-200">
               <div className="flex items-center gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
+                <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0">
+                  ✓
+                </span>
                 <span>1-Click direct booking link</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
+                <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0">
+                  ✓
+                </span>
                 <span>Direct UPI/Card payments to bank</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
+                <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0">
+                  ✓
+                </span>
                 <span>Instant confirmation WhatsApp</span>
               </div>
             </div>
             <div className="pt-2.5 border-t border-white/10 text-xs sm:text-sm flex justify-between items-center">
               <span className="text-red-400 line-through">Agency: ₹12L &middot; 7 Mo</span>
-              <span className="text-emerald-400 font-bold bg-emerald-500/15 px-2.5 py-1 rounded-md">
-                Nexfound: 30 Days
+              <span className="text-emerald-400 font-bold bg-emerald-500/15 border border-emerald-500/25 px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.15)]">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+                </span>
+                <span>Nexfound: 30 Days</span>
               </span>
             </div>
           </div>
@@ -490,9 +558,10 @@ export default function CinematicReel() {
           <div className="text-center flex flex-col items-center gap-1.5 w-full">
             <button
               onClick={() => goToSlide(5)}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-102 active:scale-98 transition-transform text-center"
+              className="group w-full py-3 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-102 active:scale-98 transition-transform text-center flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              Discuss Idea (Takes 60s) →
+              <span>Discuss Idea (Takes 60s)</span>
+              <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
             </button>
             <button
               onClick={() => goToSlide(1)}
@@ -518,7 +587,11 @@ export default function CinematicReel() {
         <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
           <div className="lg:col-span-7 space-y-5 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-xs font-mono text-red-400">
-              <span>⚠️ The Costly Reality Check</span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-400" />
+              </span>
+              <span>The Costly Reality Check</span>
             </div>
 
             <h2 className="text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-[1.1]">
@@ -533,30 +606,42 @@ export default function CinematicReel() {
             </p>
 
             <div className="space-y-3 pt-1 max-w-xl">
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 flex items-start gap-3">
-                <span className="text-lg flex-shrink-0">❌</span>
+              <div className="group p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-red-500/30 hover:bg-white/[0.06] hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-3">
+                <div className="w-8 h-8 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-red-400 flex-shrink-0 group-hover:scale-110 group-hover:bg-red-500/25 group-hover:border-red-400/50 transition-all duration-300">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg>
+                </div>
                 <div>
-                  <div className="text-sm font-bold text-white">Mistake 01: Building iOS, Android, and Web on Day 1</div>
+                  <div className="text-sm font-bold text-white group-hover:text-red-200 transition-colors">Mistake 01: Building iOS, Android, and Web on Day 1</div>
                   <div className="text-xs text-zinc-400 mt-0.5">
                     Burning 3x the budget and 9 months before finding out if a single person wants to use it.
                   </div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 flex items-start gap-3">
-                <span className="text-lg flex-shrink-0">❌</span>
+              <div className="group p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-red-500/30 hover:bg-white/[0.06] hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-3">
+                <div className="w-8 h-8 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-red-400 flex-shrink-0 group-hover:scale-110 group-hover:bg-red-500/25 group-hover:border-red-400/50 transition-all duration-300">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg>
+                </div>
                 <div>
-                  <div className="text-sm font-bold text-white">Mistake 02: Paying Retainers for Wireframes &amp; Meetings</div>
+                  <div className="text-sm font-bold text-white group-hover:text-red-200 transition-colors">Mistake 02: Paying Retainers for Wireframes &amp; Meetings</div>
                   <div className="text-xs text-zinc-400 mt-0.5">
                     Endless discovery calls while junior coders get assigned to your product.
                   </div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 flex items-start gap-3">
-                <span className="text-lg flex-shrink-0">❌</span>
+              <div className="group p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-red-500/30 hover:bg-white/[0.06] hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-3">
+                <div className="w-8 h-8 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-red-400 flex-shrink-0 group-hover:scale-110 group-hover:bg-red-500/25 group-hover:border-red-400/50 transition-all duration-300">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg>
+                </div>
                 <div>
-                  <div className="text-sm font-bold text-white">Mistake 03: The Fragile AI Code Maze</div>
+                  <div className="text-sm font-bold text-white group-hover:text-red-200 transition-colors">Mistake 03: The Fragile AI Code Maze</div>
                   <div className="text-xs text-zinc-400 mt-0.5">
                     Looks slick in a Twitter demo, but crashes the second a real customer tries to pay via UPI.
                   </div>
@@ -566,34 +651,52 @@ export default function CinematicReel() {
           </div>
 
           <div className="lg:col-span-5 flex justify-center">
-            <div className="w-full max-w-md rounded-3xl bg-[#140608]/90 border border-red-500/25 p-7 shadow-2xl space-y-5 text-left">
+            <div className="w-full max-w-md rounded-3xl bg-[#140608]/90 border border-red-500/25 p-7 shadow-2xl space-y-5 text-left hover:border-red-500/40 transition-colors">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <span className="text-xs font-mono uppercase text-red-400 font-bold">Traditional Agency Retainer</span>
+                <span className="text-xs font-mono uppercase text-red-400 font-bold flex items-center gap-1.5">
+                  <span>Traditional Agency Retainer</span>
+                </span>
                 <span className="text-xs font-mono text-zinc-500">6–9 Months</span>
               </div>
 
               <div className="space-y-2 text-xs text-zinc-300">
-                <div className="flex justify-between py-1 border-b border-white/5">
-                  <span>Scoping workshops &amp; Figma decks:</span>
+                <div className="flex justify-between py-1 border-b border-white/5 items-center">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-3.5 h-3.5 rounded-full bg-red-500/15 text-red-400 text-[10px] flex items-center justify-center font-bold">−</span>
+                    <span>Scoping workshops &amp; Figma decks:</span>
+                  </span>
                   <span className="text-red-400 font-mono font-bold">₹4,00,000</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-white/5">
-                  <span>Junior developer hourly retainers:</span>
+                <div className="flex justify-between py-1 border-b border-white/5 items-center">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-3.5 h-3.5 rounded-full bg-red-500/15 text-red-400 text-[10px] flex items-center justify-center font-bold">−</span>
+                    <span>Junior developer hourly retainers:</span>
+                  </span>
                   <span className="text-red-400 font-mono font-bold">₹8,50,000</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-white/5">
-                  <span>Vendor lock-in &amp; server fees:</span>
+                <div className="flex justify-between py-1 border-b border-white/5 items-center">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-3.5 h-3.5 rounded-full bg-red-500/15 text-red-400 text-[10px] flex items-center justify-center font-bold">−</span>
+                    <span>Vendor lock-in &amp; server fees:</span>
+                  </span>
                   <span className="text-red-400 font-mono font-bold">₹2,50,000</span>
                 </div>
-                <div className="flex justify-between py-1 font-bold text-white">
+                <div className="flex justify-between py-1 font-bold text-white items-center">
                   <span>Customers paying you on Day 180:</span>
-                  <span className="text-red-400 font-mono">0 Users</span>
+                  <span className="text-red-400 font-mono inline-flex items-center gap-1.5 bg-red-500/15 border border-red-500/25 px-2 py-0.5 rounded">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-400" />
+                    </span>
+                    <span>0 Users</span>
+                  </span>
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/25">
-                <div className="text-xs font-mono text-emerald-400 uppercase font-bold mb-1">
-                  The Nexfound Alternative:
+              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.12)]">
+                <div className="text-xs font-mono text-emerald-400 uppercase font-bold mb-1 flex items-center gap-1.5">
+                  <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-[10px] text-emerald-300">✓</span>
+                  <span>The Nexfound Alternative:</span>
                 </div>
                 <div className="text-sm font-bold text-white">
                   Fixed 30-Day Sprint starting from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup>.
@@ -610,7 +713,11 @@ export default function CinematicReel() {
         <div className="lg:hidden flex flex-col justify-center items-center h-full w-full max-w-[420px] mx-auto z-10 pt-12 pb-14 px-3.5">
           <div className="text-center mb-4 sm:mb-6">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 text-[11px] font-mono text-red-400 mb-1">
-              <span>⚠️ The Costly Trap</span>
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-400" />
+              </span>
+              <span>The Costly Trap</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
               Are you about to burn ₹15L on a{" "}
@@ -629,26 +736,42 @@ export default function CinematicReel() {
               <span className="text-xs font-mono text-zinc-400">6–9 Months</span>
             </div>
             <div className="space-y-2 text-xs sm:text-sm text-zinc-200">
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span>Scoping &amp; Figma decks:</span>
+              <div className="flex justify-between py-1 border-b border-white/5 items-center">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-3.5 h-3.5 rounded-full bg-red-500/15 text-red-400 text-[10px] flex items-center justify-center font-bold">−</span>
+                  <span>Scoping &amp; Figma decks:</span>
+                </span>
                 <span className="text-red-400 font-mono font-bold">₹4,00,000</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span>Developer hourly retainers:</span>
+              <div className="flex justify-between py-1 border-b border-white/5 items-center">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-3.5 h-3.5 rounded-full bg-red-500/15 text-red-400 text-[10px] flex items-center justify-center font-bold">−</span>
+                  <span>Developer hourly retainers:</span>
+                </span>
                 <span className="text-red-400 font-mono font-bold">₹8,50,000</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-white/5">
-                <span>Server &amp; lock-in fees:</span>
+              <div className="flex justify-between py-1 border-b border-white/5 items-center">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-3.5 h-3.5 rounded-full bg-red-500/15 text-red-400 text-[10px] flex items-center justify-center font-bold">−</span>
+                  <span>Server &amp; lock-in fees:</span>
+                </span>
                 <span className="text-red-400 font-mono font-bold">₹2,50,000</span>
               </div>
-              <div className="flex justify-between py-1 font-bold text-white">
+              <div className="flex justify-between py-1 font-bold text-white items-center">
                 <span>Paying users on Day 180:</span>
-                <span className="text-red-400 font-mono">0 Users</span>
+                <span className="text-red-400 font-mono inline-flex items-center gap-1.5 bg-red-500/15 border border-red-500/25 px-2 py-0.5 rounded">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-400" />
+                  </span>
+                  <span>0 Users</span>
+                </span>
               </div>
             </div>
-            <div className="p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30">
-              <div className="text-xs font-mono text-emerald-400 uppercase font-bold mb-1">
-                The Nexfound Alternative:
+            <div className="p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+              <div className="text-xs font-mono text-emerald-400 uppercase font-bold mb-1 flex items-center gap-1.5">
+                <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-[10px] text-emerald-300">✓</span>
+                <span>The Nexfound Alternative:</span>
               </div>
               <div className="text-sm sm:text-base font-bold text-white">
                 Fixed 30-Day Sprint from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup>.
@@ -684,7 +807,11 @@ export default function CinematicReel() {
         <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
           <div className="lg:col-span-7 space-y-5 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400">
-              <span>⚡ The 30-Day Lean Strategy</span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
+              <span>The 30-Day Lean Strategy</span>
             </div>
 
             <h2 className="text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-[1.1]">
@@ -701,23 +828,31 @@ export default function CinematicReel() {
             <div className="flex items-center gap-2 pt-1">
               <button
                 onClick={() => setWebOrMobile("web")}
-                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+                className={`group px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   webOrMobile === "web"
                     ? "bg-emerald-400 text-black shadow-lg shadow-emerald-500/20"
                     : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
                 }`}
               >
-                🌐 Option A: Web First
+                <svg className={`w-3.5 h-3.5 ${webOrMobile === "web" ? "animate-[spin_10s_linear_infinite]" : "group-hover:rotate-45 transition-transform"}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20" />
+                </svg>
+                <span>Option A: Web First</span>
               </button>
               <button
                 onClick={() => setWebOrMobile("mobile")}
-                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+                className={`group px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   webOrMobile === "mobile"
                     ? "bg-emerald-400 text-black shadow-lg shadow-emerald-500/20"
                     : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
                 }`}
               >
-                📱 Option B: Mobile First
+                <svg className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+                  <path d="M12 18h.01" />
+                </svg>
+                <span>Option B: Mobile First</span>
               </button>
             </div>
 
@@ -727,10 +862,10 @@ export default function CinematicReel() {
           </div>
 
           <div className="lg:col-span-5 flex justify-center">
-            <div className="w-full max-w-md rounded-3xl bg-[#091510] border border-emerald-500/25 p-6 shadow-2xl text-left space-y-4">
+            <div className="w-full max-w-md rounded-3xl bg-[#091510] border border-emerald-500/25 p-6 shadow-2xl text-left space-y-4 hover:border-emerald-500/40 transition-colors">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <span className="text-xs font-mono uppercase text-emerald-400 font-bold">
-                  {webOrMobile === "web" ? "Web First Architecture" : "Mobile First Architecture"}
+                <span className="text-xs font-mono uppercase text-emerald-400 font-bold flex items-center gap-1.5">
+                  <span>{webOrMobile === "web" ? "Web First Architecture" : "Mobile First Architecture"}</span>
                 </span>
                 <span className="text-xs font-mono text-zinc-400">Day 30 Live</span>
               </div>
@@ -745,17 +880,26 @@ export default function CinematicReel() {
                     transition={{ duration: 0.2 }}
                     className="space-y-3 text-xs text-zinc-300"
                   >
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="font-bold text-white">Zero App Store Barrier</div>
-                      <div className="text-zinc-400 mt-0.5">Customers tap a link on WhatsApp and use it instantly.</div>
+                    <div className="group/item p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 hover:bg-white/[0.06] transition-all duration-300">
+                      <div className="flex items-center gap-2 font-bold text-white">
+                        <span className="w-5 h-5 rounded-md bg-amber-400/15 text-amber-300 flex items-center justify-center text-xs group-hover/item:scale-110 transition-transform">⚡</span>
+                        <span>Zero App Store Barrier</span>
+                      </div>
+                      <div className="text-zinc-400 mt-1 pl-7">Customers tap a link on WhatsApp and use it instantly.</div>
                     </div>
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="font-bold text-white">100% Revenue Retention</div>
-                      <div className="text-zinc-400 mt-0.5">No 30% Apple/Google tax. Direct UPI &amp; card payouts to your bank.</div>
+                    <div className="group/item p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 hover:bg-white/[0.06] transition-all duration-300">
+                      <div className="flex items-center gap-2 font-bold text-white">
+                        <span className="w-5 h-5 rounded-md bg-emerald-400/15 text-emerald-300 flex items-center justify-center text-xs font-bold group-hover/item:scale-110 transition-transform">₹</span>
+                        <span>100% Revenue Retention</span>
+                      </div>
+                      <div className="text-zinc-400 mt-1 pl-7">No 30% Apple/Google tax. Direct UPI &amp; card payouts to your bank.</div>
                     </div>
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="font-bold text-white">Instant Updates</div>
-                      <div className="text-zinc-400 mt-0.5">Update prices, copy, and features in seconds with zero review delays.</div>
+                    <div className="group/item p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 hover:bg-white/[0.06] transition-all duration-300">
+                      <div className="flex items-center gap-2 font-bold text-white">
+                        <span className="w-5 h-5 rounded-md bg-cyan-400/15 text-cyan-300 flex items-center justify-center text-xs group-hover/item:scale-110 transition-transform">🚀</span>
+                        <span>Instant Updates</span>
+                      </div>
+                      <div className="text-zinc-400 mt-1 pl-7">Update prices, copy, and features in seconds with zero review delays.</div>
                     </div>
                   </motion.div>
                 ) : (
@@ -767,29 +911,42 @@ export default function CinematicReel() {
                     transition={{ duration: 0.2 }}
                     className="space-y-3 text-xs text-zinc-300"
                   >
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="font-bold text-white">Permanent Pocket Real Estate</div>
-                      <div className="text-zinc-400 mt-0.5">Lives on their home screen for daily recurring habits.</div>
+                    <div className="group/item p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 hover:bg-white/[0.06] transition-all duration-300">
+                      <div className="flex items-center gap-2 font-bold text-white">
+                        <span className="w-5 h-5 rounded-md bg-indigo-400/15 text-indigo-300 flex items-center justify-center text-xs group-hover/item:scale-110 transition-transform">📲</span>
+                        <span>Permanent Pocket Real Estate</span>
+                      </div>
+                      <div className="text-zinc-400 mt-1 pl-7">Lives on their home screen for daily recurring habits.</div>
                     </div>
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="font-bold text-white">Free Push Notifications</div>
-                      <div className="text-zinc-400 mt-0.5">Re-engage customers instantly without spending a rupee on ads.</div>
+                    <div className="group/item p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 hover:bg-white/[0.06] transition-all duration-300">
+                      <div className="flex items-center gap-2 font-bold text-white">
+                        <span className="w-5 h-5 rounded-md bg-amber-400/15 text-amber-300 flex items-center justify-center text-xs group-hover/item:scale-110 transition-transform">🔔</span>
+                        <span>Free Push Notifications</span>
+                      </div>
+                      <div className="text-zinc-400 mt-1 pl-7">Re-engage customers instantly without spending a rupee on ads.</div>
                     </div>
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                      <div className="font-bold text-white">Hardware Integration</div>
-                      <div className="text-zinc-400 mt-0.5">Seamless offline Bluetooth, GPS location, and camera access.</div>
+                    <div className="group/item p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 hover:bg-white/[0.06] transition-all duration-300">
+                      <div className="flex items-center gap-2 font-bold text-white">
+                        <span className="w-5 h-5 rounded-md bg-cyan-400/15 text-cyan-300 flex items-center justify-center text-xs group-hover/item:scale-110 transition-transform">📡</span>
+                        <span>Hardware Integration</span>
+                      </div>
+                      <div className="text-zinc-400 mt-1 pl-7">Seamless offline Bluetooth, GPS location, and camera access.</div>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-xs">
+              <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-xs shadow-[0_0_15px_rgba(16,185,129,0.08)]">
                 <div>
                   <div className="text-[10px] font-mono text-emerald-400 uppercase">30-Day Revenue Validation:</div>
                   <div className="text-base font-bold text-white mt-0.5">₹1,48,500 Deposited</div>
                 </div>
-                <span className="px-2 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">
-                  VERIFIED
+                <span className="px-2.5 py-1 rounded bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-mono text-xs font-bold inline-flex items-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+                  </span>
+                  <span>VERIFIED</span>
                 </span>
               </div>
             </div>
@@ -800,7 +957,11 @@ export default function CinematicReel() {
         <div className="lg:hidden flex flex-col justify-center items-center h-full w-full max-w-[420px] mx-auto z-10 pt-12 pb-14 px-3.5">
           <div className="text-center mb-3">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400 mb-1">
-              <span>⚡ The 30-Day Lean Strategy</span>
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+              </span>
+              <span>The 30-Day Lean Strategy</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
               Cut 80% of noise and{" "}
@@ -814,23 +975,31 @@ export default function CinematicReel() {
           <div className="flex justify-center items-center gap-2.5 mb-4 w-full">
             <button
               onClick={() => setWebOrMobile("web")}
-              className={`flex-1 max-w-[170px] py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+              className={`flex-1 max-w-[170px] py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 webOrMobile === "web"
                   ? "bg-emerald-400 text-black shadow-md shadow-emerald-500/20"
                   : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
               }`}
             >
-              🌐 Option A: Web
+              <svg className={`w-3.5 h-3.5 ${webOrMobile === "web" ? "animate-[spin_10s_linear_infinite]" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20" />
+              </svg>
+              <span>Option A: Web</span>
             </button>
             <button
               onClick={() => setWebOrMobile("mobile")}
-              className={`flex-1 max-w-[170px] py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+              className={`flex-1 max-w-[170px] py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 webOrMobile === "mobile"
                   ? "bg-emerald-400 text-black shadow-md shadow-emerald-500/20"
                   : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
               }`}
             >
-              📱 Option B: Mobile
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+                <path d="M12 18h.01" />
+              </svg>
+              <span>Option B: Mobile</span>
             </button>
           </div>
 
@@ -852,16 +1021,25 @@ export default function CinematicReel() {
                   className="space-y-2.5 text-xs sm:text-sm text-zinc-200"
                 >
                   <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                    <div className="font-bold text-white text-xs sm:text-sm">Zero App Store Barrier</div>
-                    <div className="text-zinc-300 text-xs mt-0.5">Customers tap a link on WhatsApp and use it instantly.</div>
+                    <div className="flex items-center gap-2 font-bold text-white text-xs sm:text-sm">
+                      <span className="w-4 h-4 rounded bg-amber-400/15 text-amber-300 flex items-center justify-center text-[10px]">⚡</span>
+                      <span>Zero App Store Barrier</span>
+                    </div>
+                    <div className="text-zinc-300 text-xs mt-1 pl-6">Customers tap a link on WhatsApp and use it instantly.</div>
                   </div>
                   <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                    <div className="font-bold text-white text-xs sm:text-sm">100% Revenue Retention</div>
-                    <div className="text-zinc-300 text-xs mt-0.5">No 30% Apple tax. Direct UPI &amp; card payouts to your bank.</div>
+                    <div className="flex items-center gap-2 font-bold text-white text-xs sm:text-sm">
+                      <span className="w-4 h-4 rounded bg-emerald-400/15 text-emerald-300 flex items-center justify-center text-[10px] font-bold">₹</span>
+                      <span>100% Revenue Retention</span>
+                    </div>
+                    <div className="text-zinc-300 text-xs mt-1 pl-6">No 30% Apple tax. Direct UPI &amp; card payouts to your bank.</div>
                   </div>
                   <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                    <div className="font-bold text-white text-xs sm:text-sm">Instant Updates</div>
-                    <div className="text-zinc-300 text-xs mt-0.5">Deploy code and pricing updates in seconds with zero delays.</div>
+                    <div className="flex items-center gap-2 font-bold text-white text-xs sm:text-sm">
+                      <span className="w-4 h-4 rounded bg-cyan-400/15 text-cyan-300 flex items-center justify-center text-[10px]">🚀</span>
+                      <span>Instant Updates</span>
+                    </div>
+                    <div className="text-zinc-300 text-xs mt-1 pl-6">Deploy code and pricing updates in seconds with zero delays.</div>
                   </div>
                 </motion.div>
               ) : (
@@ -874,16 +1052,25 @@ export default function CinematicReel() {
                   className="space-y-2.5 text-xs sm:text-sm text-zinc-200"
                 >
                   <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                    <div className="font-bold text-white text-xs sm:text-sm">Permanent Home Screen Real Estate</div>
-                    <div className="text-zinc-300 text-xs mt-0.5">Lives on customer home screens for daily recurring habits.</div>
+                    <div className="flex items-center gap-2 font-bold text-white text-xs sm:text-sm">
+                      <span className="w-4 h-4 rounded bg-indigo-400/15 text-indigo-300 flex items-center justify-center text-[10px]">📲</span>
+                      <span>Permanent Home Screen Real Estate</span>
+                    </div>
+                    <div className="text-zinc-300 text-xs mt-1 pl-6">Lives on customer home screens for daily recurring habits.</div>
                   </div>
                   <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                    <div className="font-bold text-white text-xs sm:text-sm">Free Push Notifications</div>
-                    <div className="text-zinc-300 text-xs mt-0.5">Re-engage customers anytime with zero ad spend.</div>
+                    <div className="flex items-center gap-2 font-bold text-white text-xs sm:text-sm">
+                      <span className="w-4 h-4 rounded bg-amber-400/15 text-amber-300 flex items-center justify-center text-[10px]">🔔</span>
+                      <span>Free Push Notifications</span>
+                    </div>
+                    <div className="text-zinc-300 text-xs mt-1 pl-6">Re-engage customers anytime with zero ad spend.</div>
                   </div>
                   <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                    <div className="font-bold text-white text-xs sm:text-sm">Hardware Integration</div>
-                    <div className="text-zinc-300 text-xs mt-0.5">Offline Bluetooth, GPS location, and camera sensors.</div>
+                    <div className="flex items-center gap-2 font-bold text-white text-xs sm:text-sm">
+                      <span className="w-4 h-4 rounded bg-cyan-400/15 text-cyan-300 flex items-center justify-center text-[10px]">📡</span>
+                      <span>Hardware Integration</span>
+                    </div>
+                    <div className="text-zinc-300 text-xs mt-1 pl-6">Offline Bluetooth, GPS location, and camera sensors.</div>
                   </div>
                 </motion.div>
               )}
@@ -893,8 +1080,12 @@ export default function CinematicReel() {
                 <div className="text-[10px] font-mono text-emerald-400 uppercase">30-Day Revenue:</div>
                 <div className="text-sm sm:text-base font-bold text-white">₹1,48,500 Deposited</div>
               </div>
-              <span className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">
-                VERIFIED
+              <span className="px-2.5 py-1 rounded bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-mono text-xs font-bold inline-flex items-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+                </span>
+                <span>VERIFIED</span>
               </span>
             </div>
           </div>
@@ -924,7 +1115,11 @@ export default function CinematicReel() {
         <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
           <div className="lg:col-span-6 space-y-5 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-mono text-cyan-400">
-              <span>📦 Zero Jargon · 100% Tangible Assets</span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
+              </span>
+              <span>Zero Jargon · 100% Tangible Assets</span>
             </div>
 
             <h2 className="text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-[1.1]">
@@ -944,40 +1139,76 @@ export default function CinematicReel() {
           </div>
 
           <div className="lg:col-span-6 grid grid-cols-2 gap-3.5 text-left">
-            <div className="p-5 rounded-2xl bg-[#091820] border border-cyan-500/20 shadow-xl space-y-2">
-              <div className="text-2xl">🌐</div>
-              <h3 className="text-base font-bold text-white font-display">Live App on Your Domain</h3>
+            <div className="group p-5 rounded-2xl bg-[#091820] border border-cyan-500/20 hover:border-cyan-400/40 hover:bg-[#0c202a] hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(6,182,212,0.25)] transition-all duration-300 space-y-2 cursor-default">
+              <div className="relative w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 group-hover:scale-110 group-hover:bg-cyan-500/25 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-300">
+                <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20" />
+                </svg>
+                <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
+                </span>
+              </div>
+              <h3 className="text-base font-bold text-white font-display group-hover:text-cyan-200 transition-colors">Live App on Your Domain</h3>
               <p className="text-xs text-zinc-300 leading-relaxed">
                 Loads in under 1 second. Built to look gorgeous on iPhones, Androids, and laptops.
               </p>
-              <div className="text-[10px] font-mono text-cyan-300 font-bold pt-1">OUTCOME: INSTANT TRUST</div>
+              <div className="text-[10px] font-mono text-cyan-300 font-bold pt-1 flex items-center gap-1">
+                <span>OUTCOME: INSTANT TRUST</span>
+              </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#091820] border border-cyan-500/20 shadow-xl space-y-2">
-              <div className="text-2xl">💳</div>
-              <h3 className="text-base font-bold text-white font-display">Instant Customer Checkout</h3>
+            <div className="group p-5 rounded-2xl bg-[#091820] border border-cyan-500/20 hover:border-cyan-400/40 hover:bg-[#0c202a] hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(6,182,212,0.25)] transition-all duration-300 space-y-2 cursor-default">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 group-hover:scale-110 group-hover:bg-cyan-500/25 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-300">
+                <svg className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect width="20" height="14" x="2" y="5" rx="2" />
+                  <line x1="2" x2="22" y1="10" strokeLinecap="round" />
+                  <path d="M6 15h2M12 15h4" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h3 className="text-base font-bold text-white font-display group-hover:text-cyan-200 transition-colors">Instant Customer Checkout</h3>
               <p className="text-xs text-zinc-300 leading-relaxed">
                 Connected to Stripe &amp; UPI. Payments deposit directly into your bank account.
               </p>
-              <div className="text-[10px] font-mono text-cyan-300 font-bold pt-1">OUTCOME: DIRECT REVENUE</div>
+              <div className="text-[10px] font-mono text-cyan-300 font-bold pt-1 flex items-center gap-1">
+                <span>OUTCOME: DIRECT REVENUE</span>
+              </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#091820] border border-cyan-500/20 shadow-xl space-y-2">
-              <div className="text-2xl">📊</div>
-              <h3 className="text-base font-bold text-white font-display">Founder Control Panel</h3>
+            <div className="group p-5 rounded-2xl bg-[#091820] border border-cyan-500/20 hover:border-cyan-400/40 hover:bg-[#0c202a] hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(6,182,212,0.25)] transition-all duration-300 space-y-2 cursor-default">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 group-hover:scale-110 group-hover:bg-cyan-500/25 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-300">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="18" x2="18" y1="20" y2="10" className="group-hover:stroke-cyan-200 transition-colors" />
+                  <line x1="12" x2="12" y1="20" y2="4" className="group-hover:stroke-cyan-200 transition-colors" />
+                  <line x1="6" x2="6" y1="20" y2="14" className="group-hover:stroke-cyan-200 transition-colors" />
+                </svg>
+              </div>
+              <h3 className="text-base font-bold text-white font-display group-hover:text-cyan-200 transition-colors">Founder Control Panel</h3>
               <p className="text-xs text-zinc-300 leading-relaxed">
                 Clean admin screen to track sales, view users, and export customer data without code.
               </p>
-              <div className="text-[10px] font-mono text-cyan-300 font-bold pt-1">OUTCOME: ZERO CODE NEEDED</div>
+              <div className="text-[10px] font-mono text-cyan-300 font-bold pt-1 flex items-center gap-1">
+                <span>OUTCOME: ZERO CODE NEEDED</span>
+              </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#091820] border border-cyan-500/20 shadow-xl space-y-2">
-              <div className="text-2xl">🔑</div>
-              <h3 className="text-base font-bold text-white font-display">100% Code Ownership</h3>
+            <div className="group p-5 rounded-2xl bg-[#091820] border border-cyan-500/20 hover:border-cyan-400/40 hover:bg-[#0c202a] hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(6,182,212,0.25)] transition-all duration-300 space-y-2 cursor-default">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 group-hover:scale-110 group-hover:bg-cyan-500/25 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-300">
+                <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="6" x2="6" y1="3" y2="15" />
+                  <circle cx="18" cy="6" r="3" />
+                  <circle cx="6" cy="18" r="3" />
+                  <path d="M18 9a9 9 0 0 1-9 9" />
+                </svg>
+              </div>
+              <h3 className="text-base font-bold text-white font-display group-hover:text-cyan-200 transition-colors">100% Code Ownership</h3>
               <p className="text-xs text-zinc-300 leading-relaxed">
                 Transferred to your GitHub and cloud accounts. Zero hostage retainers or lock-in.
               </p>
-              <div className="text-[10px] font-mono text-cyan-300 font-bold pt-1">OUTCOME: 100% ASSET FREEDOM</div>
+              <div className="text-[10px] font-mono text-cyan-300 font-bold pt-1 flex items-center gap-1">
+                <span>OUTCOME: 100% ASSET FREEDOM</span>
+              </div>
             </div>
           </div>
         </div>
@@ -986,7 +1217,11 @@ export default function CinematicReel() {
         <div className="lg:hidden flex flex-col justify-center items-center h-full w-full max-w-[420px] mx-auto z-10 pt-12 pb-14 px-3.5">
           <div className="text-center mb-4 sm:mb-6">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[11px] font-mono text-cyan-400 mb-1">
-              <span>📦 4 Tangible Assets</span>
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-400" />
+              </span>
+              <span>4 Tangible Assets</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
               What do you get when we{" "}
@@ -1000,9 +1235,16 @@ export default function CinematicReel() {
           </div>
 
           <div className="w-full space-y-2.5 mb-4 sm:mb-5 text-left">
-            <div className="p-2.5 sm:p-3 rounded-xl bg-[#091820] border border-cyan-500/25 shadow-lg flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-lg flex-shrink-0">
-                🌐
+            <div className="group p-2.5 sm:p-3 rounded-xl bg-[#091820] border border-cyan-500/25 hover:border-cyan-400/40 shadow-lg flex items-center gap-3 transition-colors">
+              <div className="relative w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 flex-shrink-0 group-hover:scale-105 transition-transform">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20" />
+                </svg>
+                <span className="absolute -top-0.5 -right-0.5 flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-400" />
+                </span>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
@@ -1013,9 +1255,13 @@ export default function CinematicReel() {
               </div>
             </div>
 
-            <div className="p-2.5 sm:p-3 rounded-xl bg-[#091820] border border-cyan-500/25 shadow-lg flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-lg flex-shrink-0">
-                💳
+            <div className="group p-2.5 sm:p-3 rounded-xl bg-[#091820] border border-cyan-500/25 hover:border-cyan-400/40 shadow-lg flex items-center gap-3 transition-colors">
+              <div className="w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 flex-shrink-0 group-hover:scale-105 transition-transform">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect width="20" height="14" x="2" y="5" rx="2" />
+                  <line x1="2" x2="22" y1="10" strokeLinecap="round" />
+                  <path d="M6 15h2M12 15h4" strokeLinecap="round" />
+                </svg>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
@@ -1026,9 +1272,13 @@ export default function CinematicReel() {
               </div>
             </div>
 
-            <div className="p-2.5 sm:p-3 rounded-xl bg-[#091820] border border-cyan-500/25 shadow-lg flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-lg flex-shrink-0">
-                📊
+            <div className="group p-2.5 sm:p-3 rounded-xl bg-[#091820] border border-cyan-500/25 hover:border-cyan-400/40 shadow-lg flex items-center gap-3 transition-colors">
+              <div className="w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 flex-shrink-0 group-hover:scale-105 transition-transform">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="18" x2="18" y1="20" y2="10" />
+                  <line x1="12" x2="12" y1="20" y2="4" />
+                  <line x1="6" x2="6" y1="20" y2="14" />
+                </svg>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
@@ -1039,9 +1289,14 @@ export default function CinematicReel() {
               </div>
             </div>
 
-            <div className="p-2.5 sm:p-3 rounded-xl bg-[#091820] border border-cyan-500/25 shadow-lg flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-lg flex-shrink-0">
-                🔑
+            <div className="group p-2.5 sm:p-3 rounded-xl bg-[#091820] border border-cyan-500/25 hover:border-cyan-400/40 shadow-lg flex items-center gap-3 transition-colors">
+              <div className="w-9 h-9 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300 flex-shrink-0 group-hover:scale-105 transition-transform">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="6" x2="6" y1="3" y2="15" />
+                  <circle cx="18" cy="6" r="3" />
+                  <circle cx="6" cy="18" r="3" />
+                  <path d="M18 9a9 9 0 0 1-9 9" />
+                </svg>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
@@ -1078,7 +1333,11 @@ export default function CinematicReel() {
         <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
           <div className="lg:col-span-6 space-y-5 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 text-xs font-mono text-[#DFCA9F]">
-              <span>💰 Honest Pricing &amp; Scope Clarity</span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DFCA9F] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#DFCA9F]" />
+              </span>
+              <span>Honest Pricing &amp; Scope Clarity</span>
             </div>
 
             <h2 className="text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-[1.1]">
@@ -1112,29 +1371,37 @@ export default function CinematicReel() {
             <div className="flex items-center gap-2 pt-1">
               <button
                 onClick={() => setActiveProject("dalalfree")}
-                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+                className={`group px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeProject === "dalalfree"
-                    ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-lg"
+                    ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-lg shadow-[#DFCA9F]/20"
                     : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
                 }`}
               >
-                🌐 Proof 01: DalalFree
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20" />
+                </svg>
+                <span>Proof 01: DalalFree</span>
               </button>
               <button
                 onClick={() => setActiveProject("evdock")}
-                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+                className={`group px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeProject === "evdock"
-                    ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-lg"
+                    ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-lg shadow-[#DFCA9F]/20"
                     : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
                 }`}
               >
-                📱 Proof 02: EV Dock
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+                  <path d="M12 18h.01" />
+                </svg>
+                <span>Proof 02: EV Dock</span>
               </button>
             </div>
           </div>
 
           <div className="lg:col-span-6 flex justify-center">
-            <div className="w-full max-w-lg rounded-3xl bg-[#14120A] border border-[#DFCA9F]/25 overflow-hidden shadow-2xl text-left">
+            <div className="w-full max-w-lg rounded-3xl bg-[#14120A] border border-[#DFCA9F]/25 overflow-hidden shadow-2xl text-left hover:border-[#DFCA9F]/40 transition-colors">
               <AnimatePresence mode="wait">
                 {activeProject === "dalalfree" ? (
                   <motion.div
@@ -1149,20 +1416,25 @@ export default function CinematicReel() {
                         <div className="text-[10px] font-mono uppercase text-[#DFCA9F] font-bold">Client Web Platform</div>
                         <div className="text-base font-bold text-white font-display">DalalFree</div>
                       </div>
-                      <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-bold">
-                        LIVE IN PRODUCTION
+                      <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold inline-flex items-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+                        </span>
+                        <span>LIVE IN PRODUCTION</span>
                       </span>
                     </div>
 
-                    <div className="relative aspect-video w-full overflow-hidden bg-black">
+                    <div className="group/img relative aspect-video w-full overflow-hidden bg-black">
                       <Image
                         src="/images/dalalfree_real_platform.jpg"
                         alt="DalalFree Direct Property Platform"
                         fill
                         sizes="(max-width: 1024px) 100vw, 45vw"
-                        className="object-cover"
+                        className="object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
                         priority
                       />
+                      <div className="absolute inset-0 -translate-x-full group-hover/img:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
                     </div>
 
                     <div className="p-4 space-y-1.5 text-xs text-zinc-300">
@@ -1185,20 +1457,25 @@ export default function CinematicReel() {
                         <div className="text-[10px] font-mono uppercase text-cyan-400 font-bold">Client Mobile App</div>
                         <div className="text-base font-bold text-white font-display">EV Dock</div>
                       </div>
-                      <span className="text-[10px] font-mono bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded font-bold">
-                        HARDWARE PAIRED
+                      <span className="text-[10px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-2.5 py-0.5 rounded-full font-bold inline-flex items-center gap-1.5 shadow-[0_0_10px_rgba(6,182,212,0.2)]">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-400" />
+                        </span>
+                        <span>HARDWARE PAIRED</span>
                       </span>
                     </div>
 
-                    <div className="relative aspect-video w-full overflow-hidden bg-black">
+                    <div className="group/img relative aspect-video w-full overflow-hidden bg-black">
                       <Image
                         src="/images/ev-dock-showcase.jpg"
                         alt="EV Dock Mobile Smart Charger System"
                         fill
                         sizes="(max-width: 1024px) 100vw, 45vw"
-                        className="object-cover"
+                        className="object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
                         priority
                       />
+                      <div className="absolute inset-0 -translate-x-full group-hover/img:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
                     </div>
 
                     <div className="p-4 space-y-1.5 text-xs text-zinc-300">
@@ -1218,7 +1495,11 @@ export default function CinematicReel() {
         <div className="lg:hidden flex flex-col justify-center items-center h-full w-full max-w-[420px] mx-auto z-10 pt-12 pb-14 px-3.5">
           <div className="text-center mb-3">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 text-[11px] font-mono text-[#DFCA9F] mb-1">
-              <span>💰 Scope &amp; Live Proof</span>
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DFCA9F] opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#DFCA9F]" />
+              </span>
+              <span>Scope &amp; Live Proof</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
               From ₹50,000<sup className="text-[10px] text-[#DFCA9F]/70 font-normal">*</sup> &amp;{" "}
@@ -1246,23 +1527,31 @@ export default function CinematicReel() {
           <div className="flex justify-center items-center gap-2.5 mb-3.5 w-full">
             <button
               onClick={() => setActiveProject("dalalfree")}
-              className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+              className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeProject === "dalalfree"
                   ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-md"
                   : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
               }`}
             >
-              🌐 DalalFree (Web)
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20" />
+              </svg>
+              <span>DalalFree (Web)</span>
             </button>
             <button
               onClick={() => setActiveProject("evdock")}
-              className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+              className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeProject === "evdock"
                   ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-md"
                   : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
               }`}
             >
-              📱 EV Dock (Mobile)
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+                <path d="M12 18h.01" />
+              </svg>
+              <span>EV Dock (Mobile)</span>
             </button>
           </div>
 
@@ -1281,17 +1570,21 @@ export default function CinematicReel() {
                       <div className="text-[9px] font-mono uppercase text-[#DFCA9F] font-bold">Client Web Platform</div>
                       <div className="text-xs sm:text-sm font-bold text-white font-display">DalalFree</div>
                     </div>
-                    <span className="text-[9px] font-mono bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-bold">
-                      LIVE IN PRODUCTION
+                    <span className="text-[9px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold inline-flex items-center gap-1">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+                      </span>
+                      <span>LIVE</span>
                     </span>
                   </div>
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-black">
+                  <div className="group/m-img relative aspect-[16/9] w-full overflow-hidden bg-black">
                     <Image
                       src="/images/dalalfree_real_platform.jpg"
                       alt="DalalFree Direct Property Platform"
                       fill
                       sizes="100vw"
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover/m-img:scale-105"
                       priority
                     />
                   </div>
@@ -1315,17 +1608,21 @@ export default function CinematicReel() {
                       <div className="text-[9px] font-mono uppercase text-cyan-400 font-bold">Client Mobile App</div>
                       <div className="text-xs sm:text-sm font-bold text-white font-display">EV Dock</div>
                     </div>
-                    <span className="text-[9px] font-mono bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded font-bold">
-                      HARDWARE PAIRED
+                    <span className="text-[9px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-2 py-0.5 rounded-full font-bold inline-flex items-center gap-1">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-400" />
+                      </span>
+                      <span>PAIRED</span>
                     </span>
                   </div>
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-black">
+                  <div className="group/m-img relative aspect-[16/9] w-full overflow-hidden bg-black">
                     <Image
                       src="/images/ev-dock-showcase.jpg"
                       alt="EV Dock Mobile Smart Charger System"
                       fill
                       sizes="100vw"
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover/m-img:scale-105"
                       priority
                     />
                   </div>
@@ -1365,7 +1662,10 @@ export default function CinematicReel() {
         <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
           <div className="lg:col-span-6 space-y-5 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
               <span>The Final Decision</span>
             </div>
 
@@ -1380,48 +1680,63 @@ export default function CinematicReel() {
               Leave it in your notes app for another year, or have a live product in customers&apos; hands in 30 days?
             </p>
 
-            <div className="p-5 rounded-2xl bg-emerald-500/[0.08] border border-emerald-500/30 space-y-3 max-w-xl">
+            <div className="p-5 rounded-2xl bg-emerald-500/[0.08] border border-emerald-500/30 space-y-3 max-w-xl shadow-[0_0_25px_rgba(16,185,129,0.08)]">
               <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-semibold uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                </span>
                 <span>Hate filling forms? Chat directly</span>
               </div>
               <a
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-opacity cursor-pointer text-center"
+                className="group w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-all cursor-pointer text-center"
               >
-                <span>Discuss Idea with Danish on WhatsApp 💬</span>
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-50" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-black" />
+                </span>
+                <span>Discuss Idea with Danish on WhatsApp</span>
+                <span className="inline-block transition-transform duration-200 group-hover:scale-125">💬</span>
               </a>
               <div className="text-[11px] text-zinc-400 text-center font-mono">
                 Direct phone: +91 9321456661 &middot; hello@nexfound.in
               </div>
             </div>
 
-            <div className="space-y-1.5 text-xs text-zinc-300">
-              <div className="flex items-center gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
+            <div className="space-y-2 text-xs text-zinc-300">
+              <div className="flex items-center gap-2 group/chk">
+                <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0 group-hover/chk:scale-110 transition-transform">
+                  ✓
+                </span>
                 <span>100% honest feasibility &amp; ruthless scope cut</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
+              <div className="flex items-center gap-2 group/chk">
+                <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0 group-hover/chk:scale-110 transition-transform">
+                  ✓
+                </span>
                 <span>Starting baseline from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup></span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-emerald-400 font-bold">✓</span>
+              <div className="flex items-center gap-2 group/chk">
+                <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0 group-hover/chk:scale-110 transition-transform">
+                  ✓
+                </span>
                 <span>Founder-led architecture &amp; quality oversight backed by our engineering team</span>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-6 flex justify-center">
-            <div className="w-full max-w-md rounded-3xl bg-[#0C0D18]/95 border border-white/15 p-7 shadow-2xl text-left space-y-4">
+            <div className="w-full max-w-md rounded-3xl bg-[#0C0D18]/95 border border-white/15 p-7 shadow-2xl text-left space-y-4 hover:border-white/25 transition-colors">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <span className="text-xs font-mono uppercase text-white font-bold tracking-wider">
                   60-Second Fast Idea Drop
                 </span>
-                <span className="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded">
-                  Takes 1 Min
+                <span className="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Takes 1 Min</span>
                 </span>
               </div>
 
@@ -1450,7 +1765,7 @@ export default function CinematicReel() {
                         type="button"
                         key={p}
                         onClick={() => setSelectedPlatform(p)}
-                        className={`py-1.5 px-2 rounded-lg text-xs font-mono transition-all ${
+                        className={`py-1.5 px-2 rounded-lg text-xs font-mono transition-all cursor-pointer ${
                           selectedPlatform === p
                             ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold shadow"
                             : "bg-white/5 text-zinc-400 border border-white/5 hover:text-white"
@@ -1493,9 +1808,10 @@ export default function CinematicReel() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-[1.02] active:scale-98 transition-transform cursor-pointer mt-1"
+                  className="group relative overflow-hidden w-full py-3.5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-[1.02] active:scale-98 transition-transform cursor-pointer mt-1 flex items-center justify-center gap-1.5"
                 >
-                  {isSubmitting ? "Sending Your Idea..." : "Send My Idea for 30-Day Launch →"}
+                  <span>{isSubmitting ? "Sending Your Idea..." : "Send My Idea for 30-Day Launch"}</span>
+                  <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
                 </button>
 
                 <div className="text-[10px] text-zinc-400 text-center font-mono pt-1 leading-relaxed">
@@ -1510,7 +1826,10 @@ export default function CinematicReel() {
         <div className="lg:hidden flex flex-col justify-center items-center h-full w-full max-w-[420px] mx-auto z-10 pt-12 pb-14 px-3.5">
           <div className="text-center mb-4 sm:mb-6">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400 mb-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+              </span>
               <span>The Final Decision</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
@@ -1529,9 +1848,14 @@ export default function CinematicReel() {
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-opacity cursor-pointer text-center"
+              className="group w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-opacity cursor-pointer text-center"
             >
-              <span>Chat with Danish on WhatsApp 💬</span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-50" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-black" />
+              </span>
+              <span>Chat with Danish on WhatsApp</span>
+              <span className="inline-block transition-transform duration-200 group-hover:scale-125">💬</span>
             </a>
 
             <div className="relative flex py-0.5 items-center">
@@ -1558,7 +1882,7 @@ export default function CinematicReel() {
                     type="button"
                     key={p}
                     onClick={() => setSelectedPlatform(p)}
-                    className={`py-1.5 px-1 rounded-lg text-[10px] font-mono transition-all ${
+                    className={`py-1.5 px-1 rounded-lg text-[10px] font-mono transition-all cursor-pointer ${
                       selectedPlatform === p
                         ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold shadow"
                         : "bg-white/5 text-zinc-400 border border-white/5 hover:text-white"
@@ -1590,9 +1914,10 @@ export default function CinematicReel() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-[1.02] active:scale-98 transition-transform cursor-pointer mt-0.5"
+                className="group relative overflow-hidden w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-[1.02] active:scale-98 transition-transform cursor-pointer mt-0.5 flex items-center justify-center gap-1.5"
               >
-                {isSubmitting ? "Sending..." : "Send My Idea for 30-Day Launch →"}
+                <span>{isSubmitting ? "Sending..." : "Send My Idea for 30-Day Launch"}</span>
+                <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
               </button>
             </form>
           </div>
