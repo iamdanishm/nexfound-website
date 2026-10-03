@@ -421,14 +421,6 @@ export default function CinematicReel() {
         {/* ----------------- DESKTOP 12-COLUMN SPLIT VIEW ----------------- */}
         <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
           <div className="lg:col-span-7 space-y-5 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-zinc-300">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-              </span>
-              <span>30-Day Sprint · Napkin Note to First Customer</span>
-            </div>
-
             <h1 className="text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-[1.1]">
               Still letting your app idea collect dust in your{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A]">
@@ -1407,7 +1399,7 @@ export default function CinematicReel() {
               onClick={() => goToSlide(4)}
               className="text-xs font-mono text-zinc-400 hover:text-white transition-colors flex items-center gap-1 cursor-pointer pt-0.5"
             >
-              <span>Swipe up for proof &amp; pricing</span>
+              <span>Swipe up for live proof</span>
               <span className="animate-bounce">↓</span>
             </button>
           </div>
@@ -1423,8 +1415,8 @@ export default function CinematicReel() {
       >
         <div className="absolute top-1/2 left-1/3 -translate-x-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[500px] rounded-full bg-[#DFCA9F]/15 blur-[140px] pointer-events-none" />
 
-        <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
-          <div className="lg:col-span-5 space-y-4 text-left">
+        <div className="hidden lg:grid lg:grid-cols-12 lg:gap-10 xl:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
+          <div className="lg:col-span-6 space-y-4 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 text-xs font-mono text-[#DFCA9F]">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -1540,29 +1532,18 @@ export default function CinematicReel() {
                 </>
               )}
             </div>
-
-            <div className="pt-1">
-              <button
-                type="button"
-                onClick={() => goToSlide(5)}
-                className="text-xs font-mono text-[#DFCA9F] hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer group"
-              >
-                <span>Ready to see sprint investment &amp; tiers?</span>
-                <span className="group-hover:translate-y-0.5 transition-transform">↓</span>
-              </button>
-            </div>
           </div>
 
-          <div className="lg:col-span-6 flex justify-center">
-            <div className="w-full max-w-lg rounded-3xl bg-[#14120A] border border-[#DFCA9F]/25 overflow-hidden shadow-2xl text-left hover:border-[#DFCA9F]/40 transition-colors">
+          <div className="lg:col-span-6 flex justify-end w-full">
+            <div className="w-full max-w-xl rounded-3xl bg-[#14120A] border border-[#DFCA9F]/25 overflow-hidden shadow-2xl text-left hover:border-[#DFCA9F]/40 transition-colors">
               <AnimatePresence mode="wait">
                 {activeProject === "dalalfree" ? (
                   <motion.div
                     key="dalalfree"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.22 }}
                   >
                     <div className="p-4 border-b border-white/10 flex justify-between items-center bg-black/40">
                       <div>
@@ -1600,10 +1581,10 @@ export default function CinematicReel() {
                 ) : (
                   <motion.div
                     key="evdock"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.22 }}
                   >
                     <div className="p-4 border-b border-white/10 flex justify-between items-center bg-black/40">
                       <div>
@@ -1699,9 +1680,9 @@ export default function CinematicReel() {
               {activeProject === "dalalfree" ? (
                 <motion.div
                   key="dal-m"
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.2 }}
                 >
                   <div className="p-2.5 border-b border-white/10 flex justify-between items-center bg-black/40">
@@ -1737,9 +1718,9 @@ export default function CinematicReel() {
               ) : (
                 <motion.div
                   key="ev-m"
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.2 }}
                 >
                   <div className="p-2.5 border-b border-white/10 flex justify-between items-center bg-black/40">
@@ -1777,14 +1758,23 @@ export default function CinematicReel() {
           </div>
 
           {/* Clean Navigation to Slide 06 (Pricing) */}
-          <button
-            type="button"
-            onClick={() => goToSlide(5)}
-            className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#DFCA9F]/20 cursor-pointer"
-          >
-            <span>View Sprint Pricing &amp; Tiers</span>
-            <span>→</span>
-          </button>
+          <div className="text-center flex flex-col items-center gap-1.5 w-full">
+            <button
+              type="button"
+              onClick={() => goToSlide(5)}
+              className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#DFCA9F]/20 cursor-pointer"
+            >
+              <span>View Sprint Pricing &amp; Tiers</span>
+              <span>→</span>
+            </button>
+            <button
+              onClick={() => goToSlide(5)}
+              className="text-xs font-mono text-zinc-400 hover:text-white transition-colors flex items-center gap-1 cursor-pointer pt-0.5"
+            >
+              <span>Swipe up to view pricing</span>
+              <span className="animate-bounce">↓</span>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -1816,41 +1806,41 @@ export default function CinematicReel() {
           </div>
 
           {/* 3-Column Pricing Cards */}
-          <div className="grid grid-cols-3 gap-6 items-stretch pt-1">
+          <div className="grid grid-cols-3 gap-3 xl:gap-5 2xl:gap-6 items-stretch pt-4 min-w-0">
             {/* TIER 1: DESIGN & ARCHITECTURE */}
-            <div className="rounded-2xl bg-[#0C0B12]/90 border border-white/10 p-6 flex flex-col justify-between hover:border-blue-400/40 transition-all text-left group">
+            <div className="rounded-2xl bg-[#0C0B12]/90 border border-white/10 p-4 xl:p-6 flex flex-col justify-between hover:border-blue-400/40 transition-all text-left group min-w-0 overflow-hidden">
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-1">
                   <span className="text-[11px] font-mono text-zinc-400 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     <span>7–10 Days</span>
                   </span>
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-500/15 text-blue-300 border border-blue-500/30 font-bold">
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-500/15 text-blue-300 border border-blue-500/30 font-bold whitespace-nowrap">
                     VALIDATION
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-white font-display">Design &amp; Architecture</h3>
+                  <h3 className="text-base xl:text-lg font-bold text-white font-display">Design &amp; Architecture</h3>
                   <p className="text-xs text-zinc-400 mt-1 leading-snug">
                     Validate market demand and pitch angels before writing code.
                   </p>
                 </div>
 
-                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
-                  <div className="flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1 min-w-0 overflow-hidden">
+                  <div className="flex items-center justify-between gap-1 flex-wrap">
                     <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-bold">
                       Sprint Fee
                     </span>
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">
                       SAVE 35%
                     </span>
                   </div>
-                  <div className="flex items-baseline gap-2.5">
-                    <span className="text-3xl font-extrabold font-mono text-white tracking-tight">
+                  <div className="flex items-baseline gap-1.5 xl:gap-2 flex-wrap min-w-0">
+                    <span className="text-2xl xl:text-3xl font-extrabold font-mono text-white tracking-tight">
                       ₹49,000
                     </span>
-                    <span className="text-base text-zinc-500 line-through font-mono decoration-rose-500/80 decoration-2">
+                    <span className="text-xs xl:text-sm text-zinc-500 line-through font-mono decoration-rose-500/80 decoration-2 whitespace-nowrap">
                       ₹75,000
                     </span>
                   </div>
@@ -1886,43 +1876,43 @@ export default function CinematicReel() {
             </div>
 
             {/* TIER 2: 30-DAY MVP (HERO FLAGSHIP) */}
-            <div className="rounded-2xl bg-gradient-to-b from-[#1C180E] via-[#14120A] to-[#0D0C07] border-2 border-[#DFCA9F]/70 p-6 flex flex-col justify-between shadow-[0_0_40px_rgba(223,202,159,0.18)] relative scale-[1.03] z-10 text-left">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3.5 py-0.5 rounded-full bg-gradient-to-r from-[#DFCA9F] via-[#F5ECDA] to-[#DFCA9F] text-black font-mono font-extrabold text-[10px] uppercase tracking-wider shadow-md whitespace-nowrap">
+            <div className="rounded-2xl bg-gradient-to-b from-[#1C180E] via-[#14120A] to-[#0D0C07] border-2 border-[#DFCA9F]/70 p-4 xl:p-6 flex flex-col justify-between shadow-[0_0_40px_rgba(223,202,159,0.18)] relative 2xl:scale-[1.03] z-10 text-left min-w-0 overflow-visible">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 px-3.5 py-0.5 rounded-full bg-gradient-to-r from-[#DFCA9F] via-[#F5ECDA] to-[#DFCA9F] text-black font-mono font-extrabold text-[10px] uppercase tracking-wider shadow-md whitespace-nowrap">
                 ★ MOST POPULAR · BEST VALUE
               </div>
 
               <div className="space-y-4 pt-1">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-1">
                   <span className="text-[11px] font-mono text-[#DFCA9F] font-bold flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
                     <span>30 Days Hard Launch</span>
                   </span>
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#DFCA9F]/20 text-[#DFCA9F] border border-[#DFCA9F]/40 font-bold">
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#DFCA9F]/20 text-[#DFCA9F] border border-[#DFCA9F]/40 font-bold whitespace-nowrap">
                     FLAGSHIP
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-extrabold text-white font-display">30-Day Production MVP</h3>
+                  <h3 className="text-lg xl:text-xl font-extrabold text-white font-display">30-Day Production MVP</h3>
                   <p className="text-xs text-zinc-300 mt-1 leading-snug">
                     Full-stack Web or Mobile app taking live customer payments.
                   </p>
                 </div>
 
-                <div className="p-3 rounded-xl bg-black/60 border border-[#DFCA9F]/25 space-y-1">
-                  <div className="flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-black/60 border border-[#DFCA9F]/25 space-y-1 min-w-0 overflow-hidden">
+                  <div className="flex items-center justify-between gap-1 flex-wrap">
                     <span className="text-[10px] font-mono uppercase tracking-widest text-[#DFCA9F] font-bold">
                       Starting from
                     </span>
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                      SAVE ₹76,000 (34% OFF)
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">
+                      SAVE 34% (₹76K)
                     </span>
                   </div>
-                  <div className="flex items-baseline gap-2.5">
-                    <span className="text-3xl lg:text-4xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] tracking-tight">
+                  <div className="flex items-baseline gap-1.5 xl:gap-2 flex-wrap min-w-0">
+                    <span className="text-2xl sm:text-2xl lg:text-[26px] xl:text-3xl 2xl:text-4xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] tracking-tight">
                       ₹1,49,000*
                     </span>
-                    <span className="text-base text-zinc-400 line-through font-mono decoration-rose-500/80 decoration-2">
+                    <span className="text-xs xl:text-sm text-zinc-400 line-through font-mono decoration-rose-500/80 decoration-2 whitespace-nowrap">
                       ₹2,25,000
                     </span>
                   </div>
@@ -1962,39 +1952,39 @@ export default function CinematicReel() {
             </div>
 
             {/* TIER 3: SCALE & MULTI-PLATFORM */}
-            <div className="rounded-2xl bg-[#0C0B12]/90 border border-white/10 p-6 flex flex-col justify-between hover:border-purple-400/40 transition-all text-left group">
+            <div className="rounded-2xl bg-[#0C0B12]/90 border border-white/10 p-4 xl:p-6 flex flex-col justify-between hover:border-purple-400/40 transition-all text-left group min-w-0 overflow-hidden">
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-1">
                   <span className="text-[11px] font-mono text-zinc-400 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
                     <span>45 Days</span>
                   </span>
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30 font-bold">
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30 font-bold whitespace-nowrap">
                     ECOSYSTEM
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-white font-display">Scale &amp; Multi-Platform</h3>
+                  <h3 className="text-base xl:text-lg font-bold text-white font-display">Scale &amp; Multi-Platform</h3>
                   <p className="text-xs text-zinc-400 mt-1 leading-snug">
                     Dual-platform releases, custom AI/LLM pipelines, or IoT.
                   </p>
                 </div>
 
-                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
-                  <div className="flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1 min-w-0 overflow-hidden">
+                  <div className="flex items-center justify-between gap-1 flex-wrap">
                     <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-bold">
                       Starting from
                     </span>
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30 whitespace-nowrap">
                       SAVE 22%
                     </span>
                   </div>
-                  <div className="flex items-baseline gap-2.5">
-                    <span className="text-3xl font-extrabold font-mono text-white tracking-tight">
+                  <div className="flex items-baseline gap-1.5 xl:gap-2 flex-wrap min-w-0">
+                    <span className="text-2xl xl:text-3xl font-extrabold font-mono text-white tracking-tight">
                       ₹3,49,000
                     </span>
-                    <span className="text-base text-zinc-500 line-through font-mono decoration-rose-500/80 decoration-2">
+                    <span className="text-xs xl:text-sm text-zinc-500 line-through font-mono decoration-rose-500/80 decoration-2 whitespace-nowrap">
                       ₹4,50,000
                     </span>
                   </div>
@@ -2031,7 +2021,7 @@ export default function CinematicReel() {
           </div>
 
           {/* Desktop Guarantee Ticker */}
-          <div className="pt-2 flex items-center justify-center gap-8 text-xs text-zinc-400 font-mono border-t border-white/10">
+          <div className="pt-2 flex items-center justify-center gap-3 xl:gap-8 text-[11px] xl:text-xs text-zinc-400 font-mono border-t border-white/10 flex-wrap">
             <span className="flex items-center gap-1.5"><span>🔒</span> 100% IP &amp; GitHub Handover</span>
             <span className="flex items-center gap-1.5"><span>⚡</span> 30-Day Hard Delivery</span>
             <span className="flex items-center gap-1.5"><span>🛡️</span> 14-Day Warranty</span>
@@ -2080,71 +2070,73 @@ export default function CinematicReel() {
             })}
           </div>
 
-          {/* Active Tier Mobile Card Animated */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTier}
-              initial={{ opacity: 0, y: 8, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              className="w-full p-4 rounded-2xl bg-[#14120A] border border-[#DFCA9F]/35 text-left shadow-xl space-y-3 mb-3"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-bold text-white font-display">
-                  {SPRINT_TIERS[activeTier].name}
-                </span>
-                <span className={`text-[9px] font-mono px-2 py-0.5 rounded border font-semibold ${SPRINT_TIERS[activeTier].badgeStyle}`}>
-                  {SPRINT_TIERS[activeTier].badge}
-                </span>
-              </div>
-
-              {/* Mobile Price Zone with Small "STARTING FROM" and Clear Slash */}
-              <div className="p-2.5 rounded-xl bg-black/50 border border-white/5 space-y-0.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-zinc-400 font-bold">
-                    {SPRINT_TIERS[activeTier].priceLabel}
-                  </span>
-                  <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                    {SPRINT_TIERS[activeTier].discountBadge}
-                  </span>
-                </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A]">
-                    {SPRINT_TIERS[activeTier].price}
-                  </span>
-                  <span className="text-xs text-zinc-500 line-through font-mono decoration-rose-500/80 decoration-2">
-                    {SPRINT_TIERS[activeTier].slashedPrice}
-                  </span>
-                  <span className="text-[10px] text-zinc-400 font-mono ml-auto">
-                    · {SPRINT_TIERS[activeTier].duration}
-                  </span>
-                </div>
-              </div>
-
-              <p className="text-[11px] text-zinc-300 leading-snug">
-                {SPRINT_TIERS[activeTier].subtitle}
-              </p>
-
-              <ul className="space-y-1.5 text-[11px] text-zinc-200">
-                {SPRINT_TIERS[activeTier].highlights.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-1.5">
-                    <span className="text-[#DFCA9F] font-bold">✓</span>
-                    <span className="leading-tight">{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                type="button"
-                onClick={() => goToSlide(6)}
-                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 cursor-pointer flex items-center justify-center gap-1.5 mt-1"
+          {/* Active Tier Mobile Card */}
+          <div className="w-full p-4 rounded-2xl bg-[#14120A] border border-[#DFCA9F]/35 text-left shadow-xl mb-3 overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTier}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-3"
               >
-                <span>{activeTier === "tier2" ? "Lock 30-Day MVP & Launch" : "Select Sprint & Launch"}</span>
-                <span>→</span>
-              </button>
-            </motion.div>
-          </AnimatePresence>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold text-white font-display">
+                    {SPRINT_TIERS[activeTier].name}
+                  </span>
+                  <span className={`text-[9px] font-mono px-2 py-0.5 rounded border font-semibold ${SPRINT_TIERS[activeTier].badgeStyle}`}>
+                    {SPRINT_TIERS[activeTier].badge}
+                  </span>
+                </div>
+
+                {/* Mobile Price Zone with Small "STARTING FROM" and Clear Slash */}
+                <div className="p-2.5 rounded-xl bg-black/50 border border-white/5 space-y-0.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-zinc-400 font-bold">
+                      {SPRINT_TIERS[activeTier].priceLabel}
+                    </span>
+                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                      {SPRINT_TIERS[activeTier].discountBadge}
+                    </span>
+                  </div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A]">
+                      {SPRINT_TIERS[activeTier].price}
+                    </span>
+                    <span className="text-xs text-zinc-500 line-through font-mono decoration-rose-500/80 decoration-2">
+                      {SPRINT_TIERS[activeTier].slashedPrice}
+                    </span>
+                    <span className="text-[10px] text-zinc-400 font-mono ml-auto">
+                      · {SPRINT_TIERS[activeTier].duration}
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-zinc-300 leading-snug">
+                  {SPRINT_TIERS[activeTier].subtitle}
+                </p>
+
+                <ul className="space-y-1.5 text-[11px] text-zinc-200">
+                  {SPRINT_TIERS[activeTier].highlights.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-1.5">
+                      <span className="text-[#DFCA9F] font-bold">✓</span>
+                      <span className="leading-tight">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  type="button"
+                  onClick={() => goToSlide(6)}
+                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 cursor-pointer flex items-center justify-center gap-1.5 mt-1"
+                >
+                  <span>{activeTier === "tier2" ? "Lock 30-Day MVP & Launch" : "Select Sprint & Launch"}</span>
+                  <span>→</span>
+                </button>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
           <div className="text-center w-full">
             <button
