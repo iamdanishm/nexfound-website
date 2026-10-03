@@ -118,16 +118,54 @@ export default function CinematicReel() {
   }, []);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const targetSlideRef = useRef<number | null>(null);
+  const navigationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Scroll to a specific slide index
   const goToSlide = (idx: number) => {
     if (idx < 0 || idx >= SLIDES.length) return;
     const targetEl = document.getElementById(SLIDES[idx].id);
     if (targetEl) {
-      targetEl.scrollIntoView({ behavior: "smooth" });
+      // Lock target slide so IntersectionObserver ignores intermediate/old slides
+      targetSlideRef.current = idx;
       setCurrentSlide(idx);
+
+      if (navigationTimeoutRef.current) {
+        clearTimeout(navigationTimeoutRef.current);
+      }
+
+      targetEl.scrollIntoView({ behavior: "smooth" });
+
+      // Fallback timeout to release lock once smooth scrolling completes
+      navigationTimeoutRef.current = setTimeout(() => {
+        targetSlideRef.current = null;
+      }, 1000);
     }
   };
+
+  // If user interrupts scroll with mouse wheel or touch, release lock immediately
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleUserInterrupt = () => {
+      targetSlideRef.current = null;
+      if (navigationTimeoutRef.current) {
+        clearTimeout(navigationTimeoutRef.current);
+      }
+    };
+
+    container.addEventListener("wheel", handleUserInterrupt, { passive: true });
+    container.addEventListener("touchstart", handleUserInterrupt, { passive: true });
+
+    return () => {
+      container.removeEventListener("wheel", handleUserInterrupt);
+      container.removeEventListener("touchstart", handleUserInterrupt);
+      if (navigationTimeoutRef.current) {
+        clearTimeout(navigationTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Keyboard navigation
   useEffect(() => {
@@ -156,6 +194,21 @@ export default function CinematicReel() {
           if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
             const index = SLIDES.findIndex((s) => s.id === entry.target.id);
             if (index !== -1) {
+              // If we are programmatically traveling to a specific slide:
+              if (targetSlideRef.current !== null) {
+                // If this is the destination slide arriving in view, release the lock
+                if (index === targetSlideRef.current) {
+                  targetSlideRef.current = null;
+                  setCurrentSlide(index);
+                  if (navigationTimeoutRef.current) {
+                    clearTimeout(navigationTimeoutRef.current);
+                  }
+                }
+                // Ignore any intermediate slides passed along the way
+                return;
+              }
+
+              // Normal manual scroll tracking
               setCurrentSlide(index);
             }
           }
@@ -247,19 +300,29 @@ export default function CinematicReel() {
 
         {/* Desktop Slide Shortcuts Pill */}
         <nav className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-black/80 border border-white/10 backdrop-blur-xl pointer-events-auto shadow-lg">
-          {SLIDES.map((s, idx) => (
-            <button
-              key={s.id}
-              onClick={() => goToSlide(idx)}
-              className={`px-3 py-1 rounded-full text-xs font-mono transition-all cursor-pointer ${
-                currentSlide === idx
-                  ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold shadow-md shadow-[#DFCA9F]/20"
-                  : "text-zinc-400 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              {s.label}
-            </button>
-          ))}
+          {SLIDES.map((s, idx) => {
+            const isSelected = currentSlide === idx;
+            return (
+              <button
+                key={s.id}
+                onClick={() => goToSlide(idx)}
+                className={`relative px-3 py-1 rounded-full text-xs font-mono transition-colors cursor-pointer ${
+                  isSelected
+                    ? "text-black font-bold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                {isSelected && (
+                  <motion.div
+                    layoutId="activeSlideNavTab"
+                    className="absolute inset-0 bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] rounded-full shadow-md shadow-[#DFCA9F]/20"
+                    transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10">{s.label}</span>
+              </button>
+            );
+          })}
         </nav>
 
         {/* Right Action Button */}
@@ -281,23 +344,31 @@ export default function CinematicReel() {
         <div className="text-[11px] font-mono font-bold text-[#DFCA9F] mb-1">
           {SLIDES[currentSlide].number} / 0{SLIDES.length}
         </div>
-        <div className="flex flex-col gap-1">
-          {SLIDES.map((s, idx) => (
-            <button
-              key={s.id}
-              onClick={() => goToSlide(idx)}
-              aria-label={`Jump to slide ${s.number}: ${s.label}`}
-              className="w-6 h-6 flex items-center justify-center cursor-pointer group"
-            >
-              <span
-                className={`w-2 transition-all rounded-full ${
-                  currentSlide === idx
-                    ? "h-8 bg-[#DFCA9F] shadow-[0_0_12px_rgba(223,202,159,0.8)]"
-                    : "h-2 bg-white/20 group-hover:bg-white/40"
-                }`}
-              />
-            </button>
-          ))}
+        <div className="flex flex-col gap-1 items-center">
+          {SLIDES.map((s, idx) => {
+            const isSelected = currentSlide === idx;
+            return (
+              <button
+                key={s.id}
+                onClick={() => goToSlide(idx)}
+                aria-label={`Jump to slide ${s.number}: ${s.label}`}
+                className="w-6 h-8 flex items-center justify-center cursor-pointer group"
+              >
+                <motion.span
+                  animate={{
+                    height: isSelected ? 32 : 8,
+                    backgroundColor: isSelected ? "#DFCA9F" : "rgba(255, 255, 255, 0.2)",
+                  }}
+                  transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                  className={`w-2 rounded-full ${
+                    isSelected
+                      ? "shadow-[0_0_12px_rgba(223,202,159,0.8)]"
+                      : "group-hover:bg-white/40"
+                  }`}
+                />
+              </button>
+            );
+          })}
         </div>
         {currentSlide < SLIDES.length - 1 && (
           <button
