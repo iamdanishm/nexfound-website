@@ -155,7 +155,7 @@ const jsonLd = {
       },
       "image": "https://nexfound.in/og-image.jpg",
       "description":
-        "Nexfound helps founders and businesses turn raw concepts into live, payment-ready web and mobile MVPs in 30 days—starting from ₹50,000.",
+        "Nexfound helps founders and businesses turn raw concepts into live, payment-ready web and mobile MVPs in 30 days—with production sprints starting from ₹1,49,000 (and Design Sprints from ₹49,000).",
       "email": "hello@nexfound.in",
       "founder": {
         "@type": "Person",
@@ -172,7 +172,7 @@ const jsonLd = {
         "https://x.com/iam_danishm",
         "https://github.com/iamdanishm",
       ],
-      "priceRange": "₹50,000 - ₹2,50,000",
+      "priceRange": "₹49,000 - ₹3,90,000",
       "currenciesAccepted": "INR, USD",
       "paymentAccepted": "UPI, Credit Card, Bank Transfer, Stripe",
       "address": {

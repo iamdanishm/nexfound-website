@@ -81,7 +81,7 @@ export default function Showcase() {
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-300 max-w-xl mx-auto leading-relaxed">
-              No surprise invoices or vague hourly rates. Every project is a fixed 30-day sprint starting at ₹50,000, engineered directly with Danish.
+              No surprise invoices or vague hourly rates. Production sprints starting from ₹1,49,000 (slashed from ₹2,25,000) and Design Sprints from ₹49,000, engineered directly with Danish.
             </p>
 
             {/* Project Selector */}
@@ -263,7 +263,7 @@ export default function Showcase() {
                 Transparent Pricing Floor
               </div>
               <h4 className="text-base sm:text-lg font-bold text-white font-display">
-                Single-platform MVPs start from ₹50,000 for a 30-day launch.
+                Single-platform MVPs start from ₹1,49,000 for a 30-day launch (Design Sprints from ₹49k).
               </h4>
               <p className="text-xs text-zinc-400">
                 You receive a fixed price and milestone schedule before we begin. No open-ended invoices.

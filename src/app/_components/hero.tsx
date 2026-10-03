@@ -105,7 +105,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             className="text-base sm:text-lg md:text-xl text-zinc-300 max-w-3xl leading-relaxed mb-8 sm:mb-10 font-normal px-2"
           >
-            Agencies quote 6 months and ₹15L. Freelancers vanish halfway through. Building alone feels overwhelming. Nexfound turns your raw concept into a live, payment-ready app in 30 days—starting at ₹50,000.
+            Agencies quote 6 months and ₹15L. Freelancers vanish halfway through. Nexfound turns your raw concept into a live, payment-ready product in 30 days.
           </motion.p>
 
           {/* High-Contrast Action Buttons */}
@@ -144,8 +144,8 @@ export default function Hero() {
               <div className="text-xs text-zinc-400 mt-1 font-medium">Idea to Live Launch</div>
             </div>
             <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.07] backdrop-blur-md text-center hover:border-white/[0.15] transition-colors">
-              <div className="text-xl sm:text-2xl font-bold font-display text-emerald-400">From ₹50k</div>
-              <div className="text-xs text-zinc-400 mt-1 font-medium">Clear Starting Scope Floor</div>
+              <div className="text-xl sm:text-2xl font-bold font-display text-emerald-400">From ₹1.49L</div>
+              <div className="text-xs text-zinc-400 mt-1 font-medium">Fixed 30-Day Sprint</div>
             </div>
             <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.07] backdrop-blur-md text-center hover:border-white/[0.15] transition-colors">
               <div className="text-xl sm:text-2xl font-bold font-display text-white">100% Yours</div>
@@ -281,7 +281,7 @@ export default function Hero() {
                             Agency Quote: ₹12,00,000 &middot; 7 Months &middot; 14-page feature list
                           </div>
                           <div className="px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-medium">
-                            Nexfound Solution: 30-Day Focused Sprint from ₹50,000
+                            Nexfound Solution: 30-Day Hard Sprint &middot; Starting from ₹1,49,000
                           </div>
                         </div>
                       </div>

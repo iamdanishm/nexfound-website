@@ -127,7 +127,7 @@ export default function Features() {
                 <span>TRANSPARENT PRICING FLOOR</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold font-display text-white">
-                Focused 30-Day Sprints starting from ₹50,000.
+                Focused 30-Day Sprints starting from ₹1,49,000 (Design Sprints from ₹49,000).
               </h3>
               <p className="text-xs sm:text-sm text-zinc-300 max-w-xl leading-relaxed">
                 No open-ended hourly billing or surprise invoices. We isolate your core workflow, agree on a fixed deliverable scope, and ship in 30 days.

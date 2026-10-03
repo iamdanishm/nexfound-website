@@ -10,14 +10,92 @@ const SLIDES = [
   { id: "slide-2", number: "02", label: "The Trap", color: "crimson" },
   { id: "slide-3", number: "03", label: "The 30-Day Fix", color: "emerald" },
   { id: "slide-4", number: "04", label: "What You Get", color: "cyan" },
-  { id: "slide-5", number: "05", label: "Proof & Pricing", color: "gold" },
-  { id: "slide-6", number: "06", label: "The Launch", color: "finale" },
+  { id: "slide-5", number: "05", label: "Live Proof", color: "amber" },
+  { id: "slide-6", number: "06", label: "Sprint Pricing", color: "gold" },
+  { id: "slide-7", number: "07", label: "The Launch", color: "finale" },
 ] as const;
+
+type SprintTierKey = "tier1" | "tier2" | "tier3";
+
+interface SprintTierData {
+  id: SprintTierKey;
+  tabLabel: string;
+  name: string;
+  duration: string;
+  priceLabel: string;
+  price: string;
+  slashedPrice: string;
+  discountBadge: string;
+  badge?: string;
+  badgeStyle?: string;
+  subtitle: string;
+  highlights: string[];
+}
+
+const SPRINT_TIERS: Record<SprintTierKey, SprintTierData> = {
+  tier1: {
+    id: "tier1",
+    tabLabel: "Design & Specs",
+    name: "Design & Architecture",
+    duration: "7–10 Days",
+    priceLabel: "Sprint Fee",
+    price: "₹49,000",
+    slashedPrice: "₹75,000",
+    discountBadge: "SAVE 35%",
+    badge: "VALIDATION",
+    badgeStyle: "bg-blue-500/15 text-blue-300 border-blue-500/30",
+    subtitle: "Interactive prototype & technical spec to pitch investors and validate demand before code.",
+    highlights: [
+      "Clickable interactive Figma prototype",
+      "Full database schema & API endpoint blueprints",
+      "100% fee credited toward MVP if continued",
+    ],
+  },
+  tier2: {
+    id: "tier2",
+    tabLabel: "★ 30-Day MVP",
+    name: "30-Day Production MVP",
+    duration: "30-Day Hard Sprint",
+    priceLabel: "Starting from",
+    price: "₹1,49,000*",
+    slashedPrice: "₹2,25,000",
+    discountBadge: "SAVE ₹76,000 (34% OFF)",
+    badge: "★ MOST POPULAR · BEST VALUE",
+    badgeStyle:
+      "bg-gradient-to-r from-[#DFCA9F]/20 via-[#DFCA9F]/35 to-[#DFCA9F]/20 text-[#DFCA9F] border-[#DFCA9F]/60 shadow-[0_0_15px_rgba(223,202,159,0.3)]",
+    subtitle: "Our flagship production sprint. Live Web or Mobile product taking real customer payments.",
+    highlights: [
+      "1 Core revenue customer workflow (Web or Mobile)",
+      "Auth, Payment Integration & Admin Dashboard",
+      "100% direct GitHub & IP transfer on Day 30",
+      "14-day warranty with founder oversight",
+    ],
+  },
+  tier3: {
+    id: "tier3",
+    tabLabel: "Scale & Ecosystem",
+    name: "Scale & Multi-Platform",
+    duration: "45-Day Sprint",
+    priceLabel: "Starting from",
+    price: "₹3,49,000",
+    slashedPrice: "₹4,50,000",
+    discountBadge: "SAVE 22%",
+    badge: "FULL ECOSYSTEM",
+    badgeStyle: "bg-purple-500/15 text-purple-300 border-purple-500/30",
+    subtitle: "For startups requiring dual-platform releases, custom AI/LLM pipelines, or IoT hardware.",
+    highlights: [
+      "Cross-platform Web + iOS & Android deployment",
+      "Custom AI / LLM pipeline or real-time queues",
+      "60-day launch support & priority engineering SLA",
+    ],
+  },
+};
 
 export default function CinematicReel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [webOrMobile, setWebOrMobile] = useState<"web" | "mobile">("web");
   const [activeProject, setActiveProject] = useState<"dalalfree" | "evdock">("dalalfree");
+  const [activeTier, setActiveTier] = useState<SprintTierKey>("tier2");
 
   // Form states for Slide 6
   const [ideaText, setIdeaText] = useState("");
@@ -27,7 +105,7 @@ export default function CinematicReel() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Dynamic label width measurement for fluid spring-animated width transitions
-  const [labelWidths, setLabelWidths] = useState<number[]>([76, 52, 84, 72, 82, 66]);
+  const [labelWidths, setLabelWidths] = useState<number[]>([76, 52, 84, 72, 68, 85, 66]);
   const labelMeasureRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
@@ -187,7 +265,7 @@ export default function CinematicReel() {
         {/* Right Action Button */}
         <div className="flex items-center gap-2 pointer-events-auto">
           <button
-            onClick={() => goToSlide(5)}
+            onClick={() => goToSlide(SLIDES.length - 1)}
             className="group px-3 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold font-mono uppercase tracking-wider bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-lg shadow-[#DFCA9F]/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <span>Discuss Idea</span>
@@ -201,7 +279,7 @@ export default function CinematicReel() {
       {/* ============================================================ */}
       <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-3">
         <div className="text-[11px] font-mono font-bold text-[#DFCA9F] mb-1">
-          {SLIDES[currentSlide].number} / 06
+          {SLIDES[currentSlide].number} / 0{SLIDES.length}
         </div>
         <div className="flex flex-col gap-1">
           {SLIDES.map((s, idx) => (
@@ -258,7 +336,7 @@ export default function CinematicReel() {
             title={SLIDES[currentSlide].label}
           >
             <span className="font-mono font-bold text-xs text-[#DFCA9F] tabular-nums shrink-0">
-              {SLIDES[currentSlide].number}/06
+              {SLIDES[currentSlide].number}/0{SLIDES.length}
             </span>
             <motion.div
               animate={{ width: labelWidths[currentSlide] || "auto" }}
@@ -358,8 +436,8 @@ export default function CinematicReel() {
               </span>
             </h1>
 
-            <p className="text-base lg:text-lg text-zinc-300 max-w-xl leading-relaxed font-normal">
-              Agencies quote 6 months and ₹15L. Freelancers vanish halfway through. Building alone feels overwhelming. Nexfound turns your raw concept into a live, payment-ready app in 30 days—starting from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup>.
+            <p className="text-sm sm:text-base text-zinc-300 max-w-lg leading-relaxed font-normal">
+              Agencies take 6 months and charge ₹15L. Freelancers vanish halfway through, and building alone is overwhelming. At Nexfound, we turn your raw concept into a live, payment-ready product in 30 days, with production sprints starting from ₹1,49,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup> and design sprints from ₹49,000.
             </p>
 
             <div className="grid grid-cols-4 gap-2.5 pt-1 max-w-xl">
@@ -379,10 +457,11 @@ export default function CinematicReel() {
                     <path d="M6 3h12M6 8h12M6 13l6 8M6 13h4a4 4 0 0 0 0-8" />
                   </svg>
                 </div>
-                <div className="text-lg font-bold font-display text-[#DFCA9F]">
-                  From ₹50k<sup className="text-[9px] text-[#DFCA9F]/70 font-normal">*</sup>
+                <div className="text-sm sm:text-base font-bold font-display text-[#DFCA9F] flex items-center justify-center gap-1">
+                  <span className="text-[10px] text-zinc-500 line-through font-normal">₹2.25L</span>
+                  <span>₹1.49L<sup className="text-[9px] text-[#DFCA9F]/70 font-normal">*</sup></span>
                 </div>
-                <div className="text-[10px] text-zinc-400 font-mono">Starting Floor</div>
+                <div className="text-[10px] text-zinc-400 font-mono">MVP Sprint Floor</div>
               </div>
               <div className="group p-3 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 hover:-translate-y-1 hover:bg-white/[0.07] transition-all duration-300 text-center cursor-default">
                 <div className="w-7 h-7 mx-auto mb-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 group-hover:bg-emerald-500/20 group-hover:border-emerald-400/40 transition-all duration-300">
@@ -408,7 +487,7 @@ export default function CinematicReel() {
 
             <div className="flex items-center gap-3 pt-2">
               <button
-                onClick={() => goToSlide(5)}
+                onClick={() => goToSlide(6)}
                 className="group px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-105 active:scale-95 transition-transform flex items-center gap-1.5 cursor-pointer"
               >
                 <span>Discuss Your Idea (Takes 60s)</span>
@@ -503,7 +582,7 @@ export default function CinematicReel() {
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-zinc-300 mt-1 leading-relaxed max-w-sm mx-auto">
-              Nexfound turns your concept into a live app in 30 days—starting from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup>.
+              Nexfound turns your concept into a live app in 30 days. Fixed production sprints from <span className="line-through text-zinc-500">₹2.25L</span> <span className="text-[#DFCA9F] font-bold">₹1,49,000</span><sup className="text-[10px] text-zinc-400 font-normal">*</sup>.
             </p>
           </div>
 
@@ -562,7 +641,7 @@ export default function CinematicReel() {
           {/* Bottom Action */}
           <div className="text-center flex flex-col items-center gap-1.5 w-full">
             <button
-              onClick={() => goToSlide(5)}
+              onClick={() => goToSlide(6)}
               className="group w-full py-3 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 hover:scale-102 active:scale-98 transition-transform text-center flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <span>Discuss Idea (Takes 60s)</span>
@@ -699,15 +778,20 @@ export default function CinematicReel() {
               </div>
 
               <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.12)]">
-                <div className="text-xs font-mono text-emerald-400 uppercase font-bold mb-1 flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-[10px] text-emerald-300">✓</span>
-                  <span>The Nexfound Alternative:</span>
+                <div className="text-xs font-mono text-emerald-400 uppercase font-bold mb-1 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-[10px] text-emerald-300">✓</span>
+                    <span>The Nexfound Alternative:</span>
+                  </div>
+                  <span className="text-[10px] font-mono bg-[#DFCA9F]/20 text-[#DFCA9F] px-2 py-0.5 rounded border border-[#DFCA9F]/30 font-bold">BEST VALUE</span>
                 </div>
-                <div className="text-sm font-bold text-white">
-                  Fixed 30-Day Sprint starting from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup>.
+                <div className="text-sm font-bold text-white flex items-center gap-2 flex-wrap">
+                  <span>30-Day Production MVP:</span>
+                  <span className="text-xs font-mono text-zinc-500 line-through">₹2,25,000</span>
+                  <span className="text-emerald-400">Starting from ₹1,49,000</span><sup className="text-[10px] text-zinc-400 font-normal">*</sup>
                 </div>
                 <div className="text-xs text-zinc-300 mt-1 leading-relaxed">
-                  1 Core workflow. 1 Platform first. Live in customers&apos; hands. 100% code transferred to your GitHub.
+                  1 Core revenue workflow. Live in customers&apos; hands in 30 days. 100% code transferred to your GitHub. (Design &amp; Architecture Sprints from <span className="line-through text-zinc-500">₹75k</span> ₹49k).
                 </div>
               </div>
             </div>
@@ -774,15 +858,20 @@ export default function CinematicReel() {
               </div>
             </div>
             <div className="p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-              <div className="text-xs font-mono text-emerald-400 uppercase font-bold mb-1 flex items-center gap-1.5">
-                <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-[10px] text-emerald-300">✓</span>
-                <span>The Nexfound Alternative:</span>
+              <div className="text-xs font-mono text-emerald-400 uppercase font-bold mb-1 flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-[10px] text-emerald-300">✓</span>
+                  <span>The Nexfound Alternative:</span>
+                </div>
+                <span className="text-[9px] font-mono bg-[#DFCA9F]/20 text-[#DFCA9F] px-1.5 py-0.5 rounded font-bold">BEST VALUE</span>
               </div>
-              <div className="text-sm sm:text-base font-bold text-white">
-                Fixed 30-Day Sprint from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup>.
+              <div className="text-sm sm:text-base font-bold text-white flex items-center gap-1.5 flex-wrap">
+                <span>30-Day Sprint:</span>
+                <span className="text-xs text-zinc-500 line-through">₹2,25,000</span>
+                <span className="text-emerald-400">From ₹1,49,000</span><sup className="text-[10px] text-zinc-400 font-normal">*</sup>
               </div>
               <div className="text-xs sm:text-sm text-zinc-200 mt-1 leading-relaxed">
-                1 Core workflow. 1 Platform first. Live in customers&apos; hands. 100% code transferred to your GitHub.
+                Live in customers&apos; hands in 30 days. 100% code on your GitHub. (Design Sprints from <span className="line-through text-zinc-500">₹75k</span> ₹49k).
               </div>
             </div>
           </div>
@@ -1326,7 +1415,7 @@ export default function CinematicReel() {
       </section>
 
       {/* ============================================================ */}
-      {/* SLIDE 05: PROOF & PRICING                                    */}
+      {/* SLIDE 05: LIVE PROOF                                         */}
       {/* ============================================================ */}
       <section
         id="slide-5"
@@ -1334,49 +1423,33 @@ export default function CinematicReel() {
       >
         <div className="absolute top-1/2 left-1/3 -translate-x-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[500px] rounded-full bg-[#DFCA9F]/15 blur-[140px] pointer-events-none" />
 
-        {/* ----------------- DESKTOP 12-COLUMN SPLIT VIEW ----------------- */}
         <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center max-w-7xl w-full mx-auto my-auto z-10">
-          <div className="lg:col-span-6 space-y-5 text-left">
+          <div className="lg:col-span-5 space-y-4 text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 text-xs font-mono text-[#DFCA9F]">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DFCA9F] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#DFCA9F]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
               </span>
-              <span>Honest Pricing &amp; Scope Clarity</span>
+              <span>Live Proof · Real Code In Production</span>
             </div>
 
-            <h2 className="text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-[1.1]">
-              How much does it cost, and{" "}
+            <h2 className="text-4xl lg:text-5xl font-display font-extrabold tracking-tight text-white leading-[1.1]">
+              Don&apos;t take our word for it. Look at what&apos;s{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A]">
-                how is it built?
+                live in production.
               </span>
             </h2>
 
-            <p className="text-base lg:text-lg text-zinc-300 max-w-xl leading-relaxed font-normal">
-              Transparent scopes, clear milestones, and zero surprise invoices. Focused MVPs start from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup> on a 30-day sprint. Architecture and product direction are overseen directly by Danish, built and shipped by our dedicated engineering team.
+            <p className="text-sm text-zinc-300 max-w-lg leading-relaxed font-normal">
+              We don&apos;t show conceptual Figma mockups. Here are real client applications engineered, deployed, and processing user payments in 30-day sprints.
             </p>
 
-            <div className="p-4 rounded-2xl bg-white/[0.04] border border-[#DFCA9F]/30 space-y-2 max-w-xl">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-[#DFCA9F] font-bold uppercase tracking-wider">
-                  Baseline MVP Starting Scope:
-                </span>
-                <span className="text-xs font-mono font-bold text-white bg-[#DFCA9F]/20 px-2 py-0.5 rounded">
-                  From ₹50,000<sup className="text-[9px] text-[#DFCA9F]/70 font-normal">*</sup>
-                </span>
-              </div>
-              <p className="text-xs text-zinc-300 leading-relaxed">
-                <strong className="text-white">What ₹50,000 Covers:</strong> A focused, single-platform MVP (Web or Mobile) with 1 core customer workflow, user auth, direct payments (Stripe/UPI), and an admin dashboard.
-              </p>
-              <div className="pt-2 border-t border-white/10 text-[11px] text-zinc-400 leading-relaxed">
-                <strong className="text-amber-300">What if your product is larger?</strong> If your product needs multi-sided marketplaces, custom AI models, or complex IoT backends, ₹50k won&apos;t cut it—and we won&apos;t mislead you. We give you a clear, honest custom scope &amp; milestone estimate upfront after a discovery call.
-              </div>
-            </div>
-
+            {/* Project Switcher Tabs */}
             <div className="flex items-center gap-2 pt-1">
               <button
+                type="button"
                 onClick={() => setActiveProject("dalalfree")}
-                className={`group px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                className={`group px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeProject === "dalalfree"
                     ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-lg shadow-[#DFCA9F]/20"
                     : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
@@ -1386,11 +1459,12 @@ export default function CinematicReel() {
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20" />
                 </svg>
-                <span>Proof 01: DalalFree</span>
+                <span>Proof 01: DalalFree (Web)</span>
               </button>
               <button
+                type="button"
                 onClick={() => setActiveProject("evdock")}
-                className={`group px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                className={`group px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeProject === "evdock"
                     ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-lg shadow-[#DFCA9F]/20"
                     : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
@@ -1400,7 +1474,81 @@ export default function CinematicReel() {
                   <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
                   <path d="M12 18h.01" />
                 </svg>
-                <span>Proof 02: EV Dock</span>
+                <span>Proof 02: EV Dock (Mobile)</span>
+              </button>
+            </div>
+
+            {/* Case Study Deep-Dive Card */}
+            <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2.5 max-w-lg">
+              {activeProject === "dalalfree" ? (
+                <>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono text-emerald-400 uppercase font-bold">
+                      Direct Real Estate Marketplace
+                    </span>
+                    <span className="text-[10px] font-mono text-zinc-400">Launched in 30 Days</span>
+                  </div>
+                  <p className="text-xs text-zinc-300 leading-relaxed">
+                    Eliminates 1–2% broker fees with direct owner-to-buyer chat, automated document verification, and live booking payments.
+                  </p>
+                  <div className="grid grid-cols-3 gap-2 pt-1 border-t border-white/10">
+                    <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-center">
+                      <div className="text-base font-bold font-mono text-emerald-400">₹1,48,500</div>
+                      <div className="text-[10px] text-zinc-400 font-mono">Deposited</div>
+                    </div>
+                    <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-center">
+                      <div className="text-base font-bold font-mono text-white">30 Days</div>
+                      <div className="text-[10px] text-zinc-400 font-mono">Build Time</div>
+                    </div>
+                    <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-center">
+                      <div className="text-base font-bold font-mono text-[#DFCA9F]">100% IP</div>
+                      <div className="text-[10px] text-zinc-400 font-mono">Direct GitHub</div>
+                    </div>
+                  </div>
+                  <div className="text-[10px] font-mono text-zinc-500 pt-0.5">
+                    Stack: Next.js 15 · PostgreSQL · Razorpay/UPI · Tailwind CSS · Vercel
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono text-cyan-400 uppercase font-bold">
+                      IoT Smart EV Charger Mobile App
+                    </span>
+                    <span className="text-[10px] font-mono text-zinc-400">Hardware Paired</span>
+                  </div>
+                  <p className="text-xs text-zinc-300 leading-relaxed">
+                    1-Tap Bluetooth charger reserve and unlock in deep underground basement parking garages with zero cell signal.
+                  </p>
+                  <div className="grid grid-cols-3 gap-2 pt-1 border-t border-white/10">
+                    <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-center">
+                      <div className="text-base font-bold font-mono text-cyan-400">&lt; 1.2s</div>
+                      <div className="text-[10px] text-zinc-400 font-mono">BLE Latency</div>
+                    </div>
+                    <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-center">
+                      <div className="text-base font-bold font-mono text-white">30 Days</div>
+                      <div className="text-[10px] text-zinc-400 font-mono">App Launch</div>
+                    </div>
+                    <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-center">
+                      <div className="text-base font-bold font-mono text-emerald-400">Offline</div>
+                      <div className="text-[10px] text-zinc-400 font-mono">Zero Signal</div>
+                    </div>
+                  </div>
+                  <div className="text-[10px] font-mono text-zinc-500 pt-0.5">
+                    Stack: React Native / Expo · BLE Protocols · Node.js · AWS IoT
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="pt-1">
+              <button
+                type="button"
+                onClick={() => goToSlide(5)}
+                className="text-xs font-mono text-[#DFCA9F] hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer group"
+              >
+                <span>Ready to see sprint investment &amp; tiers?</span>
+                <span className="group-hover:translate-y-0.5 transition-transform">↓</span>
               </button>
             </div>
           </div>
@@ -1496,63 +1644,48 @@ export default function CinematicReel() {
           </div>
         </div>
 
-        {/* ----------------- MOBILE 100VH REEL VIEW (Cohesive & Spacious) ----------------- */}
+        {/* ----------------- MOBILE 100VH REEL VIEW (Pure Live Proof) ----------------- */}
         <div className="lg:hidden flex flex-col justify-center items-center h-full w-full max-w-[420px] mx-auto z-10 pt-12 pb-14 px-3.5">
-          <div className="text-center mb-3">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 text-[11px] font-mono text-[#DFCA9F] mb-1">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DFCA9F] opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#DFCA9F]" />
-              </span>
-              <span>Scope &amp; Live Proof</span>
+          <div className="text-center w-full mb-3">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 text-[10px] font-mono text-[#DFCA9F] mb-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Live In Production</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
-              From ₹50,000<sup className="text-[10px] text-[#DFCA9F]/70 font-normal">*</sup> &amp;{" "}
+            <h2 className="text-2xl font-display font-extrabold tracking-tight text-white leading-tight">
+              Real Apps.{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A]">
-                real live proof.
+                Real Revenue.
               </span>
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-300 mt-0.5 leading-relaxed max-w-sm mx-auto">
-              Transparent scopes, clear milestones, and zero surprise invoices.
-            </p>
           </div>
 
-          {/* Scope Highlight Card */}
-          <div className="w-full p-2.5 sm:p-3 rounded-2xl bg-white/[0.04] border border-[#DFCA9F]/30 text-left mb-3">
-            <div className="flex items-center justify-between mb-0.5">
-              <span className="text-[11px] font-mono text-[#DFCA9F] font-bold uppercase">MVP Starting Scope:</span>
-              <span className="text-xs font-mono font-bold text-white bg-[#DFCA9F]/20 px-2 py-0.5 rounded">From ₹50,000*</span>
-            </div>
-            <p className="text-[11px] sm:text-xs text-zinc-300 leading-snug">
-              1 Focused workflow, 1 platform (Web or Mobile), auth, direct payments &amp; admin. Larger apps quoted transparently upfront.
-            </p>
-          </div>
-
-          {/* Dedicated Proof Toggle Buttons in between with Generous Spacing */}
-          <div className="flex justify-center items-center gap-2.5 mb-3.5 w-full">
+          {/* Clean Proof Switcher */}
+          <div className="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-white/[0.04] border border-white/10 w-full mb-3">
             <button
+              type="button"
               onClick={() => setActiveProject("dalalfree")}
-              className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
+              className={`py-1.5 px-2 rounded-lg text-[11px] font-mono font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 activeProject === "dalalfree"
                   ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-md"
-                  : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
+                  : "text-zinc-400 hover:text-white"
               }`}
             >
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10" />
                 <path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20" />
               </svg>
               <span>DalalFree (Web)</span>
             </button>
             <button
+              type="button"
               onClick={() => setActiveProject("evdock")}
-              className={`flex-1 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
+              className={`py-1.5 px-2 rounded-lg text-[11px] font-mono font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 activeProject === "evdock"
                   ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-md"
-                  : "bg-white/5 text-zinc-400 border border-white/10 hover:text-white"
+                  : "text-zinc-400 hover:text-white"
               }`}
             >
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
                 <path d="M12 18h.01" />
               </svg>
@@ -1560,7 +1693,8 @@ export default function CinematicReel() {
             </button>
           </div>
 
-          <div className="w-full rounded-2xl bg-[#14120A] border border-[#DFCA9F]/30 overflow-hidden shadow-2xl text-left mb-4 sm:mb-5">
+          {/* Proof Showcase Card */}
+          <div className="w-full rounded-2xl bg-[#14120A] border border-[#DFCA9F]/30 overflow-hidden shadow-2xl text-left mb-3">
             <AnimatePresence mode="wait">
               {activeProject === "dalalfree" ? (
                 <motion.div
@@ -1572,32 +1706,32 @@ export default function CinematicReel() {
                 >
                   <div className="p-2.5 border-b border-white/10 flex justify-between items-center bg-black/40">
                     <div>
-                      <div className="text-[9px] font-mono uppercase text-[#DFCA9F] font-bold">Client Web Platform</div>
-                      <div className="text-xs sm:text-sm font-bold text-white font-display">DalalFree</div>
+                      <div className="text-[9px] font-mono uppercase text-[#DFCA9F] font-bold">Direct Property Platform</div>
+                      <div className="text-sm font-bold text-white font-display">DalalFree</div>
                     </div>
                     <span className="text-[9px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold inline-flex items-center gap-1">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
-                      </span>
-                      <span>LIVE</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>LIVE IN PROD</span>
                     </span>
                   </div>
-                  <div className="group/m-img relative aspect-[16/9] w-full overflow-hidden bg-black">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-black">
                     <Image
                       src="/images/dalalfree_real_platform.jpg"
                       alt="DalalFree Direct Property Platform"
                       fill
-                      sizes="(max-width: 640px) 393px, 450px"
-                      className="object-cover transition-transform duration-700 group-hover/m-img:scale-105"
+                      sizes="(max-width: 640px) 390px, 450px"
+                      className="object-cover"
                       priority
                     />
                   </div>
-                  <div className="p-2.5 space-y-0.5 text-xs text-zinc-300">
-                    <div className="font-semibold text-white text-xs">Direct Buyer-to-Seller Real Estate</div>
-                    <p className="text-zinc-400 text-[11px] leading-tight">
-                      Eliminates broker commissions with direct owner chat &amp; verified listings.
-                    </p>
+                  <div className="p-3">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-zinc-300 bg-white/5 py-1.5 px-2.5 rounded-lg border border-white/5">
+                      <span className="text-emerald-400 font-bold">₹1,48,500 Deposited</span>
+                      <span>·</span>
+                      <span className="text-white font-medium">30-Day Build</span>
+                      <span>·</span>
+                      <span className="text-[#DFCA9F] font-medium">100% IP</span>
+                    </div>
                   </div>
                 </motion.div>
               ) : (
@@ -1610,44 +1744,415 @@ export default function CinematicReel() {
                 >
                   <div className="p-2.5 border-b border-white/10 flex justify-between items-center bg-black/40">
                     <div>
-                      <div className="text-[9px] font-mono uppercase text-cyan-400 font-bold">Client Mobile App</div>
-                      <div className="text-xs sm:text-sm font-bold text-white font-display">EV Dock</div>
+                      <div className="text-[9px] font-mono uppercase text-cyan-400 font-bold">Smart EV IoT App</div>
+                      <div className="text-sm font-bold text-white font-display">EV Dock</div>
                     </div>
                     <span className="text-[9px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-2 py-0.5 rounded-full font-bold inline-flex items-center gap-1">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-400" />
-                      </span>
-                      <span>PAIRED</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                      <span>HARDWARE PAIRED</span>
                     </span>
                   </div>
-                  <div className="group/m-img relative aspect-[16/9] w-full overflow-hidden bg-black">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-black">
                     <Image
                       src="/images/ev-dock-showcase.jpg"
                       alt="EV Dock Mobile Smart Charger System"
                       fill
-                      sizes="(max-width: 640px) 393px, 450px"
-                      className="object-cover transition-transform duration-700 group-hover/m-img:scale-105"
+                      sizes="(max-width: 640px) 390px, 450px"
+                      className="object-cover"
                       priority
                     />
                   </div>
-                  <div className="p-2.5 space-y-0.5 text-xs text-zinc-300">
-                    <div className="font-semibold text-white text-xs">Smart EV Charging IoT Mobile App</div>
-                    <p className="text-zinc-400 text-[11px] leading-tight">
-                      1-Tap Bluetooth charger reserve and unlock in underground parking.
-                    </p>
+                  <div className="p-3">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-zinc-300 bg-white/5 py-1.5 px-2.5 rounded-lg border border-white/5">
+                      <span className="text-cyan-400 font-bold">&lt; 1.2s BLE Sync</span>
+                      <span>·</span>
+                      <span className="text-white font-medium">30-Day Launch</span>
+                      <span>·</span>
+                      <span className="text-emerald-400 font-medium">Offline First</span>
+                    </div>
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
-          <div className="text-center flex flex-col items-center gap-1.5 w-full">
-            <button
-              onClick={() => goToSlide(5)}
-              className="text-xs font-mono text-zinc-400 hover:text-white transition-colors flex items-center gap-1 cursor-pointer pt-0.5"
+          {/* Clean Navigation to Slide 06 (Pricing) */}
+          <button
+            type="button"
+            onClick={() => goToSlide(5)}
+            className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#DFCA9F]/20 cursor-pointer"
+          >
+            <span>View Sprint Pricing &amp; Tiers</span>
+            <span>→</span>
+          </button>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* SLIDE 06: SPRINT PRICING & TIERS                            */}
+      {/* ============================================================ */}
+      <section
+        id="slide-6"
+        className="relative w-full h-[100dvh] max-h-[100dvh] snap-start snap-always overflow-hidden flex flex-col justify-center px-4 sm:px-8 lg:px-16 bg-gradient-to-b from-[#0A0906] via-[#0F0D08] to-[#12100A]"
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] lg:w-[800px] h-[350px] lg:h-[500px] rounded-full bg-[#DFCA9F]/10 blur-[150px] pointer-events-none" />
+
+        {/* ----------------- DESKTOP 3-TIER MATRIX VIEW (Spacious & Clean) ----------------- */}
+        <div className="hidden lg:flex flex-col justify-center max-w-7xl w-full mx-auto my-auto z-10 space-y-6">
+          <div className="text-center space-y-2 max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 text-xs font-mono text-[#DFCA9F]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Sprint Tiers · Slashed Pricing Active</span>
+            </div>
+            <h2 className="text-3xl lg:text-4xl xl:text-5xl font-display font-extrabold tracking-tight text-white leading-tight whitespace-nowrap">
+              Pick Your Sprint.{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A]">
+                Ship In 30 Days.
+              </span>
+            </h2>
+            <p className="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto font-normal">
+              Fixed scope locked upfront. Zero hourly billing. 100% IP handover on Day 30.
+            </p>
+          </div>
+
+          {/* 3-Column Pricing Cards */}
+          <div className="grid grid-cols-3 gap-6 items-stretch pt-1">
+            {/* TIER 1: DESIGN & ARCHITECTURE */}
+            <div className="rounded-2xl bg-[#0C0B12]/90 border border-white/10 p-6 flex flex-col justify-between hover:border-blue-400/40 transition-all text-left group">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-zinc-400 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span>7–10 Days</span>
+                  </span>
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-500/15 text-blue-300 border border-blue-500/30 font-bold">
+                    VALIDATION
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-bold text-white font-display">Design &amp; Architecture</h3>
+                  <p className="text-xs text-zinc-400 mt-1 leading-snug">
+                    Validate market demand and pitch angels before writing code.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-bold">
+                      Sprint Fee
+                    </span>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                      SAVE 35%
+                    </span>
+                  </div>
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-3xl font-extrabold font-mono text-white tracking-tight">
+                      ₹49,000
+                    </span>
+                    <span className="text-base text-zinc-500 line-through font-mono decoration-rose-500/80 decoration-2">
+                      ₹75,000
+                    </span>
+                  </div>
+                  <div className="text-[10px] font-mono text-blue-300/90 font-medium pt-0.5">
+                    ★ 100% credited toward MVP if continued
+                  </div>
+                </div>
+
+                <ul className="space-y-2 text-xs text-zinc-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 font-bold">✓</span>
+                    <span>Clickable interactive Figma prototype</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 font-bold">✓</span>
+                    <span>Complete DB schema &amp; API blueprints</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 font-bold">✓</span>
+                    <span>Investor-ready demo link for pitches</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => goToSlide(6)}
+                className="w-full mt-6 py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs uppercase tracking-wider border border-white/15 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <span>Start Design Sprint</span>
+                <span>→</span>
+              </button>
+            </div>
+
+            {/* TIER 2: 30-DAY MVP (HERO FLAGSHIP) */}
+            <div className="rounded-2xl bg-gradient-to-b from-[#1C180E] via-[#14120A] to-[#0D0C07] border-2 border-[#DFCA9F]/70 p-6 flex flex-col justify-between shadow-[0_0_40px_rgba(223,202,159,0.18)] relative scale-[1.03] z-10 text-left">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3.5 py-0.5 rounded-full bg-gradient-to-r from-[#DFCA9F] via-[#F5ECDA] to-[#DFCA9F] text-black font-mono font-extrabold text-[10px] uppercase tracking-wider shadow-md whitespace-nowrap">
+                ★ MOST POPULAR · BEST VALUE
+              </div>
+
+              <div className="space-y-4 pt-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-[#DFCA9F] font-bold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
+                    <span>30 Days Hard Launch</span>
+                  </span>
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#DFCA9F]/20 text-[#DFCA9F] border border-[#DFCA9F]/40 font-bold">
+                    FLAGSHIP
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-extrabold text-white font-display">30-Day Production MVP</h3>
+                  <p className="text-xs text-zinc-300 mt-1 leading-snug">
+                    Full-stack Web or Mobile app taking live customer payments.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-[#DFCA9F]/25 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#DFCA9F] font-bold">
+                      Starting from
+                    </span>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      SAVE ₹76,000 (34% OFF)
+                    </span>
+                  </div>
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-3xl lg:text-4xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] tracking-tight">
+                      ₹1,49,000*
+                    </span>
+                    <span className="text-base text-zinc-400 line-through font-mono decoration-rose-500/80 decoration-2">
+                      ₹2,25,000
+                    </span>
+                  </div>
+                  <div className="text-[10px] font-mono text-zinc-400 font-medium pt-0.5">
+                    Fixed price locked upfront · 0 surprise charges
+                  </div>
+                </div>
+
+                <ul className="space-y-2 text-xs text-zinc-200">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#DFCA9F] font-bold">✓</span>
+                    <span>1 Core revenue customer workflow (Web or Mobile)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#DFCA9F] font-bold">✓</span>
+                    <span>Auth, Payment Integration &amp; Admin Dashboard</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#DFCA9F] font-bold">✓</span>
+                    <span>100% direct GitHub &amp; IP transfer on Day 30</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#DFCA9F] font-bold">✓</span>
+                    <span>14-day warranty &amp; Danish direct oversight</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => goToSlide(6)}
+                className="w-full mt-6 py-3 px-4 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/25 hover:brightness-105 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <span>Lock 30-Day MVP Sprint</span>
+                <span>→</span>
+              </button>
+            </div>
+
+            {/* TIER 3: SCALE & MULTI-PLATFORM */}
+            <div className="rounded-2xl bg-[#0C0B12]/90 border border-white/10 p-6 flex flex-col justify-between hover:border-purple-400/40 transition-all text-left group">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-zinc-400 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                    <span>45 Days</span>
+                  </span>
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30 font-bold">
+                    ECOSYSTEM
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-bold text-white font-display">Scale &amp; Multi-Platform</h3>
+                  <p className="text-xs text-zinc-400 mt-1 leading-snug">
+                    Dual-platform releases, custom AI/LLM pipelines, or IoT.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-bold">
+                      Starting from
+                    </span>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                      SAVE 22%
+                    </span>
+                  </div>
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-3xl font-extrabold font-mono text-white tracking-tight">
+                      ₹3,49,000
+                    </span>
+                    <span className="text-base text-zinc-500 line-through font-mono decoration-rose-500/80 decoration-2">
+                      ₹4,50,000
+                    </span>
+                  </div>
+                  <div className="text-[10px] font-mono text-purple-300/90 font-medium pt-0.5">
+                    For multi-sided platforms &amp; complex architectures
+                  </div>
+                </div>
+
+                <ul className="space-y-2 text-xs text-zinc-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400 font-bold">✓</span>
+                    <span>Cross-platform Web + iOS &amp; Android launch</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400 font-bold">✓</span>
+                    <span>Custom AI / LLM pipeline or real-time queues</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400 font-bold">✓</span>
+                    <span>60-day launch support &amp; priority SLA</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => goToSlide(6)}
+                className="w-full mt-6 py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs uppercase tracking-wider border border-white/15 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <span>Start Scale Sprint</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Desktop Guarantee Ticker */}
+          <div className="pt-2 flex items-center justify-center gap-8 text-xs text-zinc-400 font-mono border-t border-white/10">
+            <span className="flex items-center gap-1.5"><span>🔒</span> 100% IP &amp; GitHub Handover</span>
+            <span className="flex items-center gap-1.5"><span>⚡</span> 30-Day Hard Delivery</span>
+            <span className="flex items-center gap-1.5"><span>🛡️</span> 14-Day Warranty</span>
+            <span className="flex items-center gap-1.5"><span>👨‍💻</span> Founder Oversight</span>
+          </div>
+        </div>
+
+        {/* ----------------- MOBILE 100VH REEL VIEW (Spacious & Clean) ----------------- */}
+        <div className="lg:hidden flex flex-col justify-center items-center h-full w-full max-w-[420px] mx-auto z-10 pt-12 pb-14 px-3.5">
+          <div className="text-center w-full mb-3">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#DFCA9F]/10 border border-[#DFCA9F]/20 text-[10px] font-mono text-[#DFCA9F] mb-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Sprint Tiers</span>
+            </div>
+            <h2 className="text-2xl font-display font-extrabold tracking-tight text-white leading-tight">
+              Pick Your Sprint
+            </h2>
+          </div>
+
+          {/* Clean 3-Tier Switcher Tabs Animated */}
+          <div className="grid grid-cols-3 gap-1 p-1 rounded-xl bg-white/[0.04] border border-white/10 w-full mb-3">
+            {(["tier1", "tier2", "tier3"] as SprintTierKey[]).map((tKey) => {
+              const isSelected = activeTier === tKey;
+              return (
+                <button
+                  key={tKey}
+                  type="button"
+                  onClick={() => setActiveTier(tKey)}
+                  className={`relative py-1.5 px-1 rounded-lg text-[10px] font-mono font-bold transition-colors text-center cursor-pointer ${
+                    isSelected ? "text-black" : "text-zinc-400 hover:text-white"
+                  }`}
+                >
+                  {isSelected && (
+                    <motion.div
+                      layoutId="activeTierMobileTab"
+                      className="absolute inset-0 bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] rounded-lg shadow"
+                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                    />
+                  )}
+                  <div className="relative z-10 truncate">{tKey === "tier1" ? "Design" : tKey === "tier2" ? "★ 30-Day" : "Scale"}</div>
+                  <div className={`relative z-10 text-[9px] ${isSelected ? "text-black/80 font-bold" : "text-zinc-500"}`}>
+                    {tKey === "tier1" ? "₹49k" : tKey === "tier2" ? "₹1.49L" : "₹3.49L"}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Tier Mobile Card Animated */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTier}
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="w-full p-4 rounded-2xl bg-[#14120A] border border-[#DFCA9F]/35 text-left shadow-xl space-y-3 mb-3"
             >
-              <span>Swipe up to launch your idea</span>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold text-white font-display">
+                  {SPRINT_TIERS[activeTier].name}
+                </span>
+                <span className={`text-[9px] font-mono px-2 py-0.5 rounded border font-semibold ${SPRINT_TIERS[activeTier].badgeStyle}`}>
+                  {SPRINT_TIERS[activeTier].badge}
+                </span>
+              </div>
+
+              {/* Mobile Price Zone with Small "STARTING FROM" and Clear Slash */}
+              <div className="p-2.5 rounded-xl bg-black/50 border border-white/5 space-y-0.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] font-mono uppercase tracking-wider text-zinc-400 font-bold">
+                    {SPRINT_TIERS[activeTier].priceLabel}
+                  </span>
+                  <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                    {SPRINT_TIERS[activeTier].discountBadge}
+                  </span>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A]">
+                    {SPRINT_TIERS[activeTier].price}
+                  </span>
+                  <span className="text-xs text-zinc-500 line-through font-mono decoration-rose-500/80 decoration-2">
+                    {SPRINT_TIERS[activeTier].slashedPrice}
+                  </span>
+                  <span className="text-[10px] text-zinc-400 font-mono ml-auto">
+                    · {SPRINT_TIERS[activeTier].duration}
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-zinc-300 leading-snug">
+                {SPRINT_TIERS[activeTier].subtitle}
+              </p>
+
+              <ul className="space-y-1.5 text-[11px] text-zinc-200">
+                {SPRINT_TIERS[activeTier].highlights.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-1.5">
+                    <span className="text-[#DFCA9F] font-bold">✓</span>
+                    <span className="leading-tight">{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                type="button"
+                onClick={() => goToSlide(6)}
+                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-[#DFCA9F]/20 cursor-pointer flex items-center justify-center gap-1.5 mt-1"
+              >
+                <span>{activeTier === "tier2" ? "Lock 30-Day MVP & Launch" : "Select Sprint & Launch"}</span>
+                <span>→</span>
+              </button>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="text-center w-full">
+            <button
+              type="button"
+              onClick={() => goToSlide(6)}
+              className="text-xs font-mono text-zinc-400 hover:text-white transition-colors flex items-center justify-center gap-1 cursor-pointer mx-auto"
+            >
+              <span>Swipe up to drop your idea</span>
               <span className="animate-bounce">↓</span>
             </button>
           </div>
@@ -1655,10 +2160,10 @@ export default function CinematicReel() {
       </section>
 
       {/* ============================================================ */}
-      {/* SLIDE 06: THE LAUNCH                                         */}
+      {/* SLIDE 07: THE LAUNCH                                         */}
       {/* ============================================================ */}
       <section
-        id="slide-6"
+        id="slide-7"
         className="relative w-full h-[100dvh] max-h-[100dvh] snap-start snap-always overflow-hidden flex flex-col justify-center px-4 sm:px-8 lg:px-16 bg-gradient-to-b from-[#06060A] to-[#0D0E1A]"
       >
         <div className="absolute top-1/2 left-1/3 -translate-x-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[500px] rounded-full bg-emerald-600/15 blur-[140px] pointer-events-none" />
@@ -1722,7 +2227,7 @@ export default function CinematicReel() {
                 <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0 group-hover/chk:scale-110 transition-transform">
                   ✓
                 </span>
-                <span>Starting baseline from ₹50,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup></span>
+                <span>Production MVPs starting from ₹1,49,000<sup className="text-[10px] text-zinc-400 font-normal">*</sup> (Design Sprints from ₹49k)</span>
               </div>
               <div className="flex items-center gap-2 group/chk">
                 <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-[10px] flex-shrink-0 group-hover/chk:scale-110 transition-transform">
@@ -1820,7 +2325,7 @@ export default function CinematicReel() {
                 </button>
 
                 <div className="text-[10px] text-zinc-400 text-center font-mono pt-1 leading-relaxed">
-                  *₹50k &amp; 30 days are the starting baseline for a focused MVP. Clear proposal sent within 24 hours.
+                  *Production MVPs from ₹1,49,000 (slashed from ₹2.25L) · Design Sprints from ₹49,000. Clear proposal in 24 hours.
                 </div>
               </form>
             </div>
@@ -1929,7 +2434,7 @@ export default function CinematicReel() {
 
           <div className="text-center w-full">
             <div className="text-[10px] text-zinc-400 font-mono leading-tight">
-              *Starting baseline for focused MVP. Clear proposal sent in 24h.
+              *MVPs from ₹1,49,000 (Design Sprints from ₹49k). Proposal in 24h.
             </div>
           </div>
         </div>

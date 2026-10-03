@@ -201,7 +201,7 @@ export default function ScopeEstimator() {
     const event = new CustomEvent("scopeConfigured", {
       detail: {
         platform: platformLabel,
-        budget: "Starting floor from ₹50,000 (Detailed quote via Discovery)",
+        budget: "Starting floor from ₹1,49,000 (Detailed quote via Discovery)",
         timeline: scopeAnalysis.estimatedTimeline,
         modules: `V1 (Ship at Launch): [${v1Names.join(", ")}] | V2 (Post-Launch Expansion): [${v2Names.join(", ")}]`,
       },
@@ -472,11 +472,16 @@ export default function ScopeEstimator() {
                   <div className="text-xs font-mono uppercase text-[#DFCA9F] font-semibold mb-1">
                     Transparent Pricing Policy
                   </div>
-                  <div className="text-sm font-bold text-white mb-2">
-                    Single-Workflow Builds: <span className="text-gold-foil">From ₹50,000</span>
+                  <div className="text-sm font-bold text-white mb-1.5 flex items-center gap-2 flex-wrap">
+                    <span>30-Day Production MVP:</span>
+                    <span className="line-through text-zinc-500 text-xs font-mono">₹2,25,000</span>
+                    <span className="text-gold-foil">From ₹1,49,000</span>
+                  </div>
+                  <div className="text-xs text-zinc-400 mb-2">
+                    Design &amp; Architecture Sprints available from <span className="line-through text-zinc-500 text-[11px]">₹75,000</span> <span className="text-emerald-400 font-bold">₹49,000</span>.
                   </div>
                   <p className="text-[11px] text-[#9E9EB0] leading-relaxed">
-                    Comprehensive MVPs featuring custom database schemas, authenticated roles, and business workflows are quoted individually following technical discovery. We do not use arbitrary additive calculators because building a 3-field CRUD screen vs. an enterprise telemetry dashboard requires entirely different engineering.
+                    Comprehensive MVPs featuring custom database schemas, authenticated roles, and business workflows are quoted transparently based on sprint tier. We never charge endless agency hourly retainers or arbitrary additive sums.
                   </p>
                 </div>
 

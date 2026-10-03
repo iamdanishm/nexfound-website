@@ -161,7 +161,7 @@ ${idea}
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
-                  <span>Transparent starting floor of ₹50,000</span>
+                  <span>Transparent sprints starting from ₹1,49,000 (Design Sprint from ₹49k)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>

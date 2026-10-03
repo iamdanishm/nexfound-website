@@ -12,7 +12,7 @@ const TEXTS = {
     "Hear directly from founders, product operators, and technical collaborators who partnered with Nexfound.",
   DEFAULT_STATS: [
     { value: "30 Days", label: "Idea to Live Launch" },
-    { value: "₹50,000", label: "Clear Starting Price" },
+    { value: "₹1,49,000", label: "Clear Starting Price" },
     { value: "100%", label: "Code & Cloud Ownership" },
     { value: "Zero", label: "Agency Lock-in" },
   ],

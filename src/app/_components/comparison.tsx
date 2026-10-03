@@ -49,7 +49,7 @@ const FOUNDER_PATHS = [
     borderStyle: "border-[#DFCA9F]/40 bg-[#090A12]/95 shadow-[0_20px_60px_rgba(223,202,159,0.1)]",
     icon: "⚡",
     timeline: "30-Day Hard Sprint",
-    cost: "From ₹50,000 (Transparent Scope)",
+    cost: "From ₹1,49,000 (Slashed from ₹2.25L · Design Sprint ₹49k)",
     ownership: "100% Direct GitHub & Cloud Transfer",
     points: [
       "Ruthlessly isolate the single workflow customers will pay for",
@@ -72,7 +72,7 @@ const COMPARISON_ROWS = [
     criteria: "Starting Budget Floor",
     agency: "₹10,00,000+ retainers",
     freelancer: "Unpredictable hourly billing",
-    nexfound: "From ₹50,000 (Clear Scope)",
+    nexfound: "From ₹1,49,000 (Design Sprint ₹49k)",
   },
   {
     criteria: "Code & Cloud Ownership",
