@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
 
 const CLIENT_PROJECTS = [
   {
@@ -46,52 +47,77 @@ const CLIENT_PROJECTS = [
 export default function Showcase() {
   const [activeIdx, setActiveIdx] = useState(0);
   const active = CLIENT_PROJECTS[activeIdx];
+  const tiltCardRef = useRef<HTMLDivElement>(null);
 
-  const scrollToContact = () => {
-    const el = document.querySelector("#contact");
-    if (el) {
-      const offset = 80;
-      const pos = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: pos, behavior: "smooth" });
-    }
+  // Mouse spotlight coordinates handler
+  const handleSpotlight = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+  };
+
+  // 3D Perspective Tilt on Preview Card
+  const handleTiltMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!tiltCardRef.current) return;
+    const rect = tiltCardRef.current.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+
+    const rotateX = (-y / (rect.height / 2)) * 6; // max 6deg
+    const rotateY = (x / (rect.width / 2)) * 6;
+
+    gsap.to(tiltCardRef.current, {
+      rotateX,
+      rotateY,
+      transformPerspective: 1200,
+      duration: 0.35,
+      ease: "power2.out",
+    });
+  };
+
+  const handleTiltLeave = () => {
+    if (!tiltCardRef.current) return;
+    gsap.to(tiltCardRef.current, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.7,
+      ease: "power3.out",
+    });
   };
 
   return (
-    <section id="work" className="relative py-16 sm:py-24 overflow-hidden bg-transparent scroll-mt-24">
-      {/* Warm Champagne & Emerald Glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full opacity-15 pointer-events-none blur-[150px]"
-        style={{
-          background: "radial-gradient(circle, rgba(223, 202, 159, 0.18) 0%, rgba(16, 185, 129, 0.1) 45%, transparent 70%)",
-        }}
-      />
+    <section id="work" className="relative py-20 sm:py-28 overflow-hidden bg-transparent scroll-mt-24">
+      {/* Background Accent Halo */}
+      <div className="absolute top-1/3 right-10 w-[500px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.06)_0%,transparent_70%)] blur-[80px] pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8 sm:mb-12">
-            <div className="studio-badge mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F] animate-pulse" />
+          <div className="text-center mb-10 sm:mb-14">
+            <div className="studio-badge mb-3.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
               <span>Verified Production Proof</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-2.5 font-display">
-              <span>How much does it cost, and </span>
-              <span className="text-gold-gradient block sm:inline">who built this?</span>
+            <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight text-white mb-3">
+              <span>Production products shipped </span>
+              <span className="text-gold-gradient block sm:inline">for real founders.</span>
             </h2>
 
-            <p className="text-sm sm:text-base text-zinc-300 max-w-xl mx-auto leading-relaxed">
-              No surprise invoices or vague hourly rates. Production sprints starting from ₹1,49,000 (slashed from ₹2,25,000) and Design Sprints from ₹49,000, engineered directly with Danish.
+            <p className="text-sm sm:text-base md:text-lg text-zinc-300 max-w-xl mx-auto leading-relaxed">
+              Explore real Web and Mobile products engineered in 30-day hard sprints—with live verified transactions, offline hardware connectivity, and full founder IP ownership.
             </p>
 
             {/* Project Selector */}
-            <div className="flex justify-center mt-6">
-              <div className="p-1 rounded-xl bg-[#0A0A10] border border-white/[0.08] backdrop-blur-md flex items-center gap-1 relative">
+            <div className="flex justify-center mt-7">
+              <div className="p-1 rounded-xl bg-black/70 border border-white/10 backdrop-blur-md flex items-center gap-1 relative">
                 {CLIENT_PROJECTS.map((proj, idx) => (
                   <button
                     key={proj.id}
                     onClick={() => setActiveIdx(idx)}
-                    className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors duration-200 z-10 flex items-center gap-2 ${
+                    className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-semibold transition-colors duration-200 z-10 flex items-center gap-2 cursor-pointer ${
                       activeIdx === idx ? "text-black font-bold" : "text-zinc-400 hover:text-white"
                     }`}
                   >
@@ -103,7 +129,7 @@ export default function Showcase() {
                       />
                     )}
                     <span className="relative z-10 flex items-center gap-2">
-                      <span>{proj.id === "dalalfree" ? "🌐" : "📱"}</span>
+                      <span className="text-[10px] font-mono">[{proj.id === "dalalfree" ? "WEB" : "APP"}]</span>
                       <span>{proj.title}</span>
                       <span
                         className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
@@ -121,7 +147,7 @@ export default function Showcase() {
             </div>
           </div>
 
-          {/* MAIN SHOWCASE FRAME */}
+          {/* MAIN SHOWCASE FRAME WITH SPOTLIGHT ILLUMINATION */}
           <AnimatePresence mode="wait">
             <motion.div
               key={active.id}
@@ -129,9 +155,10 @@ export default function Showcase() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
               transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-2xl sm:rounded-3xl bg-[#08080E]/95 border border-white/[0.1] p-5 sm:p-8 lg:p-10 shadow-2xl overflow-hidden mb-8"
+              onMouseMove={handleSpotlight}
+              className="spotlight-card rounded-2xl sm:rounded-3xl bg-[#08080E]/95 border border-white/[0.1] p-5 sm:p-8 lg:p-10 shadow-2xl overflow-hidden mb-8"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
                 {/* Left Column: Project Brief */}
                 <div className="lg:col-span-5 space-y-4 sm:space-y-5">
                   <div className="flex flex-wrap items-center gap-2">
@@ -161,7 +188,7 @@ export default function Showcase() {
                     {active.pills.map((pill, i) => (
                       <div
                         key={i}
-                        className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs"
+                        className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs hover:border-white/15 transition-colors"
                       >
                         <div className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">
                           {pill.label}
@@ -180,102 +207,90 @@ export default function Showcase() {
                   </div>
                 </div>
 
-                {/* Right Column: Visual Mockup */}
-                <div className="lg:col-span-7">
-                  {active.id === "dalalfree" ? (
-                    <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group">
-                      {/* Browser Header Bar */}
-                      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
-                        <div className="flex items-center gap-2">
-                          <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
-                          <span className="text-[11px] font-mono text-zinc-400 ml-2">
-                            dalalfree.com
+                {/* Right Column: Visual Mockup with 3D Tilt */}
+                <div
+                  className="lg:col-span-7 perspective-[1200px]"
+                  onMouseMove={handleTiltMove}
+                  onMouseLeave={handleTiltLeave}
+                >
+                  <div
+                    ref={tiltCardRef}
+                    className="will-change-transform transition-shadow duration-300"
+                  >
+                    {active.id === "dalalfree" ? (
+                      <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group hover:border-[#DFCA9F]/30 transition-colors">
+                        {/* Browser Header Bar */}
+                        <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
+                          <div className="flex items-center gap-2">
+                            <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+                            <span className="text-[11px] font-mono text-zinc-400 ml-2">
+                              dalalfree.com
+                            </span>
+                          </div>
+                          <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-[#DFCA9F]/15 text-[#DFCA9F] font-bold border border-[#DFCA9F]/20">
+                            LIVE IN PRODUCTION
                           </span>
                         </div>
-                        <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-[#DFCA9F]/15 text-[#DFCA9F] font-bold border border-[#DFCA9F]/20">
-                          LIVE IN PRODUCTION
-                        </span>
-                      </div>
 
-                      {/* Image Preview */}
-                      <div className="relative aspect-video w-full overflow-hidden bg-black">
-                        <Image
-                          src={active.image}
-                          alt={active.imageAlt}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 55vw"
-                          className="object-cover group-hover:scale-103 transition-transform duration-700"
-                          priority
-                        />
-                        <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#0B0B14] via-[#0B0B14]/40 to-transparent" />
+                        {/* Image Preview */}
+                        <div className="relative aspect-video w-full overflow-hidden bg-black">
+                          <Image
+                            src={active.image}
+                            alt={active.imageAlt}
+                            fill
+                            sizes="(max-width: 1024px) 100vw, 55vw"
+                            className="object-cover group-hover:scale-102 transition-transform duration-700"
+                            priority
+                          />
+                          <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#0B0B14] via-[#0B0B14]/40 to-transparent" />
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group">
-                      {/* Mobile Header Bar */}
-                      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
-                        <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                          <span className="text-[10px] font-mono text-cyan-300 font-bold">
-                            EV DOCK MOBILE APPLICATION
+                    ) : (
+                      <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group hover:border-cyan-500/30 transition-colors">
+                        {/* Mobile Header Bar */}
+                        <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
+                          <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                            <span className="text-[10px] font-mono text-cyan-300 font-bold">
+                              EV DOCK MOBILE APPLICATION
+                            </span>
+                          </div>
+                          <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-cyan-500/15 text-cyan-400 font-bold border border-cyan-500/20">
+                            HARDWARE PAIRED
                           </span>
                         </div>
-                        <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-cyan-500/15 text-cyan-400 font-bold border border-cyan-500/20">
-                          HARDWARE PAIRED
-                        </span>
-                      </div>
 
-                      {/* Image Preview */}
-                      <div className="relative aspect-video w-full overflow-hidden bg-black">
-                        <Image
-                          src={active.image}
-                          alt={active.imageAlt}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 55vw"
-                          className="object-cover group-hover:scale-103 transition-transform duration-700"
-                          priority
-                        />
-                        <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#0B0B14] via-[#0B0B14]/60 to-transparent" />
+                        {/* Image Preview */}
+                        <div className="relative aspect-video w-full overflow-hidden bg-black">
+                          <Image
+                            src={active.image}
+                            alt={active.imageAlt}
+                            fill
+                            sizes="(max-width: 1024px) 100vw, 55vw"
+                            className="object-cover group-hover:scale-102 transition-transform duration-700"
+                            priority
+                          />
+                          <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#0B0B14] via-[#0B0B14]/60 to-transparent" />
 
-                        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[10px] font-mono text-zinc-300">
-                          <div className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 flex items-center gap-1.5">
-                            <span className="text-cyan-400 font-bold">Offline Bluetooth:</span>
-                            <span>Basement Signal</span>
-                          </div>
-                          <div className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5">
-                            <span>✓ Zero Connection Drops</span>
+                          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[10px] font-mono text-zinc-300">
+                            <div className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 flex items-center gap-1.5">
+                              <span className="text-cyan-400 font-bold">Offline Bluetooth:</span>
+                              <span>Basement Signal</span>
+                            </div>
+                            <div className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5">
+                              <span>✓ Zero Connection Drops</span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
-
-          {/* Pricing Floor & Direct Sprint Callout */}
-          <div className="rounded-2xl sm:rounded-3xl bg-[#08080C] border border-white/[0.08] p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="space-y-1 text-left">
-              <div className="text-xs font-mono text-[#DFCA9F] uppercase tracking-wider font-semibold">
-                Transparent Pricing Floor
-              </div>
-              <h4 className="text-base sm:text-lg font-bold text-white font-display">
-                Single-platform MVPs start from ₹1,49,000 for a 30-day launch (Design Sprints from ₹49k).
-              </h4>
-              <p className="text-xs text-zinc-400">
-                You receive a fixed price and milestone schedule before we begin. No open-ended invoices.
-              </p>
-            </div>
-            <button
-              onClick={scrollToContact}
-              className="btn-primary py-3 px-6 text-xs font-bold uppercase tracking-wider shrink-0 w-full sm:w-auto"
-            >
-              Discuss Your Idea
-            </button>
-          </div>
         </div>
       </div>
     </section>

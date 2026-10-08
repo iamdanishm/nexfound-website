@@ -304,7 +304,6 @@ export default defineType({
                                 { label: 'About Us', href: '#about' },
                                 { label: 'Our Work', href: '#work' },
                                 { label: 'Careers', href: '#careers' },
-                                { label: 'Blog', href: '/blog' },
                             ],
                         },
                         {

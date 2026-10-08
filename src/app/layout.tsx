@@ -61,20 +61,20 @@ const METADATA_TEXTS = {
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
-  display: "optional",
+  display: "swap",
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
-  display: "optional",
+  display: "swap",
 });
 
 const newsreader = Newsreader({
   subsets: ["latin"],
   variable: "--font-newsreader",
   style: ["normal", "italic"],
-  display: "optional",
+  display: "swap",
   preload: false,
 });
 
@@ -244,49 +244,31 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="relative min-h-screen bg-[#030305] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-indigo-500/30 selection:text-white bg-grain">
-        {/* Atmospheric Studio Ambient Lighting */}
+      <body className="relative min-h-screen bg-[#060608] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-[#DFCA9F]/20 selection:text-white bg-grain">
+        {/* Subtle Architectural Studio Canvas (Disciplined, Non-AI Ambient) */}
         <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-          {/* Top Center Ambient Aura */}
+          {/* Subtle Top Center Ambient Warmth */}
           <div
-            className="absolute -top-[25%] left-1/2 -translate-x-1/2 w-[1100px] h-[800px] rounded-full opacity-30 blur-[160px]"
+            className="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-[0.07] blur-[140px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(139, 92, 246, 0.08) 45%, transparent 70%)",
-            }}
-          />
-
-          {/* Secondary Subtle Ambient Glow */}
-          <div
-            className="absolute top-[40%] -right-[15%] w-[800px] h-[800px] rounded-full opacity-20 blur-[180px]"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(99, 102, 241, 0.04) 50%, transparent 70%)",
-            }}
-          />
-
-          {/* Bottom Ambient Glow */}
-          <div
-            className="absolute -bottom-[10%] -left-[10%] w-[700px] h-[700px] rounded-full opacity-20 blur-[170px]"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%)",
+                "radial-gradient(circle, rgba(223, 202, 159, 0.9) 0%, rgba(255, 255, 255, 0.4) 30%, transparent 70%)",
             }}
           />
 
           {/* Ultra-fine Architectural Grid with Radial Vignette */}
           <div
-            className="absolute inset-0 opacity-[0.03]"
+            className="absolute inset-0 opacity-[0.025]"
             style={{
               backgroundImage: `
-                linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px)
+                linear-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.7) 1px, transparent 1px)
               `,
-              backgroundSize: "64px 64px",
+              backgroundSize: "48px 48px",
               maskImage:
-                "radial-gradient(ellipse 90% 80% at 50% 50%, black 40%, transparent 95%)",
+                "radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 90%)",
               WebkitMaskImage:
-                "radial-gradient(ellipse 90% 80% at 50% 50%, black 40%, transparent 95%)",
+                "radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 90%)",
             }}
           />
         </div>

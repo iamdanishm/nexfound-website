@@ -8,41 +8,33 @@ export default function PlatformStrategy() {
   const [selectedRoute, setSelectedRoute] = useState<"web" | "mobile">("web");
 
   return (
-    <section id="platform-strategy" className="relative py-14 sm:py-20 overflow-hidden bg-transparent scroll-mt-24">
-      {/* Ambient Warm Champagne Glow */}
-      <div
-        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[350px] rounded-full opacity-10 pointer-events-none blur-[140px]"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(223, 202, 159, 0.25) 0%, transparent 70%)",
-        }}
-      />
-
+    <section id="platform-strategy" className="relative py-16 sm:py-24 overflow-hidden bg-transparent scroll-mt-24">
       <div className="container-custom relative z-10 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-8 sm:mb-12">
+          <div className="text-center mb-10 sm:mb-14">
             <div className="studio-badge mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F] animate-pulse" />
-              <span>Smart Launch Strategy</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
+              <span>Smart Platform Architecture</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-2.5 font-display">
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-3 font-display">
               <span>What if you cut </span>
               <span className="text-gold-gradient block sm:inline">80% of the noise?</span>
             </h2>
 
-            <p className="text-xs sm:text-base text-zinc-300 max-w-2xl mx-auto leading-relaxed">
-              Defaulting to web and mobile simultaneously on day one doubles your cost, doubles your timeline, and drains your budget. We help you pick the ONE platform that proves customer demand fastest.
+            <p className="text-sm sm:text-base md:text-lg text-zinc-300 max-w-2xl mx-auto leading-relaxed">
+              Defaulting to web and mobile simultaneously on Day 1 doubles your budget and extends your timeline.
+              We help you engineer the ONE platform that validates paying customers fastest.
             </p>
           </div>
 
           {/* Platform Route Selector Pills */}
           <div className="flex justify-center mb-8">
-            <div className="p-1 rounded-xl bg-[#0A0A10] border border-white/[0.08] backdrop-blur-md flex items-center gap-1 relative">
+            <div className="p-1 rounded-xl bg-black/70 border border-white/10 backdrop-blur-md flex items-center gap-1 relative">
               <button
                 onClick={() => setSelectedRoute("web")}
-                className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors duration-200 z-10 flex items-center gap-2 ${
+                className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-semibold transition-colors duration-200 z-10 flex items-center gap-2 cursor-pointer ${
                   selectedRoute === "web" ? "text-black font-bold" : "text-zinc-400 hover:text-white"
                 }`}
               >
@@ -54,14 +46,14 @@ export default function PlatformStrategy() {
                   />
                 )}
                 <span className="relative z-10 flex items-center gap-1.5">
-                  <span>🌐</span>
+                  <span className="text-[10px] font-mono">[WEB]</span>
                   <span>Option A: Web First</span>
                 </span>
               </button>
 
               <button
                 onClick={() => setSelectedRoute("mobile")}
-                className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-colors duration-200 z-10 flex items-center gap-2 ${
+                className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-semibold transition-colors duration-200 z-10 flex items-center gap-2 cursor-pointer ${
                   selectedRoute === "mobile" ? "text-black font-bold" : "text-zinc-400 hover:text-white"
                 }`}
               >
@@ -73,7 +65,7 @@ export default function PlatformStrategy() {
                   />
                 )}
                 <span className="relative z-10 flex items-center gap-1.5">
-                  <span>📱</span>
+                  <span className="text-[10px] font-mono">[APP]</span>
                   <span>Option B: Mobile Native</span>
                 </span>
               </button>

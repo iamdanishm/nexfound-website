@@ -1,9 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const CTA = dynamic(() => import("./cta"), { ssr: false });
-const Footer = dynamic(() => import("./footer"), { ssr: false });
+import CTA from "./cta";
+import Footer from "./footer";
 
 type CTAData = {
   badgeText?: string;

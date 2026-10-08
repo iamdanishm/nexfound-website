@@ -16,11 +16,11 @@ const TEXTS = {
     {
       category: "Navigation",
       links: [
-        { label: "Reality Check", href: "#comparison" },
+        { label: "Live Work", href: "#work" },
         { label: "30-Day Sprint", href: "#process" },
-        { label: "Web vs Mobile", href: "#platform-strategy" },
-        { label: "What You Get", href: "#services" },
-        { label: "Live Proof", href: "#work" },
+        { label: "Sprint Pricing", href: "#pricing" },
+        { label: "Reality Check", href: "#approach" },
+        { label: "Start Sprint", href: "#contact" },
       ],
     },
     {
@@ -28,7 +28,6 @@ const TEXTS = {
       links: [
         { label: "Codebase Rescues", href: "#contact" },
         { label: "Technical Advisory", href: "#contact" },
-        { label: "The Dispatch", href: "/blog" },
       ],
     },
     {
@@ -128,7 +127,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                 />
               </div>
               <span className="font-display font-bold text-2xl tracking-tight text-white transition-colors">
-                Nexfound<span className="text-indigo-400">.</span>
+                Nexfound<span className="text-[#DFCA9F]">.</span>
               </span>
             </Link>
 

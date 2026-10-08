@@ -45,7 +45,6 @@ export const testimonialsQuery = groq`
   }
 `
 
-
 // Services remain the same (icons are emojis, not images)
 export const servicesQuery = groq`
   *[_type == "service"] | order(order asc) {
@@ -54,152 +53,6 @@ export const servicesQuery = groq`
     icon,
     description,
     gradient
-  }
-`
-
-
-// Get all blog posts for listing with optimized field selection
-export const blogPostsQuery = groq`
-  *[_type == "blog"] | order(publishedAt desc) {
-    _id,
-    title,
-    slug,
-    excerpt,
-    publishedAt,
-    featured,
-    author->{
-      _id,
-      name,
-      avatar {
-        asset->{
-          _id,
-          url
-        },
-        alt
-      }
-    },
-    tags,
-    featuredImage {
-      asset->{
-        _id,
-        url
-      },
-      alt
-    },
-    category->{
-      _id,
-      title,
-      color
-    }
-  }
-`
-
-// Get single blog post by slug
-export const blogPostQuery = groq`
-  *[_type == "blog" && slug.current == $slug][0] {
-    _id,
-    title,
-    slug,
-    content[] {
-      ...,
-      _type == "image" => {
-        ...,
-        asset->{
-          _id,
-          url
-        }
-      }
-    },
-    excerpt,
-    publishedAt,
-    featured,
-    lastUpdated,
-    author->{
-      _id,
-      name,
-      slug,
-      bio,
-      avatar {
-        asset->{
-          _id,
-          url
-        },
-        alt
-      }
-    },
-    tags,
-    seo,
-    featuredImage {
-      asset->{
-        _id,
-        url
-      },
-      alt,
-      caption
-    },
-    category->{
-      _id,
-      title,
-      slug,
-      color
-    }
-  }
-`
-
-// Get related blog posts by category (excluding current post)
-export const relatedBlogPostsQuery = groq`
-  *[_type == "blog" && category._ref == $categoryId && _id != $currentPostId] | order(publishedAt desc)[0...5] {
-    _id,
-    title,
-    slug,
-    excerpt,
-    publishedAt,
-    featuredImage {
-      asset->{
-        _id,
-        url
-      },
-      alt
-    },
-    category->{
-      _id,
-      title,
-      color
-    }
-  }
-`
-
-// Get other blog posts (excluding current post and category)
-export const otherBlogPostsQuery = groq`
-  *[_type == "blog" && category._ref != $categoryId && _id != $currentPostId] | order(publishedAt desc)[0...5] {
-    _id,
-    title,
-    slug,
-    excerpt,
-    publishedAt,
-    featuredImage {
-      asset->{
-        _id,
-        url
-      },
-      alt
-    },
-    category->{
-      _id,
-      title,
-      color
-    }
-  }
-`
-
-// Get all blog categories
-export const blogCategoriesQuery = groq`
-  *[_type == "blogCategory"] | order(title asc) {
-    _id,
-    title,
-    slug,
-    description,
-    color
   }
 `
 
@@ -255,34 +108,6 @@ export const settingsQuery = groq`
       metaTitle,
       metaDescription,
       ogImage{asset->{_id, url}}
-    }
-  }
-`
-
-// Get featured blog posts for home page carousel (only featured posts, up to 6)
-export const featuredBlogPostsQuery = groq`
-  *[_type == "blog" && featured == true] | order(publishedAt desc)[0...6] {
-    _id,
-    title,
-    slug,
-    excerpt,
-    publishedAt,
-    author->{
-      _id,
-      name
-    },
-    tags,
-    featuredImage {
-      asset->{
-        _id,
-        url
-      },
-      alt
-    },
-    category->{
-      _id,
-      title,
-      color
     }
   }
 `
