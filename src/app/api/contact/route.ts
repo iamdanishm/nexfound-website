@@ -1,7 +1,5 @@
 import { Resend } from 'resend'
 import { type NextRequest, NextResponse } from 'next/server'
-import { client } from '@/sanity/lib/client'
-import { settingsQuery } from '@/app/lib/queries'
 import { promises as fs } from 'fs'
 import path from 'path'
 
@@ -20,16 +18,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const [settings] = await Promise.all([
-      client.fetch(settingsQuery, {}, { cache: "no-cache" }),
-    ]);
-
-
-
+    const contactEmail = process.env.CONTACT_EMAIL || 'hello@nexfound.in'
 
     // Send email
     console.log('Contact form submission:', { name, email, company, message })
-    console.log('Sending to:', settings?.contactEmail)
+    console.log('Sending to:', contactEmail)
     console.log('Using API key:', process.env.RESEND_API_KEY?.substring(0, 10) + '...')
 
     // Read and process email template
@@ -67,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     const { data, error } = await resend.emails.send({
       from: 'Nexfound Contact Form <hello@send.nexfound.in>', // Use verified custom domain
-      to: [settings?.contactEmail],
+      to: [contactEmail],
       replyTo: email, // User's email for easy reply
       subject: `New Contact Form Submission from ${name}`,
       html: htmlTemplate,

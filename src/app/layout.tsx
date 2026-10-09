@@ -75,7 +75,6 @@ const newsreader = Newsreader({
   variable: "--font-newsreader",
   style: ["normal", "italic"],
   display: "swap",
-  preload: false,
 });
 
 export const metadata: Metadata = {

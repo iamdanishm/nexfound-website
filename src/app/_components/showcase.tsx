@@ -240,9 +240,9 @@ export default function Showcase() {
                             src={active.image}
                             alt={active.imageAlt}
                             fill
-                            sizes="(max-width: 1024px) 100vw, 55vw"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                             className="object-cover group-hover:scale-102 transition-transform duration-700"
-                            priority
+                            loading="lazy"
                           />
                           <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#0B0B14] via-[#0B0B14]/40 to-transparent" />
                         </div>
@@ -268,9 +268,9 @@ export default function Showcase() {
                             src={active.image}
                             alt={active.imageAlt}
                             fill
-                            sizes="(max-width: 1024px) 100vw, 55vw"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                             className="object-cover group-hover:scale-102 transition-transform duration-700"
-                            priority
+                            loading="lazy"
                           />
                           <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#0B0B14] via-[#0B0B14]/60 to-transparent" />
 

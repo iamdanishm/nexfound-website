@@ -131,17 +131,17 @@ export default function Header() {
               className="flex items-center gap-3 group focus:outline-none"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <div className="relative w-8 h-8 sm:w-9 sm:h-9 transition-transform duration-300 group-hover:scale-105">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/logo-transparent.png"
                   alt={TEXTS.ALT_TEXT}
-                  fill
-                  sizes="36px"
-                  className="object-contain"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain"
                   priority
                 />
               </div>
-              <span className="font-display font-bold text-xl sm:text-2xl tracking-tight text-white transition-colors duration-300">
+              <span className="font-display italic font-bold text-xl sm:text-2xl tracking-tight text-white transition-colors duration-300">
                 {TEXTS.BRAND_NAME}
                 <span className="text-[#DFCA9F] ml-0.5">.</span>
               </span>

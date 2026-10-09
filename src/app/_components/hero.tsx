@@ -38,13 +38,13 @@ export default function Hero() {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       tl.fromTo(
-        ".hero-entrance",
-        { y: 32, opacity: 0, filter: "blur(6px)" },
+        ".hero-entrance-secondary",
+        { y: 24, opacity: 0, filter: "blur(4px)" },
         {
           y: 0,
           opacity: 1,
           filter: "blur(0px)",
-          duration: 0.85,
+          duration: 0.8,
           stagger: 0.1,
           clearProps: "all",
         }
@@ -99,35 +99,9 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4.5rem_4.5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_45%,#000_70%,transparent_100%)] pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10 text-center">
-        {/* Architectural HUD Coordinate Header */}
-        <div className="hero-entrance hidden md:flex items-center justify-between text-[10px] font-mono text-zinc-500 uppercase tracking-widest max-w-5xl mx-auto mb-6 px-2 select-none">
-          <span className="flex items-center gap-1.5">
-            <span className="text-[#DFCA9F] font-bold">+</span>
-            <span>SYS.ONLINE // 30D.STUDIO</span>
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="text-emerald-400 font-bold">+</span>
-            <span>SLOTS: 2/3 OPEN (OCTOBER)</span>
-          </span>
-        </div>
 
-        {/* Studio Telemetry Pill Bar */}
-        <div className="hero-entrance inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/10 bg-[#090A0E]/90 backdrop-blur-xl mb-7 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-          </span>
-          <span className="text-[11px] font-mono tracking-widest uppercase text-zinc-300 font-semibold">
-            30-Day MVP Engineering Studio
-          </span>
-          <span className="text-zinc-600 font-mono">·</span>
-          <span className="text-[10px] font-mono text-[#DFCA9F] uppercase tracking-wider font-bold">
-            Fixed Scope &middot; Zero Retainers
-          </span>
-        </div>
-
-        {/* Grand Headline with Editorial Contrast & Kinetic Gold Light Sweep */}
-        <h1 className="hero-entrance text-4xl sm:text-6xl lg:text-7xl xl:text-[5.25rem] font-display font-extrabold tracking-tight text-white leading-[1.05] max-w-5xl mx-auto mb-6">
+        {/* Grand Headline with Editorial Contrast & Kinetic Gold Light Sweep (Instantly Painted for Optimal LCP) */}
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-[5.25rem] font-display font-extrabold tracking-tight text-white leading-[1.05] max-w-5xl mx-auto mb-6">
           Turn your product idea into a{" "}
           <span className="relative inline-block font-serif italic font-normal tracking-normal text-gold-shimmer px-1">
             live, payment-ready
@@ -137,12 +111,12 @@ export default function Hero() {
         </h1>
 
         {/* Punchy 1-Sentence Subhead */}
-        <p className="hero-entrance text-base sm:text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-9 font-normal">
+        <p className="hero-entrance-secondary text-base sm:text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-9 font-normal">
           We architect, design, and ship production-grade Web &amp; Mobile MVPs for ambitious founders. Fixed timeline. 100% direct Git ownership.
         </p>
 
         {/* Magnetic CTA Buttons */}
-        <div className="hero-entrance flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12 max-w-md mx-auto">
+        <div className="hero-entrance-secondary flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12 max-w-md mx-auto">
           <button
             ref={magneticBtnRef}
             onMouseMove={handleMagneticMove}
@@ -166,7 +140,7 @@ export default function Hero() {
         </div>
 
         {/* Interactive 30-Day Sprint Velocity Runway Widget */}
-        <div className="hero-entrance max-w-3xl mx-auto mb-10 p-2 sm:p-2.5 rounded-2xl bg-[#08080D]/90 border border-white/[0.08] backdrop-blur-xl shadow-2xl">
+        <div className="hero-entrance-secondary max-w-3xl mx-auto mb-10 p-2 sm:p-2.5 rounded-2xl bg-[#08080D]/90 border border-white/[0.08] backdrop-blur-xl shadow-2xl">
           <div className="flex items-center justify-between px-3 py-1.5 border-b border-white/[0.06] mb-2 text-[10px] font-mono text-zinc-400">
             <span className="flex items-center gap-1.5 uppercase font-semibold tracking-wider">
               <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
@@ -209,7 +183,7 @@ export default function Hero() {
         </div>
 
         {/* Quick Founder Guarantees Pill Bar */}
-        <div className="hero-entrance inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-mono text-zinc-400">
+        <div className="hero-entrance-secondary inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-mono text-zinc-400">
           <span className="flex items-center gap-1.5 hover:text-white transition-colors">
             <span className="text-[#DFCA9F]">✓</span> 30-Day Guaranteed Launch
           </span>

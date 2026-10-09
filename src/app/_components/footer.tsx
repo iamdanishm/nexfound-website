@@ -103,12 +103,14 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
   return (
     <footer className="relative pt-20 pb-12 border-t border-white/[0.08] bg-[#050507] overflow-hidden">
       {/* Background Watermark Monogram */}
-      <div className="absolute -bottom-20 right-0 w-[500px] h-[500px] opacity-[0.02] pointer-events-none select-none">
+      <div className="absolute -bottom-20 right-0 w-[400px] h-[400px] opacity-[0.02] pointer-events-none select-none" aria-hidden="true">
         <Image
           src="/logo-transparent.png"
-          alt="Watermark"
-          fill
-          className="object-contain"
+          alt=""
+          width={250}
+          height={250}
+          className="w-full h-full object-contain"
+          loading="lazy"
         />
       </div>
 
@@ -117,16 +119,16 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
           {/* Brand & Mission Column */}
           <div className="lg:col-span-4 space-y-5">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-9 h-9">
+              <div className="w-9 h-9 flex items-center justify-center">
                 <Image
                   src="/logo-transparent.png"
                   alt="Nexfound"
-                  fill
-                  sizes="36px"
-                  className="object-contain"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain"
                 />
               </div>
-              <span className="font-display font-bold text-2xl tracking-tight text-white transition-colors">
+              <span className="font-display italic font-bold text-2xl tracking-tight text-white transition-colors">
                 Nexfound<span className="text-[#DFCA9F]">.</span>
               </span>
             </Link>
@@ -207,6 +209,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               href={socialLinks?.twitter ?? "https://twitter.com/iam_danishm"}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Twitter / X profile"
               className="hover:text-white transition-colors"
             >
               Twitter / X
@@ -215,12 +218,14 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               href={socialLinks?.linkedin ?? "https://linkedin.com"}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
               className="hover:text-white transition-colors"
             >
               LinkedIn
             </a>
             <a
               href="mailto:hello@nexfound.in"
+              aria-label="Send email to hello@nexfound.in"
               className="hover:text-white transition-colors"
             >
               hello@nexfound.in

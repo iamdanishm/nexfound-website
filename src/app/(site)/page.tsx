@@ -4,16 +4,8 @@ import Showcase from "../_components/showcase";
 import Process from "../_components/process";
 import SprintPricing from "../_components/sprint-pricing";
 import Comparison from "../_components/comparison";
-import ContactFooter from "../_components/contact-footer";
-import { client } from "@/sanity/lib/client";
-import {
-  projectsQuery,
-  servicesQuery,
-  settingsQuery,
-  testimonialsQuery,
-} from "../lib/queries";
-
 import Testimonials from "../_components/testimonials";
+import ContactFooter from "../_components/contact-footer";
 
 export const metadata = {
   title: "Turn Your Product Idea Into a Focused MVP | Nexfound",
@@ -21,31 +13,7 @@ export const metadata = {
     "We architect, design, and deploy production-grade Web & Mobile MVPs for ambitious founders in 30 days. Transparent sprints from ₹1,49,000* (Design Sprints from ₹49,000). 100% direct Git and IP handover.",
 };
 
-async function getData() {
-  try {
-    const [projects, testimonials, services, settings] =
-      await Promise.all([
-        client.fetch(projectsQuery, {}, { next: { revalidate: 60 } }),
-        client.fetch(testimonialsQuery, {}, { next: { revalidate: 60 } }),
-        client.fetch(servicesQuery, {}, { next: { revalidate: 60 } }),
-        client.fetch(settingsQuery, {}, { next: { revalidate: 60 } }),
-      ]);
-
-    return { projects, testimonials, services, settings };
-  } catch (error) {
-    console.error("Sanity data fetch error:", error);
-    return {
-      projects: [],
-      testimonials: [],
-      services: [],
-      settings: null,
-    };
-  }
-}
-
-export default async function Home() {
-  const { testimonials, settings } = await getData();
-
+export default function Home() {
   return (
     <>
       <Header />
@@ -67,20 +35,11 @@ export default async function Home() {
         <Comparison />
 
         {/* 6. Client Endorsements & Founder Proof */}
-        <Testimonials
-          testimonials={testimonials}
-          stats={settings?.testimonialStats}
-        />
+        <Testimonials />
       </main>
 
       {/* 7. 60-Second Founder Brief Intake & Studio Footer */}
-      <ContactFooter
-        cta={settings?.cta}
-        contactEmail={settings?.contactEmail}
-        contactPhone={settings?.contactPhone}
-        footer={settings?.footer}
-        socialLinks={settings?.socialLinks}
-      />
+      <ContactFooter />
     </>
   );
 }

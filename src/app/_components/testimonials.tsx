@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { SanityImage } from "@/sanity/lib/image";
 import TiltCard from "./tilt-card";
 
 const TEXTS = {
@@ -31,7 +30,7 @@ type Testimonial = {
   company: string;
   quote: string;
   rating: number;
-  avatar?: SanityImage;
+  avatar?: string;
   gradient?: string;
   project?: Project;
   outcome?: string;
