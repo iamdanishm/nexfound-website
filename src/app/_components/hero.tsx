@@ -92,11 +92,11 @@ export default function Hero() {
       ref={heroRef}
       className="relative pt-32 sm:pt-40 lg:pt-36 pb-20 sm:pb-28 overflow-hidden bg-transparent"
     >
-      {/* Studio Ambient Gold Halo */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.13)_0%,rgba(223,202,159,0.03)_50%,transparent_75%)] blur-[105px] pointer-events-none -z-10" />
+      {/* Studio Ambient Gold Halo (GPU-Optimized Zero-Lag Radial Gradient) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.12)_0%,rgba(223,202,159,0.03)_45%,transparent_70%)] pointer-events-none -z-10" />
 
       {/* Engineering Architectural Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4.5rem_4.5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_45%,#000_70%,transparent_100%)] pointer-events-none -z-10" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4.5rem_4.5rem] opacity-70 pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10 text-center">
 
@@ -140,7 +140,7 @@ export default function Hero() {
         </div>
 
         {/* Interactive 30-Day Sprint Velocity Runway Widget */}
-        <div className="hero-entrance-secondary max-w-3xl mx-auto mb-10 p-2 sm:p-2.5 rounded-2xl bg-[#08080D]/90 border border-white/[0.08] backdrop-blur-xl shadow-2xl">
+        <div className="hero-entrance-secondary max-w-3xl mx-auto mb-10 p-2 sm:p-2.5 rounded-2xl bg-[#08080D]/95 border border-white/[0.08] shadow-2xl">
           <div className="flex items-center justify-between px-3 py-1.5 border-b border-white/[0.06] mb-2 text-[10px] font-mono text-zinc-400">
             <span className="flex items-center gap-1.5 uppercase font-semibold tracking-wider">
               <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />

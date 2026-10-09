@@ -238,7 +238,6 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${clashDisplay.variable} ${plusJakarta.variable}`}
-      data-scroll-behavior="smooth"
     >
       <head>
         <script
@@ -248,9 +247,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="relative min-h-screen bg-[#060608] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-[#DFCA9F]/20 selection:text-white bg-grain">
+      <body className="relative min-h-screen bg-[#060608] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-[#DFCA9F]/20 selection:text-white">
         {/* Subtle Architectural Studio Canvas (Disciplined, Non-AI Ambient) */}
-        <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+        <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden will-change-transform transform-gpu">
           {/* Subtle Top Center Ambient Warmth */}
           <div
             className="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-[0.07] blur-[140px]"

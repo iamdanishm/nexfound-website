@@ -49,13 +49,10 @@ export default function Showcase() {
   const active = CLIENT_PROJECTS[activeIdx];
   const tiltCardRef = useRef<HTMLDivElement>(null);
 
-  // Mouse spotlight coordinates handler
+  // Fast, layout-thrash-free mouse spotlight handler
   const handleSpotlight = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+    e.currentTarget.style.setProperty("--mouse-x", `${e.nativeEvent.offsetX}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${e.nativeEvent.offsetY}px`);
   };
 
   // 3D Perspective Tilt on Preview Card

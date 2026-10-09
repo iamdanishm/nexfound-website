@@ -86,7 +86,7 @@ ${idea}
   return (
     <section id="contact" className="relative py-20 sm:py-28 overflow-hidden bg-transparent scroll-mt-24">
       {/* Background Accent Halo */}
-      <div className="absolute top-1/2 right-10 w-[600px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.06)_0%,transparent_70%)] blur-[90px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 right-10 w-[600px] h-[350px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(223,202,159,0.06)_0%,rgba(223,202,159,0.01)_50%,transparent_70%)] pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">

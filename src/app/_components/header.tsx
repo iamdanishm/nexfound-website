@@ -22,13 +22,18 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Throttled scroll listener
+  // Smooth, jitter-free scroll listener with hysteresis
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
+          const currentY = window.scrollY;
+          setIsScrolled((prev) => {
+            if (!prev && currentY > 50) return true;
+            if (prev && currentY < 20) return false;
+            return prev;
+          });
           ticking = false;
         });
         ticking = true;
@@ -112,16 +117,12 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? "py-3" : "py-5 md:py-6"
-        }`}
-      >
-        <div className="container-custom">
+      <header className="fixed top-0 left-0 right-0 z-50 py-3.5 sm:py-4 pointer-events-none will-change-transform transform-gpu">
+        <div className="container-custom pointer-events-auto">
           <div
-            className={`flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl transition-all duration-500 bg-[#060609]/80 backdrop-blur-2xl border border-white/[0.08] ${
+            className={`flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl transition-[background-color,border-color,box-shadow] duration-300 bg-[#060609]/85 backdrop-blur-xl border border-white/[0.08] ${
               isScrolled
-                ? "shadow-[0_20px_50px_rgba(0,0,0,0.9)] border-white/[0.14]"
+                ? "shadow-[0_20px_50px_rgba(0,0,0,0.9)] border-white/[0.14] bg-[#060609]/95"
                 : "shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
             }`}
           >

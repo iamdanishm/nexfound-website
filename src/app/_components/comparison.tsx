@@ -22,19 +22,16 @@ export default function Comparison() {
     },
   ];
 
-  // Mouse spotlight coordinates handler
+  // Fast, layout-thrash-free mouse spotlight handler
   const handleSpotlight = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+    e.currentTarget.style.setProperty("--mouse-x", `${e.nativeEvent.offsetX}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${e.nativeEvent.offsetY}px`);
   };
 
   return (
     <section id="approach" className="relative py-20 sm:py-28 overflow-hidden bg-transparent scroll-mt-24">
       {/* Background Subtle Accent */}
-      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.05)_0%,transparent_70%)] blur-[90px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[350px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(223,202,159,0.06)_0%,rgba(223,202,159,0.01)_50%,transparent_70%)] pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10">
         <div className="max-w-5xl mx-auto">
