@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./(site)/globals.css";
 import { Toaster } from "react-hot-toast";
+import BackgroundCanvas from "./_components/background-canvas";
 import ServiceWorkerRegister from "./_components/sw-register";
 
 // Text constants for metadata
@@ -248,33 +249,8 @@ export default function RootLayout({
         />
       </head>
       <body className="relative min-h-screen bg-[#060608] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-[#DFCA9F]/20 selection:text-white">
-        {/* Subtle Architectural Studio Canvas (Disciplined, Non-AI Ambient) */}
-        <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden will-change-transform transform-gpu">
-          {/* Subtle Top Center Ambient Warmth */}
-          <div
-            className="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-[0.07] blur-[140px]"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(223, 202, 159, 0.9) 0%, rgba(255, 255, 255, 0.4) 30%, transparent 70%)",
-            }}
-          />
-
-          {/* Ultra-fine Architectural Grid with Radial Vignette */}
-          <div
-            className="absolute inset-0 opacity-[0.025]"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.7) 1px, transparent 1px)
-              `,
-              backgroundSize: "48px 48px",
-              maskImage:
-                "radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 90%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 90%)",
-            }}
-          />
-        </div>
+        {/* Precision Architectural Studio Canvas */}
+        <BackgroundCanvas />
 
         <ServiceWorkerRegister />
         <Toaster

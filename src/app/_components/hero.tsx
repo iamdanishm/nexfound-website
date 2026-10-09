@@ -92,11 +92,8 @@ export default function Hero() {
       ref={heroRef}
       className="relative pt-32 sm:pt-40 lg:pt-36 pb-20 sm:pb-28 overflow-hidden bg-transparent"
     >
-      {/* Studio Ambient Gold Halo (GPU-Optimized Zero-Lag Radial Gradient) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.12)_0%,rgba(223,202,159,0.03)_45%,transparent_70%)] pointer-events-none -z-10" />
-
-      {/* Engineering Architectural Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4.5rem_4.5rem] opacity-70 pointer-events-none -z-10" />
+      {/* Studio Ambient Center Warmth */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.12)_0%,rgba(223,202,159,0.02)_45%,transparent_70%)] pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10 text-center">
 
