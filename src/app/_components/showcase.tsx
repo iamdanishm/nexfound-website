@@ -40,7 +40,7 @@ const CLIENT_PROJECTS = [
       { label: "Hardware Link", val: "Bluetooth Low Energy" },
     ],
     verifiedOutcome: "Flawless offline charger unlock across underground parking basements.",
-    badgeColor: "bg-cyan-500/10 border-cyan-500/30 text-cyan-400",
+    badgeColor: "bg-[#DFCA9F]/10 border-[#DFCA9F]/30 text-[#DFCA9F]",
   },
 ];
 
@@ -101,7 +101,7 @@ export default function Showcase() {
               <span>Verified Production Proof</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight text-white mb-3">
+            <h2 className="text-3xl sm:text-5xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white mb-3">
               <span>Production products shipped </span>
               <span className="text-gold-gradient block sm:inline">for real founders.</span>
             </h2>
@@ -171,7 +171,7 @@ export default function Showcase() {
                   </div>
 
                   <div>
-                    <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white mb-1">
+                    <h3 className="text-2xl sm:text-3xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white mb-1">
                       {active.title}
                     </h3>
                     <p className="text-xs sm:text-sm font-medium text-[#DFCA9F]">
@@ -201,8 +201,8 @@ export default function Showcase() {
                   </div>
 
                   {/* Verified Result Banner */}
-                  <div className="p-3 rounded-xl bg-emerald-500/[0.08] border border-emerald-500/20 text-xs text-emerald-300 flex items-center gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+                  <div className="p-3 rounded-xl bg-[#DFCA9F]/[0.06] border border-[#DFCA9F]/25 text-xs text-[#F5ECDA] flex items-center gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#DFCA9F] shadow-[0_0_8px_rgba(223,202,159,0.6)] shrink-0" />
                     <span>{active.verifiedOutcome}</span>
                   </div>
                 </div>
@@ -221,10 +221,10 @@ export default function Showcase() {
                       <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group hover:border-[#DFCA9F]/30 transition-colors">
                         {/* Browser Header Bar */}
                         <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
-                          <div className="flex items-center gap-2">
-                            <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                            <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
-                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-white/25" />
+                            <span className="w-2 h-2 rounded-full bg-white/10" />
+                            <span className="w-2 h-2 rounded-full bg-white/10" />
                             <span className="text-[11px] font-mono text-zinc-400 ml-2">
                               dalalfree.com
                             </span>
@@ -248,16 +248,16 @@ export default function Showcase() {
                         </div>
                       </div>
                     ) : (
-                      <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group hover:border-cyan-500/30 transition-colors">
+                      <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group hover:border-[#DFCA9F]/30 transition-colors">
                         {/* Mobile Header Bar */}
                         <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
                           <div className="flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                            <span className="text-[10px] font-mono text-cyan-300 font-bold">
+                            <span className="w-2 h-2 rounded-full bg-[#DFCA9F] animate-pulse" />
+                            <span className="text-[10px] font-mono text-zinc-300 font-bold">
                               EV DOCK MOBILE APPLICATION
                             </span>
                           </div>
-                          <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-cyan-500/15 text-cyan-400 font-bold border border-cyan-500/20">
+                          <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-[#DFCA9F]/15 text-[#DFCA9F] font-bold border border-[#DFCA9F]/20">
                             HARDWARE PAIRED
                           </span>
                         </div>
@@ -276,10 +276,10 @@ export default function Showcase() {
 
                           <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[10px] font-mono text-zinc-300">
                             <div className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-white/10 flex items-center gap-1.5">
-                              <span className="text-cyan-400 font-bold">Offline Bluetooth:</span>
+                              <span className="text-[#DFCA9F] font-bold">Offline Bluetooth:</span>
                               <span>Basement Signal</span>
                             </div>
-                            <div className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5">
+                            <div className="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md border border-[#DFCA9F]/30 text-[#DFCA9F] flex items-center gap-1.5">
                               <span>✓ Zero Connection Drops</span>
                             </div>
                           </div>

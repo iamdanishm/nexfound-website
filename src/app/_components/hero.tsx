@@ -100,12 +100,12 @@ export default function Hero() {
 
       <div className="container-custom relative z-10 text-center">
 
-        {/* Grand Headline with Editorial Contrast & Kinetic Gold Light Sweep (Instantly Painted for Optimal LCP) */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-[5.25rem] font-display font-extrabold tracking-tight text-white leading-[1.05] max-w-5xl mx-auto mb-6">
+        {/* Grand Headline with Bold Premium High-Contrast Display & Kinetic Gold Light Sweep */}
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-[5.25rem] font-display font-bold tracking-normal [word-spacing:0.28em] text-white leading-[1.08] max-w-5xl mx-auto mb-6 text-balance">
           Turn your product idea into a{" "}
-          <span className="relative inline-block font-serif italic font-normal tracking-normal text-gold-shimmer px-1">
+          <span className="relative inline-block italic text-gold-shimmer px-2 font-bold [word-spacing:0.28em] pr-3.5">
             live, payment-ready
-            <span className="absolute -bottom-1 left-1 right-1 h-[2px] bg-gradient-to-r from-transparent via-[#DFCA9F]/60 to-transparent pointer-events-none" />
+            <span className="absolute -bottom-1 left-1 right-2 h-[2px] bg-gradient-to-r from-transparent via-[#DFCA9F]/60 to-transparent pointer-events-none" />
           </span>{" "}
           MVP in 30 days.
         </h1>
@@ -116,13 +116,13 @@ export default function Hero() {
         </p>
 
         {/* Magnetic CTA Buttons */}
-        <div className="hero-entrance-secondary flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12 max-w-md mx-auto">
+        <div className="hero-entrance-secondary flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12 w-full max-w-lg mx-auto">
           <button
             ref={magneticBtnRef}
             onMouseMove={handleMagneticMove}
             onMouseLeave={handleMagneticLeave}
             onClick={() => scrollToSection("#contact")}
-            className="w-full sm:w-auto btn-primary py-4 px-8 text-xs sm:text-sm font-semibold tracking-wider uppercase flex items-center justify-center gap-2 group cursor-pointer shadow-[0_12px_40px_rgba(223,202,159,0.4)] hover:shadow-[0_18px_50px_rgba(223,202,159,0.55)] transition-shadow will-change-transform"
+            className="w-full sm:w-auto btn-primary py-4 px-8 text-xs sm:text-sm font-semibold tracking-wider uppercase flex items-center justify-center gap-2 group cursor-pointer shadow-[0_12px_40px_rgba(223,202,159,0.4)] hover:shadow-[0_18px_50px_rgba(223,202,159,0.55)] transition-shadow will-change-transform whitespace-nowrap"
           >
             <span>Start Your 30-Day Sprint</span>
             <span className="inline-block transition-transform duration-200 group-hover:translate-x-1 font-bold">
@@ -132,7 +132,7 @@ export default function Hero() {
 
           <button
             onClick={() => scrollToSection("#work")}
-            className="w-full sm:w-auto btn-secondary py-4 px-7 text-xs sm:text-sm font-semibold tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer hover:border-white/30 transition-all"
+            className="w-full sm:w-auto btn-secondary py-4 px-7 text-xs sm:text-sm font-semibold tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer hover:border-white/30 transition-all whitespace-nowrap"
           >
             <span>See Shipped MVPs</span>
             <span className="text-zinc-500">↓</span>
@@ -174,7 +174,7 @@ export default function Hero() {
                 <div className="text-[11px] font-mono text-zinc-400 truncate">
                   {phase.deliverable}
                 </div>
-                <div className="mt-1.5 text-[9px] font-mono text-emerald-400 flex items-center gap-1">
+                <div className="mt-1.5 text-[9px] font-mono text-[#DFCA9F] flex items-center gap-1 font-semibold">
                   <span>✓</span> {phase.milestone}
                 </div>
               </div>

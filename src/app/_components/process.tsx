@@ -72,7 +72,7 @@ export default function Process() {
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight text-white mb-4">
+            <h2 className="text-3xl sm:text-5xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white mb-4">
               From concept to live paying users in{" "}
               <span className="text-gold-gradient block sm:inline">30 days.</span>
             </h2>
@@ -101,7 +101,7 @@ export default function Process() {
                     {/* Top Row: Number + Timeline Marker */}
                     <div className="flex items-center justify-between mb-6">
                       <div className="relative">
-                        <span className="text-3xl sm:text-4xl font-display font-extrabold text-[#DFCA9F] group-hover:drop-shadow-[0_0_12px_rgba(223,202,159,0.5)] transition-all">
+                        <span className="text-3xl sm:text-4xl font-display font-bold text-[#DFCA9F] group-hover:drop-shadow-[0_0_12px_rgba(223,202,159,0.5)] transition-all">
                           {step.number}
                         </span>
                         {/* Connecting Step Dot Indicator */}

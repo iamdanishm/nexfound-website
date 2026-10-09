@@ -99,7 +99,7 @@ ${idea}
                   <span>Sprint Commencement</span>
                 </div>
 
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-4 leading-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white mb-4 leading-tight">
                   Ready to launch your product{" "}
                   <span className="text-gold-gradient block">in 30 days?</span>
                 </h2>
@@ -113,17 +113,17 @@ ${idea}
               {/* Direct WhatsApp Action Box */}
               <div
                 onMouseMove={handleSpotlight}
-                className="spotlight-card p-4 rounded-2xl border-[#10B981]/30 bg-[#10B981]/[0.04] space-y-3"
+                className="spotlight-card p-4 rounded-2xl border-[#DFCA9F]/30 bg-[#DFCA9F]/[0.04] space-y-3"
               >
-                <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-semibold uppercase tracking-wider">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <div className="flex items-center gap-2 text-xs font-mono text-[#DFCA9F] font-semibold uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-[#DFCA9F] animate-pulse" />
                   <span>Direct Founder Access</span>
                 </div>
                 <a
                   href={`https://wa.me/919321456661?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-opacity cursor-pointer font-mono"
+                  className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#DFCA9F]/20 hover:opacity-95 transition-opacity cursor-pointer font-mono"
                 >
                   <span>Chat with Danish on WhatsApp</span>
                   <span>→</span>
@@ -136,15 +136,15 @@ ${idea}
               {/* Guarantees */}
               <div className="space-y-2.5 text-xs text-zinc-300 pt-1">
                 <div className="flex items-center gap-2.5">
-                  <span className="text-emerald-400 font-bold">✓</span>
+                  <span className="text-[#DFCA9F] font-bold">✓</span>
                   <span>100% transparent scope audit &amp; ruthless bloat removal</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <span className="text-emerald-400 font-bold">✓</span>
+                  <span className="text-[#DFCA9F] font-bold">✓</span>
                   <span>Fixed sprint fees: Design from ₹49k · Production MVP from ₹1.49L*</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <span className="text-emerald-400 font-bold">✓</span>
+                  <span className="text-[#DFCA9F] font-bold">✓</span>
                   <span>Direct technical discussion with senior engineers—zero account managers</span>
                 </div>
               </div>

@@ -47,7 +47,7 @@ export default function Comparison() {
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight text-white mb-4">
+            <h2 className="text-3xl sm:text-5xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white mb-4">
               Built for speed.{" "}
               <span className="text-gold-gradient block sm:inline">Engineered for ownership.</span>
             </h2>
@@ -70,7 +70,7 @@ export default function Comparison() {
                     <span className="text-[10px] font-mono tracking-wider px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[#DFCA9F] uppercase font-bold group-hover:border-[#DFCA9F]/30 transition-colors">
                       {pillar.badge}
                     </span>
-                    <span className="text-xs font-mono text-emerald-400">
+                    <span className="text-xs font-mono text-[#DFCA9F] font-semibold">
                       {pillar.metric}
                     </span>
                   </div>
@@ -85,7 +85,7 @@ export default function Comparison() {
                 </div>
 
                 <div className="pt-5 mt-6 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-zinc-300">
-                  <span className="text-emerald-400">✓</span>
+                  <span className="text-[#DFCA9F] font-bold">✓</span>
                   <span>Guaranteed in every sprint</span>
                 </div>
               </div>

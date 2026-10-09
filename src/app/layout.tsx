@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans, Newsreader } from "next/font/google";
+import localFont from "next/font/local";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./(site)/globals.css";
 import { Toaster } from "react-hot-toast";
 import ServiceWorkerRegister from "./_components/sw-register";
@@ -58,22 +59,26 @@ const METADATA_TEXTS = {
   REFERRER: "origin-when-cross-origin",
 } as const;
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
+const clashDisplay = localFont({
+  src: [
+    {
+      path: "../../public/fonts/clash-display-600.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/clash-display-700.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-clash",
   display: "swap",
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
-  display: "swap",
-});
-
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  variable: "--font-newsreader",
-  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -232,7 +237,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${plusJakarta.variable} ${newsreader.variable}`}
+      className={`${clashDisplay.variable} ${plusJakarta.variable}`}
       data-scroll-behavior="smooth"
     >
       <head>

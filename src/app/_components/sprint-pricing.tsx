@@ -116,7 +116,7 @@ export default function SprintPricing() {
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-display font-extrabold tracking-tight text-white mb-2.5">
+            <h2 className="text-2xl sm:text-4xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white mb-2.5">
               Pick your sprint.{" "}
               <span className="text-gold-gradient block sm:inline">
                 Launch on Day 30.
@@ -172,10 +172,10 @@ export default function SprintPricing() {
                     {/* Responsive Price Block */}
                     <div className="py-3 px-4 rounded-xl bg-white/[0.02] border border-white/[0.05] mb-4 group-hover:border-white/10 transition-colors">
                       <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
+                        <span className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
                           {tier.price}
                         </span>
-                        <span className="text-[10px] font-mono text-emerald-400 font-semibold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 whitespace-nowrap shrink-0">
+                        <span className="text-[10px] font-mono text-[#DFCA9F] font-semibold px-2 py-0.5 rounded bg-[#DFCA9F]/10 border border-[#DFCA9F]/25 whitespace-nowrap shrink-0">
                           {tier.discount}
                         </span>
                       </div>

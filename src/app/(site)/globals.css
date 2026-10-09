@@ -7,18 +7,25 @@
 
 @theme {
   --font-sans: var(--font-jakarta), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: var(--font-outfit), var(--font-jakarta), system-ui, sans-serif;
-  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-display: var(--font-clash), var(--font-jakarta), system-ui, sans-serif;
+  --font-serif: var(--font-clash), sans-serif;
 
-  /* OBSIDIAN & VOID SURFACES */
-  --color-obsidian-950: #020204;
-  --color-obsidian-900: #050508;
-  --color-obsidian-850: #09090e;
-  --color-obsidian-800: #0e0e14;
-  --color-obsidian-700: #14141d;
-  --color-obsidian-600: #1c1c28;
+  /* OBSIDIAN & TITANIUM VOID SURFACES (Porsche Design / Apple Pro) */
+  --color-obsidian-950: #030305;
+  --color-obsidian-900: #060609;
+  --color-obsidian-850: #0a0a0f;
+  --color-obsidian-800: #0f0f15;
+  --color-obsidian-700: #15151e;
+  --color-obsidian-600: #1d1d28;
 
-  /* TITANIUM & SILVER TOKENS */
+  /* SIGNATURE METALLIC CHAMPAGNE GOLD (Matching "NF" Monogram) */
+  --color-gold-300: #f5ecda;
+  --color-gold-400: #eadbb6;
+  --color-gold-500: #dfca9f;
+  --color-gold-600: #c5a86e;
+  --color-gold-700: #9e824c;
+
+  /* PLATINUM TITANIUM CHROME */
   --color-titanium-100: #ffffff;
   --color-titanium-200: #f8fafc;
   --color-titanium-300: #f1f5f9;
@@ -26,12 +33,6 @@
   --color-titanium-500: #cbd5e1;
   --color-titanium-600: #94a3b8;
   --color-titanium-700: #64748b;
-
-  /* ELECTRIC ACCENTS */
-  --color-electric-indigo: #6366f1;
-  --color-electric-violet: #8b5cf6;
-  --color-electric-cyan: #06b6d4;
-  --color-electric-emerald: #10b981;
 }
 
 /* ============================================
@@ -40,8 +41,8 @@
 
 :root {
   --font-sans: var(--font-jakarta), system-ui, -apple-system, sans-serif;
-  --font-display: var(--font-outfit), system-ui, sans-serif;
-  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-display: var(--font-clash), var(--font-jakarta), system-ui, sans-serif;
+  --font-serif: var(--font-clash), sans-serif;
 }
 
 html {
@@ -212,12 +213,26 @@ body {
   filter: drop-shadow(0 2px 14px rgba(223, 202, 159, 0.4));
 }
 
-/* Editorial Headline Typography */
+/* Editorial Headline & Display Typography (Generous Word Spacing) */
+.font-display {
+  font-family: var(--font-display);
+  word-spacing: 0.28em;
+  letter-spacing: 0.005em;
+}
+
+h1.font-display,
+h2.font-display,
+h3.font-display {
+  word-spacing: 0.28em;
+  letter-spacing: 0.005em;
+}
+
 .headline-display {
   font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  word-spacing: 0.28em;
+  line-height: 1.06;
 }
 
 .headline-serif-italic {
@@ -239,10 +254,11 @@ body {
   gap: 0.5rem;
   padding: 0.85rem 1.85rem;
   border-radius: 9999px;
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-weight: 600;
   font-size: 0.875rem;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.08em;
+  word-spacing: 0.22em;
   color: #07070A;
   background: linear-gradient(135deg, #F5ECDA 0%, #DFCA9F 50%, #CBB58A 100%);
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -271,10 +287,11 @@ body {
   gap: 0.5rem;
   padding: 0.85rem 1.85rem;
   border-radius: 9999px;
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 0.875rem;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.08em;
+  word-spacing: 0.22em;
   color: #F5ECDA;
   background: rgba(223, 202, 159, 0.04);
   backdrop-filter: blur(16px);

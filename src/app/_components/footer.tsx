@@ -139,7 +139,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
 
             {/* Live Studio Status */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs text-zinc-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[#DFCA9F] animate-pulse" />
               <span>Available for New Projects</span>
             </div>
           </div>

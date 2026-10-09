@@ -128,17 +128,17 @@ export default function Testimonials({
           <div className="text-center mb-8 sm:mb-14">
             <motion.div variants={itemVariants} className="mb-3">
               <div className="studio-badge">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
                 <span>{TEXTS.BADGE_TEXT}</span>
               </div>
             </motion.div>
 
             <motion.h2
               variants={itemVariants}
-              className="text-2xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-2.5"
+              className="text-2xl sm:text-4xl md:text-5xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white mb-2.5"
             >
               <span>{TEXTS.TITLE_FIRST_LINE} </span>
-              <span className="text-titanium block sm:inline">{TEXTS.TITLE_SECOND_LINE}</span>
+              <span className="text-gold-gradient block sm:inline">{TEXTS.TITLE_SECOND_LINE}</span>
             </motion.h2>
 
             <motion.p
@@ -168,26 +168,26 @@ export default function Testimonials({
                       <div className="flex items-center justify-between mb-3.5">
                         <div className="flex items-center gap-1">
                           {[...Array(item.rating || 5)].map((_, i) => (
-                            <span key={i} className="text-amber-400 text-xs">
+                            <span key={i} className="text-[#DFCA9F] text-xs">
                               ★
                             </span>
                           ))}
                         </div>
 
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-[#DFCA9F]/10 border border-[#DFCA9F]/25 text-[#DFCA9F] flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F] animate-pulse" />
                           <span>Verified Production</span>
                         </span>
                       </div>
 
                       {/* Quantified Outcome Strip */}
                       <div className="mb-3.5 p-2 rounded-xl bg-white/[0.02] border border-white/[0.06] text-[11px] font-mono text-zinc-200 font-medium flex items-center gap-1.5">
-                        <span className="text-emerald-400">★</span>
+                        <span className="text-[#DFCA9F]">★</span>
                         <span>{outcome}</span>
                       </div>
 
                       {/* Quote */}
-                      <p className="text-xs text-zinc-300 leading-relaxed mb-5 italic font-serif">
+                      <p className="text-xs text-zinc-300 leading-relaxed mb-5">
                         &ldquo;{item.quote}&rdquo;
                       </p>
                     </div>
