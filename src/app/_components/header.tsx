@@ -155,7 +155,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={handleNavClick}
-                  className="relative px-3.5 py-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors duration-200 group rounded-lg focus:outline-none"
+                  className="tab-spring relative px-3.5 py-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors duration-200 group rounded-lg focus:outline-none"
                 >
                   <span className="relative z-10">{link.label}</span>
                   <span className="absolute inset-0 bg-white/[0.04] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
@@ -178,7 +178,7 @@ export default function Header() {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-xl bg-white/[0.05] border border-white/[0.1] text-white hover:bg-white/[0.1] transition-colors focus:outline-none"
+              className="btn-spring md:hidden relative w-10 h-10 flex items-center justify-center rounded-xl bg-white/[0.05] border border-white/[0.1] text-white hover:bg-white/[0.1] transition-colors focus:outline-none"
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMobileMenuOpen}
             >
@@ -232,7 +232,7 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     onClick={handleNavClick}
-                    className="flex items-center justify-between p-3 rounded-xl text-base font-medium text-zinc-200 hover:bg-white/[0.06] hover:text-white transition-all"
+                    className="tab-spring flex items-center justify-between p-3 rounded-xl text-base font-medium text-zinc-200 hover:bg-white/[0.06] hover:text-white transition-all"
                   >
                     <span>{link.label}</span>
                     <svg

@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
+import ScrollReveal from "./scroll-reveal";
 
 const CLIENT_PROJECTS = [
   {
@@ -93,59 +94,70 @@ export default function Showcase() {
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="text-center mb-10 sm:mb-14">
-            <div className="studio-badge mb-3.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
-              <span>Verified Production Proof</span>
-            </div>
+            <ScrollReveal variant="fade-lift">
+              <div className="studio-badge mb-3.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
+                <span>Verified Production Proof</span>
+              </div>
+            </ScrollReveal>
 
-            <h2 className="text-3xl sm:text-5xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white mb-3">
-              <span>Production products shipped </span>
-              <span className="text-gold-gradient block sm:inline">for real founders.</span>
-            </h2>
+            <ScrollReveal variant="clip" as="h2" className="mb-3">
+              <span className="text-3xl sm:text-5xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white">
+                Production products shipped{" "}
+              </span>
+              <span className="text-3xl sm:text-5xl font-display font-bold tracking-normal [word-spacing:0.24em] text-gold-gradient block sm:inline">
+                for real founders.
+              </span>
+            </ScrollReveal>
 
-            <p className="text-sm sm:text-base md:text-lg text-zinc-300 max-w-xl mx-auto leading-relaxed">
-              Explore real Web and Mobile products engineered in 30-day hard sprints—with live verified transactions, offline hardware connectivity, and full founder IP ownership.
-            </p>
+            <ScrollReveal variant="fade-lift" delay={120}>
+              <p className="text-sm sm:text-base md:text-lg text-zinc-300 max-w-xl mx-auto leading-relaxed">
+                Explore real Web and Mobile products engineered in 30-day hard sprints—with live verified transactions, offline hardware connectivity, and full founder IP ownership.
+              </p>
+            </ScrollReveal>
 
             {/* Project Selector */}
-            <div className="flex justify-center mt-7">
-              <div className="p-1 rounded-xl bg-black/70 border border-white/10 backdrop-blur-md flex items-center gap-1 relative">
-                {CLIENT_PROJECTS.map((proj, idx) => (
-                  <button
-                    key={proj.id}
-                    onClick={() => setActiveIdx(idx)}
-                    className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-semibold transition-colors duration-200 z-10 flex items-center gap-2 cursor-pointer ${
-                      activeIdx === idx ? "text-black font-bold" : "text-zinc-400 hover:text-white"
-                    }`}
-                  >
-                    {activeIdx === idx && (
-                      <motion.div
-                        layoutId="clientWorkTabPill"
-                        className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] shadow-[0_4px_15px_rgba(223,202,159,0.35)]"
-                        transition={{ type: "spring", stiffness: 450, damping: 35 }}
-                      />
-                    )}
-                    <span className="relative z-10 flex items-center gap-2">
-                      <span className="text-[10px] font-mono">[{proj.id === "dalalfree" ? "WEB" : "APP"}]</span>
-                      <span>{proj.title}</span>
-                      <span
-                        className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
-                          activeIdx === idx
-                            ? "bg-black/15 text-zinc-900 font-bold"
-                            : "bg-white/[0.06] text-zinc-400"
-                        }`}
-                      >
-                        Proof
+            <ScrollReveal variant="fade-lift" delay={200}>
+              <div className="flex justify-center mt-7">
+                <div className="p-1 rounded-xl bg-black/70 border border-white/10 backdrop-blur-md flex items-center gap-1 relative">
+                  {CLIENT_PROJECTS.map((proj, idx) => (
+                    <button
+                      key={proj.id}
+                      onClick={() => setActiveIdx(idx)}
+                      className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-semibold transition-colors duration-200 z-10 flex items-center gap-2 cursor-pointer tab-spring ${
+                        activeIdx === idx ? "text-black font-bold" : "text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {activeIdx === idx && (
+                        <motion.div
+                          layoutId="clientWorkTabPill"
+                          className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] shadow-[0_4px_15px_rgba(223,202,159,0.35)]"
+                          transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                        />
+                      )}
+                      <span className="relative z-10 flex items-center gap-2">
+                        <span className="text-[10px] font-mono">[{proj.id === "dalalfree" ? "WEB" : "APP"}]</span>
+                        <span>{proj.title}</span>
+                        <span
+                          className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
+                            activeIdx === idx
+                              ? "bg-black/15 text-zinc-900 font-bold"
+                              : "bg-white/[0.06] text-zinc-400"
+                          }`}
+                        >
+                          Proof
+                        </span>
                       </span>
-                    </span>
-                  </button>
-                ))}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
 
           {/* MAIN SHOWCASE FRAME WITH SPOTLIGHT ILLUMINATION */}
-          <AnimatePresence mode="wait">
+          <ScrollReveal variant="fade-lift" delay={260}>
+            <AnimatePresence mode="wait">
             <motion.div
               key={active.id}
               initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
@@ -288,6 +300,7 @@ export default function Showcase() {
               </div>
             </motion.div>
           </AnimatePresence>
+        </ScrollReveal>
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ScrollReveal from "./scroll-reveal";
 
 export type SprintTierKey = "tier1" | "tier2" | "tier3";
 
@@ -106,120 +107,127 @@ export default function SprintPricing() {
         <div className="max-w-5xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-10 sm:mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
-              <span className="text-[10px] font-mono tracking-widest uppercase text-zinc-300">
-                Transparent Fixed Pricing
-              </span>
-            </div>
+            <ScrollReveal variant="fade-lift">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#DFCA9F]" />
+                <span className="text-[10px] font-mono tracking-widest uppercase text-zinc-300">
+                  Transparent Fixed Pricing
+                </span>
+              </div>
+            </ScrollReveal>
 
-            <h2 className="text-2xl sm:text-4xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white mb-2.5">
-              Pick your sprint.{" "}
-              <span className="text-gold-gradient block sm:inline">
+            <ScrollReveal variant="clip" as="h2" className="mb-2.5">
+              <span className="text-2xl sm:text-4xl font-display font-bold tracking-normal [word-spacing:0.24em] text-white">
+                Pick your sprint.{" "}
+              </span>
+              <span className="text-2xl sm:text-4xl font-display font-bold tracking-normal [word-spacing:0.24em] text-gold-gradient block sm:inline">
                 Launch on Day 30.
               </span>
-            </h2>
+            </ScrollReveal>
 
-            <p className="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed">
-              Fixed fees agreed upfront. Zero open-ended hourly billing. 100% direct Git ownership on delivery.
-            </p>
+            <ScrollReveal variant="fade-lift" delay={120}>
+              <p className="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed">
+                Fixed fees agreed upfront. Zero open-ended hourly billing. 100% direct Git ownership on delivery.
+              </p>
+            </ScrollReveal>
           </div>
 
-          {/* Compact Informative Pricing Grid with Spotlight Illumination */}
+          {/* Compact Informative Pricing Grid with Spotlight Illumination & Staggered Reveal */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 items-stretch">
-            {(Object.keys(TIERS) as SprintTierKey[]).map((key) => {
+            {(Object.keys(TIERS) as SprintTierKey[]).map((key, idx) => {
               const tier = TIERS[key];
               const isFlagship = tier.isPopular;
               const isSelected = selectedTier === key;
 
               return (
-                <div
-                  key={tier.id}
-                  onClick={() => setSelectedTier(key)}
-                  onMouseMove={handleSpotlight}
-                  className={`spotlight-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer ${
-                    isFlagship
-                      ? "bg-[#0E0F16] border border-[#DFCA9F]/45 shadow-[0_15px_45px_rgba(223,202,159,0.12)] relative"
-                      : "bg-[#090A0E] border border-white/[0.08] hover:border-white/[0.2]"
-                  } ${isSelected && !isFlagship ? "border-white/30" : ""}`}
-                >
-                  <div>
-                    {/* Top Row: Title + Badge/Duration */}
-                    <div className="flex items-center justify-between gap-2 mb-2">
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-base sm:text-lg font-display font-bold text-white whitespace-nowrap">
-                          {tier.name}
-                        </h3>
-                        {tier.badge && (
-                          <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-[#DFCA9F]/15 text-[#DFCA9F] font-bold border border-[#DFCA9F]/30 uppercase tracking-wider whitespace-nowrap">
-                            {tier.badge}
-                          </span>
-                        )}
-                      </div>
-                      <span className="text-xs font-mono text-zinc-400 shrink-0">
-                        {tier.duration}
-                      </span>
-                    </div>
-
-                    {/* Summary One-Liner */}
-                    <p className="text-xs text-zinc-400 leading-relaxed mb-4 min-h-[36px]">
-                      {tier.summary}
-                    </p>
-
-                    {/* Responsive Price Block */}
-                    <div className="py-3 px-4 rounded-xl bg-white/[0.02] border border-white/[0.05] mb-4 group-hover:border-white/10 transition-colors">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
-                          {tier.price}
-                        </span>
-                        <span className="text-[10px] font-mono text-[#DFCA9F] font-semibold px-2 py-0.5 rounded bg-[#DFCA9F]/10 border border-[#DFCA9F]/25 whitespace-nowrap shrink-0">
-                          {tier.discount}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5 mt-1 text-xs font-mono text-zinc-500">
-                        <span className="line-through">{tier.slashedPrice}</span>
-                        <span>·</span>
-                        <span>Fixed sprint fee</span>
-                      </div>
-                    </div>
-
-                    {/* 4 Crisp Informative Features */}
-                    <div className="space-y-2 mb-5">
-                      {tier.features.map((feat, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-start gap-2 text-xs text-zinc-300 leading-snug"
-                        >
-                          <span className="text-[#DFCA9F] font-bold text-xs shrink-0 mt-0.5">
-                            ✓
-                          </span>
-                          <span>{feat}</span>
+                <ScrollReveal key={tier.id} variant="fade-lift" delay={100 + idx * 110}>
+                  <div
+                    onClick={() => setSelectedTier(key)}
+                    onMouseMove={handleSpotlight}
+                    className={`spotlight-card h-full rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 tab-spring cursor-pointer ${
+                      isFlagship
+                        ? "bg-[#0E0F16] border border-[#DFCA9F]/45 shadow-[0_15px_45px_rgba(223,202,159,0.12)] relative"
+                        : "bg-[#090A0E] border border-white/[0.08] hover:border-white/[0.2]"
+                    } ${isSelected && !isFlagship ? "border-white/30" : ""}`}
+                  >
+                    <div>
+                      {/* Top Row: Title + Badge/Duration */}
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-base sm:text-lg font-display font-bold text-white whitespace-nowrap">
+                            {tier.name}
+                          </h3>
+                          {tier.badge && (
+                            <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-[#DFCA9F]/15 text-[#DFCA9F] font-bold border border-[#DFCA9F]/30 uppercase tracking-wider whitespace-nowrap">
+                              {tier.badge}
+                            </span>
+                          )}
                         </div>
-                      ))}
-                    </div>
-                  </div>
+                        <span className="text-xs font-mono text-zinc-400 shrink-0">
+                          {tier.duration}
+                        </span>
+                      </div>
 
-                  {/* Compact CTA Button */}
-                  <div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        scrollToContact(tier.name);
-                      }}
-                      className={`w-full py-2.5 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                        isFlagship
-                          ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-md shadow-[#DFCA9F]/20 hover:shadow-lg hover:shadow-[#DFCA9F]/35 active:scale-[0.98]"
-                          : "bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 active:scale-[0.98]"
-                      }`}
-                    >
-                      <span>{tier.ctaText}</span>
-                      <span>→</span>
-                    </button>
-                    <div className="text-center mt-2 text-[10px] font-mono text-zinc-500">
-                      {isFlagship ? "14-Day Warranty Included" : "Direct Git Handover"}
+                      {/* Summary One-Liner */}
+                      <p className="text-xs text-zinc-400 leading-relaxed mb-4 min-h-[36px]">
+                        {tier.summary}
+                      </p>
+
+                      {/* Responsive Price Block */}
+                      <div className="py-3 px-4 rounded-xl bg-white/[0.02] border border-white/[0.05] mb-4 group-hover:border-white/10 transition-colors">
+                        <div className="flex items-baseline justify-between gap-2">
+                          <span className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
+                            {tier.price}
+                          </span>
+                          <span className="text-[10px] font-mono text-[#DFCA9F] font-semibold px-2 py-0.5 rounded bg-[#DFCA9F]/10 border border-[#DFCA9F]/25 whitespace-nowrap shrink-0">
+                            {tier.discount}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 mt-1 text-xs font-mono text-zinc-500">
+                          <span className="line-through">{tier.slashedPrice}</span>
+                          <span>·</span>
+                          <span>Fixed sprint fee</span>
+                        </div>
+                      </div>
+
+                      {/* 4 Crisp Informative Features */}
+                      <div className="space-y-2 mb-5">
+                        {tier.features.map((feat, fIdx) => (
+                          <div
+                            key={fIdx}
+                            className="flex items-start gap-2 text-xs text-zinc-300 leading-snug"
+                          >
+                            <span className="text-[#DFCA9F] font-bold text-xs shrink-0 mt-0.5">
+                              ✓
+                            </span>
+                            <span>{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Compact CTA Button with Tactile Spring */}
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          scrollToContact(tier.name);
+                        }}
+                        className={`w-full py-2.5 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer btn-spring ${
+                          isFlagship
+                            ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-md shadow-[#DFCA9F]/20 hover:shadow-lg hover:shadow-[#DFCA9F]/35"
+                            : "bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10"
+                        }`}
+                      >
+                        <span>{tier.ctaText}</span>
+                        <span>→</span>
+                      </button>
+                      <div className="text-center mt-2 text-[10px] font-mono text-zinc-500">
+                        {isFlagship ? "14-Day Warranty Included" : "Direct Git Handover"}
+                      </div>
                     </div>
                   </div>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>

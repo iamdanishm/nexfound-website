@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import ScrollReveal from "./scroll-reveal";
 
 // Text constants
 const TEXTS = {
@@ -117,7 +118,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
       <div className="container-custom relative z-10 px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-white/[0.08]">
           {/* Brand & Mission Column */}
-          <div className="lg:col-span-4 space-y-5">
+          <ScrollReveal delay={0} className="lg:col-span-4 space-y-5">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="w-9 h-9 flex items-center justify-center">
                 <Image
@@ -142,17 +143,17 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               <span className="w-2 h-2 rounded-full bg-[#DFCA9F] animate-pulse" />
               <span>Available for New Projects</span>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Navigation Links Columns */}
-          <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-6">
+          <ScrollReveal delay={120} className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-6">
             {footerLinks.map((group, idx) => (
               <div key={idx} className="space-y-4">
                 <h4 className="text-xs font-mono font-bold tracking-widest text-zinc-200 uppercase">
                   {group.category}
                 </h4>
                 <ul className="space-y-2.5">
-                  {group.links.map((link, lIdx) => (
+                  {footerLinks && group.links.map((link, lIdx) => (
                     <li key={lIdx}>
                       <a
                         href={link.href}
@@ -165,10 +166,10 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
                 </ul>
               </div>
             ))}
-          </div>
+          </ScrollReveal>
 
           {/* Newsletter Column */}
-          <div className="lg:col-span-3 space-y-4">
+          <ScrollReveal delay={240} className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-mono font-bold tracking-widest text-zinc-200 uppercase">
               {newsletterTitle}
             </h4>
@@ -188,17 +189,17 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               <button
                 type="submit"
                 disabled={isSubscribing}
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-white text-black flex items-center justify-center hover:bg-zinc-200 transition-colors font-bold"
+                className="absolute right-1.5 top-1.5 bottom-1.5 w-7 rounded-lg bg-white text-black flex items-center justify-center hover:bg-zinc-200 transition-all font-bold btn-spring"
                 aria-label="Subscribe"
               >
                 →
               </button>
             </form>
-          </div>
+          </ScrollReveal>
         </div>
 
         {/* Bottom Copyright & Social Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+        <ScrollReveal delay={300} className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
           <div>
             {TEXTS.COPYRIGHT_TEXT.replace("{year}", currentYear.toString())}
           </div>
@@ -231,7 +232,7 @@ export default function Footer({ footer, socialLinks }: FooterProps) {
               hello@nexfound.in
             </a>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </footer>
   );

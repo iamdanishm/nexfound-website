@@ -4,6 +4,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./(site)/globals.css";
 import { Toaster } from "react-hot-toast";
 import BackgroundCanvas from "./_components/background-canvas";
+import ClickFeedback from "./_components/click-feedback";
 import ServiceWorkerRegister from "./_components/sw-register";
 
 // Text constants for metadata
@@ -251,6 +252,7 @@ export default function RootLayout({
       <body className="relative min-h-screen bg-[#060608] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-[#DFCA9F]/20 selection:text-white">
         {/* Precision Architectural Studio Canvas */}
         <BackgroundCanvas />
+        <ClickFeedback />
 
         <ServiceWorkerRegister />
         <Toaster

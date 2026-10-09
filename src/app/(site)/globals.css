@@ -244,7 +244,7 @@ h3.font-display {
     HIGH-CONTRAST STUDIO BUTTONS (MATCHING LOGO)
     ============================================ */
 
-/* Primary Button: Champagne Gold Gradient */
+/* Primary Button: Champagne Gold Gradient with Tactile Spring Physics */
 .btn-primary {
   position: relative;
   display: inline-flex;
@@ -262,22 +262,30 @@ h3.font-display {
   background: linear-gradient(135deg, #F5ECDA 0%, #DFCA9F 50%, #CBB58A 100%);
   border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 10px 25px -5px rgba(223, 202, 159, 0.35), 0 0 15px rgba(223, 202, 159, 0.2);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: 
+    transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.2s ease,
+    color 0.2s ease;
+  will-change: transform;
+  user-select: none;
   cursor: pointer;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.015);
   background: linear-gradient(135deg, #FFFFFF 0%, #F5ECDA 50%, #DFCA9F 100%);
   box-shadow: 0 16px 35px -5px rgba(223, 202, 159, 0.5), 0 0 25px rgba(223, 202, 159, 0.3);
   color: #000000;
 }
 
 .btn-primary:active {
-  transform: translateY(0);
+  transform: translateY(1.5px) scale(0.955) !important;
+  transition: transform 0.08s cubic-bezier(0.2, 0, 0, 1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(223, 202, 159, 0.55), inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Secondary Button: Frosted Obsidian Glass with Gold Accents */
+/* Secondary Button: Frosted Obsidian Glass with Tactile Spring Physics */
 .btn-secondary {
   position: relative;
   display: inline-flex;
@@ -297,12 +305,19 @@ h3.font-display {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(223, 202, 159, 0.15);
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: 
+    transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+  will-change: transform;
+  user-select: none;
   cursor: pointer;
 }
 
 .btn-secondary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.015);
   background: rgba(223, 202, 159, 0.08);
   border-color: rgba(223, 202, 159, 0.35);
   color: #ffffff;
@@ -310,7 +325,118 @@ h3.font-display {
 }
 
 .btn-secondary:active {
+  transform: translateY(1.5px) scale(0.955) !important;
+  transition: transform 0.08s cubic-bezier(0.2, 0, 0, 1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(223, 202, 159, 0.4) !important;
+}
+
+/* Universal Tactile Spring Physics for All Clickable Elements */
+.btn-spring,
+button:not(.no-spring),
+.tab-spring {
+  transition: 
+    transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+  will-change: transform;
+  user-select: none;
+}
+
+.btn-spring:active,
+button:not(.no-spring):active,
+.tab-spring:active {
+  transform: translateY(1.5px) scale(0.96) !important;
+  transition: transform 0.08s cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+/* ============================================
+    CHOREOGRAPHED ENTRANCE & SCROLL REVEALS
+    ============================================ */
+
+/* 1. Architectural Clip Reveal (Masked vertical rise) */
+.reveal-clip {
+  overflow: hidden;
+  display: block;
+}
+
+.reveal-clip-item {
+  display: block;
+  transform: translateY(115%);
+  opacity: 0;
+  transition: 
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.is-revealed .reveal-clip-item,
+.reveal-clip-item.is-revealed {
+  transform: translateY(0%);
+  opacity: 1;
+}
+
+/* 2. Fade + Lift (Calibrated Elevation Entrance) */
+.reveal-fade-lift {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: 
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.is-revealed .reveal-fade-lift,
+.reveal-fade-lift.is-revealed {
+  opacity: 1;
   transform: translateY(0);
+}
+
+/* Stagger Delay Classes */
+.stagger-1 { transition-delay: 80ms !important; }
+.stagger-2 { transition-delay: 160ms !important; }
+.stagger-3 { transition-delay: 240ms !important; }
+.stagger-4 { transition-delay: 320ms !important; }
+.stagger-5 { transition-delay: 400ms !important; }
+
+/* Micro-Haptic Click Feedback Shockwave */
+@keyframes tactileShockwave {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.9;
+    border-width: 2px;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.4);
+    opacity: 0;
+    border-width: 0.5px;
+  }
+}
+
+.tactile-shockwave {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  border: 2px solid rgba(223, 202, 159, 0.75);
+  background: radial-gradient(circle, rgba(223, 202, 159, 0.3) 0%, transparent 70%);
+  animation: tactileShockwave 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-clip-item,
+  .reveal-fade-lift,
+  .btn-primary,
+  .btn-secondary,
+  .btn-spring,
+  button {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+  }
 }
 
 
