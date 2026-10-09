@@ -120,7 +120,7 @@ export default function Header() {
       <header className="fixed top-0 left-0 right-0 z-50 py-3.5 sm:py-4 pointer-events-none will-change-transform transform-gpu">
         <div className="container-custom pointer-events-auto">
           <div
-            className={`flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl transition-[background-color,border-color,box-shadow] duration-300 bg-[#060609]/85 backdrop-blur-xl border border-white/[0.08] ${
+            className={`flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl transition-[background-color,border-color,box-shadow] duration-300 bg-[#060609]/90 backdrop-blur-xl border border-white/[0.08] ${
               isScrolled
                 ? "shadow-[0_20px_50px_rgba(0,0,0,0.9)] border-white/[0.14] bg-[#060609]/95"
                 : "shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
