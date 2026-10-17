@@ -119,13 +119,13 @@ export default function Showcase() {
 
             {/* Project Selector */}
             <ScrollReveal variant="fade-lift" delay={200}>
-              <div className="flex justify-center mt-7">
-                <div className="p-1 rounded-xl liquid-glass liquid-lens flex items-center gap-1 relative">
+              <div className="flex justify-center mt-7 px-2">
+                <div className="p-1 rounded-xl liquid-glass liquid-lens flex items-center gap-1 relative max-w-full">
                   {CLIENT_PROJECTS.map((proj, idx) => (
                     <button
                       key={proj.id}
                       onClick={() => setActiveIdx(idx)}
-                      className={`relative px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-semibold transition-colors duration-200 z-10 flex items-center gap-2 cursor-pointer tab-spring ${
+                      className={`relative px-2.5 sm:px-6 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-mono font-semibold transition-colors duration-200 z-10 flex items-center gap-1.5 sm:gap-2 cursor-pointer tab-spring ${
                         activeIdx === idx ? "text-black font-bold" : "text-zinc-400 hover:text-white"
                       }`}
                     >
@@ -136,11 +136,11 @@ export default function Showcase() {
                           transition={kinetics.pill}
                         />
                       )}
-                      <span className="relative z-10 flex items-center gap-2">
+                      <span className="relative z-10 flex items-center gap-1.5 sm:gap-2">
                         <span className="text-[10px] font-mono">[{proj.id === "dalalfree" ? "WEB" : "APP"}]</span>
                         <span>{proj.title}</span>
                         <span
-                          className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
+                          className={`hidden sm:inline-block text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
                             activeIdx === idx
                               ? "bg-black/15 text-zinc-900 font-bold"
                               : "bg-white/[0.06] text-zinc-400"

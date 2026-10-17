@@ -249,7 +249,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="relative min-h-screen bg-[#060608] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-[#DFCA9F]/20 selection:text-white">
+      <body className="m-0 p-0 relative min-h-screen bg-[#060608] text-[#F1F5F9] font-sans antialiased overflow-x-hidden selection:bg-[#DFCA9F]/20 selection:text-white">
         {/* Precision Architectural Studio Canvas */}
         <BackgroundCanvas />
         <ClickFeedback />

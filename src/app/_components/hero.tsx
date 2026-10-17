@@ -143,9 +143,9 @@ export default function Hero() {
 
         {/* 2. Grand Headline with Architectural Clip Reveal */}
         <div className="overflow-hidden pb-2 mb-4 sm:mb-6">
-          <h1 className="hero-headline-clip text-4xl sm:text-6xl lg:text-7xl xl:text-[5.25rem] font-display font-bold tracking-normal [word-spacing:0.28em] text-white leading-[1.08] max-w-5xl mx-auto text-balance">
+          <h1 className="hero-headline-clip text-3xl sm:text-6xl lg:text-7xl xl:text-[5.25rem] font-display font-bold tracking-normal sm:[word-spacing:0.28em] text-white leading-[1.1] sm:leading-[1.08] max-w-5xl mx-auto text-balance">
             Turn your product idea into a{" "}
-            <span className="relative inline-block italic text-gold-shimmer px-2 font-bold [word-spacing:0.28em] pr-3.5">
+            <span className="relative inline-block italic text-gold-shimmer px-1.5 sm:px-2 font-bold sm:[word-spacing:0.28em] pr-2.5 sm:pr-3.5">
               live, payment-ready
               <span className="absolute -bottom-1 left-1 right-2 h-[2px] bg-gradient-to-r from-transparent via-[#DFCA9F]/60 to-transparent pointer-events-none" />
             </span>{" "}

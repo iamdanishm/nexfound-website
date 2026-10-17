@@ -57,17 +57,7 @@ export default function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobileMenuOpen]);
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMobileMenuOpen]);
+
 
   // Smooth scroll handler
   const smoothScrollTo = useCallback((target: string) => {
@@ -119,10 +109,26 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 py-3.5 sm:py-4 pointer-events-none will-change-transform transform-gpu">
-        <div className="container-custom pointer-events-auto">
+      {/* Mobile Backdrop Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-xl z-40 md:hidden pointer-events-auto"
+            onClick={() => setIsMobileMenuOpen(false)}
+            onTouchMove={(e) => e.preventDefault()}
+          />
+        )}
+      </AnimatePresence>
+
+      <header className="fixed top-0 inset-x-0 z-50 py-3 sm:py-4 pointer-events-none w-full">
+        <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 pointer-events-auto">
+          {/* Header Capsule Bar */}
           <div
-            className={`flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl transition-[background-color,border-color,box-shadow] duration-300 liquid-glass liquid-lens ${
+            className={`flex items-center justify-between px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-2xl transition-[background-color,border-color,box-shadow] duration-300 liquid-glass liquid-lens w-full ${
               isScrolled
                 ? "shadow-[0_24px_56px_rgba(0,0,0,0.95)] border-white/[0.18]"
                 : "shadow-[0_12px_36px_rgba(0,0,0,0.6)]"
@@ -217,70 +223,57 @@ export default function Header() {
               </div>
             </button>
           </div>
+
+          {/* Mobile Navigation Dropdown - Perfectly aligned in the same container */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                className="mt-2.5 md:hidden liquid-glass liquid-lens p-5 rounded-2xl shadow-2xl w-full border border-white/[0.14]"
+              >
+                <div className="flex flex-col gap-1.5">
+                  {TEXTS.NAV_LINKS.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={handleNavClick}
+                      className="tab-spring flex items-center justify-between p-3 rounded-xl text-base font-medium text-zinc-200 hover:bg-white/[0.06] hover:text-white transition-all"
+                    >
+                      <span>{link.label}</span>
+                      <svg
+                        className="w-4 h-4 text-zinc-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </a>
+                  ))}
+
+                  <div className="pt-3.5 mt-1 border-t border-white/[0.08]">
+                    <a
+                      href="#contact"
+                      onClick={handleNavClick}
+                      className="btn-primary w-full text-center py-3 rounded-xl font-bold text-xs uppercase tracking-wider block"
+                    >
+                      {TEXTS.CTA_BUTTON}
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </header>
-
-      {/* Mobile Navigation Drawer */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed inset-0 bg-black/85 backdrop-blur-xl z-40 md:hidden"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-
-            {/* Mobile Dropdown Panel */}
-            <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.96 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="fixed top-20 left-4 right-4 z-40 md:hidden liquid-glass liquid-lens p-6 rounded-2xl shadow-2xl"
-            >
-              <div className="flex flex-col gap-2">
-                {TEXTS.NAV_LINKS.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={handleNavClick}
-                    className="tab-spring flex items-center justify-between p-3 rounded-xl text-base font-medium text-zinc-200 hover:bg-white/[0.06] hover:text-white transition-all"
-                  >
-                    <span>{link.label}</span>
-                    <svg
-                      className="w-4 h-4 text-zinc-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </a>
-                ))}
-
-                <div className="pt-4 mt-2 border-t border-white/[0.08]">
-                  <a
-                    href="#contact"
-                    onClick={handleNavClick}
-                    className="btn-primary w-full text-center py-3 rounded-xl font-bold text-xs uppercase tracking-wider"
-                  >
-                    {TEXTS.CTA_BUTTON}
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </>
   );
 }

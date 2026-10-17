@@ -53,11 +53,23 @@ export default function BackgroundCanvas() {
       }
     };
 
+    const handleTouch = (e: TouchEvent) => {
+      if (e.touches && e.touches.length > 0) {
+        targetX = e.touches[0].clientX;
+        targetY = e.touches[0].clientY;
+        if (!rafId) {
+          rafId = requestAnimationFrame(render);
+        }
+      }
+    };
+
     const SPACING = 28;
-    const LENS_RADIUS = 280;
-    const LENS_RADIUS_SQ = LENS_RADIUS * LENS_RADIUS;
 
     const render = () => {
+      // Dynamic mobile lens radius: ~135px on phones, 260px on desktop
+      const LENS_RADIUS = width < 640 ? Math.min(145, Math.max(105, width * 0.36)) : 260;
+      const LENS_RADIUS_SQ = LENS_RADIUS * LENS_RADIUS;
+
       // Kinetic Mass-Spring-Damper Physics
       const ax = (targetX - currentX) * stiffness;
       const ay = (targetY - currentY) * stiffness;
@@ -103,7 +115,7 @@ export default function BackgroundCanvas() {
             const elevation = Math.cos(norm * (Math.PI / 2));
 
             // Outward radial grid displacement (the grid spacing stretches apart like a 3D lens)
-            const push = Math.sin(norm * Math.PI) * 10;
+            const push = Math.sin(norm * Math.PI) * (width < 640 ? 6 : 10);
             const angle = Math.atan2(dy, dx);
 
             const drawX = x + Math.cos(angle) * push;
@@ -140,9 +152,14 @@ export default function BackgroundCanvas() {
     render();
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("touchstart", handleTouch, { passive: true });
+    window.addEventListener("touchmove", handleTouch, { passive: true });
+
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("touchstart", handleTouch);
+      window.removeEventListener("touchmove", handleTouch);
       if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);

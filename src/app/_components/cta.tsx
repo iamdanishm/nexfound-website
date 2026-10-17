@@ -133,7 +133,7 @@ ${idea}
                     href={`https://wa.me/919321456661?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#DFCA9F]/20 hover:opacity-95 transition-opacity cursor-pointer font-mono kinetic-btn"
+                    className="w-full py-3.5 px-3 sm:px-5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#DFCA9F]/20 hover:opacity-95 transition-opacity cursor-pointer font-mono kinetic-btn text-center"
                   >
                     <span>Chat with Danish on WhatsApp</span>
                     <span>→</span>
@@ -201,7 +201,7 @@ ${idea}
                       <label className="block text-xs font-mono uppercase tracking-wider text-zinc-300 mb-1.5 font-semibold">
                         2. Preferred First Platform
                       </label>
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         {PLATFORMS.map((p) => (
                           <button
                             type="button"
