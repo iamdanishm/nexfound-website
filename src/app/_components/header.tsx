@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { kinetics } from "@/lib/kinetics";
 
 // Text constants
 const TEXTS = {
@@ -21,6 +22,7 @@ const TEXTS = {
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hoveredNav, setHoveredNav] = useState<string | null>(null);
 
   // Smooth, jitter-free scroll listener with hysteresis
   useEffect(() => {
@@ -120,10 +122,10 @@ export default function Header() {
       <header className="fixed top-0 left-0 right-0 z-50 py-3.5 sm:py-4 pointer-events-none will-change-transform transform-gpu">
         <div className="container-custom pointer-events-auto">
           <div
-            className={`flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl transition-[background-color,border-color,box-shadow] duration-300 bg-[#060609]/90 backdrop-blur-xl border border-white/[0.08] ${
+            className={`flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl transition-[background-color,border-color,box-shadow] duration-300 liquid-glass liquid-lens ${
               isScrolled
-                ? "shadow-[0_20px_50px_rgba(0,0,0,0.9)] border-white/[0.14] bg-[#060609]/95"
-                : "shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+                ? "shadow-[0_24px_56px_rgba(0,0,0,0.95)] border-white/[0.18]"
+                : "shadow-[0_12px_36px_rgba(0,0,0,0.6)]"
             }`}
           >
             {/* Brand Logo & Name */}
@@ -148,31 +150,45 @@ export default function Header() {
               </span>
             </Link>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-              {TEXTS.NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={handleNavClick}
-                  className="tab-spring relative px-3.5 py-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors duration-200 group rounded-lg focus:outline-none"
-                >
-                  <span className="relative z-10">{link.label}</span>
-                  <span className="absolute inset-0 bg-white/[0.04] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                  <span className="absolute bottom-1 left-3.5 right-3.5 h-[1.5px] bg-gradient-to-r from-transparent via-[#DFCA9F] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-                </a>
-              ))}
+            {/* Desktop Navigation Links with Kinetic Magnetic Sliding Pill */}
+            <nav
+              className="hidden md:flex items-center gap-1 lg:gap-2"
+              onMouseLeave={() => setHoveredNav(null)}
+            >
+              {TEXTS.NAV_LINKS.map((link) => {
+                const isHovered = hoveredNav === link.href;
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={handleNavClick}
+                    onMouseEnter={() => setHoveredNav(link.href)}
+                    className="relative px-3.5 py-2 text-sm font-medium text-zinc-300 hover:text-white transition-colors duration-200 group rounded-lg focus:outline-none"
+                  >
+                    {isHovered && (
+                      <motion.span
+                        layoutId="navPill"
+                        className="absolute inset-0 bg-white/[0.08] rounded-lg -z-0 border border-white/[0.12] shadow-[0_2px_10px_rgba(0,0,0,0.4)]"
+                        transition={kinetics.pill}
+                      />
+                    )}
+                    <span className="relative z-10">{link.label}</span>
+                  </a>
+                );
+              })}
             </nav>
 
-            {/* Desktop Right CTA Button */}
+            {/* Desktop Right CTA Button with Kinetic Press */}
             <div className="hidden md:flex items-center gap-4">
-              <a
+              <motion.a
                 href="#contact"
                 onClick={handleNavClick}
-                className="btn-primary text-xs tracking-wider uppercase font-semibold py-2.5 px-5 rounded-full"
+                whileHover={kinetics.button.whileHover}
+                whileTap={kinetics.button.whileTap}
+                className="btn-primary text-xs tracking-wider uppercase font-semibold py-2.5 px-5 rounded-full kinetic-btn cursor-pointer inline-flex items-center justify-center"
               >
                 <span>{TEXTS.CTA_BUTTON}</span>
-              </a>
+              </motion.a>
             </div>
 
             {/* Mobile Hamburger Button */}
@@ -224,7 +240,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.96 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="fixed top-20 left-4 right-4 z-40 md:hidden bg-[#09090e]/95 backdrop-blur-2xl p-6 rounded-2xl border border-white/[0.12] shadow-2xl"
+              className="fixed top-20 left-4 right-4 z-40 md:hidden liquid-glass liquid-lens p-6 rounded-2xl shadow-2xl"
             >
               <div className="flex flex-col gap-2">
                 {TEXTS.NAV_LINKS.map((link) => (

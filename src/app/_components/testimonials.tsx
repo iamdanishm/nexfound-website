@@ -159,9 +159,9 @@ export default function Testimonials({
               return (
                 <motion.div key={item._id} variants={itemVariants} className="group h-full">
                   <TiltCard
-                    className="bg-[#07070B]/90 h-full p-5 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between border border-white/[0.08] hover:border-white/[0.18] transition-colors"
+                    className="liquid-glass liquid-lens h-full p-5 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between transition-colors"
                     maxTilt={3}
-                    glareOpacity={0.1}
+                    glareOpacity={0.12}
                   >
                     <div>
                       {/* Rating & Verified Pill */}
@@ -214,7 +214,7 @@ export default function Testimonials({
 
           {/* Stats Bar */}
           <motion.div variants={itemVariants}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 sm:p-5 rounded-3xl bg-[#08080E]/90 border border-white/[0.08]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 sm:p-5 rounded-3xl liquid-glass liquid-lens">
               {displayStats.map((stat, sIdx) => (
                 <div key={sIdx} className="text-center p-2">
                   <div className="text-xl sm:text-2xl font-bold font-display text-white">

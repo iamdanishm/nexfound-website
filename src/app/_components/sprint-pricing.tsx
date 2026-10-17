@@ -100,8 +100,8 @@ export default function SprintPricing() {
       id="pricing"
       className="relative py-16 sm:py-20 overflow-hidden bg-transparent scroll-mt-24"
     >
-      {/* Ambient background depth */}
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[550px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.06)_0%,transparent_70%)] blur-[80px] pointer-events-none -z-10" />
+      {/* Ambient background depth (Soft diffused) */}
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[550px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.025)_0%,transparent_70%)] blur-[80px] pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10">
         <div className="max-w-5xl mx-auto">
@@ -146,8 +146,8 @@ export default function SprintPricing() {
                     onMouseMove={handleSpotlight}
                     className={`spotlight-card h-full rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 tab-spring cursor-pointer ${
                       isFlagship
-                        ? "bg-[#0E0F16] border border-[#DFCA9F]/45 shadow-[0_15px_45px_rgba(223,202,159,0.12)] relative"
-                        : "bg-[#090A0E] border border-white/[0.08] hover:border-white/[0.2]"
+                        ? "liquid-glass liquid-lens border-beam-flagship border-[#DFCA9F]/45 shadow-[0_20px_50px_rgba(223,202,159,0.14)] relative"
+                        : "liquid-glass border-white/[0.08] hover:border-white/[0.2]"
                     } ${isSelected && !isFlagship ? "border-white/30" : ""}`}
                   >
                     <div>
@@ -213,7 +213,7 @@ export default function SprintPricing() {
                           e.stopPropagation();
                           scrollToContact(tier.name);
                         }}
-                        className={`w-full py-2.5 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer btn-spring ${
+                        className={`w-full py-2.5 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer kinetic-btn ${
                           isFlagship
                             ? "bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black shadow-md shadow-[#DFCA9F]/20 hover:shadow-lg hover:shadow-[#DFCA9F]/35"
                             : "bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10"

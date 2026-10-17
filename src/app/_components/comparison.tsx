@@ -26,7 +26,7 @@ export default function Comparison() {
 
   // Fast, layout-thrash-free mouse spotlight handler
   const handleSpotlight = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.style.setProperty("--mouse-x", `${e.nativeEvent.offsetY}px`);
+    e.currentTarget.style.setProperty("--mouse-x", `${e.nativeEvent.offsetX}px`);
     e.currentTarget.style.setProperty("--mouse-y", `${e.nativeEvent.offsetY}px`);
   };
 
@@ -70,7 +70,7 @@ export default function Comparison() {
               <ScrollReveal key={idx} variant="fade-lift" delay={100 + idx * 110}>
                 <div
                   onMouseMove={handleSpotlight}
-                  className="spotlight-card h-full p-7 rounded-2xl bg-[#090A0E] border border-white/[0.08] hover:border-white/[0.22] transition-all flex flex-col justify-between group tab-spring cursor-pointer"
+                  className="spotlight-card h-full p-7 rounded-2xl liquid-glass liquid-lens hover:border-white/[0.22] transition-all flex flex-col justify-between group tab-spring cursor-pointer"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-5">

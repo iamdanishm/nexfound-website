@@ -3,120 +3,175 @@
 import { useEffect, useRef } from "react";
 
 export default function BackgroundCanvas() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
 
     let rafId: number | null = null;
-    let targetX = window.innerWidth / 2;
-    let targetY = 300;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    // Kinetic spring parameters for fluid, weighted tracking
+    let targetX = width / 2;
+    let targetY = height / 3;
     let currentX = targetX;
     let currentY = targetY;
+    let vx = 0;
+    let vy = 0;
+    const stiffness = 0.12;
+    const damping = 0.82;
+
+    const resize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
 
     const handlePointerMove = (e: PointerEvent) => {
       targetX = e.clientX;
       targetY = e.clientY;
 
       if (!rafId) {
-        rafId = requestAnimationFrame(updateCursor);
+        rafId = requestAnimationFrame(render);
       }
     };
 
-    const updateCursor = () => {
-      // Smooth interpolation for fluid cinematic tracking
-      currentX += (targetX - currentX) * 0.15;
-      currentY += (targetY - currentY) * 0.15;
+    const SPACING = 28;
+    const LENS_RADIUS = 280;
+    const LENS_RADIUS_SQ = LENS_RADIUS * LENS_RADIUS;
 
-      if (container) {
-        container.style.setProperty("--cursor-x", `${currentX.toFixed(1)}px`);
-        container.style.setProperty("--cursor-y", `${currentY.toFixed(1)}px`);
+    const render = () => {
+      // Kinetic Mass-Spring-Damper Physics
+      const ax = (targetX - currentX) * stiffness;
+      const ay = (targetY - currentY) * stiffness;
+      vx = (vx + ax) * damping;
+      vy = (vy + ay) * damping;
+      currentX += vx;
+      currentY += vy;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Batch draw ambient rest dots outside lens radius (ultra performant 0.1ms)
+      ctx.fillStyle = "rgba(255, 255, 255, 0.055)";
+      ctx.beginPath();
+      for (let x = 0; x <= width + SPACING; x += SPACING) {
+        for (let y = 0; y <= height + SPACING; y += SPACING) {
+          const dx = x - currentX;
+          const dy = y - currentY;
+          if (dx * dx + dy * dy >= LENS_RADIUS_SQ) {
+            ctx.moveTo(x + 0.75, y);
+            ctx.arc(x, y, 0.75, 0, Math.PI * 2);
+          }
+        }
+      }
+      ctx.fill();
+
+      // 2. Draw 3D Bulge & Radial Stretch dots inside hover lens
+      const minX = Math.max(0, Math.floor((currentX - LENS_RADIUS) / SPACING) * SPACING);
+      const maxX = Math.min(width, Math.ceil((currentX + LENS_RADIUS) / SPACING) * SPACING);
+      const minY = Math.max(0, Math.floor((currentY - LENS_RADIUS) / SPACING) * SPACING);
+      const maxY = Math.min(height, Math.ceil((currentY + LENS_RADIUS) / SPACING) * SPACING);
+
+      for (let x = minX; x <= maxX; x += SPACING) {
+        for (let y = minY; y <= maxY; y += SPACING) {
+          const dx = x - currentX;
+          const dy = y - currentY;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < LENS_RADIUS_SQ) {
+            const dist = Math.sqrt(distSq);
+            const norm = dist / LENS_RADIUS; // 0 at center, 1 at boundary
+
+            // 3D Dome elevation: spherical curve (peak at center, 0 at edge)
+            const elevation = Math.cos(norm * (Math.PI / 2));
+
+            // Outward radial grid displacement (the grid spacing stretches apart like a 3D lens)
+            const push = Math.sin(norm * Math.PI) * 10;
+            const angle = Math.atan2(dy, dx);
+
+            const drawX = x + Math.cos(angle) * push;
+            const drawY = y + Math.sin(angle) * push;
+
+            // Always a perfect circle: big in the middle (~2.25px), tapering smoothly to ambient (0.75px)
+            const dotRadius = 0.75 + elevation * 1.5;
+
+            // Luminous champagne-white at center, softly tapering to edge
+            const opacity = 0.06 + elevation * 0.70;
+
+            ctx.beginPath();
+            ctx.arc(drawX, drawY, dotRadius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(245, 236, 218, ${opacity.toFixed(3)})`;
+            ctx.fill();
+          }
+        }
       }
 
-      if (Math.abs(targetX - currentX) > 0.5 || Math.abs(targetY - currentY) > 0.5) {
-        rafId = requestAnimationFrame(updateCursor);
+      // Continue animating while there's kinetic momentum
+      if (
+        Math.abs(targetX - currentX) > 0.2 ||
+        Math.abs(targetY - currentY) > 0.2 ||
+        Math.abs(vx) > 0.04 ||
+        Math.abs(vy) > 0.04
+      ) {
+        rafId = requestAnimationFrame(render);
       } else {
         rafId = null;
       }
     };
 
+    // Initial render
+    render();
+
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
     return () => {
+      window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", handlePointerMove);
       if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
-  // Precision CAD Grid SVG: 64x64px cell with visible titanium lines and champagne gold (+) crosshair intersections
-  const svgGrid = `data:image/svg+xml;utf8,<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="0" x2="64" y2="0" stroke="rgba(255,255,255,0.075)" stroke-width="1"/><line x1="0" y1="0" x2="0" y2="64" stroke="rgba(255,255,255,0.075)" stroke-width="1"/><path d="M 0 -3.5 L 0 3.5 M -3.5 0 L 3.5 0" stroke="rgba(223,202,159,0.6)" stroke-width="1.2"/><path d="M 64 -3.5 L 64 3.5 M 60.5 0 L 67.5 0" stroke="rgba(223,202,159,0.6)" stroke-width="1.2"/><circle cx="32" cy="32" r="0.8" fill="rgba(255,255,255,0.12)"/></svg>`;
-
   return (
-    <div
-      ref={containerRef}
-      className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none will-change-transform"
-      style={
-        {
-          "--cursor-x": "50%",
-          "--cursor-y": "320px",
-        } as React.CSSProperties
-      }
-    >
-      {/* 1. Top Cinematic Studio Champagne Halo (Zero-lag pure CSS gradient) */}
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none">
+      {/* 1. Subtle Top Champagne Feather Halo */}
       <div
-        className="absolute -top-[16%] left-1/2 -translate-x-1/2 w-[1350px] h-[780px] rounded-full pointer-events-none"
+        className="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[1200px] h-[650px] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(223, 202, 159, 0.20) 0%, rgba(223, 202, 159, 0.04) 48%, transparent 75%)",
+            "radial-gradient(ellipse at center, rgba(223, 202, 159, 0.08) 0%, rgba(223, 202, 159, 0.015) 50%, transparent 72%)",
         }}
       />
 
-      {/* 2. Interactive Cursor Flashlight Spotlight (Follows cursor smoothly across grid) */}
-      <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-300"
-        style={{
-          background:
-            "radial-gradient(circle 520px at var(--cursor-x) var(--cursor-y), rgba(223, 202, 159, 0.12) 0%, rgba(223, 202, 159, 0.025) 50%, transparent 70%)",
-        }}
+      {/* 2. Interactive 3D Bulge & Radial Stretch Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 pointer-events-none will-change-transform"
       />
 
-      {/* 3. Mid-Page Subtle Warmth Halos for Showcase, Process & Pricing */}
-      <div
-        className="absolute top-[35%] left-1/2 -translate-x-1/2 w-[1150px] h-[900px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(223, 202, 159, 0.075) 0%, transparent 65%)",
-        }}
-      />
-      <div
-        className="absolute top-[70%] left-1/2 -translate-x-1/2 w-[1150px] h-[900px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(223, 202, 159, 0.065) 0%, transparent 65%)",
-        }}
-      />
-
-      {/* 4. Precision CAD Architectural Grid Pattern */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `url('${svgGrid}')`,
-          backgroundSize: "64px 64px",
-        }}
-      />
-
-      {/* 5. Soft Center Reading Vignette (Keeps headline typography punchy & high-contrast) */}
+      {/* 3. Reading Clarity Vignette (Pristine typography contrast) */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 65% 45% at 50% 32%, rgba(3, 3, 5, 0.4) 0%, transparent 75%)",
+            "radial-gradient(ellipse 70% 50% at 50% 30%, rgba(3, 3, 5, 0.25) 0%, transparent 75%)",
         }}
       />
-
-      {/* 6. Vertical Architectural Guideline Hairlines (Framing container like technical drafting) */}
-      <div className="absolute top-0 bottom-0 left-[max(1rem,calc(50%-640px))] w-[1px] bg-gradient-to-b from-transparent via-[#DFCA9F]/30 to-transparent pointer-events-none" />
-      <div className="absolute top-0 bottom-0 right-[max(1rem,calc(50%-640px))] w-[1px] bg-gradient-to-b from-transparent via-[#DFCA9F]/30 to-transparent pointer-events-none" />
     </div>
   );
 }

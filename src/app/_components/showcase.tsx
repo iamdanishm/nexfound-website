@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import ScrollReveal from "./scroll-reveal";
+import { kinetics } from "@/lib/kinetics";
 
 const CLIENT_PROJECTS = [
   {
@@ -80,15 +81,15 @@ export default function Showcase() {
     gsap.to(tiltCardRef.current, {
       rotateX: 0,
       rotateY: 0,
-      duration: 0.7,
-      ease: "power3.out",
+      duration: 0.8,
+      ease: "elastic.out(1, 0.4)",
     });
   };
 
   return (
     <section id="work" className="relative py-20 sm:py-28 overflow-hidden bg-transparent scroll-mt-24">
-      {/* Background Accent Halo */}
-      <div className="absolute top-1/3 right-10 w-[500px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.06)_0%,transparent_70%)] blur-[80px] pointer-events-none -z-10" />
+      {/* Background Accent Halo (Soft diffused) */}
+      <div className="absolute top-1/3 right-10 w-[500px] h-[350px] rounded-full bg-[radial-gradient(circle,rgba(223,202,159,0.025)_0%,transparent_70%)] blur-[80px] pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
@@ -119,7 +120,7 @@ export default function Showcase() {
             {/* Project Selector */}
             <ScrollReveal variant="fade-lift" delay={200}>
               <div className="flex justify-center mt-7">
-                <div className="p-1 rounded-xl bg-black/70 border border-white/10 backdrop-blur-md flex items-center gap-1 relative">
+                <div className="p-1 rounded-xl liquid-glass liquid-lens flex items-center gap-1 relative">
                   {CLIENT_PROJECTS.map((proj, idx) => (
                     <button
                       key={proj.id}
@@ -132,7 +133,7 @@ export default function Showcase() {
                         <motion.div
                           layoutId="clientWorkTabPill"
                           className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] shadow-[0_4px_15px_rgba(223,202,159,0.35)]"
-                          transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                          transition={kinetics.pill}
                         />
                       )}
                       <span className="relative z-10 flex items-center gap-2">
@@ -155,7 +156,7 @@ export default function Showcase() {
             </ScrollReveal>
           </div>
 
-          {/* MAIN SHOWCASE FRAME WITH SPOTLIGHT ILLUMINATION */}
+          {/* MAIN SHOWCASE FRAME WITH LIQUID GLASS & SPOTLIGHT ILLUMINATION */}
           <ScrollReveal variant="fade-lift" delay={260}>
             <AnimatePresence mode="wait">
             <motion.div
@@ -165,7 +166,7 @@ export default function Showcase() {
               exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
               transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
               onMouseMove={handleSpotlight}
-              className="spotlight-card rounded-2xl sm:rounded-3xl bg-[#08080E]/95 border border-white/[0.1] p-5 sm:p-8 lg:p-10 shadow-2xl overflow-hidden mb-8"
+              className="spotlight-card rounded-2xl sm:rounded-3xl liquid-glass liquid-lens p-5 sm:p-8 lg:p-10 shadow-2xl overflow-hidden mb-8"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
                 {/* Left Column: Project Brief */}
@@ -227,7 +228,7 @@ export default function Showcase() {
                     className="will-change-transform transition-shadow duration-300"
                   >
                     {active.id === "dalalfree" ? (
-                      <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group hover:border-[#DFCA9F]/30 transition-colors">
+                      <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group hover:border-[#DFCA9F]/30 transition-colors liquid-lens">
                         {/* Browser Header Bar */}
                         <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
                           <div className="flex items-center gap-1.5">
@@ -251,13 +252,13 @@ export default function Showcase() {
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                             className="object-cover group-hover:scale-102 transition-transform duration-700"
-                            loading="lazy"
+                            priority={active.id === "dalalfree"}
                           />
                           <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#0B0B14] via-[#0B0B14]/40 to-transparent" />
                         </div>
                       </div>
                     ) : (
-                      <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group hover:border-[#DFCA9F]/30 transition-colors">
+                      <div className="w-full rounded-2xl bg-[#0B0B14] border border-white/[0.12] overflow-hidden shadow-2xl group hover:border-[#DFCA9F]/30 transition-colors liquid-lens">
                         {/* Mobile Header Bar */}
                         <div className="flex items-center justify-between px-4 py-2.5 bg-[#0E0E18] border-b border-white/[0.08]">
                           <div className="flex items-center gap-2">

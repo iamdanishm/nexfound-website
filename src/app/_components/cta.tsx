@@ -86,8 +86,8 @@ ${idea}
 
   return (
     <section id="contact" className="relative py-20 sm:py-28 overflow-hidden bg-transparent scroll-mt-24">
-      {/* Background Accent Halo */}
-      <div className="absolute top-1/2 right-10 w-[600px] h-[350px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(223,202,159,0.06)_0%,rgba(223,202,159,0.01)_50%,transparent_70%)] pointer-events-none -z-10" />
+      {/* Background Accent Halo (Soft diffused) */}
+      <div className="absolute top-1/2 right-10 w-[600px] h-[350px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(223,202,159,0.025)_0%,transparent_70%)] pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
@@ -123,7 +123,7 @@ ${idea}
               <ScrollReveal variant="fade-lift" delay={180}>
                 <div
                   onMouseMove={handleSpotlight}
-                  className="spotlight-card p-4 rounded-2xl border-[#DFCA9F]/30 bg-[#DFCA9F]/[0.04] space-y-3"
+                  className="spotlight-card p-4 rounded-2xl liquid-glass liquid-lens border-[#DFCA9F]/30 space-y-3"
                 >
                   <div className="flex items-center gap-2 text-xs font-mono text-[#DFCA9F] font-semibold uppercase tracking-wider">
                     <span className="w-2 h-2 rounded-full bg-[#DFCA9F] animate-pulse" />
@@ -133,7 +133,7 @@ ${idea}
                     href={`https://wa.me/919321456661?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#DFCA9F]/20 hover:opacity-95 transition-opacity cursor-pointer font-mono btn-spring"
+                    className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-[#F5ECDA] via-[#DFCA9F] to-[#CBB58A] text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#DFCA9F]/20 hover:opacity-95 transition-opacity cursor-pointer font-mono kinetic-btn"
                   >
                     <span>Chat with Danish on WhatsApp</span>
                     <span>→</span>
@@ -168,7 +168,7 @@ ${idea}
               <ScrollReveal variant="fade-lift" delay={140}>
                 <div
                   onMouseMove={handleSpotlight}
-                  className="spotlight-card p-6 sm:p-8 rounded-3xl bg-[#090A0E] border border-white/[0.12] shadow-2xl"
+                  className="spotlight-card p-6 sm:p-8 rounded-3xl liquid-glass liquid-lens shadow-2xl"
                 >
                   <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] mb-5">
                     <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
@@ -207,7 +207,7 @@ ${idea}
                             type="button"
                             key={p}
                             onClick={() => setPlatform(p)}
-                            className={`py-2 px-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer tab-spring ${
+                            className={`py-2 px-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer tab-spring kinetic-btn ${
                               platform === p
                                 ? "bg-white text-black font-bold shadow-md"
                                 : "bg-white/[0.03] text-zinc-400 border border-white/[0.06] hover:border-white/20"
@@ -252,7 +252,7 @@ ${idea}
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="btn-primary w-full py-3.5 text-xs sm:text-sm uppercase tracking-wider font-bold rounded-xl cursor-pointer flex items-center justify-center gap-2 mt-2 shadow-[0_10px_25px_rgba(223,202,159,0.35)] btn-spring"
+                      className="btn-primary w-full py-3.5 text-xs sm:text-sm uppercase tracking-wider font-bold rounded-xl cursor-pointer flex items-center justify-center gap-2 mt-2 shadow-[0_10px_25px_rgba(223,202,159,0.35)] kinetic-btn"
                     >
                       <span>
                         {isSubmitting ? "Submitting Brief..." : "Submit Brief for 30-Day Sprint"}

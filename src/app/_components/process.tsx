@@ -56,8 +56,8 @@ export default function Process() {
       ref={containerRef}
       className="relative py-20 sm:py-28 overflow-hidden bg-transparent scroll-mt-24"
     >
-      {/* Background Subtle Ambient Glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[350px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(223,202,159,0.06)_0%,rgba(223,202,159,0.01)_50%,transparent_70%)] pointer-events-none -z-10" />
+      {/* Background Subtle Ambient Glow (Soft diffused) */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[350px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(223,202,159,0.025)_0%,transparent_70%)] pointer-events-none -z-10" />
 
       <div className="container-custom relative z-10">
         <div className="max-w-5xl mx-auto">
@@ -101,7 +101,7 @@ export default function Process() {
                 <ScrollReveal key={step.number} variant="fade-lift" delay={100 + idx * 110}>
                   <div
                     onMouseMove={handleSpotlight}
-                    className="spotlight-card h-full p-7 rounded-2xl bg-[#090A0E] border border-white/[0.08] hover:border-white/[0.22] transition-all flex flex-col justify-between group tab-spring cursor-pointer"
+                    className="spotlight-card h-full p-7 rounded-2xl liquid-glass liquid-lens hover:border-white/[0.22] transition-all flex flex-col justify-between group tab-spring cursor-pointer"
                   >
                     <div>
                       {/* Top Row: Number + Timeline Marker */}
